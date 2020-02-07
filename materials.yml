@@ -1,0 +1,70 @@
+# Composition is only mentioned as reference not used in calculations
+
+Water:
+  Density [g/cm^3]: 1
+Lead:
+  Density [g/cm^3]: 11.34
+  Composition:
+    Pb: 1
+Lead Glass:
+  Density [g/cm^3]: 6.22
+  Composition:
+    #source: http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html
+    O: 0.156453
+    Si: 0.080866
+    Ti: 0.008092
+    As: 0.002651
+    Pb: 0.751938
+
+Iron:
+  Density [g/cm^3]: 7.87
+  #source: http://physics.nist.gov/PhysRefData/XrayMassCoef/tab1.html
+  Composition:
+    Fe: 1
+    
+  
+Concrete:
+  Density [g/cm^3]: 2.24
+  Composition:
+  #source: http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html
+    H: 0.022100
+    C: 0.002484
+    O: 0.574930 
+    Na: 0.015208
+    Mg: 0.001266
+    Al: 0.019953
+    Si: 0.304627
+    K: 0.010045
+    Ca: 0.042951
+    Fe: 0.006435
+    
+
+Robalith 3.2:
+  Density [g/cm^3]: 3.2
+Robalith 3.35:
+  Density [g/cm^3]: 3.35
+Robalith 3.5:
+  Density [g/cm^3]: 3.5
+Robalith 3.7:
+  Density [g/cm^3]: 3.7
+Robalith 3.8:
+  Density [g/cm^3]: 3.8
+
+
+Concrete Barite:
+  Density [g/cm^3]: 3.35
+  Composition:
+  #source: http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html
+    H: 0.003585
+    O: 0.311622
+    Mg: 0.001195
+    Al: 0.004183
+    Si: 0.010457
+    S: 0.107858
+    Ca: 0.050194
+    Fe: 0.047505
+    Ba: 0.463400
+Brick:
+  Density [g/cm^3]: 1.3
+
+  

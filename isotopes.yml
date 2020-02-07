@@ -1,0 +1,77 @@
+
+Lu-177:
+  h(10) [uSv/h per MBq/m^2]:  0.0063
+  labda [s^-1]: 1.2e-6
+  Energy [keV]:
+    - 55.79
+    - 63 # two peaks combined
+    - 112.948
+    - 208.37
+  Abundance:
+    - 2.77E-2
+    - 0.91E-2
+    - 6.17e-2
+    - 10.36e-2
+
+
+I-131:
+  h(10) [uSv/h per MBq/m^2]:  0.066
+  labda [s^-1]: 1.0e-6
+  Energy [keV]:
+    - 80.185
+    - 284.305
+    - 364.489
+    - 636.989
+ #   - 722.911
+  Abundance:
+    - 2.62e-2
+    - 6.12e-2
+    - 81.5e-2
+    - 7.16e-2
+ #   - 1.77e-2
+I-131 Body:
+  h(10) [uSv/h per MBq/m^2]:  0.034
+  labda [s^-1]: 2.41e-5         # 8 hours halflife
+  Energy [keV]:
+    - 80.185
+    - 284.305
+    - 364.489
+    - 636.989
+#    - 722.911
+  Abundance: # reduction by factor 2 of 365 keV
+    - 2.62e-2
+    - 6.12e-2
+    - 41.0e-2
+    - 7.16e-2
+ #   - 1.77e-2
+F-18:
+  h(10) [uSv/h per MBq/m^2]: 0.166
+  labda [s^-1]: 1.05e-4
+  Energy [keV]:
+    - 511
+  Abundance:
+    - 2
+Ga-68:
+  h(10) [uSv/h per MBq/m^2]: 0.16
+  labda [s^-1]: 2.79e-8
+  Energy [keV]:
+    - 511
+    - 1077
+  Abundance:
+    - 1.780
+    - 0.033
+Ho-166:
+  h(10) [uSv/h per MBq/m^2]: 0.005 # estimated 40 uSv/h for a 60 Gy therapy dose (Figure 1.), median injected activity 4510 MBq (Table 2)
+  labda [s^-1]: 7.18E-6
+  Energy [keV]:
+    - 48.6 # two close peaks summed
+    - 56 # two close peaks summed
+    - 80.576
+    - 1379.437
+    - 1581.834
+  Abundance:
+    - 2.96E-2
+    - 6.84E-2
+    - 6.56E-2
+    - 0.922E-2
+    - 0.182E-2
