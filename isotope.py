@@ -1,0 +1,2 @@
+class Isotope:
+	pass
