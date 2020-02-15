@@ -1,3 +1,5 @@
+from shield import Shield
+
 class Source(Shield):
 	"""Abtract class to model a radiation source."""
 	pass
