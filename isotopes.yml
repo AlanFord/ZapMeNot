@@ -4,29 +4,29 @@ c-11:
   half-life-units: minute
   photon-energy-units: MeV
   photon-intensity:
-    0.0002: 2.22e-6
-    0.511:  1.9953
+    - !!python/tuple [0.0002, 2.22e-6]
+    - !!python/tuple [0.511,  1.9953]
 co-60:
   half-life: 5.2713
   half-life-units: year
   photon-energy-units: MeV
   photon-intensity:
-    0.6938:  1.6312e-4
-    1.1732:  1.0
-    1.3325:  1.0
+    - !!python/tuple [0.6938,  1.6312e-4]
+    - !!python/tuple [1.1732,  1.0]
+    - !!python/tuple [1.3325,  1.0]
 cu-67:
   half-life: 61.83
   half-life-units: hour
   photon-energy-units: MeV
   photon-intensity:
-    0.001: 9.6012e-4
-    0.0086:  1.9136e-2
-    0.0086:  3.7522e-2
-    0.0096:  7.6488e-3
-    0.0913:  7.e-2
-    0.933: 1.61e-1
-    0.1846:  4.87e-1
-    0.209: 1.15e-3
-    0.3002:  7.97e-3
-    0.3935:  2.2e-3
+    - !!python/tuple [0.001,   9.6012e-4]
+    - !!python/tuple [0.0086,  1.9136e-2]
+    - !!python/tuple [0.0086,  3.7522e-2]
+    - !!python/tuple [0.0096,  7.6488e-3]
+    - !!python/tuple [0.0913,  7.e-2]
+    - !!python/tuple [0.933,   1.61e-1]
+    - !!python/tuple [0.1846,  4.87e-1]
+    - !!python/tuple [0.209,   1.15e-3]
+    - !!python/tuple [0.3002,  7.97e-3]
+    - !!python/tuple [0.3935,  2.2e-3]
 ...

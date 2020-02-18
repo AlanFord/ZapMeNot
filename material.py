@@ -9,6 +9,7 @@ class Material:
 		if Material.library is None:
 			stream = open("materials.yml", 'r')
 			Material.library = yaml.load(stream, Loader=yaml.FullLoader)
+			stream.close()
 
 		# check to see if the name is in the library
 		if name not in Material.library.keys():
@@ -20,7 +21,12 @@ class Material:
 		self.density = properties.get("density")
 		self.energy_bins = np.array(properties.get("energy"))
 		self.mass_atten_coff = np.array(properties.get("mass-atten-coff"))
-		self.gp_coeff = np.array(properties.get("gp-coeff"))
+		gp_array = properties.get("gp-coeff")
+		self.gp_b = np.array(gp_array[:][0])
+		self.gp_c = np.array(gp_array[:][1])
+		self.gp_a = np.array(gp_array[:][2])
+		self.gp_X = np.array(gp_array[:][3])
+		self.gp_d = np.array(gp_array[:][4])
 
 	def setDensity(self, density):
 		self.density = density
@@ -38,26 +44,12 @@ class Material:
 			# find the bounding array indices
 			if (energy < self.energy_bins[0]) or (energy > self.energy_bins[-1]):
 				raise ValueError("Photon energy is out of range")
-			upper_index = np.searchsorted(self.energy_bins, energy)
-			if upper_index == 0:
-				upper_index = 1
-			lower_index = upper_index -1
-			b = self.gp_coeff[upper_index][0]
-			c = self.gp_coeff[upper_index][1]
-			a = self.gp_coeff[upper_index][2]
-			X = self.gp_coeff[upper_index][3]
-			d = self.gp_coeff[upper_index][4]
-			highGP = self.GP(a,b,c,d,X,mfp)
-			b = self.gp_coeff[lower_index][0]
-			c = self.gp_coeff[lower_index][1]
-			a = self.gp_coeff[lower_index][2]
-			X = self.gp_coeff[lower_index][3]
-			d = self.gp_coeff[lower_index][4]
-			lowGP = self.GP(a,b,c,d,X,mfp)
-			# linear interpolation
-			upper_energy = self.energy_bins[upper_index]
-			lower_energy = self.energy_bins[lower_index]
-			return (energy - lower_energy)/(upper_energy-lower_energy)*(highGP-lowGP) + lowGP
+			b = np.interp(energy, self.energy_bins, gp_b)
+			c = np.interp(energy, self.energy_bins, gp_c)
+			a = np.interp(energy, self.energy_bins, gp_a)
+			X = np.interp(energy, self.energy_bins, gp_X)
+			d = np.interp(energy, self.energy_bins, gp_d)
+			return self.GP(a,b,c,d,X,mfp)
 		else:
 			raise ValueError("Only GP Buildup Factors are currently supported")
 
