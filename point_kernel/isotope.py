@@ -14,14 +14,14 @@ class Isotope:
 
 		# initialize the object
 		self.name = name
-		properties = Isotope.Library.get(self.name)
+		properties = Isotope.Library.get(self.name) # dict() of properties
 		# convert the half-life to units of seconds
 		half_life = properties.get("half-life")
 		half_life_units = properties.get("half-life-units")
 		self.half_life = convert_half_life(half_life,half_life_units)
 
 		# photon energies and intensities are stored as a list of tuples
-		self.photons = properties.get("photon-intensity")
+		self.photons = properties.get("photon-intensity") # 2D list of photon energies and intensities
 
 	def convert_half_life(value,units):
 		if units == "minute":

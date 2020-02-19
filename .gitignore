@@ -1,3 +1,8 @@
+references/
+notes.txt
+resources_databases_Isotopes.yml
+materials-old.yml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

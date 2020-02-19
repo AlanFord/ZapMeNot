@@ -1,2 +1,0 @@
-class Shield:
-	pass
