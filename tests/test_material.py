@@ -38,5 +38,4 @@ class testMaterial(unittest.TestCase):
 		self.assertAlmostEqual(b,45.214774926711492)
 
 
-	# test calculation of a buildup factor from coefficients
 
