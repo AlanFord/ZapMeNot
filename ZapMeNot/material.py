@@ -1,5 +1,6 @@
 import numpy as np
 import yaml
+import pkg_resources
 
 class Material:
 	library = None
@@ -7,7 +8,9 @@ class Material:
 	def __init__(self,name="void"):
 		#initialize the class library if it has not already been done
 		if Material.library is None:
-			stream = open("materials.yml", 'r')
+			path = 'materialLibrary.yml'
+			filepath = pkg_resources.resource_filename(__name__, path)
+			stream = open(filepath, 'r')
 			Material.library = yaml.load(stream, Loader=yaml.FullLoader)
 			stream.close()
 
@@ -21,12 +24,12 @@ class Material:
 		self.density = properties.get("density")
 		self.energy_bins = np.array(properties.get("energy"))
 		self.mass_atten_coff = np.array(properties.get("mass-atten-coff"))
-		gp_array = properties.get("gp-coeff")
-		self.gp_b = np.array(gp_array[:][0])
-		self.gp_c = np.array(gp_array[:][1])
-		self.gp_a = np.array(gp_array[:][2])
-		self.gp_X = np.array(gp_array[:][3])
-		self.gp_d = np.array(gp_array[:][4])
+		gp_array = np.array(properties.get("gp-coeff"))
+		self.gp_b = gp_array[:,0]
+		self.gp_c = gp_array[:,1]
+		self.gp_a = gp_array[:,2]
+		self.gp_X = gp_array[:,3]
+		self.gp_d = gp_array[:,4]
 
 	def setDensity(self, density):
 		self.density = density
@@ -44,11 +47,11 @@ class Material:
 			# find the bounding array indices
 			if (energy < self.energy_bins[0]) or (energy > self.energy_bins[-1]):
 				raise ValueError("Photon energy is out of range")
-			b = np.interp(energy, self.energy_bins, gp_b)
-			c = np.interp(energy, self.energy_bins, gp_c)
-			a = np.interp(energy, self.energy_bins, gp_a)
-			X = np.interp(energy, self.energy_bins, gp_X)
-			d = np.interp(energy, self.energy_bins, gp_d)
+			b = np.interp(energy, self.energy_bins, self.gp_b)
+			c = np.interp(energy, self.energy_bins, self.gp_c)
+			a = np.interp(energy, self.energy_bins, self.gp_a)
+			X = np.interp(energy, self.energy_bins, self.gp_X)
+			d = np.interp(energy, self.energy_bins, self.gp_d)
 			return self.GP(a,b,c,d,X,mfp)
 		else:
 			raise ValueError("Only GP Buildup Factors are currently supported")

@@ -4,7 +4,7 @@ class Isotope:
 	def __init__(self,name):
 		#initialize the class library if it has not already been done
 		if Isotope.library is None:
-			stream = open("isotopes.yml", 'r')
+			stream = open("isotopeLibrary.yml", 'r')
 			Isotope.library = yaml.load(stream, Loader=yaml.FullLoader)
 			stream.close()
 
