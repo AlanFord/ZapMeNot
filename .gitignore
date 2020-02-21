@@ -2,6 +2,8 @@ references/
 notes.txt
 resources_databases_Isotopes.yml
 materials-old.yml
+dataConversion/ICRP38.RAD
+dataConversion/ICRP38.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
