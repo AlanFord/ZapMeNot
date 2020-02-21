@@ -29,6 +29,12 @@ class Isotope:
 		self.photons = properties.get("photon-intensity") # 2D list of photon energies and intensities
 
 	def convert_half_life(self,value,units):
+		if units == "usecond":
+			return value/1.0E6
+		if units == "msecond":
+			return value/1000.
+		if units == "second":
+			return value
 		if units == "minute":
 			return value*60
 		if units == "hour":

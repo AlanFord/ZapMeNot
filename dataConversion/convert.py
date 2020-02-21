@@ -63,3 +63,5 @@ def convert():
 	yamlStream = open('newIsotopeLibrary.yml', 'wt')
 	yaml.dump(isotopeLibrary, yamlStream, default_flow_style=False, explicit_start=True, explicit_end=True)
 	stream.close()
+	yamlStream.close()
+	
