@@ -14,6 +14,7 @@ class Isotope:
 			stream.close()
 
 		# check to see if the name is in the library
+		name = name.lower().capitalize()
 		if name not in Isotope.library.keys():
 			raise ValueError("Isotope not found in the Isotope Library")
 

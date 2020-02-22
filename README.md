@@ -3,11 +3,10 @@
 
 This is very-much a work in progress - not ready for prime-time.
 
-### Background
-
-These days there are fewer and fewer engineering graduates with a thorough knowledge of radiation shielding.
-Although there are a number of high-quality monte carlo-based tools available, (MCNP, SCALE, etc.), there are fewer
-simple point-kernel tools, especially open source.  The goal of ZapMeNot is to fill that need.
+### Prerequisites (or at least what was used in development)
+* Python 3.4 or above
+* Pyyaml 5.3
+* Numpy 1.18.1
 
 ### Using the Library
 
