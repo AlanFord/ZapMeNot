@@ -36,7 +36,7 @@ class Material:
 		self.density = density
 
 	def getMfp(self, energy, distance):
-		return distance * self.density / self.getMassAttenCoff(energy)
+		return distance / (self.density * self.getMassAttenCoff(energy))
 
 	def getMassAttenCoff(self, energy):
 		if (energy < self.xsec_energy_bins[0]) or (energy > self.xsec_energy_bins[-1]):
