@@ -45,14 +45,13 @@ class XInfiniteSlab(Shield):
 
 	def getCrossingLength(self,ray):
 		'''returns a  crossing length'''
-		rayPoint = ray.start
+		rayPoint = np.array(ray.start)
 		rayUnitVector = ray.unitVector()
-		# get one crossing point
 		planeNormal = np.array([1,0,0])
+		# get one crossing point
 		planePoint = np.array([self.xStart,0,0])
 		firstPoint = self.LinePlaneCollision(planeNormal, planePoint, rayUnitVector, rayPoint)
 		# get second crossing point
-		planeNormal = np.array([1,0,0])
 		planePoint = np.array([self.xEnd,0,0])
 		secondPoint = self.LinePlaneCollision(planeNormal, planePoint, rayUnitVector, rayPoint)
 		# let numpy do the heavy lifting
