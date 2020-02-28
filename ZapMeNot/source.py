@@ -31,12 +31,8 @@ class Source(metaclass=abc.ABCMeta):
 	def listUniquePhotons(self):
 		return self.uniquePhotons
 
-	@abc.abstractproperty
-	def interateSourcePoints(self):
-		pass
-
 	def getPhotonSourceList(self):
-		"returns a dict of unique photon energies and activities"
+		"returns a list of unique photon energies and activities"
 		photonDict = dict()
 		keys = photonDict.keys()
 		# test to see if photon energy is already on the list
@@ -56,25 +52,11 @@ class Source(metaclass=abc.ABCMeta):
 		photonList = []
 		for key,value in photonDict.items():
 			photonList.append((key,value))
-		return photonList
+		return sorted(photonList)
 
-	def __iter__(self):
-		return SourceIterator(self.getPhotonEnergyList())
-
-# -----------------------------------------------------------
-
-class SourceIterator:
-	def __init__(self, dictOfPhotons):
-		self.dictionary = dictOfPhotons
-		self.keys = self.dictionary.keys()
-		self.index = 0
-
-	def __next__(self):
-		if self.index == len(self.keys):
-			raise StopIteration()
-		retValue = self.dictionary(self.keys[self.index])
-		self.index += 1
-		return retValue
+	@abc.abstractproperty
+	def getSourcePoints(self):
+		pass
 
 # -----------------------------------------------------------
 
@@ -88,15 +70,13 @@ class PointSource(Source, shield.Shield):
 		self.z = z
 		super().__init__()
 
-	def interateSourcePoints(self):
-		pass
+	def getSourcePoints(self):
+		return[(self.x,self.y,self.z)]
 
-# -----------------------------------------------------------
+	def getCrossingLength(self,vector):
+		'''returns a  crossing length'''
+		return 0
 
-# class LineSource(Source):
-# 	"""Modeling a finite-length line source of radiation."""
-# 	pass
-
-# class PlaneSource(Source):
-# 	"""Modeling a finite-area planar source of radiation."""
-# 	pass
+	def getCrossingMFP(self,vector, photonEnergy):
+		'''returns the crossing mfp'''
+		return 0

@@ -1,35 +1,65 @@
-class model:
+from ZapMeNot import model,source,shield,detector,ray,material
+import math
+
+class Model:
 	def __init__(self):
 		self.source = None
 		self.shieldList = []
 		self.detector = None
 		self.buildupFactorMaterial = None
+		self.conversionFactor = 1.835E-8 # used to calculate exposure from flux, MeV, and linear energy absorption coeff
 
+	def addSource(self, newSource):
+		self.source = newSource
+		# don't forget that sources are shields too!
+		self.shieldList.append(newSource)
+
+	def addShield(self, newShield):
+		self.shieldList.append(newShield)
+
+	def addDetector(self, newDetector):
+		self.detector = newDetector
+
+	def setBuildupFactorMaterial(self, newMaterial):
+		self.buildupFactorMaterial = newMaterial
 	
 	def calculateExposure(self):
 		# flux by photon energy
-		fluxByPhotonEnergy = {}
+		fluxByPhotonEnergy = []
 		# get a list of photons (energy/intensity [gamma/sec]) from the source
-		spectrum= source.getSpectrum()
-		for photon in spectrum
-		# get a list of source points
-		sourcePoints = source.getSourcePoints()
+		spectrum= self.source.getPhotonSourceList()
+		sourcePoints = self.source.getSourcePoints()
 		# iterate through the photons 
-		for photon in spectrum
+		for photon in spectrum:
+			uncollidedFlux = 0
+			totalFlux = 0
 			# iterate through the source points
-			for nextPoint in sourcePoints
+			for nextPoint in sourcePoints:
 				# determine the vector from source to detector
-				vector = (nextPoint, self.detector.location)
+				vector = ray.Ray()
+				vector.start = nextPoint
+				vector.end = self.detector.location
+				# vector = (nextPoint, self.detector.location)
 				# iterate through the shield list
 				totalMFP = 0.0
-				totalFluxReductionFactor = 0.0
-				for shield in shieldList
-					mfp, fluxReductionFactor = shield.getCrossingMFP(vector, photon.energy)
-					totalMFP = totalMFP + mfp
-					totalFluxReductionFactor = totalFluxReductionFactor * fluxReductionFactor
-				# calculate buildup factor for this photon and source point
-				# calculate uncollided flux from buildup factor and flux reduction factor
-				# add to uncollided flux sum for this photon
-			# calculate exposure for this photon
+				for shield in self.shieldList:
+					mfp = shield.getCrossingMFP(vector, photon[0])
+					totalMFP += mfp
+				totalFluxReductionFactor = math.exp(-totalMFP)
+				buildupFactor = self.buildupFactorMaterial.getBuildupFactor(photon[0], totalMFP)
+				uncollidedPointFlux = photon[1] * totalFluxReductionFactor * (1/(4*math.pi*vector.length()**2))
+				print(uncollidedPointFlux)
+				totalPointFlux = uncollidedPointFlux*buildupFactor
+				uncollidedFlux += uncollidedPointFlux
+				totalFlux += totalPointFlux
+			fluxByPhotonEnergy.append([photon[0],uncollidedFlux,totalFlux])
+
+		air = material.Material('air')
+		results = 0	
+		for photon in fluxByPhotonEnergy:
+			photon.append(totalFlux*photon[0]*self.conversionFactor*air.getMassEnergyAbsCoff(photon[0]))
 		# sum exposure over all photons
-		# return exposure (and maybe dose)
+		exposureTotal = 0
+		for photon in fluxByPhotonEnergy:
+			exposureTotal += photon[3]
+		return exposureTotal

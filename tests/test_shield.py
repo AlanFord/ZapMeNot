@@ -17,7 +17,15 @@ class testXInfiniteSlab(unittest.TestCase):
 	# test getting a crossing mfp
 	def test_get_MFP(self):
 		mfp = self.myShield.getCrossingMFP(self.aRay, 0.66)
-		self.assertAlmostEqual(mfp,30.046974074640065)
+		self.assertAlmostEqual(mfp,9.984366454164944)
+
+	# test getting a crossing mfp
+	def test_get_special_MFP(self):
+		self.aRay = ray.Ray()
+		self.aRay.start = [0,0,0]
+		self.aRay.end = [100,0,0]
+		mfp = self.myShield.getCrossingMFP(self.aRay, 1)
+		self.assertAlmostEqual(mfp,4.6905418)
 
 
 	# test line/plane collision

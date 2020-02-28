@@ -16,7 +16,7 @@ class testMaterial(unittest.TestCase):
 	def test_getMfp(self):
 		a = material.Material("air")
 		b = a.getMfp(0.66, 10)
-		self.assertAlmostEqual(b, 1.071055882233550e+05)
+		self.assertAlmostEqual(b, 9.336581e-04)
 
 	# test retrieval of a mass attenuation coefficient
 	# WARNING: result is based on preliminary test dataset!
