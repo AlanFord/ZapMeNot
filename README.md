@@ -7,7 +7,7 @@ This is very-much a work in progress - not ready for prime-time.
 * Python 3.4 or above
 * Numpy 1.18.1
 * Pytest 5.3.5
-* Pyyaml 5.3 (soon to be removed)
+* Pyyaml 5.3
 
 ### Using the Library
 

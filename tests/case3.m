@@ -1,16 +1,21 @@
 % MATLAB script to generate a reference value used in the
-% test_Case1 python unit test
+% test_Case3 python unit test
 
-function case1()
+function case3()
     % perform a simple point-source shielding calculation
     % with buildup to verify operation of ZapMeNot
     % Problem Description:
-    % - 1 MeV point source, 3E10 Bq, located at (0,0,0)
+    % - Ar-41, 3E10 Bq, located at (0,0,0)
     % - 10 cm thick iron shield
     % - 10 cm thick concrete shield
     % - Detector located at (100,0,0)
     % - Use Iron buildup factor
     % - Use air response function
+    % - Ar-41 photon spectrum:
+    % - MeV            Yield
+    %   1.29364e+00    9.91600e-01
+    %   1.67700e+00    5.20000e-04
+
     
     format long
     ironDensity = 7.874;   % g/cc, from the ZapMeNot material library

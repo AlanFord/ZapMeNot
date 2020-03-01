@@ -33,6 +33,8 @@ class Model:
 		for photon in spectrum:
 			uncollidedFlux = 0
 			totalFlux = 0
+			photonEnergy = photon[0]
+			photonYield = photon[1]
 			# iterate through the source points
 			for nextPoint in sourcePoints:
 				# determine the vector from source to detector
@@ -43,21 +45,20 @@ class Model:
 				# iterate through the shield list
 				totalMFP = 0.0
 				for shield in self.shieldList:
-					mfp = shield.getCrossingMFP(vector, photon[0])
+					mfp = shield.getCrossingMFP(vector, photonEnergy)
 					totalMFP += mfp
 				totalFluxReductionFactor = math.exp(-totalMFP)
-				buildupFactor = self.buildupFactorMaterial.getBuildupFactor(photon[0], totalMFP)
-				uncollidedPointFlux = photon[1] * totalFluxReductionFactor * (1/(4*math.pi*vector.length()**2))
-				print(uncollidedPointFlux)
+				buildupFactor = self.buildupFactorMaterial.getBuildupFactor(photonEnergy, totalMFP)
+				uncollidedPointFlux = photonYield * totalFluxReductionFactor * (1/(4*math.pi*vector.length()**2))
 				totalPointFlux = uncollidedPointFlux*buildupFactor
 				uncollidedFlux += uncollidedPointFlux
 				totalFlux += totalPointFlux
-			fluxByPhotonEnergy.append([photon[0],uncollidedFlux,totalFlux])
+			fluxByPhotonEnergy.append([photonEnergy,uncollidedFlux,totalFlux])
 
 		air = material.Material('air')
 		results = 0	
 		for photon in fluxByPhotonEnergy:
-			photon.append(totalFlux*photon[0]*self.conversionFactor*air.getMassEnergyAbsCoff(photon[0]))
+			photon.append(photon[2]*photon[0]*self.conversionFactor*air.getMassEnergyAbsCoff(photon[0]))
 		# sum exposure over all photons
 		exposureTotal = 0
 		for photon in fluxByPhotonEnergy:

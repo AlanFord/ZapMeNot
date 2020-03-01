@@ -1,6 +1,10 @@
+% MATLAB script to generate a reference value used in the
+% test_getMfp and test_getMassAttenCoff python unit tests
+
 function getattenCoeff()
 % calculate an mass attenuation coefficient
 % at 0.66 MeV
+format long
 energy = 0.66;
 density = 0.001205;
 

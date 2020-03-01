@@ -1,6 +1,10 @@
+% MATLAB script to generate a reference value used in the
+% test_getBuildupFactor python unit test
+
 function buildupFactor()
     % calculate an air GP buildup factor
     % at 0.66 MeV and 10 MFP
+    format long
     energy = 0.66;
     mfp = 10;
     lowCoeffs =  [2.371, 1.656, -0.120, 14.27, 0.0472];

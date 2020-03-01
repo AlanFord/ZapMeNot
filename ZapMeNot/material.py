@@ -66,7 +66,6 @@ class Material:
 
 	def GP(self, a, b, c, d, X, mfp):
 		K = (c * (mfp**a)) + (d * (np.tanh(mfp/X -2) - np.tanh(-2))) / (1 - np.tanh(-2))
-		#print(K)
 		if K == 1:
 			return 1 + (b-1) * mfp
 		else:

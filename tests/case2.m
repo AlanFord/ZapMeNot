@@ -1,3 +1,6 @@
+% MATLAB script to generate a reference value used in the
+% test_Case2 python unit test
+
 function case2()
     % perform a simple point-source shielding calculation
     % with buildup to verify operation of ZapMeNot
@@ -8,6 +11,7 @@ function case2()
     % - Use Iron buildup factor
     % - Use air response function
     
+    format long
     ironDensity = 7.874;   % g/cc, from the ZapMeNot material library
     airDensity = 0.001205; % g/cc, from the ZapMeNot material library
     airMassEnAbsCoeff = 2.787E-02; % @ 1MeV (ANS 6.4.3 Table 2)
