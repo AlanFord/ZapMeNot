@@ -17,7 +17,7 @@ class testXInfiniteSlab(unittest.TestCase):
 	# test getting a crossing mfp
 	def test_get_MFP(self):
 		mfp = self.myShield.getCrossingMFP(self.aRay, 0.66)
-		self.assertAlmostEqual(mfp,9.984366454164944)
+		self.assertAlmostEqual(mfp,9.923087573149688)
 
 	# test getting a crossing mfp
 	def test_get_special_MFP(self):

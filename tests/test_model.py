@@ -38,7 +38,7 @@ def test_Case3():
 	myModel.addDetector(detector.Detector(100,0,0))
 	myModel.setBuildupFactorMaterial(material.Material('iron'))
 	result = myModel.calculateExposure()
-	assert result == pytest.approx(4.439e-6)
+	assert result == pytest.approx(4.3979088503738596e-06)
 
 # def test_Case4():
 # 	# a point source with infinite yz shields

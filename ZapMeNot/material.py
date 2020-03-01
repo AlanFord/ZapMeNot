@@ -1,3 +1,4 @@
+from scipy.interpolate import Akima1DInterpolator
 import numpy as np
 import yaml
 import pkg_resources
@@ -33,6 +34,15 @@ class Material:
 		self.gp_a = gp_array[:,2]
 		self.gp_X = gp_array[:,3]
 		self.gp_d = gp_array[:,4]
+		# here we are building interpolators based on the Akima method.
+		# For more information on the use of Akima method on G-P coefficients, 
+		# see https://www.nrc.gov/docs/ML1905/ML19059A414.pdf
+		# "QAD-CGGP2 and G33-GP2: Revised Version of QAD-CGGP and G33-GP"
+		self.bi = Akima1DInterpolator(self.gp_energy_bins, self.gp_b)
+		self.ci = Akima1DInterpolator(self.gp_energy_bins, self.gp_c)
+		self.ai = Akima1DInterpolator(self.gp_energy_bins, self.gp_a)
+		self.Xi = Akima1DInterpolator(self.gp_energy_bins, self.gp_X)
+		self.di = Akima1DInterpolator(self.gp_energy_bins, self.gp_d)
 
 	def setDensity(self, density):
 		self.density = density
@@ -43,23 +53,30 @@ class Material:
 	def getMassAttenCoff(self, energy):
 		if (energy < self.atten_energy_bins[0]) or (energy > self.atten_energy_bins[-1]):
 			raise ValueError("Photon energy is out of range")
-		return np.interp(energy, self.atten_energy_bins, self.mass_atten_coff)
+		return np.power(10.0, np.interp(np.log10(energy), np.log10(self.atten_energy_bins), np.log10(self.mass_atten_coff)))
 
 	def getMassEnergyAbsCoff(self, energy):
 		if (energy < self.enAbs_energy_bins[0]) or (energy > self.enAbs_energy_bins[-1]):
 			raise ValueError("Photon energy is out of range")
-		return np.interp(energy, self.enAbs_energy_bins, self.mass_enAbs_coff)
+		return np.power(10.0, np.interp(np.log10(energy), np.log10(self.enAbs_energy_bins), np.log10(self.mass_enAbs_coff)))
 
 	def getBuildupFactor(self, energy, mfp, type="GP"):
 		if type == "GP":
 			# find the bounding array indices
 			if (energy < self.gp_energy_bins[0]) or (energy > self.gp_energy_bins[-1]):
 				raise ValueError("Photon energy is out of range")
-			b = np.interp(energy, self.gp_energy_bins, self.gp_b)
-			c = np.interp(energy, self.gp_energy_bins, self.gp_c)
-			a = np.interp(energy, self.gp_energy_bins, self.gp_a)
-			X = np.interp(energy, self.gp_energy_bins, self.gp_X)
-			d = np.interp(energy, self.gp_energy_bins, self.gp_d)
+			# b = np.interp(energy, self.gp_energy_bins, self.gp_b)
+			# c = np.interp(energy, self.gp_energy_bins, self.gp_c)
+			# a = np.interp(energy, self.gp_energy_bins, self.gp_a)
+			# X = np.interp(energy, self.gp_energy_bins, self.gp_X)
+			# d = np.interp(energy, self.gp_energy_bins, self.gp_d)
+
+			b = self.bi(energy)
+			c = self.ci(energy)
+			a = self.ai(energy)
+			X = self.Xi(energy)
+			d = self.di(energy)
+
 			return self.GP(a,b,c,d,X,mfp)
 		else:
 			raise ValueError("Only GP Buildup Factors are currently supported")

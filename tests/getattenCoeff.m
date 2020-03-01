@@ -19,7 +19,7 @@ coeffArray = [4.961E+00, 1.525E+00, 7.210E-01, 3.248E-01, 2.311E-01, ...
               3.072E-02, 2.745E-02, 2.516E-02, 2.220E-02, 2.040E-02, ...
               1.805E-02, 1.702E-02, 1.624E-02];
           
-xs = interp1(energyArray, coeffArray, energy)
+xs = power(10.0,interp1(log10(energyArray), log10(coeffArray), log10(energy)))
 distance = 10;
 mfp = distance*xs*density
 
