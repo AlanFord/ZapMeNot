@@ -6,10 +6,14 @@ from ZapMeNot import material
 class Shield:
 	'''Abtract class to model a shield.'''
 
-	def __init__(self, materialName="void"):
+	def __init__(self, materialName, density=None, **kwargs):
 		'''Initialize the Shield with a void material 
 		and photon list'''
 		self.material=material.Material(materialName)
+		if density != None:
+			self.material.setDensity(density)
+		super().__init__(**kwargs)
+		print("Initializing Shield")
 
 	@abc.abstractproperty
 	def getCrossingLength(self,vector):
@@ -34,7 +38,7 @@ class Shield:
 
 
 
-class XInfiniteSlab(Shield):
+class SemiInfiniteXSlab(Shield):
 	''' Infinite slab shield perpendicular to the X axis'''
 
 	def __init__(self, materialName, xStart, xEnd):

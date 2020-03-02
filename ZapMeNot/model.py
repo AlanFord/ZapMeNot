@@ -63,4 +63,4 @@ class Model:
 		exposureTotal = 0
 		for photon in fluxByPhotonEnergy:
 			exposureTotal += photon[3]
-		return exposureTotal
+		return exposureTotal*1000*3600 # convert from R/sec to mR/hr

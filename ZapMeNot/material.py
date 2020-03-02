@@ -6,7 +6,10 @@ import pkg_resources
 class Material:
 	library = None
 
-	def __init__(self,name="void"):
+	def __init__(self,name):
+		if name == None:
+			raise ValueError("Material type not specified")
+
 		#initialize the class library if it has not already been done
 		if Material.library is None:
 			path = 'materialLibrary.yml'
@@ -61,6 +64,8 @@ class Material:
 		return np.power(10.0, np.interp(np.log10(energy), np.log10(self.enAbs_energy_bins), np.log10(self.mass_enAbs_coff)))
 
 	def getBuildupFactor(self, energy, mfp, type="GP"):
+		if mfp == 0:
+			return 1
 		if type == "GP":
 			# find the bounding array indices
 			if (energy < self.gp_energy_bins[0]) or (energy > self.gp_energy_bins[-1]):
@@ -87,6 +92,7 @@ class Material:
 			return 1 + (b-1) * mfp
 		else:
 			return 1 + (b-1)*((K**mfp) - 1)/(K -1)
+
 	
 
 

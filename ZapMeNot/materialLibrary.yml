@@ -7,31 +7,6 @@
 # Nominal densities of materials were taken from Appendix C of "Radiation
 # Shielding", J. K. Shultis and R. E. Faw, American Nuclear Society, 2000.
 #
-void:
-  density: 0.0
-  density-units: g/cm3
-  energy-units: MeV
-  energy:
-    - 0.015
-    - 15.000
-  mass-atten-coff-units: cm2/g
-  mass-atten-coff:
-    - 0.0
-    - 0.0
-  # GP Coefficients b, c, a, X, d
-  gp-coeff:
-    -
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    -
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
 aluminum:
   density: 2.7
   density-units: g/cm3

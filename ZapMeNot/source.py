@@ -6,11 +6,13 @@ class Source(metaclass=abc.ABCMeta):
 	isotopes and can returna list of point source locations within the
 	body of the Source'''
 
-	def __init__(self):
+	def __init__(self, **kwargs):
 		'''Initialize the Source with empty strings for the isotope list 
 		and photon list'''
 		self.isotopeList=[]   # LIST of isotopes and activities (Bq)
 		self.uniquePhotons=[] # LIST of unique photons and activities (Bq)
+		super().__init__(**kwargs)
+		print("Initializing Source")
 
 	def addIsotopeCuries(self, newIsotope, curies):
 		"add an isotope and activity to the isotope list"
@@ -62,13 +64,17 @@ class Source(metaclass=abc.ABCMeta):
 
 class PointSource(Source, shield.Shield):
 	'''Modeling a point source of radiation.'''
-	def __init__(self,x=0,y=0,z=0):
+	def __init__(self,x=0,y=0,z=0, **kwargs):
 		'''Initialize with an x,y,z location in space'''
 		"Initialize"
 		self.x = x
 		self.y = y
 		self.z = z
-		super().__init__()
+		# let the point source have a dummy material of air at a zero density
+		kwargs['materialName'] = 'air'
+		kwargs['density'] = 0
+		super().__init__(**kwargs)
+		print("Initializing PointSource")
 
 	def getSourcePoints(self):
 		return[(self.x,self.y,self.z)]

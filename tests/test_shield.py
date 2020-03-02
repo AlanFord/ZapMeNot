@@ -4,7 +4,7 @@ from ZapMeNot import shield, ray, material
 class testXInfiniteSlab(unittest.TestCase):
 
 	def setUp(self):
-		self.myShield = shield.XInfiniteSlab("iron", 10, 20)
+		self.myShield = shield.SemiInfiniteXSlab("iron", 10, 20)
 		self.aRay = ray.Ray()
 		self.aRay.start = [0,0,0]
 		self.aRay.end = [30,30,30]
