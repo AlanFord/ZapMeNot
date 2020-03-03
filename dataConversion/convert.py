@@ -51,7 +51,9 @@ def convert():
 			data = stream.readline()
 			tokens = data.split()
 			if int(tokens[0]) <=3:
-				if float(tokens[2]) >= 20.0e-3: # limit photons to >= 20 keV
+				if float(tokens[2]) >15:  # flag photons > 15 MeV
+					raise ValueError("Photon energy above 15 MeV")
+				if float(tokens[2]) > 15.01e-3: # limit photons to > 15.01 keV
 					photonIntensities.append([float(tokens[2]),float(tokens[1])/100.])
 		# build the dictionary entry for the current isotope
 		currentIsotope.update({"half-life" : halflife})
