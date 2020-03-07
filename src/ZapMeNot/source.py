@@ -12,7 +12,6 @@ class Source(metaclass=abc.ABCMeta):
 		self.isotopeList=[]   # LIST of isotopes and activities (Bq)
 		self.uniquePhotons=[] # LIST of unique photons and activities (Bq)
 		super().__init__(**kwargs)
-		print("Initializing Source")
 
 	def addIsotopeCuries(self, newIsotope, curies):
 		"add an isotope and activity to the isotope list"
@@ -74,7 +73,6 @@ class PointSource(Source, shield.Shield):
 		kwargs['materialName'] = 'air'
 		kwargs['density'] = 0
 		super().__init__(**kwargs)
-		print("Initializing PointSource")
 
 	def getSourcePoints(self):
 		return[(self.x,self.y,self.z)]

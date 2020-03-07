@@ -5,9 +5,9 @@ class testXInfiniteSlab(unittest.TestCase):
 
 	def setUp(self):
 		self.myShield = shield.SemiInfiniteXSlab("iron", 10, 20)
-		self.aRay = ray.Ray()
-		self.aRay.start = [0,0,0]
-		self.aRay.end = [30,30,30]
+		start = [0,0,0]
+		end = [30,30,30]
+		self.aRay = ray.Ray(start, end)
 
 	# test getting a crossing length
 	def test_crossing_length(self):
@@ -21,12 +21,11 @@ class testXInfiniteSlab(unittest.TestCase):
 
 	# test getting a crossing mfp
 	def test_get_special_MFP(self):
-		self.aRay = ray.Ray()
-		self.aRay.start = [0,0,0]
-		self.aRay.end = [100,0,0]
+		start = [0,0,0]
+		end = [100,0,0]
+		self.aRay = ray.Ray(start, end)
 		mfp = self.myShield.getCrossingMFP(self.aRay, 1)
 		self.assertAlmostEqual(mfp,4.6905418)
 
 
-	# test line/plane collision
 

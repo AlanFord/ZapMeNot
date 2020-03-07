@@ -6,16 +6,16 @@ import numpy as np
 class testRay(unittest.TestCase):
 	# test length
 	def test_ray_length(self):
-		a = ray.Ray()
-		a.start = [1, 1, 1]
-		a.end = [2,2,2]
-		self.assertAlmostEqual(a.length(),math.sqrt(3.))
+		start = [1, 1, 1]
+		end = [2,2,2]
+		a = ray.Ray(start, end)
+		self.assertAlmostEqual(a.length,math.sqrt(3.))
 		
 	# test unit vector
 	def test_ray_unit_vector(self):
-		a = ray.Ray()
-		a.start = [1, 1, 1]
-		a.end = [2,2,2]
+		start = [1, 1, 1]
+		end = [2,2,2]
+		a = ray.Ray(start, end)
 		part = 1./math.sqrt(3.)
-		self.assertTrue((a.unitVector() == np.array([part,part,part])).all)
+		self.assertTrue((a.dir == np.array([part,part,part])).all)
 

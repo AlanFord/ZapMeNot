@@ -38,9 +38,7 @@ class Model:
 			# iterate through the source points
 			for nextPoint in sourcePoints:
 				# determine the vector from source to detector
-				vector = ray.Ray()
-				vector.start = nextPoint
-				vector.end = self.detector.location
+				vector = ray.Ray(nextPoint, self.detector.location)
 				# vector = (nextPoint, self.detector.location)
 				# iterate through the shield list
 				totalMFP = 0.0
@@ -49,7 +47,7 @@ class Model:
 					totalMFP += mfp
 				totalFluxReductionFactor = math.exp(-totalMFP)
 				buildupFactor = self.buildupFactorMaterial.getBuildupFactor(photonEnergy, totalMFP)
-				uncollidedPointFlux = photonYield * totalFluxReductionFactor * (1/(4*math.pi*vector.length()**2))
+				uncollidedPointFlux = photonYield * totalFluxReductionFactor * (1/(4*math.pi*vector.length**2))
 				totalPointFlux = uncollidedPointFlux*buildupFactor
 				uncollidedFlux += uncollidedPointFlux
 				totalFlux += totalPointFlux
