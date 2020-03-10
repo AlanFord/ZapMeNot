@@ -1,5 +1,6 @@
 from ZapMeNot import shield, isotope
 import abc
+import numpy as np
 
 class Source(metaclass=abc.ABCMeta):
 	'''Abtract class to model a radiation source.  Maintains a list of
@@ -11,6 +12,7 @@ class Source(metaclass=abc.ABCMeta):
 		and photon list'''
 		self.isotopeList=[]   # LIST of isotopes and activities (Bq)
 		self.uniquePhotons=[] # LIST of unique photons and activities (Bq)
+		self.pointsPerDimension=[10,10,10]
 		super().__init__(**kwargs)
 
 	def addIsotopeCuries(self, newIsotope, curies):
@@ -51,8 +53,9 @@ class Source(metaclass=abc.ABCMeta):
 			else :
 				photonDict[photon[0]] = photon[1]
 		photonList = []
+		scalingFactor = np.prod(self.pointsPerDimension)
 		for key,value in photonDict.items():
-			photonList.append((key,value))
+			photonList.append((key,value/scalingFactor))
 		return sorted(photonList)
 
 	@abc.abstractproperty
@@ -73,6 +76,7 @@ class PointSource(Source, shield.Shield):
 		kwargs['materialName'] = 'air'
 		kwargs['density'] = 0
 		super().__init__(**kwargs)
+		self.pointsPerDimension=[1,1,1]
 
 	def getSourcePoints(self):
 		return[(self.x,self.y,self.z)]
@@ -84,3 +88,44 @@ class PointSource(Source, shield.Shield):
 	def getCrossingMFP(self,vector, photonEnergy):
 		'''returns the crossing mfp'''
 		return 0
+
+
+# -----------------------------------------------------------
+
+class BoxSource(Source, shield.Box):
+	'''Axis-Aligned rectangular box source'''
+	# initialize with boxCenter, boxDimensions, material(optional), density(optional)
+
+	def __init__(self,**kwargs):
+		'''Initialize with an x,y,z location in space'''
+		# let the point source have a dummy material of air at a zero density
+		kwargs['materialName'] = 'air'
+		kwargs['density'] = 0
+		super().__init__(**kwargs)
+
+	def getSourcePoints(self):
+		sourcePoints = []
+		meshWidth = self.boxDimensions/self.pointsPerDimension
+		startPoint = self.boxCenter-self.boxDimensions+(meshWidth/2)
+		for i in range(self.pointsPerDimension[0]):
+			x = startPoint[0]+meshWidth[0]*i
+			for j in range(self.pointsPerDimension[1]):
+				y = startPoint[1]+meshWidth[1]*j
+				for k in range(self.pointsPerDimension[2]):
+					z = startPoint[2]+meshWidth[2]*k
+					sourcePoints.append([x,y,z])
+		return sourcePoints
+
+
+
+
+
+
+
+
+
+
+
+
+
+

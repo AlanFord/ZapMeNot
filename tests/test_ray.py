@@ -1,21 +1,26 @@
-import unittest
 import math
 from ZapMeNot import ray
 import numpy as np
+import pytest
 
-class testRay(unittest.TestCase):
-	# test length
-	def test_ray_length(self):
-		start = [1, 1, 1]
-		end = [2,2,2]
-		a = ray.Ray(start, end)
-		self.assertAlmostEqual(a.length,math.sqrt(3.))
-		
-	# test unit vector
-	def test_ray_unit_vector(self):
-		start = [1, 1, 1]
-		end = [2,2,2]
-		a = ray.Ray(start, end)
-		part = 1./math.sqrt(3.)
-		self.assertTrue((a.dir == np.array([part,part,part])).all)
+def test_ray_length():
+	start = [1, 1, 1]
+	end = [2,2,2]
+	a = ray.Ray(start, end)
+	assert (a.origin == np.array(start)).all
+	assert a.length == pytest.approx(math.sqrt(3.))
+	
+def test_ray_unit_vector():
+	start = [1, 1, 1]
+	end = [2,2,2]
+	a = ray.Ray(start, end)
+	part = 1./math.sqrt(3.)
+	# the following creates a vector of numerical tests and then checks to ensure
+	# they all came back true
+	assert (a.dir == np.array([part,part,part])).all
+	assert (a.invdir == np.array([1/part, 1/part, 1/part])).all
+	assert (a.sign == np.array([False, False, False])).all
+
+
+
 

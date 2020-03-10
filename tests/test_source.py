@@ -1,6 +1,7 @@
 from ZapMeNot import source
 import numpy as np
 
+
 class TestPointSource():
 
 	def test_addIsotopeCuries(self):
@@ -31,23 +32,23 @@ class TestPointSource():
 		self.mySource.addIsotopeBq('Br-80m',1E6)
 		self.mySource.addPhoton(0.9876,3.14E2)
 		a = self.mySource.getPhotonSourceList()
-		# assert a == [(1.29364, 115204088000.0), \
-		# 	(1.677, 60413599.99999999), (0.037052, 390000.0), \
-		# 	(0.0489, 3200.0), (0.9876, 314.0)]
 		np.testing.assert_allclose(a, \
 			[(0.037052, 390000), \
 			 (0.0489, 3200), \
 			 (0.9876, 314), \
 			 (1.29364, 115204088000.0), \
 			 (1.677, 60413600)])
-			# [(1.29364, 115204088000.0), \
-			#  (1.677, 60413600), \
-			#  (0.037052, 390000), \
-			#  (0.0489, 3200), \
-			#  (0.9876, 314)])
-
 
 	def test_getSourcePoints(self):
 		self.mySource = source.PointSource(1,2,3)
 		np.testing.assert_allclose(self.mySource.getSourcePoints(), \
 			[(1,2,3)])
+
+
+class TestBoxSource():
+
+	def test_getSourcePoints(self):
+		self.mySource = source.PointSource(1,2,3)
+		np.testing.assert_allclose(self.mySource.getSourcePoints(), \
+			[(1,2,3)])
+
