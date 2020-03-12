@@ -100,13 +100,46 @@ class BoxSource(Source, shield.Box):
 		'''Initialize with an x,y,z location in space'''
 		# let the point source have a dummy material of air at a zero density
 		kwargs['materialName'] = 'air'
-		kwargs['density'] = 0
+		# kwargs['density'] = 0
 		super().__init__(**kwargs)
 
 	def getSourcePoints(self):
 		sourcePoints = []
 		meshWidth = self.boxDimensions/self.pointsPerDimension
-		startPoint = self.boxCenter-self.boxDimensions+(meshWidth/2)
+		print(meshWidth)
+		startPoint = self.boxCenter-(self.boxDimensions)/2+(meshWidth/2)
+		for i in range(self.pointsPerDimension[0]):
+			x = startPoint[0]+meshWidth[0]*i
+			for j in range(self.pointsPerDimension[1]):
+				y = startPoint[1]+meshWidth[1]*j
+				for k in range(self.pointsPerDimension[2]):
+					z = startPoint[2]+meshWidth[2]*k
+					sourcePoints.append([x,y,z])
+		return sourcePoints
+
+# -----------------------------------------------------------
+
+class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
+	'''Axis-Aligned rectangular box source'''
+	# initialize with boxCenter, boxDimensions, material(optional), density(optional)
+
+	def __init__(self,**kwargs):
+		'''Initialize with an x,y,z location in space'''
+		# let the point source have a dummy material of air at a zero density
+		kwargs['materialName'] = 'air'
+		# kwargs['density'] = 0
+		super().__init__(**kwargs)
+
+	def getSourcePoints(self):
+		# calculate the area of each equal area annular region
+		totalArea = pi()*self.radius**2
+		annularArea = totalArea/self.pointsPerDimension[0]
+
+		
+		sourcePoints = []
+		meshWidth = self.boxDimensions/self.pointsPerDimension
+		print(meshWidth)
+		startPoint = self.boxCenter-(self.boxDimensions)/2+(meshWidth/2)
 		for i in range(self.pointsPerDimension[0]):
 			x = startPoint[0]+meshWidth[0]*i
 			for j in range(self.pointsPerDimension[1]):

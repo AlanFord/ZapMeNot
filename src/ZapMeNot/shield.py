@@ -1,6 +1,7 @@
 import numpy as np
 import abc
 from ZapMeNot import material
+import math
 # import material
 
 class Shield:
@@ -67,7 +68,7 @@ class SemiInfiniteXSlab(Shield):
 
 class Box(Shield):
 	'''Axis-Aligned rectangular box'''
-	def __init__(self, materialName, boxCenter, boxDimensions):
+	def __init__(self, materialName='', boxCenter=[0,0,0], boxDimensions=[0,0,0]):
 		'''Initialize material composition and location of the slab shield'''
 		super().__init__(materialName)
 		self.boxCenter = np.array(boxCenter)
@@ -101,7 +102,7 @@ class Box(Shield):
 			if len(crossings) != 2:
 				raise ValueError("Shield doesn't have 2 crossings")
 		# let numpy do the heavy lifting
-		return np.linalg.norm(crossings[1]-crossings[2])
+		return np.linalg.norm(crossings[0]-crossings[1])
 
 	def contains(self,point):
 		x = point[0]
@@ -155,4 +156,91 @@ class Box(Shield):
 
 		return results
 
+class YAlignedCylinder(Shield):
+	'''Y Axis-Aligned cylinder of finite length'''
+	def __init__(self, materialName='', cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
+		'''Initialize material composition and location of the slab shield'''
+		super().__init__(materialName)
+		self.center = np.array(cylinderCenter)
+		self.length = cylinderLength
+		self.radius = cylinderRadius
+		self.origin = self.center - [0, self.length/2, 0]
+		self.dir = np.array([0,1,0])
+		self.end = self.origin+self.dir*self.length
+
+	def getCrossingMFP(self,vector, photonEnergy):
+		'''returns the crossing mfp'''
+		distance = self.getCrossingLength(vector)
+		return self.material.getMfp(photonEnergy, distance)
+
+	def getCrossingLength(self,ray):
+		'''returns a  crossing length'''
+		rayPoint = ray.origin
+		rayUnitVector = ray.dir
+		planeNormal = np.array([1,0,0])
+		# get a list of crossing points
+		crossings = self.intersectCappedCylinder(ray)
+		# two crossings indicates a full-shield crossing
+		# one crossing indicates that either (common) the source is
+		#    in the shield or (uncommon) the dose point is in the
+		#    shield
+		# zero crossings can indicate that either both source and
+		#    dose points are in the shield or that the shield is
+		#    missed entirely
+		if len(crossings) != 2:
+			if contains(ray.origin):
+				crossings.insert(0,ray.origin)
+			if len(crossings) != 2:
+				if contains(np.array(ray.end)):
+					crossings.append(np.array(ray.end))
+			if len(crossings) != 2:
+				raise ValueError("Shield doesn't have 2 crossings")
+		# let numpy do the heavy lifting
+		return np.linalg.norm(crossings[0]-crossings[1])
+
+	def contains(self,point):
+		if point[0]**2 + point[2]**2 >= self.radius**2:
+			# point is outside an infinite length cylinder
+			return False
+		if (point[1] <= self.origin[1]) or (point[1] >= self.end[1]):
+			# point is outside a finite length cylinder
+			return False
+		return True
+
+
+	def intersectCappedCylinder(self, ray):
+		# based on https://mrl.nyu.edu/~dzorin/rend05/lecture2.pdf
+		# and
+		# https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection
+		results = []
+		# test for 
+		deltap = ray.origin - self.origin
+		part1 = ray.dir -(np.dot(ray.dir, self.dir)*self.dir)
+		part2 = deltap - (np.dot(deltap, self.dir)*self.dir)
+		a = np.dot(part1, part1)
+		b = 2*np.dot(part1, part2)
+		c = np.dot(part2, part2) - self.radius**2
+		zoro = b**2 - 4*a*c
+		if (zoro > 0):
+			# roots are real, thee are two intersections on an "infinite" cylinder
+			meo = math.sqrt(zoro)
+			t1 = (-b + meo)/(2*a)
+			t2 = (-b - meo)/(2*a)
+			# check to see if the intersections occur in the finite length of the cylinder
+			for t in [t1,t2]:
+				intersection = ray.origin + ray.dir*t
+				loc = np.dot(intersection-self.origin, self.dir)
+				if loc >=0 and loc < self.length:
+					results.append(intersection)
+		# check to see if there are intersections on the caps
+		denom = np.dot(self.dir,ray.dir)
+		if (denom > 1e-6):
+			for testPoint in [self.origin, self.end]:
+				t = np.dot(testPoint-ray.origin, self.dir)
+				if t>= 0:
+					strike = ray.origin + ray.dir*t
+					v = strike - testPoint
+					if np.dot(v,v) <= self.radius**2:
+						results.append(strike)
+		return results
 

@@ -27,5 +27,20 @@ class testXInfiniteSlab(unittest.TestCase):
 		mfp = self.myShield.getCrossingMFP(self.aRay, 1)
 		self.assertAlmostEqual(mfp,4.6905418)
 
+class TestYAlignedCylinder(unittest.TestCase):
+
+	def setUp(self):
+		self.myShield = shield.YAlignedCylinder(materialName="iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
+		start = [-10,20,0]
+		end = [30,20,0]
+		self.aRay = ray.Ray(start, end)
+
+	def test_crossing_length(self):
+		length = self.myShield.getCrossingLength(self.aRay)
+		self.assertAlmostEqual(length,20)
+
+
+
+
 
 

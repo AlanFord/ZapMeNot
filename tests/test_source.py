@@ -48,7 +48,28 @@ class TestPointSource():
 class TestBoxSource():
 
 	def test_getSourcePoints(self):
-		self.mySource = source.PointSource(1,2,3)
-		np.testing.assert_allclose(self.mySource.getSourcePoints(), \
-			[(1,2,3)])
+		mySource = source.BoxSource(boxCenter=[4,5,6],boxDimensions=[10,10,10],materialName='iron')
+		mySource.pointsPerDimension= [1,1,1]
+		np.testing.assert_allclose(mySource.getSourcePoints(), \
+			[(4,5,6)])
+		mySource.pointsPerDimension= [2,2,2]
+		np.testing.assert_allclose(mySource.getSourcePoints(), \
+			[[4-2.5,5-2.5,6-2.5], \
+			 [4-2.5,5-2.5,6+2.5], \
+			 [4-2.5,5+2.5,6-2.5], \
+			 [4-2.5,5+2.5,6+2.5], \
+			 [4+2.5,5-2.5,6-2.5], \
+			 [4+2.5,5-2.5,6+2.5], \
+			 [4+2.5,5+2.5,6-2.5], \
+			 [4+2.5,5+2.5,6+2.5]])
+		mySource.addIsotopeCuries('Ar-41',3.14)
+		mySource.addIsotopeBq('Br-80m',1E6)
+		mySource.addPhoton(0.9876,3.14E2)
+		a = mySource.getPhotonSourceList()
+		np.testing.assert_allclose(a, \
+			[(0.037052, 390000/8), \
+			 (0.0489, 3200/8), \
+			 (0.9876, 314/8), \
+			 (1.29364, 115204088000.0/8), \
+			 (1.677, 60413600/8)])
 
