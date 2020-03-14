@@ -66,6 +66,36 @@ class SemiInfiniteXSlab(Shield):
 		distance = self.getCrossingLength(vector)
 		return self.material.getMfp(photonEnergy, distance)
 
+class Sphere(Shield):
+	def __init__(self, materialName='', sphereCenter=[0,0,0], sphereRadius=1):
+		'''Initialize material composition and location of the slab shield'''
+		super().__init__(materialName)
+		self.center = np.array(sphereCenter)
+		self.radius = np.array(sphereRadius)
+
+	def getCrossingMFP(self,vector, photonEnergy):
+		'''returns the crossing mfp'''
+		distance = self.getCrossingLength(vector)
+		return self.material.getMfp(photonEnergy, distance)
+
+	def getCrossingLength(self,ray):
+		L = self.origin - ray.origin
+		tca = np.dot(L, ray.dir)
+		if tca < 0:
+			return 0
+		dSquared = np.dot(L,L)-tca**2
+		if dSquared<0 or dSquared>self.radius**2:
+			return 0
+		thc = np.sqrt(self.radius**2 - dSquared)
+		return thc*2
+
+	def contains(self,point):
+		vector = point - self.center
+		if np.cross(vector,vector) > self.radius**2:
+			return False
+		return True
+
+
 class Box(Shield):
 	'''Axis-Aligned rectangular box'''
 	def __init__(self, materialName='', boxCenter=[0,0,0], boxDimensions=[0,0,0]):
@@ -156,17 +186,16 @@ class Box(Shield):
 
 		return results
 
-class YAlignedCylinder(Shield):
-	'''Y Axis-Aligned cylinder of finite length'''
-	def __init__(self, materialName='', cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
-		'''Initialize material composition and location of the slab shield'''
+class CappedCylinder(Shield):
+	'''General Cylinder'''
+	def __init__(self, materialName='', cylinderStart=[0,0,0], cylinderEnd=[0,0,0], cylinderRadius=1):
+		'''Initialize material composition and location of the shield'''
 		super().__init__(materialName)
-		self.center = np.array(cylinderCenter)
-		self.length = cylinderLength
 		self.radius = cylinderRadius
-		self.origin = self.center - [0, self.length/2, 0]
-		self.dir = np.array([0,1,0])
-		self.end = self.origin+self.dir*self.length
+		self.origin = np.array(cylinderStart)
+		self.end = np.array(cylinderEnd)
+		self.length = np.linalg.norm(self.end - self.origin)
+		self.dir = (self.end - self.origin)/self.length
 
 	def getCrossingMFP(self,vector, photonEnergy):
 		'''returns the crossing mfp'''
@@ -175,11 +204,8 @@ class YAlignedCylinder(Shield):
 
 	def getCrossingLength(self,ray):
 		'''returns a  crossing length'''
-		rayPoint = ray.origin
-		rayUnitVector = ray.dir
-		planeNormal = np.array([1,0,0])
 		# get a list of crossing points
-		crossings = self.intersectCappedCylinder(ray)
+		crossings = self.intersect(ray)
 		# two crossings indicates a full-shield crossing
 		# one crossing indicates that either (common) the source is
 		#    in the shield or (uncommon) the dose point is in the
@@ -199,16 +225,17 @@ class YAlignedCylinder(Shield):
 		return np.linalg.norm(crossings[0]-crossings[1])
 
 	def contains(self,point):
-		if point[0]**2 + point[2]**2 >= self.radius**2:
-			# point is outside an infinite length cylinder
+		# determine scalar projection of point on cylinder centerline
+		rando = np.dot(point-self.origin, self.dir)
+		if rando < 0 or rando > self.length:
 			return False
-		if (point[1] <= self.origin[1]) or (point[1] >= self.end[1]):
-			# point is outside a finite length cylinder
+		# check the radial distance from cylinder centerline
+		parto = (self.origin+self.dir*rando) - point
+		if np.dot(parto,parto) > self.radius**2:
 			return False
 		return True
 
-
-	def intersectCappedCylinder(self, ray):
+	def intersect(self, ray):
 		# based on https://mrl.nyu.edu/~dzorin/rend05/lecture2.pdf
 		# and
 		# https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection
@@ -243,4 +270,32 @@ class YAlignedCylinder(Shield):
 					if np.dot(v,v) <= self.radius**2:
 						results.append(strike)
 		return results
+
+class YAlignedCylinder(CappedCylinder):
+	'''Y Axis-Aligned cylinder of finite length'''
+	def __init__(self, materialName='', cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
+		'''Initialize material composition and location of the shield'''
+		cylinderStart = [cylinderCenter[0],cylinderCenter[1]-cylinderLength/2,cylinderCenter[2]]
+		cylinderEnd   = [cylinderCenter[0],cylinderCenter[1]+cylinderLength/2,cylinderCenter[2]]
+		super().__init__(materialName,cylinderStart=cylinderStart,cylinderEnd=cylinderEnd,cylinderRadius=cylinderRadius)
+
+class XAlignedCylinder(CappedCylinder):
+	'''Y Axis-Aligned cylinder of finite length'''
+	def __init__(self, materialName='', cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
+		'''Initialize material composition and location of the shield'''
+		cylinderStart = [cylinderCenter[0]-cylinderLength/2,cylinderCenter[1],cylinderCenter[2]]
+		cylinderEnd   = [cylinderCenter[0]+cylinderLength/2,cylinderCenter[1],cylinderCenter[2]]
+		super().__init__(materialName,cylinderStart=cylinderStart,cylinderEnd=cylinderEnd,cylinderRadius=cylinderRadius)
+
+class ZAlignedCylinder(CappedCylinder):
+	'''Y Axis-Aligned cylinder of finite length'''
+	def __init__(self, materialName='', cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
+		'''Initialize material composition and location of the shield'''
+		cylinderStart = [cylinderCenter[0],cylinderCenter[1],cylinderCenter[2]-cylinderLength/2]
+		cylinderEnd   = [cylinderCenter[0],cylinderCenter[1],cylinderCenter[2]+cylinderLength/2]
+		super().__init__(materialName,cylinderStart=cylinderStart,cylinderEnd=cylinderEnd,cylinderRadius=cylinderRadius)
+
+
+
+
 
