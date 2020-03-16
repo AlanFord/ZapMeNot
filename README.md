@@ -26,13 +26,6 @@ exposure = sample_sink.calculateExposure()
 
 ### Testing
 
-A command like the following will run a specific test from the parent directory:
-
-```
-pytest tests/test_source.py
-```
-
-
 To run all of the unit tests
 
 ```
