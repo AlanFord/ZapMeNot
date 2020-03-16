@@ -1,5 +1,6 @@
 from ZapMeNot import material
 import pytest
+import math
 
 # test response to a bad material name
 def test_a_bad_material_name():
@@ -19,25 +20,38 @@ def test_getMfp():
 	assert b == pytest.approx(9.282790078911769e-04)
 
 # test retrieval of a mass attenuation coefficient
-# WARNING: result is based on preliminary test dataset!
 # comparison value calculated in Matlab
 def test_getMassAttenCoff():
 	a = material.Material("air")
+	# test energy out of range
+	with pytest.raises(ValueError):
+		b = a.getMassAttenCoff(300)
+	with pytest.raises(ValueError):
+		b = a.getMassAttenCoff(0.001)
+	# test for a valid return value
 	b = a.getMassAttenCoff(0.66)
 	assert b == pytest.approx(0.077035602314621)
 
-# test response to a bad material name
+# test response to a request for non-GP buildup factors
 def test_a_bad_buildupFactorType():
 	a = material.Material("air")
-	#cassertRaises(ValueError, a.getBuildupFactor, 0.66, 10, "Taylor")
 	with pytest.raises(ValueError):
 		b = a.getBuildupFactor(0.66, 10, "Taylor")
 
 # test calculation of a buildup factor
 def test_getBuildupFactor():
 	a = material.Material("air")
+	b = a.getBuildupFactor(0.66, 0, "GP")
+	assert b == 1
 	b = a.getBuildupFactor(0.66, 10, "GP")
 	assert b == pytest.approx(43.23778738585646)
+
+# test GP function with K ==1
+# def test_GP_function():
+# 	mfp = 15
+# 	X = mfp/(math.pi/4+2)
+# 	assert material.Material.GP(1, 2, 0, 1, X, mfp) == 1
+
 
 
 

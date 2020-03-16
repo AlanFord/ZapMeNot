@@ -82,11 +82,11 @@ class Material:
 			X = self.Xi(energy)
 			d = self.di(energy)
 
-			return self.GP(a,b,c,d,X,mfp)
+			return Material.GP(a,b,c,d,X,mfp)
 		else:
 			raise ValueError("Only GP Buildup Factors are currently supported")
 
-	def GP(self, a, b, c, d, X, mfp):
+	def GP(a, b, c, d, X, mfp):
 		K = (c * (mfp**a)) + (d * (np.tanh(mfp/X -2) - np.tanh(-2))) / (1 - np.tanh(-2))
 		if K == 1:
 			return 1 + (b-1) * mfp
