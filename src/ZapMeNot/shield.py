@@ -7,7 +7,7 @@ import math
 class Shield:
 	'''Abtract class to model a shield.'''
 
-	def __init__(self, materialName, density=None, **kwargs):
+	def __init__(self, materialName=None, density=None, **kwargs):
 		'''Initialize the Shield with a void material 
 		and photon list'''
 		self.material=material.Material(materialName)
@@ -41,9 +41,9 @@ class Shield:
 class SemiInfiniteXSlab(Shield):
 	''' Infinite slab shield perpendicular to the X axis'''
 
-	def __init__(self, materialName, xStart, xEnd):
+	def __init__(self, materialName=None, density=None, xStart=0, xEnd=0):
 		'''Initialize material composition and location of the slab shield'''
-		super().__init__(materialName)
+		super().__init__(materialName=materialName, density=density)
 		self.xStart = xStart
 		self.xEnd = xEnd
 
@@ -67,9 +67,9 @@ class SemiInfiniteXSlab(Shield):
 		return self.material.getMfp(photonEnergy, distance)
 
 class Sphere(Shield):
-	def __init__(self, materialName='', sphereCenter=[0,0,0], sphereRadius=1):
+	def __init__(self, materialName=None, density=None, sphereCenter=[0,0,0], sphereRadius=1):
 		'''Initialize material composition and location of the slab shield'''
-		super().__init__(materialName)
+		super().__init__(materialName=materialName, density=density)
 		self.center = np.array(sphereCenter)
 		self.radius = np.array(sphereRadius)
 
@@ -98,9 +98,9 @@ class Sphere(Shield):
 
 class Box(Shield):
 	'''Axis-Aligned rectangular box'''
-	def __init__(self, materialName='', boxCenter=[0,0,0], boxDimensions=[0,0,0]):
+	def __init__(self, materialName=None, density=None, boxCenter=[0,0,0], boxDimensions=[0,0,0]):
 		'''Initialize material composition and location of the slab shield'''
-		super().__init__(materialName)
+		super().__init__(materialName=materialName, density=density)
 		self.boxCenter = np.array(boxCenter)
 		self.boxDimensions = np.array(boxDimensions)
 
@@ -188,9 +188,9 @@ class Box(Shield):
 
 class CappedCylinder(Shield):
 	'''General Cylinder'''
-	def __init__(self, materialName='', cylinderStart=[0,0,0], cylinderEnd=[0,0,0], cylinderRadius=1):
+	def __init__(self, materialName=None, density=None, cylinderStart=[0,0,0], cylinderEnd=[0,0,0], cylinderRadius=1):
 		'''Initialize material composition and location of the shield'''
-		super().__init__(materialName)
+		super().__init__(materialName=materialName, density=density)
 		self.radius = cylinderRadius
 		self.origin = np.array(cylinderStart)
 		self.end = np.array(cylinderEnd)
@@ -273,27 +273,27 @@ class CappedCylinder(Shield):
 
 class YAlignedCylinder(CappedCylinder):
 	'''Y Axis-Aligned cylinder of finite length'''
-	def __init__(self, materialName='', cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
+	def __init__(self, materialName=None, density=None, cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
 		'''Initialize material composition and location of the shield'''
 		cylinderStart = [cylinderCenter[0],cylinderCenter[1]-cylinderLength/2,cylinderCenter[2]]
 		cylinderEnd   = [cylinderCenter[0],cylinderCenter[1]+cylinderLength/2,cylinderCenter[2]]
-		super().__init__(materialName,cylinderStart=cylinderStart,cylinderEnd=cylinderEnd,cylinderRadius=cylinderRadius)
+		super().__init__(materialName=materialName, density=density,cylinderStart=cylinderStart,cylinderEnd=cylinderEnd,cylinderRadius=cylinderRadius)
 
 class XAlignedCylinder(CappedCylinder):
 	'''Y Axis-Aligned cylinder of finite length'''
-	def __init__(self, materialName='', cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
+	def __init__(self, materialName=None, density=None, cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
 		'''Initialize material composition and location of the shield'''
 		cylinderStart = [cylinderCenter[0]-cylinderLength/2,cylinderCenter[1],cylinderCenter[2]]
 		cylinderEnd   = [cylinderCenter[0]+cylinderLength/2,cylinderCenter[1],cylinderCenter[2]]
-		super().__init__(materialName,cylinderStart=cylinderStart,cylinderEnd=cylinderEnd,cylinderRadius=cylinderRadius)
+		super().__init__(materialName=materialName, density=density,cylinderStart=cylinderStart,cylinderEnd=cylinderEnd,cylinderRadius=cylinderRadius)
 
 class ZAlignedCylinder(CappedCylinder):
 	'''Y Axis-Aligned cylinder of finite length'''
-	def __init__(self, materialName='', cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
+	def __init__(self, materialName=None, density=None, cylinderCenter=[0,0,0], cylinderLength=10, cylinderRadius=1):
 		'''Initialize material composition and location of the shield'''
 		cylinderStart = [cylinderCenter[0],cylinderCenter[1],cylinderCenter[2]-cylinderLength/2]
 		cylinderEnd   = [cylinderCenter[0],cylinderCenter[1],cylinderCenter[2]+cylinderLength/2]
-		super().__init__(materialName,cylinderStart=cylinderStart,cylinderEnd=cylinderEnd,cylinderRadius=cylinderRadius)
+		super().__init__(materialName=materialName, density=density,cylinderStart=cylinderStart,cylinderEnd=cylinderEnd,cylinderRadius=cylinderRadius)
 
 
 
