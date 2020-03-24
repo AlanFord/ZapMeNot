@@ -213,11 +213,13 @@ class CappedCylinder(Shield):
 		# zero crossings can indicate that either both source and
 		#    dose points are in the shield or that the shield is
 		#    missed entirely
+		if len(crossings) == 0:
+			return 0
 		if len(crossings) != 2:
-			if contains(ray.origin):
+			if self.contains(ray.origin):
 				crossings.insert(0,ray.origin)
 			if len(crossings) != 2:
-				if contains(np.array(ray.end)):
+				if self.contains(np.array(ray.end)):
 					crossings.append(np.array(ray.end))
 			if len(crossings) != 2:
 				raise ValueError("Shield doesn't have 2 crossings")
@@ -255,10 +257,11 @@ class CappedCylinder(Shield):
 			t2 = (-b - meo)/(2*a)
 			# check to see if the intersections occur in the finite length of the cylinder
 			for t in [t1,t2]:
-				intersection = ray.origin + ray.dir*t
-				loc = np.dot(intersection-self.origin, self.dir)
-				if loc >=0 and loc < self.length:
-					results.append(intersection)
+				if t >=0:
+					intersection = ray.origin + ray.dir*t
+					loc = np.dot(intersection-self.origin, self.dir)
+					if loc >=0 and loc < self.length:
+						results.append(intersection)
 		# check to see if there are intersections on the caps
 		denom = np.dot(self.dir,ray.dir)
 		if (denom > 1e-6):
