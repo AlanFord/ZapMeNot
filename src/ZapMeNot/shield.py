@@ -79,15 +79,23 @@ class Sphere(Shield):
 		return self.material.getMfp(photonEnergy, distance)
 
 	def getCrossingLength(self,ray):
-		L = self.origin - ray.origin
-		tca = np.dot(L, ray.dir)
-		if tca < 0:
+		# based on 
+		# http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/		L = self.center - ray.origin
+		a = np.dot(ray.dir, ray.dir)
+		b = 2 * np.dot(ray.dir, ray.origin - self.center)
+		c = np.dot(ray.origin-self.center, ray.origin-self.center)- self.radius**2
+		discriminant = b**2 - 4*a*c
+		if discriminant <= 0:
+			# sphere is missed or tangent
 			return 0
-		dSquared = np.dot(L,L)-tca**2
-		if dSquared<0 or dSquared>self.radius**2:
-			return 0
-		thc = np.sqrt(self.radius**2 - dSquared)
-		return thc*2
+		root = np.sqrt(discriminant)
+		t0 = (-b -root)/(2*a)
+		t1 = (-b +root)/(2*a)
+		if (t0*t1)>0:
+			# two positive distances, a full crossing, return the difference
+			return abs(t1-t0)
+		# only one positive distance - ray origin is inside the sphere
+		return max(t0,t1)
 
 	def contains(self,point):
 		vector = point - self.center
@@ -115,7 +123,7 @@ class Box(Shield):
 		rayUnitVector = ray.dir
 		planeNormal = np.array([1,0,0])
 		# get a list of crossing points
-		crossings = intersectAABox(ray)
+		crossings = self.intersectAABox(ray)
 		# two crossings indicates a full-shield crossing
 		# one crossing indicates that either (common) the source is
 		#    in the shield or (uncommon) the dose point is in the
@@ -123,11 +131,13 @@ class Box(Shield):
 		# zero crossings can indicate that either both source and
 		#    dose points are in the shield or that the shield is
 		#    missed entirely
+		if len(crossings) == 0:
+			return 0
 		if len(crossings) != 2:
-			if contains(ray.origin):
+			if self.contains(ray.origin):
 				crossings.insert(0,ray.origin)
 			if len(crossings) != 2:
-				if contains(np.array(ray.end)):
+				if self.contains(np.array(ray.end)):
 					crossings.append(np.array(ray.end))
 			if len(crossings) != 2:
 				raise ValueError("Shield doesn't have 2 crossings")
@@ -145,8 +155,8 @@ class Box(Shield):
 		zmin = self.boxCenter[2]-self.boxDimensions[2]
 		zmax = self.boxCenter[2]+self.boxDimensions[2]
 		if (xmin<=x and x<=xmax and ymin<=y and y<=ymax and zmin<=z and z<=zmax):
-			return true
-		return false
+			return True
+		return False
 
 
 	def intersectAABox(self, ray):

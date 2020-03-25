@@ -46,24 +46,42 @@ class TestSemiInfiniteXSlab():
 		assert mfp == pytest.approx(4.6905418)
 
 # #=============================================================
-# class TestSphere():
+class TestSphere():
 
-# 	@pytest.fixture(scope="class")
-# 	def create_shield(self):
-# 		self.myShield = shield.Sphere(materialName="iron", sphereCenter=[0,0,0],sphereRadius=10)
-# 		start = [-10,20,0]
-# 		end = [30,20,0]
-# 		self.aRay = ray.Ray(start, end)
+	@pytest.fixture(scope="class")
+	def create_shield(self):
+		myShield = shield.Sphere(materialName="iron", sphereCenter=[0,0,0],sphereRadius=10)
+		return myShield
+
+	@pytest.fixture(scope="class")
+	def create_ray(self):
+		start = [-15,0,0]
+		end = [30,0,0]
+		aRay = ray.Ray(start, end)
+		return aRay
+
+	def test_crossing_length(self, create_shield, create_ray):
+		length = create_shield.getCrossingLength(create_ray)
+		assert length == pytest.approx(20)
 
 # #=============================================================
-# class TestBox():
+class TestBox():
 
-# 	@pytest.fixture(scope="class")
-# 	def create_shield(self):
-# 		self.myShield = shield.Box(materialName="iron", boxCenter=[0,0,0],boxDimensions=[13,14,15])
-# 		start = [-10,20,0]
-# 		end = [30,20,0]
-# 		self.aRay = ray.Ray(start, end)
+	@pytest.fixture(scope="class")
+	def create_shield(self):
+		myShield = shield.Box(materialName="iron", boxCenter=[0,0,0],boxDimensions=[13,14,15])
+		return myShield
+
+	@pytest.fixture(scope="class")
+	def create_ray(self):
+		start = [-10,0,0]
+		end = [30,0,0]
+		aRay = ray.Ray(start, end)
+		return aRay
+
+	def test_crossing_length(self, create_shield, create_ray):
+		length = create_shield.getCrossingLength(create_ray)
+		assert length == pytest.approx(13)
 
 #=============================================================
 class TestCappedCylinder():
