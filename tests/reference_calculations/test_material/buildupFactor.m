@@ -1,5 +1,9 @@
-% MATLAB script to generate a reference value used in the
-% test_getBuildupFactor python unit test
+% MATLAB script to generate reference values 
+% In test_material.py
+%   See test_getBuildupFactor()
+% Uses:
+%   akima.m
+%   alimaSlopes.m
 
 function buildupFactor()
     % calculate an air GP buildup factor
@@ -38,26 +42,29 @@ function buildupFactor()
      1.418, 0.891, 0.032, 12.06, -0.0167; ...
      1.358, 0.875, 0.037, 14.01, -0.0226; ...
      1.267, 0.844, 0.048, 14.55, -0.0344]    ; 
+  
+    % b = interp1(gpEnergy, gpCoeff(:,1), energy, 'makima')
+    % c = interp1(gpEnergy, gpCoeff(:,2), energy, 'makima')
+    % a = interp1(gpEnergy, gpCoeff(:,3), energy, 'makima')
+    % X = interp1(gpEnergy, gpCoeff(:,4), energy, 'makima')
+    % d = interp1(gpEnergy, gpCoeff(:,5), energy, 'makima')
  
-    b = interp1(gpEnergy, gpCoeff(:,1), energy, 'makima');
-    c = interp1(gpEnergy, gpCoeff(:,2), energy, 'makima');
-    a = interp1(gpEnergy, gpCoeff(:,3), energy, 'makima');
-    X = interp1(gpEnergy, gpCoeff(:,4), energy, 'makima');
-    d = interp1(gpEnergy, gpCoeff(:,5), energy, 'makima');
-
-%     fraction = (energy-lowEnergy)/(highEnergy-lowEnergy);
-%     coeffs = fraction*(highCoeffs-lowCoeffs) + lowCoeffs;
-%     b = coeffs(1);
-%     c = coeffs(2);
-%     a = coeffs(3);
-%     X = coeffs(4);
-%     d = coeffs(5);
+    b = akima(gpEnergy, gpCoeff(:,1), energy);
+    c = akima(gpEnergy, gpCoeff(:,2), energy);
+    a = akima(gpEnergy, gpCoeff(:,3), energy);
+    X = akima(gpEnergy, gpCoeff(:,4), energy);
+    d = akima(gpEnergy, gpCoeff(:,5), energy);
 
     K = (c * (mfp^a)) + (d * (tanh(mfp/X -2) - tanh(-2))) / (1 - tanh(-2));
 
     if K == 1
-        GP = 1 + (b-1)*mfp
+        GP = 1 + (b-1)*mfp;
     else
-        GP = 1 + (b-1)*((K^mfp) - 1)/(K -1)
+        GP = 1 + (b-1)*((K^mfp) - 1)/(K -1);
     end
+fprintf('=================================\n')
+fprintf('Matlab script buildupFactor.m\n')
+fprintf('Reference values for Air at %g MeV \n\n', energy)
+fprintf('test_getBuildupFactor() Function: \n')
+fprintf('Geometric progression buildup factor at %g mfp is %.8g \n\n', mfp, GP)
 end

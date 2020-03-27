@@ -14,13 +14,14 @@ def test_setDensity():
 	assert a.density == 3.14
 
 # test retrieval of the MFP
+# reference value taken from matlab script getattenCoeff.m
 def test_getMfp():
 	a = material.Material("air")
 	b = a.getMfp(0.66, 10)
-	assert b == pytest.approx(9.282790078911769e-04)
+	assert b == pytest.approx(0.00092827901)
 
 # test retrieval of a mass attenuation coefficient
-# comparison value calculated in Matlab
+# reference value taken from matlab script getattenCoeff.m
 def test_getMassAttenCoff():
 	a = material.Material("air")
 	# test energy out of range
@@ -30,7 +31,7 @@ def test_getMassAttenCoff():
 		b = a.getMassAttenCoff(0.001)
 	# test for a valid return value
 	b = a.getMassAttenCoff(0.66)
-	assert b == pytest.approx(0.077035602314621)
+	assert b == pytest.approx(0.077035602)
 
 # test response to a request for non-GP buildup factors
 def test_a_bad_buildupFactorType():
@@ -39,12 +40,13 @@ def test_a_bad_buildupFactorType():
 		b = a.getBuildupFactor(0.66, 10, "Taylor")
 
 # test calculation of a buildup factor
+# reference value taken from matlab script buildupFactor.m
 def test_getBuildupFactor():
 	a = material.Material("air")
 	b = a.getBuildupFactor(0.66, 0, "GP")
 	assert b == 1
 	b = a.getBuildupFactor(0.66, 10, "GP")
-	assert b == pytest.approx(43.23778738585646)
+	assert b == pytest.approx(43.237787)
 
 # test GP function with K ==1
 # def test_GP_function():

@@ -89,6 +89,57 @@ class PointSource(Source, shield.Shield):
 		'''returns the crossing mfp'''
 		return 0
 
+# -----------------------------------------------------------
+
+class SphereSource(Source, shield.Sphere):
+	'''Axis-Aligned rectangular box source'''
+	# initialize with boxCenter, boxDimensions, material(optional), density(optional)
+
+	def __init__(self,**kwargs):
+		'''Initialize with an x,y,z location in space'''
+		# let the point source have a dummy material of air at a zero density
+		kwargs['materialName'] = 'air'
+		# kwargs['density'] = 0
+		super().__init__(**kwargs)
+
+	def getSourcePoints(self):
+
+		# calculate the radius of each "equal area" annular region
+		totalVolume = 4/3*pi()*self.radius**3
+		annularVolume = totalVolume/self.pointsPerDimension[0]
+		oldRadius = 0
+		annularLocations = []
+		for i in range(self.pointsPerDimension[0]):
+			newRadius = math.sqrt((runningArea+annularArea)/math.pi)
+			annularLocations.append((newRadius+oldRadius)/2)
+			oldRadius = newRadius
+
+		angleIncrement = 2*math.py/self.pointsPerDimension[1]
+		startAngle = angleIncrement/2
+		angleLocations = []
+		for i in range(self.pointsPerDimension[1]):
+			angleLocations.append(startAngle+ (i*angleIncrement))
+
+		lengthIncrement = self.length/self.pointsPerDimension[2]
+		startLength = lengthIncrement/2
+		lengthLocations = []
+		for i in range(self.pointsPerDimension[2]):
+			lengthLocations.append(startLength+ (i*lengthIncrement))
+
+
+		# iterate through each dimension, building a list of source points
+		sourcePoints = []
+		for radialLocation in annularLocations:
+			r = radialLocation
+			for angleLocation in angleLocations:
+				theta = angleLocation
+				for lengthLocation in lengthLocations:
+					z = lengthLocation
+					# convert cylintrical to rectangular coordinates
+					x = r * math.cos(theta)
+					y = r * math.sin(theta)
+					sourcePoints.append([x,y,z])
+		return sourcePoints
 
 # -----------------------------------------------------------
 

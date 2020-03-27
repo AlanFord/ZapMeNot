@@ -25,16 +25,26 @@ class Shield:
 		'''returns the crossing mfp'''
 		pass
 
-	def LinePlaneCollision(self, planeNormal, planePoint, rayDirection, rayPoint, epsilon=1e-6):
+	# def LinePlaneCollision1(self, planeNormal, planePoint, rayDirection, rayPoint, epsilon=1e-6):
 	 
-		ndotu = planeNormal.dot(rayDirection)
+	# 	ndotu = planeNormal.dot(rayDirection)
+	# 	if abs(ndotu) < epsilon:
+	# 		raise RuntimeError("no intersection or line is within plane")
+	 
+	# 	w = rayPoint - planePoint
+	# 	si = -planeNormal.dot(w) / ndotu
+	# 	Psi = w + si * rayDirection + planePoint
+	# 	return Psi
+
+	def LinePlaneCollision(self, planeNormal, planePoint, rayOrigin, rayNormal, epsilon=1e-6):	 
+		# based on 
+		# https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection
+		ndotu = planeNormal.dot(rayNormal)
 		if abs(ndotu) < epsilon:
-			raise RuntimeError("no intersection or line is within plane")
-	 
-		w = rayPoint - planePoint
-		si = -planeNormal.dot(w) / ndotu
-		Psi = w + si * rayDirection + planePoint
-		return Psi
+			return None
+		w = planePoint - rayOrigin
+		t = w.dot(planeNormal)/ndotu
+		return t
 
 
 
@@ -49,17 +59,41 @@ class SemiInfiniteXSlab(Shield):
 
 	def getCrossingLength(self,ray):
 		'''returns a  crossing length'''
-		rayPoint = ray.origin
+		rayOrigin = ray.origin
 		rayUnitVector = ray.dir
 		planeNormal = np.array([1,0,0])
-		# get one crossing point
+		# get length to one crossing point
 		planePoint = np.array([self.xStart,0,0])
-		firstPoint = self.LinePlaneCollision(planeNormal, planePoint, rayUnitVector, rayPoint)
-		# get second crossing point
+		firstLength = self.LinePlaneCollision(planeNormal, planePoint, rayOrigin, rayUnitVector)
+		if firstLength == None:
+			# ray is parallel to plane
+			return 0
+		# get length to second crossing point
 		planePoint = np.array([self.xEnd,0,0])
-		secondPoint = self.LinePlaneCollision(planeNormal, planePoint, rayUnitVector, rayPoint)
-		# let numpy do the heavy lifting
-		return np.linalg.norm(secondPoint-firstPoint)
+		secondLength = self.LinePlaneCollision(planeNormal, planePoint, rayOrigin, rayUnitVector)
+		if secondLength == None:
+			# ray is parallel to plane
+			return 0
+		if (firstLength<0 and secondLength<0):
+			# ray starts and ends entirely on one side of the shield
+			return 0
+		if (firstLength>ray.length and secondLength>ray.length):
+			# ray starts and ends entirely on one side of the shield
+			return 0
+		# remainder of cases have some sort of partial or full crossing
+		t0 = min(firstLength, secondLength)
+		t1 = max(firstLength, secondLength)
+		if ((t0<0) and (t1>ray.length)):
+			# ray is intirely within the slab
+			return ray.length
+		if ((t0<0) and (t1<ray.length)):
+			# ray start in slab and crosses out
+			return t1
+		if ((t0>0) and (t1>ray.length)):
+			# ray starts outside slab and ends inside slab
+			return ray.length - t0
+		# we are left with a full crossing
+		return t1 - t0
 
 	def getCrossingMFP(self,vector, photonEnergy):
 		'''returns the crossing mfp'''

@@ -1,5 +1,6 @@
-% MATLAB script to generate a reference value used in the
-% test_getMfp and test_getMassAttenCoff python unit tests
+% MATLAB script to generate reference values 
+% In test_material.py
+%   See test_getMassAttenCoff() and test_getMfp()
 
 function getattenCoeff()
 % calculate an mass attenuation coefficient
@@ -19,9 +20,16 @@ coeffArray = [4.961E+00, 1.525E+00, 7.210E-01, 3.248E-01, 2.311E-01, ...
               3.072E-02, 2.745E-02, 2.516E-02, 2.220E-02, 2.040E-02, ...
               1.805E-02, 1.702E-02, 1.624E-02];
           
-xs = power(10.0,interp1(log10(energyArray), log10(coeffArray), log10(energy)))
+xs = power(10.0,interp1(log10(energyArray), log10(coeffArray), log10(energy)));
 distance = 10;
-mfp = distance*xs*density
+mfp = distance*xs*density;
+fprintf('=================================\n')
+fprintf('Matlab script getattenCoeff.m\n')
+fprintf('Reference values for Air at %g g/cc \n\n', density)
+fprintf('test_getMassAttenCoff() Function: \n')
+fprintf('Mass attenuation coefficient at %g MeV is %.8g cm2/g \n\n', energy, xs)
+fprintf('test_getMfp() Function: \n')
+fprintf('Mean Free Path is %.8g \n\n', mfp)
 
 end
 

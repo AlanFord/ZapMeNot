@@ -1,4 +1,5 @@
 import pytest
+import math
 from ZapMeNot import shield, ray, material
 
 def test_GeneralShieldFeatures():
@@ -28,9 +29,42 @@ class TestSemiInfiniteXSlab():
 		assert create_shield.xEnd == 20
 
 	# test getting a crossing length
-	def test_crossing_length(self, create_shield, create_ray):
+	# reference value taken from matlab script slabCrossingLength.m
+	def test_crossing_length1(self, create_shield, create_ray):
 		length = create_shield.getCrossingLength(create_ray)
-		assert length == pytest.approx(17.320508075688775)
+		assert length == pytest.approx(17.320508)
+
+	def test_crossing_length2(self, create_shield, create_ray):
+		# try reversing the direction
+		a=create_ray.start
+		create_ray.start=create_ray.end
+		create_ray.end=a
+		length = create_shield.getCrossingLength(create_ray)
+		assert length == pytest.approx(17.320508)
+
+	def test_crossing_length3(self, create_shield, create_ray):
+		# ray misses the slab
+		length = create_shield.getCrossingLength(ray.Ray([30,0,0], [30,0,30]))
+		assert length == 0
+
+	def test_crossing_length4(self, create_shield, create_ray):
+		# two rays that start inside the slab and traverse outwards
+		length = create_shield.getCrossingLength(ray.Ray([15,15,15], [30,30,30]))
+		assert length == pytest.approx(17.320508/2)
+
+	def test_crossing_length5(self, create_shield, create_ray):
+		length = create_shield.getCrossingLength(ray.Ray([30,30,30], [15,15,15]))
+		assert length == pytest.approx(17.320508/2)
+
+	def test_crossing_length6(self, create_shield, create_ray):
+		# ray start outside the slab and ends inside the slab
+		length = create_shield.getCrossingLength(ray.Ray([0,0,0], [15,15,15]))
+		assert length == pytest.approx(17.320508/2)
+
+	def test_crossing_length7(self, create_shield, create_ray):
+		# ray contained entirely within the slab
+		length = create_shield.getCrossingLength(ray.Ray([11,11,11], [16,16,16]))
+		assert length == pytest.approx(math.sqrt(25*3))
 
 	# test getting a crossing mfp
 	def test_get_MFP(self, create_shield, create_ray):
@@ -43,7 +77,11 @@ class TestSemiInfiniteXSlab():
 		end = [100,0,0]
 		aRay = ray.Ray(start, end)
 		mfp = create_shield.getCrossingMFP(aRay, 1)
-		assert mfp == pytest.approx(4.6905418)
+		# data extracted from materialLibrary.yml for iron at 1 MeV
+		xsec = 5.957E-02
+		density = 7.874
+		calculated_mfp = xsec*density*10 # 10 cm width of shield
+		assert mfp == pytest.approx(calculated_mfp)
 
 # #=============================================================
 class TestSphere():
