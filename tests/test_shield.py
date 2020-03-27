@@ -42,26 +42,26 @@ class TestSemiInfiniteXSlab():
 		length = create_shield.getCrossingLength(create_ray)
 		assert length == pytest.approx(17.320508)
 
-	def test_crossing_length3(self, create_shield, create_ray):
+	def test_crossing_length3(self, create_shield):
 		# ray misses the slab
 		length = create_shield.getCrossingLength(ray.Ray([30,0,0], [30,0,30]))
 		assert length == 0
 
-	def test_crossing_length4(self, create_shield, create_ray):
+	def test_crossing_length4(self, create_shield):
 		# two rays that start inside the slab and traverse outwards
 		length = create_shield.getCrossingLength(ray.Ray([15,15,15], [30,30,30]))
 		assert length == pytest.approx(17.320508/2)
 
-	def test_crossing_length5(self, create_shield, create_ray):
+	def test_crossing_length5(self, create_shield):
 		length = create_shield.getCrossingLength(ray.Ray([30,30,30], [15,15,15]))
 		assert length == pytest.approx(17.320508/2)
 
-	def test_crossing_length6(self, create_shield, create_ray):
+	def test_crossing_length6(self, create_shield):
 		# ray start outside the slab and ends inside the slab
 		length = create_shield.getCrossingLength(ray.Ray([0,0,0], [15,15,15]))
 		assert length == pytest.approx(17.320508/2)
 
-	def test_crossing_length7(self, create_shield, create_ray):
+	def test_crossing_length7(self, create_shield):
 		# ray contained entirely within the slab
 		length = create_shield.getCrossingLength(ray.Ray([11,11,11], [16,16,16]))
 		assert length == pytest.approx(math.sqrt(25*3))
@@ -107,19 +107,48 @@ class TestBox():
 
 	@pytest.fixture(scope="class")
 	def create_shield(self):
-		myShield = shield.Box(materialName="iron", boxCenter=[0,0,0],boxDimensions=[13,14,15])
+		myShield = shield.Box(materialName="iron", boxCenter=[0,0,0],boxDimensions=[10,10,10])
 		return myShield
 
-	@pytest.fixture(scope="class")
-	def create_ray(self):
-		start = [-10,0,0]
-		end = [30,0,0]
-		aRay = ray.Ray(start, end)
-		return aRay
+	# test getting a crossing length
+	def test_crossing_length0(self, create_shield):
+		# test a pure diagonal crossing
+		length = create_shield.getCrossingLength(ray.Ray([-5,-5,-5], [15,15,15]))
+		assert length == math.sqrt(3*(10**2))
 
-	def test_crossing_length(self, create_shield, create_ray):
-		length = create_shield.getCrossingLength(create_ray)
-		assert length == pytest.approx(13)
+	def test_crossing_length1(self, create_shield):
+		# basic ray crossing
+		length = create_shield.getCrossingLength(ray.Ray([-10,3,3], [20,3,3]))
+		assert length == 10
+
+	def test_crossing_length2(self, create_shield):
+		# try reversing the direction
+		length = create_shield.getCrossingLength(ray.Ray([20,3,3], [-10,3,3]))
+		assert length == 10
+
+	def test_crossing_length3(self, create_shield):
+		# ray misses the box
+		length = create_shield.getCrossingLength(ray.Ray([30,0,0], [30,0,30]))
+		assert length == 0
+
+	def test_crossing_length4(self, create_shield):
+		# two rays that start inside the box and traverse outwards
+		length = create_shield.getCrossingLength(ray.Ray([2,3,3], [20,3,3]))
+		assert length == 3
+
+	def test_crossing_length5(self, create_shield):
+		length = create_shield.getCrossingLength(ray.Ray([2,3,3], [-20,3,3]))
+		assert length == 7
+
+	def test_crossing_length6(self, create_shield):
+		# ray start outside the box and ends inside the box
+		length = create_shield.getCrossingLength(ray.Ray([20,3,3], [2,3,3]))
+		assert length == 3
+
+	def test_crossing_length7(self, create_shield):
+		# ray contained entirely within the box
+		length = create_shield.getCrossingLength(ray.Ray([2,3,3], [-3,3,3]))
+		assert length == 5
 
 #=============================================================
 class TestCappedCylinder():
@@ -129,24 +158,64 @@ class TestCappedCylinder():
 		myShield = shield.CappedCylinder(materialName="iron", cylinderStart=[0,0,-50],cylinderEnd=[0,0,50],cylinderRadius=10)
 		return myShield
 
-	def test_crossing_length(self, create_shield):
-		start = [-10,20,0]
-		end = [30,20,0]
-		aRay = ray.Ray(start, end)
-		length = create_shield.getCrossingLength(aRay)
-		assert length == pytest.approx(0)
+	def test_crossing_length0(self, create_shield):
+		# complete miss
+		length = create_shield.getCrossingLength(ray.Ray([15,0,-60], [15,0,60]))
+		assert length == 0
 
-		start = [-30,0,0]
-		end = [30,0,0]
-		aRay = ray.Ray(start, end)
-		length = create_shield.getCrossingLength(aRay)
-		assert length == pytest.approx(20)
-		
-		start = [0,0,0]
-		end = [30,0,0]
-		bRay = ray.Ray(start, end)
-		length = create_shield.getCrossingLength(bRay)
-		assert length == pytest.approx(10)
+	def test_crossing_length1(self, create_shield):
+		# completely inside
+		length = create_shield.getCrossingLength(ray.Ray([0,0,-8], [0,0,8]))
+		assert length == 16
+
+	def test_crossing_length2(self, create_shield):
+		# side-to-side
+		length = create_shield.getCrossingLength(ray.Ray([-20,0,0], [20,0,0]))
+		assert length == 20
+
+	def test_crossing_length3(self, create_shield):
+		# and back again
+		length = create_shield.getCrossingLength(ray.Ray([20,0,0], [-20,0,0]))
+		assert length == 20
+
+	def test_crossing_length4(self, create_shield):
+		# end-to-end
+		length = create_shield.getCrossingLength(ray.Ray([0,0,-60], [0,0,60]))
+		assert length == 100
+
+	def test_crossing_length5(self, create_shield):
+		# and back again
+		length = create_shield.getCrossingLength(ray.Ray([0,0,60], [0,0,-60]))
+		assert length == 100
+
+	def test_crossing_length6(self, create_shield):
+		# side-to-end
+		pass
+
+	def test_crossing_length7(self, create_shield):
+		# end-to-side
+		pass
+
+	def test_crossing_length8(self, create_shield):
+		# outside to inside wall
+		length = create_shield.getCrossingLength(ray.Ray([-20,0,0], [-5,0,0]))
+		assert length == 5
+
+	def test_crossing_length9(self, create_shield):
+		# and back again
+		length = create_shield.getCrossingLength(ray.Ray([-5,0,0], [-20,0,0]))
+		assert length == 5
+
+	def test_crossing_length10(self, create_shield):
+		# outside to inside cap
+		length = create_shield.getCrossingLength(ray.Ray([1,1,55], [1,1,45]))
+		assert length == 5
+
+	def test_crossing_length11(self, create_shield):
+		# and back again
+		length = create_shield.getCrossingLength(ray.Ray([1,1,45], [1,1,55]))
+		assert length == 5
+
 
 
 #=============================================================
@@ -157,16 +226,9 @@ class TestYAlignedCylinder():
 		myShield = shield.YAlignedCylinder(materialName="iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
 		return myShield
 
-	@pytest.fixture(scope="class")
-	def create_ray(self):
-		start = [-10,20,0]
-		end = [30,20,0]
-		aRay = ray.Ray(start, end)
-		return aRay
-
-	def test_crossing_length(self, create_shield, create_ray):
-		length = create_shield.getCrossingLength(create_ray)
-		assert length == pytest.approx(20)
+	def test_crossing_length(self, create_shield):
+		length = create_shield.getCrossingLength(ray.Ray([2,-60,2], [2,60,2]))
+		assert length == 100
 
 #=============================================================
 class TestXAlignedCylinder():
@@ -176,16 +238,9 @@ class TestXAlignedCylinder():
 		myShield = shield.XAlignedCylinder(materialName="iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
 		return myShield
 
-	@pytest.fixture(scope="class")
-	def create_ray(self):
-		start = [20,-10,0]
-		end = [20,30,0]
-		aRay = ray.Ray(start, end)
-		return aRay
-
-	def test_crossing_length(self, create_shield, create_ray):
-		length = create_shield.getCrossingLength(create_ray)
-		assert length == pytest.approx(20)
+	def test_crossing_length(self, create_shield):
+		length = create_shield.getCrossingLength(ray.Ray([-60,2,2], [60,2,2]))
+		assert length == 100
 
 #=============================================================
 class TestZAlignedCylinder():
@@ -195,16 +250,9 @@ class TestZAlignedCylinder():
 		myShield = shield.ZAlignedCylinder(materialName="iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
 		return myShield
 
-	@pytest.fixture(scope="class")
-	def create_ray(self):
-		start = [-10,0,20]
-		end = [30,0,20]
-		aRay = ray.Ray(start, end)
-		return aRay
-
-	def test_crossing_length(self, create_shield, create_ray):
-		length = create_shield.getCrossingLength(create_ray)
-		assert length == pytest.approx(20)
+	def test_crossing_length(self, create_shield):
+		length = create_shield.getCrossingLength(ray.Ray([2,2,-60], [2,2,60]))
+		assert length == 100
 
 
 

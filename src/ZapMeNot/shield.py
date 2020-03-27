@@ -25,17 +25,6 @@ class Shield:
 		'''returns the crossing mfp'''
 		pass
 
-	# def LinePlaneCollision1(self, planeNormal, planePoint, rayDirection, rayPoint, epsilon=1e-6):
-	 
-	# 	ndotu = planeNormal.dot(rayDirection)
-	# 	if abs(ndotu) < epsilon:
-	# 		raise RuntimeError("no intersection or line is within plane")
-	 
-	# 	w = rayPoint - planePoint
-	# 	si = -planeNormal.dot(w) / ndotu
-	# 	Psi = w + si * rayDirection + planePoint
-	# 	return Psi
-
 	def LinePlaneCollision(self, planeNormal, planePoint, rayOrigin, rayNormal, epsilon=1e-6):	 
 		# based on 
 		# https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection
@@ -165,16 +154,18 @@ class Box(Shield):
 		# zero crossings can indicate that either both source and
 		#    dose points are in the shield or that the shield is
 		#    missed entirely
-		if len(crossings) == 0:
-			return 0
 		if len(crossings) != 2:
+			# check for start/end of ray within the box
 			if self.contains(ray.origin):
 				crossings.insert(0,ray.origin)
-			if len(crossings) != 2:
-				if self.contains(np.array(ray.end)):
-					crossings.append(np.array(ray.end))
-			if len(crossings) != 2:
-				raise ValueError("Shield doesn't have 2 crossings")
+			if self.contains(np.array(ray.end)):
+				crossings.append(np.array(ray.end))
+		if len(crossings) == 0:
+			# likely it's a complete miss
+			return 0
+		if len(crossings) != 2:
+			# shouldn't ever get here
+			raise ValueError("Shield doesn't have 2 crossings")
 		# let numpy do the heavy lifting
 		return np.linalg.norm(crossings[0]-crossings[1])
 
@@ -192,7 +183,6 @@ class Box(Shield):
 			return True
 		return False
 
-
 	def intersectAABox(self, ray):
 		'returns 0, 1, or 2 points of intersection'
 		results = []
@@ -201,7 +191,6 @@ class Box(Shield):
 		tmax =  (bounds[1-ray.sign[0]][0] - ray.origin[0]) * ray.invdir[0]
 		tymin = (bounds[  ray.sign[1]][1] - ray.origin[1]) * ray.invdir[1]
 		tymax = (bounds[1-ray.sign[1]][1] - ray.origin[1]) * ray.invdir[1]
-
 
 		if ((tmin > tymax) or (tymin > tmax)):
 			return results
@@ -257,16 +246,18 @@ class CappedCylinder(Shield):
 		# zero crossings can indicate that either both source and
 		#    dose points are in the shield or that the shield is
 		#    missed entirely
-		if len(crossings) == 0:
-			return 0
 		if len(crossings) != 2:
+			# check for start/end of ray within the cylinder
 			if self.contains(ray.origin):
 				crossings.insert(0,ray.origin)
-			if len(crossings) != 2:
-				if self.contains(np.array(ray.end)):
-					crossings.append(np.array(ray.end))
-			if len(crossings) != 2:
-				raise ValueError("Shield doesn't have 2 crossings")
+			if self.contains(np.array(ray.end)):
+				crossings.append(np.array(ray.end))
+		if len(crossings) == 0:
+			# likely it's a complete miss
+			return 0
+		if len(crossings) != 2:
+			# shouldn't ever get here
+			raise ValueError("Shield doesn't have 2 crossings")
 		# let numpy do the heavy lifting
 		return np.linalg.norm(crossings[0]-crossings[1])
 
@@ -295,27 +286,27 @@ class CappedCylinder(Shield):
 		c = np.dot(part2, part2) - self.radius**2
 		zoro = b**2 - 4*a*c
 		if (zoro > 0):
-			# roots are real, thee are two intersections on an "infinite" cylinder
+			# roots are real, then are two intersections on an "infinite" cylinder
 			meo = math.sqrt(zoro)
 			t1 = (-b + meo)/(2*a)
 			t2 = (-b - meo)/(2*a)
 			# check to see if the intersections occur in the finite length of the cylinder
 			for t in [t1,t2]:
-				if t >=0:
+				# discard line/cylinder intersections outside of the length of the ray
+				if t >=0 and t <=ray.length:
 					intersection = ray.origin + ray.dir*t
 					loc = np.dot(intersection-self.origin, self.dir)
+					# keep only intersections within the finite length of the cylinder
 					if loc >=0 and loc < self.length:
 						results.append(intersection)
 		# check to see if there are intersections on the caps
-		denom = np.dot(self.dir,ray.dir)
-		if (denom > 1e-6):
-			for testPoint in [self.origin, self.end]:
-				t = np.dot(testPoint-ray.origin, self.dir)
-				if t>= 0:
-					strike = ray.origin + ray.dir*t
-					v = strike - testPoint
-					if np.dot(v,v) <= self.radius**2:
-						results.append(strike)
+		for diskCenter in [self.origin, self.end]:
+			t = self.LinePlaneCollision(self.dir, diskCenter, ray.origin, ray.dir)
+			if t != None and t>=0 and t<=ray.length:
+				point = ray.origin + ray.dir*t
+				radial = point - diskCenter
+				if radial.dot(radial) < self.radius**2:
+					results.append(point)
 		return results
 
 class YAlignedCylinder(CappedCylinder):
