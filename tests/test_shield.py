@@ -3,7 +3,7 @@ import math
 from ZapMeNot import shield, ray, material
 
 def test_GeneralShieldFeatures():
-	myShield = shield.SemiInfiniteXSlab(materialName="iron", xStart=10, xEnd=20, density=0.123)
+	myShield = shield.SemiInfiniteXSlab("iron", 10, 20, density=0.123)
 	assert myShield.material.name == "iron"
 	assert myShield.material.density == 0.123
 
@@ -12,7 +12,7 @@ class TestSemiInfiniteXSlab():
 
 	@pytest.fixture(scope="class")
 	def create_shield(self):
-		myShield = shield.SemiInfiniteXSlab(materialName="iron", xStart=10, xEnd=20)
+		myShield = shield.SemiInfiniteXSlab("iron", 10, 20)
 		return myShield
 
 	@pytest.fixture(scope="class")
@@ -83,31 +83,50 @@ class TestSemiInfiniteXSlab():
 		calculated_mfp = xsec*density*10 # 10 cm width of shield
 		assert mfp == pytest.approx(calculated_mfp)
 
-# #=============================================================
+#=============================================================
 class TestSphere():
 
 	@pytest.fixture(scope="class")
 	def create_shield(self):
-		myShield = shield.Sphere(materialName="iron", sphereCenter=[0,0,0],sphereRadius=10)
+		myShield = shield.Sphere("iron", sphereRadius=10, sphereCenter=[0,0,0])
 		return myShield
 
-	@pytest.fixture(scope="class")
-	def create_ray(self):
-		start = [-15,0,0]
-		end = [30,0,0]
-		aRay = ray.Ray(start, end)
-		return aRay
-
-	def test_crossing_length(self, create_shield, create_ray):
-		length = create_shield.getCrossingLength(create_ray)
+	def test_crossing_length0(self, create_shield):
+		# basic ray crossing
+		length = create_shield.getCrossingLength(ray.Ray([-10,-10,-10], [10,10,10]))
 		assert length == pytest.approx(20)
 
-# #=============================================================
+	def test_crossing_length1(self, create_shield):
+		# try reversing the direction
+		length = create_shield.getCrossingLength(ray.Ray([10,10,10], [-10,-10,-10]))
+		assert length == pytest.approx(20)
+
+	def test_crossing_length2(self, create_shield):
+		# ray misses the sphere
+		length = create_shield.getCrossingLength(ray.Ray([-15,-15,-15], [-15,-15,15]))
+		assert length == 0
+
+	def test_crossing_length3(self, create_shield):
+		# ray starts inside the sphere and traverse outwards
+		length = create_shield.getCrossingLength(ray.Ray([-1,-1,-1], [10,10,10]))
+		assert length == 10+math.sqrt(3)
+
+	def test_crossing_length4(self, create_shield):
+		# ray starts outside the sphere and ends inside the sphere
+		length = create_shield.getCrossingLength(ray.Ray([10,10,10], [-1,-1,-1]))
+		assert length == pytest.approx(10+math.sqrt(3))
+
+	def test_crossing_length5(self, create_shield):
+		# ray contained entirely within the sphere
+		length = create_shield.getCrossingLength(ray.Ray([1,1,1], [-1,-1,-1]))
+		assert length == 2*math.sqrt(3)
+
+#=============================================================
 class TestBox():
 
 	@pytest.fixture(scope="class")
 	def create_shield(self):
-		myShield = shield.Box(materialName="iron", boxCenter=[0,0,0],boxDimensions=[10,10,10])
+		myShield = shield.Box("iron", boxCenter=[0,0,0],boxDimensions=[10,10,10])
 		return myShield
 
 	# test getting a crossing length
@@ -155,7 +174,7 @@ class TestCappedCylinder():
 
 	@pytest.fixture(scope="class")
 	def create_shield(self):
-		myShield = shield.CappedCylinder(materialName="iron", cylinderStart=[0,0,-50],cylinderEnd=[0,0,50],cylinderRadius=10)
+		myShield = shield.CappedCylinder("iron", cylinderStart=[0,0,-50],cylinderEnd=[0,0,50],cylinderRadius=10)
 		return myShield
 
 	def test_crossing_length0(self, create_shield):
@@ -223,7 +242,7 @@ class TestYAlignedCylinder():
 
 	@pytest.fixture(scope="class")
 	def create_shield(self):
-		myShield = shield.YAlignedCylinder(materialName="iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
+		myShield = shield.YAlignedCylinder("iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
 		return myShield
 
 	def test_crossing_length(self, create_shield):
@@ -235,7 +254,7 @@ class TestXAlignedCylinder():
 
 	@pytest.fixture(scope="class")
 	def create_shield(self):
-		myShield = shield.XAlignedCylinder(materialName="iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
+		myShield = shield.XAlignedCylinder("iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
 		return myShield
 
 	def test_crossing_length(self, create_shield):
@@ -247,7 +266,7 @@ class TestZAlignedCylinder():
 
 	@pytest.fixture(scope="class")
 	def create_shield(self):
-		myShield = shield.ZAlignedCylinder(materialName="iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
+		myShield = shield.ZAlignedCylinder("iron", cylinderCenter=[0,0,0],cylinderLength=100,cylinderRadius=10)
 		return myShield
 
 	def test_crossing_length(self, create_shield):

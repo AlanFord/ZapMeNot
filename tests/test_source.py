@@ -44,6 +44,7 @@ class TestPointSource():
 		np.testing.assert_allclose(self.mySource.getSourcePoints(), \
 			[(1,2,3)])
 
+#=============================================================
 
 class TestBoxSource():
 
@@ -72,4 +73,34 @@ class TestBoxSource():
 			 (0.9876, 314/8), \
 			 (1.29364, 115204088000.0/8), \
 			 (1.677, 60413600/8)])
+
+#=============================================================
+
+class TestLineSource():
+
+	def test_getSourcePoints(self):
+		pass
+
+#=============================================================
+
+class TestXAlignedCylinderSource():
+
+	def test_getSourcePoints(self):
+		pass
+
+#=============================================================
+
+class TestYAlignedCylinderSource():
+
+	def test_getSourcePoints(self):
+		pass
+
+#=============================================================
+
+class TestZAlignedCylinderSource():
+
+	def test_getSourcePoints(self):
+		pass
+
+
 

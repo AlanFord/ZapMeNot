@@ -66,7 +66,7 @@ class Source(metaclass=abc.ABCMeta):
 
 class PointSource(Source, shield.Shield):
 	'''Modeling a point source of radiation.'''
-	def __init__(self,x=0,y=0,z=0, **kwargs):
+	def __init__(self,x,y,z, **kwargs):
 		'''Initialize with an x,y,z location in space'''
 		"Initialize"
 		self.x = x
