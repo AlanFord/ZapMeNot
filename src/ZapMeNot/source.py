@@ -1,6 +1,7 @@
 from ZapMeNot import shield, isotope
 import abc
 import numpy as np
+import math
 
 class Source(metaclass=abc.ABCMeta):
 	'''Abtract class to model a radiation source.  Maintains a list of
@@ -64,6 +65,42 @@ class Source(metaclass=abc.ABCMeta):
 
 # -----------------------------------------------------------
 
+class LineSource(Source, shield.Shield):
+	'''Modeling a point source of radiation.'''
+	def __init__(self,start, end, **kwargs):
+		"Initialize"
+		self.origin = np.array(start)
+		self.end = np.array(end)
+		self.length = np.linalg.norm(self.end - self.origin)
+		self.dir = (self.end - self.origin)/self.length
+		# let the point source have a dummy material of air at a zero density
+		kwargs['materialName'] = 'air'
+		kwargs['density'] = 0
+		super().__init__(**kwargs)
+		# initialize pointsPerDimension after super() to force a single dimension
+		self.pointsPerDimension=10
+
+	def getSourcePoints(self):
+		spacings = np.linspace(1,self.pointsPerDimension,self.pointsPerDimension)
+		meshWidth = self.length/self.pointsPerDimension
+		spacings = spacings*meshWidth
+		spacings = spacings-(meshWidth/2)
+		sourcePoints=[]
+		for dist in spacings:
+			location = self.origin+self.dir*dist
+			sourcePoints.append(location)
+		return sourcePoints
+
+	def getCrossingLength(self,vector):
+		'''returns a  crossing length'''
+		return 0
+
+	def getCrossingMFP(self,vector, photonEnergy):
+		'''returns the crossing mfp'''
+		return 0
+
+# -----------------------------------------------------------
+
 class PointSource(Source, shield.Shield):
 	'''Modeling a point source of radiation.'''
 	def __init__(self,x,y,z, **kwargs):
@@ -76,7 +113,7 @@ class PointSource(Source, shield.Shield):
 		kwargs['materialName'] = 'air'
 		kwargs['density'] = 0
 		super().__init__(**kwargs)
-		self.pointsPerDimension=[1,1,1]
+		self.pointsPerDimension=1
 
 	def getSourcePoints(self):
 		return[(self.x,self.y,self.z)]
@@ -157,7 +194,6 @@ class BoxSource(Source, shield.Box):
 	def getSourcePoints(self):
 		sourcePoints = []
 		meshWidth = self.boxDimensions/self.pointsPerDimension
-		print(meshWidth)
 		startPoint = self.boxCenter-(self.boxDimensions)/2+(meshWidth/2)
 		for i in range(self.pointsPerDimension[0]):
 			x = startPoint[0]+meshWidth[0]*i
@@ -184,16 +220,18 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 	def getSourcePoints(self):
 
 		# calculate the radius of each "equal area" annular region
-		totalArea = pi()*self.radius**2
+		totalArea = math.pi*self.radius**2
 		annularArea = totalArea/self.pointsPerDimension[0]
 		oldRadius = 0
+		runningArea = 0
 		annularLocations = []
 		for i in range(self.pointsPerDimension[0]):
 			newRadius = math.sqrt((runningArea+annularArea)/math.pi)
 			annularLocations.append((newRadius+oldRadius)/2)
 			oldRadius = newRadius
+			runningArea = runningArea+annularArea
 
-		angleIncrement = 2*math.py/self.pointsPerDimension[1]
+		angleIncrement = 2*math.pi/self.pointsPerDimension[1]
 		startAngle = angleIncrement/2
 		angleLocations = []
 		for i in range(self.pointsPerDimension[1]):

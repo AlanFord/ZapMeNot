@@ -269,6 +269,8 @@ class CappedCylinder(Shield):
 			return 0
 		if len(crossings) != 2:
 			# shouldn't ever get here
+			print("Ray is ",ray.start, ray.end)
+			print("Shield is ", self.material.name)
 			raise ValueError("Shield doesn't have 2 crossings")
 		# let numpy do the heavy lifting
 		return np.linalg.norm(crossings[0]-crossings[1])

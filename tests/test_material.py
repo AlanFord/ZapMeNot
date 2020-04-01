@@ -1,6 +1,10 @@
-from ZapMeNot import material
-import pytest
 import math
+
+import pytest
+
+from ZapMeNot import material
+
+pytestmark = pytest.mark.basic
 
 # test response to a bad material name
 def test_a_bad_material_name():

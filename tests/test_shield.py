@@ -1,6 +1,10 @@
-import pytest
 import math
+
+import pytest
+
 from ZapMeNot import shield, ray, material
+
+pytestmark = pytest.mark.basic
 
 def test_GeneralShieldFeatures():
 	myShield = shield.SemiInfiniteXSlab("iron", 10, 20, density=0.123)

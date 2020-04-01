@@ -1,4 +1,8 @@
+import pytest
+
 from ZapMeNot import detector
+
+pytestmark = pytest.mark.basic
 
 def test_detector():
 	a = detector.Detector(1,2,3)

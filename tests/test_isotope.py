@@ -1,5 +1,8 @@
 import pytest
+
 from ZapMeNot import isotope
+
+pytestmark = pytest.mark.basic
 
 # request an invalid material
 def test_a_bad_isotope_name():

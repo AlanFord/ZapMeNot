@@ -1,7 +1,11 @@
 import math
-from ZapMeNot import ray
+
 import numpy as np
 import pytest
+
+from ZapMeNot import ray
+
+pytestmark = pytest.mark.basic
 
 def test_ray_length():
 	start = [1, 1, 1]

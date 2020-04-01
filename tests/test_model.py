@@ -1,6 +1,8 @@
-from ZapMeNot import model,source,shield,detector,material
 import pytest
-#import numpy as np
+
+from ZapMeNot import model,source,shield,detector,material
+
+pytestmark = pytest.mark.basic
 
 def test_Case1():
 	# a point source with infinite yz shields
