@@ -291,6 +291,8 @@ class InfiniteAnnulus(Shield):
 		return True
 
 	def intersect(self, ray):
+		# returns a list of >>DISTANCES<< olong the ray vector
+		#
 		# based on https://mrl.nyu.edu/~dzorin/rend05/lecture2.pdf
 		# and
 		# https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection

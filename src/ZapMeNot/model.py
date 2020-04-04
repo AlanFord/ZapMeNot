@@ -6,8 +6,14 @@ class Model:
 		self.source = None
 		self.shieldList = []
 		self.detector = None
+		self.fillerMaterial = None
 		self.buildupFactorMaterial = None
 		self.conversionFactor = 1.835E-8 # used to calculate exposure from flux, MeV, and linear energy absorption coeff
+
+	def setFillerMaterial(self, fillerMaterial, density = None):
+		self.fillerMaterial=material.Material(fillerMaterial)
+		if density != None:
+			self.fillerMaterial.setDensity(density)
 
 	def addSource(self, newSource):
 		self.source = newSource
@@ -42,6 +48,12 @@ class Model:
 				# vector = (nextPoint, self.detector.location)
 				# iterate through the shield list
 				totalMFP = 0.0
+				shieldCrossingDistance = 0.0
+				if fillerMaterial != None:
+					for shield in self.shieldList:
+						distance = shield.getCrossingLength(vector)
+						shieldCrossingDistance += distance
+					totalMFP += self.fillerMaterial.getMFP(photonEnergy, vector.length - shieldCrossingDistance)
 				for shield in self.shieldList:
 					mfp = shield.getCrossingMFP(vector, photonEnergy)
 					totalMFP += mfp
