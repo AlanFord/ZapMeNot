@@ -3,7 +3,7 @@
 %   See TestZAlignedCylinderSource.test_getSourcePoints()
 % Uses:
 
-function cylinder()
+function cylinder_unit_test()
 % this defines the number of source points [ r, theta, z]
 format long
 points = [3 3 3];

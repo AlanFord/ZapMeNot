@@ -125,6 +125,18 @@ class TestSphere():
 		length = create_shield.getCrossingLength(ray.Ray([1,1,1], [-1,-1,-1]))
 		assert length == 2*math.sqrt(3)
 
+	# test getting a crossing mfp
+	def test_get_special_MFP(self, create_shield):
+		start = [0,0,0]
+		end = [100,0,0]
+		aRay = ray.Ray(start, end)
+		mfp = create_shield.getCrossingMFP(aRay, 1)
+		# data extracted from materialLibrary.yml for iron at 1 MeV
+		xsec = 5.957E-02
+		density = 7.874
+		calculated_mfp = xsec*density*10 # 10 cm crossing width of shield
+		assert mfp == pytest.approx(calculated_mfp)
+
 #=============================================================
 class TestBox():
 
@@ -172,6 +184,95 @@ class TestBox():
 		# ray contained entirely within the box
 		length = create_shield.getCrossingLength(ray.Ray([2,3,3], [-3,3,3]))
 		assert length == 5
+
+	# test getting a crossing mfp
+	def test_get_special_MFP(self, create_shield):
+		start = [0,0,0]
+		end = [100,0,0]
+		aRay = ray.Ray(start, end)
+		mfp = create_shield.getCrossingMFP(aRay, 1)
+		# data extracted from materialLibrary.yml for iron at 1 MeV
+		xsec = 5.957E-02
+		density = 7.874
+		calculated_mfp = xsec*density*5 # 5 cm crossing width of shield
+		assert mfp == pytest.approx(calculated_mfp)
+
+#=============================================================
+class TestInfiniteAnnulus():
+
+
+	@pytest.fixture(scope="class")
+	def create_shield(self):
+		myShield = shield.InfiniteAnnulus("iron", cylinderOrigin=[0,0,-50],cylinderAxis=[0,0,1],cylinderInnerRadius=2,cylinderOuterRadius=4,density=2)
+		return myShield
+
+	def test_density(self,create_shield):
+		assert create_shield.material.density == 2
+
+	def test_crossing_length0(self, create_shield):
+		# complete miss
+		length = create_shield.getCrossingLength(ray.Ray([10,0,0], [15,0,00]))
+		assert length == 0
+
+	def test_crossing_length1(self, create_shield):
+		# completely inside annulus
+		length = create_shield.getCrossingLength(ray.Ray([2.5,0,-8], [3.5,0,8]))
+		assert length == math.sqrt(1+16**2)
+
+	def test_crossing_length2(self, create_shield):
+		# side-to-side
+		length = create_shield.getCrossingLength(ray.Ray([-20,0,0], [20,0,0]))
+		assert length == 4
+
+	def test_crossing_length3(self, create_shield):
+		# and back again
+		length = create_shield.getCrossingLength(ray.Ray([20,0,0], [-20,0,0]))
+		assert length == 4
+
+	def test_crossing_length4(self, create_shield):
+		# completely inside annulus (miss)
+		length = create_shield.getCrossingLength(ray.Ray([1,0,-60], [1.5,0,60]))
+		assert length == 0
+
+	def test_crossing_length5(self, create_shield):
+		# and back again
+		length = create_shield.getCrossingLength(ray.Ray([1.5,0,60], [1,0,-60]))
+		assert length == 0
+
+	def test_crossing_length8(self, create_shield):
+		# outside to inside annulus
+		length = create_shield.getCrossingLength(ray.Ray([-20,0,0], [-3.5,0,0]))
+		assert length == 0.5
+
+	def test_crossing_length9(self, create_shield):
+		# and back again
+		length = create_shield.getCrossingLength(ray.Ray([-3.5,0,0], [-20,0,0]))
+		assert length == 0.5
+
+	def test_crossing_length10(self, create_shield):
+		# center to inside annulus
+		length = create_shield.getCrossingLength(ray.Ray([1,0,55], [2.5,0,55]))
+		assert length == 0.5
+
+	def test_crossing_length11(self, create_shield):
+		# and back again
+		length = create_shield.getCrossingLength(ray.Ray([2.5,0,55], [1,0,55]))
+		assert length == 0.5
+
+	# test getting a crossing mfp
+	def test_get_special_MFP(self, create_shield):
+		start = [0,0,0]
+		end = [100,0,0]
+		aRay = ray.Ray(start, end)
+		mfp = create_shield.getCrossingMFP(aRay, 1)
+		# data extracted from materialLibrary.yml for iron at 1 MeV
+		xsec = 5.957E-02
+		density = 2  #specified in the setup
+		calculated_mfp = xsec*density*2 # 2 cm crossing width of shield
+		assert mfp == pytest.approx(calculated_mfp)
+
+
+
 
 #=============================================================
 class TestCappedCylinder():
@@ -239,7 +340,17 @@ class TestCappedCylinder():
 		length = create_shield.getCrossingLength(ray.Ray([1,1,45], [1,1,55]))
 		assert length == 5
 
-
+	# test getting a crossing mfp
+	def test_get_special_MFP(self, create_shield):
+		start = [0,0,0]
+		end = [100,0,0]
+		aRay = ray.Ray(start, end)
+		mfp = create_shield.getCrossingMFP(aRay, 1)
+		# data extracted from materialLibrary.yml for iron at 1 MeV
+		xsec = 5.957E-02
+		density = 7.874
+		calculated_mfp = xsec*density*10 # 10 cm crossing width of shield
+		assert mfp == pytest.approx(calculated_mfp)
 
 #=============================================================
 class TestYAlignedCylinder():

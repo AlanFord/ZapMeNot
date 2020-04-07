@@ -276,10 +276,10 @@ class InfiniteAnnulus(Shield):
 			raise ValueError("Shield doesn't have valid crossings")
 		crossings.sort()
 		if len(crossings) == 2:
-			return crossings[1]-crossing[0]
+			return crossings[1]-crossings[0]
 		if len(crossings) == 4:
 			# let numpy do the heavy lifting
-			return (crossings[1]-crossing[0]) + (crossings[3] - crossings[2])
+			return (crossings[1]-crossings[0]) + (crossings[3] - crossings[2])
 
 	def contains(self,point):
 		# determine scalar projection of point on cylinder centerline
@@ -297,7 +297,7 @@ class InfiniteAnnulus(Shield):
 		# and
 		# https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection
 		results = []
-		for radius in [self.innerRadius, self.outerRadius];
+		for radius in [self.innerRadius, self.outerRadius]:
 			deltap = ray.origin - self.origin
 			part1 = ray.dir -(np.dot(ray.dir, self.dir)*self.dir)
 			part2 = deltap - (np.dot(deltap, self.dir)*self.dir)

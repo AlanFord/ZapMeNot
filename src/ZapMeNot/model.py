@@ -32,15 +32,15 @@ class Model:
 	def calculateExposure(self):
 		# flux by photon energy
 		fluxByPhotonEnergy = []
-		# get a list of photons (energy/intensity [gamma/sec]) from the source
+		# get a list of photons (energy/intensity per source point [gamma/sec]) from the source
 		spectrum= self.source.getPhotonSourceList()
 		sourcePoints = self.source.getSourcePoints()
 		# iterate through the photons 
 		for photon in spectrum:
 			uncollidedFlux = 0
 			totalFlux = 0
-			photonEnergy = photon[0]
-			photonYield = photon[1]
+			photonEnergy = photon[0]  # eneregy of the current photon
+			photonYield = photon[1] # photon source strength >>PER SOURCE POINT<<
 			# iterate through the source points
 			for nextPoint in sourcePoints:
 				# determine the vector from source to detector
@@ -49,7 +49,7 @@ class Model:
 				# iterate through the shield list
 				totalMFP = 0.0
 				shieldCrossingDistance = 0.0
-				if fillerMaterial != None:
+				if self.fillerMaterial != None:
 					for shield in self.shieldList:
 						distance = shield.getCrossingLength(vector)
 						shieldCrossingDistance += distance
@@ -58,7 +58,10 @@ class Model:
 					mfp = shield.getCrossingMFP(vector, photonEnergy)
 					totalMFP += mfp
 				totalFluxReductionFactor = math.exp(-totalMFP)
-				buildupFactor = self.buildupFactorMaterial.getBuildupFactor(photonEnergy, totalMFP)
+				if (self.buildupFactorMaterial != None):
+					buildupFactor = self.buildupFactorMaterial.getBuildupFactor(photonEnergy, totalMFP)
+				else:
+					buildupFactor = 1.0
 				uncollidedPointFlux = photonYield * totalFluxReductionFactor * (1/(4*math.pi*vector.length**2))
 				totalPointFlux = uncollidedPointFlux*buildupFactor
 				uncollidedFlux += uncollidedPointFlux

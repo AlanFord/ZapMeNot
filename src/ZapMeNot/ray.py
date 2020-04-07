@@ -15,4 +15,3 @@ class Ray:
 		self.sign[1] = int((self.invdir[1] < 0))
 		self.sign[2] = int((self.invdir[2] < 0))
 
-
