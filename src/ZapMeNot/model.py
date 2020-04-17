@@ -53,7 +53,7 @@ class Model:
 					for shield in self.shieldList:
 						distance = shield.getCrossingLength(vector)
 						shieldCrossingDistance += distance
-					totalMFP += self.fillerMaterial.getMFP(photonEnergy, vector.length - shieldCrossingDistance)
+					totalMFP += self.fillerMaterial.getMfp(photonEnergy, vector.length - shieldCrossingDistance)
 				for shield in self.shieldList:
 					mfp = shield.getCrossingMFP(vector, photonEnergy)
 					totalMFP += mfp

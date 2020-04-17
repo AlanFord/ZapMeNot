@@ -133,10 +133,6 @@ class SphereSource(Source, shield.Sphere):
 	# initialize with boxCenter, boxDimensions, material(optional), density(optional)
 
 	def __init__(self,**kwargs):
-		'''Initialize with an x,y,z location in space'''
-		# let the point source have a dummy material of air at a zero density
-		kwargs['materialName'] = 'air'
-		# kwargs['density'] = 0
 		super().__init__(**kwargs)
 
 	def getSourcePoints(self):
@@ -185,10 +181,6 @@ class BoxSource(Source, shield.Box):
 	# initialize with boxCenter, boxDimensions, material(optional), density(optional)
 
 	def __init__(self,**kwargs):
-		'''Initialize with an x,y,z location in space'''
-		# let the point source have a dummy material of air at a zero density
-		kwargs['materialName'] = 'air'
-		# kwargs['density'] = 0
 		super().__init__(**kwargs)
 
 	def getSourcePoints(self):
@@ -211,10 +203,6 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 	# initialize with cylinderCenter, cylinderLength, cylinderRadius, material(optional), density(optional)
 
 	def __init__(self,**kwargs):
-		'''Initialize with an x,y,z location in space'''
-		# let the point source have a dummy material of air at a zero density
-		kwargs['materialName'] = 'air'
-		# kwargs['density'] = 0
 		super().__init__(**kwargs)
 
 	def getSourcePoints(self):
@@ -265,10 +253,6 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
 	# initialize with cylinderCenter, cylinderLength, cylinderRadius, material(optional), density(optional)
 
 	def __init__(self,**kwargs):
-		'''Initialize with an x,y,z location in space'''
-		# let the point source have a dummy material of air at a zero density
-		kwargs['materialName'] = 'air'
-		# kwargs['density'] = 0
 		super().__init__(**kwargs)
 
 	def getSourcePoints(self):
@@ -317,10 +301,6 @@ class XAlignedCylinderSource(Source, shield.YAlignedCylinder):
 	# initialize with cylinderCenter, cylinderLength, cylinderRadius, material(optional), density(optional)
 
 	def __init__(self,**kwargs):
-		'''Initialize with an x,y,z location in space'''
-		# let the point source have a dummy material of air at a zero density
-		kwargs['materialName'] = 'air'
-		# kwargs['density'] = 0
 		super().__init__(**kwargs)
 
 	def getSourcePoints(self):

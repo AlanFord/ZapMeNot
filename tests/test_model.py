@@ -100,5 +100,25 @@ class TestLineSource():
 		analyticalDose = photonFlux*responseFunction # R/sec
 		assert result == pytest.approx(analyticalDose*1000*3600) # convert from R/sec to mR/hr
 
+#=============================================================
+class TestZAlignedCylinderSource():
+
+	def test_Case0(self):
+		# point source with no shielding
+		# reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
+		# from the reference, pages 132, 157, and 159, th dose rate is 271.8 mR/hr
+		# the "other code" gives 271.8 mR/hr at an air density of 1e-12g/cc
+		myModel = model.Model()
+		mySource = source.ZAlignedCylinderSource(materialName='air', \
+			cylinderCenter=[0,0,500],cylinderLength=1000, \
+			cylinderRadius=50,density=1e-12)
+		mySource.pointsPerDimension = [40,20,400]
+		photonEnergy = 1.0 # MeV
+		photonIntensity = 3E10 # photons/sec
+		mySource.addPhoton(photonEnergy,photonIntensity)
+		myModel.addSource(mySource)
+		myModel.addDetector(detector.Detector(0,0,1000.01))
+		result = myModel.calculateExposure()
+		assert result == pytest.approx(271.628) 
 
 
