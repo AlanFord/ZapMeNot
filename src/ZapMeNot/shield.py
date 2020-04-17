@@ -190,12 +190,12 @@ class Box(Shield):
 		x = point[0]
 		y = point[1]
 		z = point[2]
-		xmin = self.boxCenter[0]-self.boxDimensions[0]
-		xmax = self.boxCenter[0]+self.boxDimensions[0]
-		ymin = self.boxCenter[1]-self.boxDimensions[1]
-		ymax = self.boxCenter[1]+self.boxDimensions[1]
-		zmin = self.boxCenter[2]-self.boxDimensions[2]
-		zmax = self.boxCenter[2]+self.boxDimensions[2]
+		xmin = self.boxCenter[0]-self.boxDimensions[0]/2
+		xmax = self.boxCenter[0]+self.boxDimensions[0]/2
+		ymin = self.boxCenter[1]-self.boxDimensions[1]/2
+		ymax = self.boxCenter[1]+self.boxDimensions[1]/2
+		zmin = self.boxCenter[2]-self.boxDimensions[2]/2
+		zmax = self.boxCenter[2]+self.boxDimensions[2]/2
 		if (xmin<=x and x<=xmax and ymin<=y and y<=ymax and zmin<=z and z<=zmax):
 			return True
 		return False

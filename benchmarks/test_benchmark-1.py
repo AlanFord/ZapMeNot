@@ -233,3 +233,54 @@ def test_benchmark_4():
 	print('test_benchmark_4')
 	print("At 228.6 cm, dose = ", result*1e-3, "R/hr")
 
+# Benchmark 5 is based on ESIS benchmark shielding problem #2.
+# The source is a rectangular water-filled tank 273 cm wide, 273 cm long,
+# and 479.9 cm high.
+# The tank wall is steel with a thickness of 2.54 cm.
+# Uniformly distributed in the water is the following source:
+#   Energy         Source
+#   (MeV)          (photons/sec/cm3)
+#   0.4            4.0E+6
+#   0.8            7.0E+6
+#   1.3            2.8E+6
+#   1.7            8.2E+6
+#   2.2            4.0E+4
+#   2.5            3.0E+4
+#   3.5            1.2E+1
+# The  detector horizontal location is 320 cm from the tank centerline
+# at the vertical centerline of the tank.
+# A concrete shield wall between tank and detector starts at
+# x = 228.6 cm and ends at x=320 cm.
+# The water density is 1 g/cm3 and the air density is 0.00122 g/cm3.
+# The the steel density is 7.8 g/cm3.
+# The buildup material is iron.
+# Benchmark result is 3.15E-3 R/hr.
+# Microshield result is 3.01E-3 R/hr  
+def test_benchmark_5():
+	myModel = model.Model()
+	mySource = source.BoxSource(materialName="water", boxCenter=[0,0,239.95], \
+		       boxDimensions=[273,273,479.9])
+	sourceVolume = 273*273*479.9 
+	mySource.addPhoton(0.4,4.0E+6*sourceVolume)
+	mySource.addPhoton(0.8,7.0E+6*sourceVolume)
+	mySource.addPhoton(1.3,2.8E+6*sourceVolume)
+	mySource.addPhoton(1.7,8.2E+6*sourceVolume)
+	mySource.addPhoton(2.2,4.0E+4*sourceVolume)
+	mySource.addPhoton(2.5,3.0E+4*sourceVolume)
+	mySource.addPhoton(3.5,1.2E+1*sourceVolume)
+	mySource.pointsPerDimension = [16,16,16]
+	myModel.addSource(mySource)
+	myModel.addShield(shield.SemiInfiniteXSlab("iron", xStart=136.5, \
+		       xEnd=139.04, density=7.8))
+	myModel.addShield(shield.SemiInfiniteXSlab("concrete", xStart=228.6, \
+		       xEnd=320, density=2.4))
+	myModel.setFillerMaterial('air',density=0.00122)
+	myModel.setBuildupFactorMaterial(material.Material('iron'))
+	myModel.addDetector(detector.Detector(320,0,239.95))
+	result = myModel.calculateExposure()
+	# convert from mR/hr to R/hr
+	print("")
+	print('test_benchmark_5')
+	print("At 320 cm, dose = ", result*1e-3, "R/hr")
+
+
