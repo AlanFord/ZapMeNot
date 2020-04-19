@@ -8,7 +8,7 @@ class Material:
     library = None
 
     def __init__(self, name):
-        if name == None:
+        if name is None:
             raise ValueError("Material type not specified")
 
         # initialize the class library if it has not already been done
@@ -57,21 +57,28 @@ class Material:
         return distance * self.density * self.getMassAttenCoff(energy)
 
     def getMassAttenCoff(self, energy):
-        if (energy < self.atten_energy_bins[0]) or (energy > self.atten_energy_bins[-1]):
+        if (energy < self.atten_energy_bins[0]) or \
+                (energy > self.atten_energy_bins[-1]):
             raise ValueError("Photon energy is out of range")
-        return np.power(10.0, np.interp(np.log10(energy), np.log10(self.atten_energy_bins), np.log10(self.mass_atten_coff)))
+        return np.power(10.0, np.interp(np.log10(energy),
+                                        np.log10(self.atten_energy_bins),
+                                        np.log10(self.mass_atten_coff)))
 
     def getMassEnergyAbsCoff(self, energy):
-        if (energy < self.enAbs_energy_bins[0]) or (energy > self.enAbs_energy_bins[-1]):
+        if (energy < self.enAbs_energy_bins[0]) or \
+                (energy > self.enAbs_energy_bins[-1]):
             raise ValueError("Photon energy is out of range")
-        return np.power(10.0, np.interp(np.log10(energy), np.log10(self.enAbs_energy_bins), np.log10(self.mass_enAbs_coff)))
+        return np.power(10.0, np.interp(np.log10(energy),
+                                        np.log10(self.enAbs_energy_bins),
+                                        np.log10(self.mass_enAbs_coff)))
 
     def getBuildupFactor(self, energy, mfp, type="GP"):
         if mfp == 0:
             return 1
         if type == "GP":
             # find the bounding array indices
-            if (energy < self.gp_energy_bins[0]) or (energy > self.gp_energy_bins[-1]):
+            if (energy < self.gp_energy_bins[0]) or \
+                    (energy > self.gp_energy_bins[-1]):
                 raise ValueError("Photon energy is out of range")
             # b = np.interp(energy, self.gp_energy_bins, self.gp_b)
             # c = np.interp(energy, self.gp_energy_bins, self.gp_c)

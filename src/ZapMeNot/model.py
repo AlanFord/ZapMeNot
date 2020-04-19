@@ -1,4 +1,4 @@
-from ZapMeNot import model, source, shield, detector, ray, material
+from ZapMeNot import ray, material
 import math
 
 
@@ -9,12 +9,13 @@ class Model:
         self.detector = None
         self.fillerMaterial = None
         self.buildupFactorMaterial = None
-        # used to calculate exposure from flux, MeV, and linear energy absorption coeff
+        # used to calculate exposure from flux, MeV,
+        # and linear energy absorption coeff
         self.conversionFactor = 1.835E-8
 
     def setFillerMaterial(self, fillerMaterial, density=None):
         self.fillerMaterial = material.Material(fillerMaterial)
-        if density != None:
+        if density is not None:
             self.fillerMaterial.setDensity(density)
 
     def addSource(self, newSource):
@@ -34,7 +35,8 @@ class Model:
     def calculateExposure(self):
         # flux by photon energy
         fluxByPhotonEnergy = []
-        # get a list of photons (energy/intensity per source point [gamma/sec]) from the source
+        # get a list of photons (energy/intensity per source point [gamma/sec])
+        # from the source
         spectrum = self.source.getPhotonSourceList()
         sourcePoints = self.source.getSourcePoints()
         # iterate through the photons
@@ -52,7 +54,7 @@ class Model:
                 # iterate through the shield list
                 totalMFP = 0.0
                 shieldCrossingDistance = 0.0
-                if self.fillerMaterial != None:
+                if self.fillerMaterial is not None:
                     for shield in self.shieldList:
                         distance = shield.getCrossingLength(vector)
                         shieldCrossingDistance += distance
@@ -62,9 +64,9 @@ class Model:
                     mfp = shield.getCrossingMFP(vector, photonEnergy)
                     totalMFP += mfp
                 totalFluxReductionFactor = math.exp(-totalMFP)
-                if (self.buildupFactorMaterial != None):
-                    buildupFactor = self.buildupFactorMaterial.getBuildupFactor(
-                        photonEnergy, totalMFP)
+                if (self.buildupFactorMaterial is not None):
+                    buildupFactor = \
+                        self.buildupFactorMaterial.getBuildupFactor(photonEnergy, totalMFP)
                 else:
                     buildupFactor = 1.0
                 uncollidedPointFlux = photonYield * \
@@ -76,10 +78,10 @@ class Model:
                 [photonEnergy, uncollidedFlux, totalFlux])
 
         air = material.Material('air')
-        results = 0
         for photon in fluxByPhotonEnergy:
             photon.append(
-                photon[2]*photon[0]*self.conversionFactor*air.getMassEnergyAbsCoff(photon[0]))
+                photon[2]*photon[0]*self.conversionFactor *
+                air.getMassEnergyAbsCoff(photon[0]))
         # sum exposure over all photons
         exposureTotal = 0
         for photon in fluxByPhotonEnergy:
