@@ -84,7 +84,7 @@ class TestLineSource():
 		# point source with no shielding
 		# reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
 		# from the reference, pages 132, 157, and 159, th dose rate is 64.66 mR/hr
-		# the "other code" gives 64.74 mR/hr at an air density of 1e-12g/cc
+		# Microshield gives 64.74 mR/hr at an air density of 1e-12g/cc
 		myModel = model.Model()
 		mySource = source.LineSource([0,0,0],[0,0,1000])
 		mySource.pointsPerDimension = 100
@@ -107,7 +107,7 @@ class TestZAlignedCylinderSource():
 		# point source with no shielding
 		# reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
 		# from the reference, pages 132, 157, and 159, th dose rate is 271.8 mR/hr
-		# the "other code" gives 271.8 mR/hr at an air density of 1e-12g/cc
+		# Microshield gives 271.8 mR/hr at an air density of 1e-12g/cc
 		myModel = model.Model()
 		mySource = source.ZAlignedCylinderSource(materialName='air', \
 			cylinderCenter=[0,0,500],cylinderLength=1000, \
