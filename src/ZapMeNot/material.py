@@ -3,7 +3,6 @@ import numpy as np
 import yaml
 import pkg_resources
 
-
 class Material:
     library = None
 
@@ -30,9 +29,9 @@ class Material:
         self.atten_energy_bins = np.array(
             properties.get("mass-atten-coff-energy"))
         self.mass_atten_coff = np.array(properties.get("mass-atten-coff"))
-        self.enAbs_energy_bins = np.array(
+        self.en_abs_energy_bins = np.array(
             properties.get("mass-en-abs-coff-energy"))
-        self.mass_enAbs_coff = np.array(properties.get("mass-en-abs-coff"))
+        self.mass_en_abs_coff = np.array(properties.get("mass-en-abs-coff"))
         self.gp_energy_bins = np.array(properties.get("gp-coff-energy"))
         gp_array = np.array(properties.get("gp-coeff"))
         self.gp_b = gp_array[:, 0]
@@ -50,13 +49,13 @@ class Material:
         self.Xi = Akima1DInterpolator(self.gp_energy_bins, self.gp_X)
         self.di = Akima1DInterpolator(self.gp_energy_bins, self.gp_d)
 
-    def setDensity(self, density):
+    def set_density(self, density):
         self.density = density
 
-    def getMfp(self, energy, distance):
-        return distance * self.density * self.getMassAttenCoff(energy)
+    def get_mfp(self, energy, distance):
+        return distance * self.density * self.get_mass_atten_coeff(energy)
 
-    def getMassAttenCoff(self, energy):
+    def get_mass_atten_coeff(self, energy):
         if (energy < self.atten_energy_bins[0]) or \
                 (energy > self.atten_energy_bins[-1]):
             raise ValueError("Photon energy is out of range")
@@ -64,18 +63,18 @@ class Material:
                                         np.log10(self.atten_energy_bins),
                                         np.log10(self.mass_atten_coff)))
 
-    def getMassEnergyAbsCoff(self, energy):
-        if (energy < self.enAbs_energy_bins[0]) or \
-                (energy > self.enAbs_energy_bins[-1]):
+    def get_mass_energy_abs_coeff(self, energy):
+        if (energy < self.en_abs_energy_bins[0]) or \
+                (energy > self.en_abs_energy_bins[-1]):
             raise ValueError("Photon energy is out of range")
         return np.power(10.0, np.interp(np.log10(energy),
-                                        np.log10(self.enAbs_energy_bins),
-                                        np.log10(self.mass_enAbs_coff)))
+                                        np.log10(self.en_abs_energy_bins),
+                                        np.log10(self.mass_en_abs_coff)))
 
-    def getBuildupFactor(self, energy, mfp, type="GP"):
+    def get_buildup_factor(self, energy, mfp, formula="GP"):
         if mfp == 0:
             return 1
-        if type == "GP":
+        if formula == "GP":
             # find the bounding array indices
             if (energy < self.gp_energy_bins[0]) or \
                     (energy > self.gp_energy_bins[-1]):
@@ -93,13 +92,12 @@ class Material:
             d = self.di(energy)
 
             return Material.GP(a, b, c, d, X, mfp)
-        else:
-            raise ValueError("Only GP Buildup Factors are currently supported")
+        raise ValueError("Only GP Buildup Factors are currently supported")
 
+    @staticmethod
     def GP(a, b, c, d, X, mfp):
         K = (c * (mfp**a)) + (d * (np.tanh(mfp/X - 2) - np.tanh(-2))) / \
             (1 - np.tanh(-2))
         if K == 1:
             return 1 + (b-1) * mfp
-        else:
-            return 1 + (b-1)*((K**mfp) - 1)/(K - 1)
+        return 1 + (b-1)*((K**mfp) - 1)/(K - 1)

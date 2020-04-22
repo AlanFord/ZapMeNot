@@ -1,7 +1,9 @@
-from ZapMeNot import shield, isotope
 import abc
-import numpy as np
 import math
+
+import numpy as np
+
+from ZapMeNot import shield, isotope
 
 
 class Source(metaclass=abc.ABCMeta):
@@ -12,61 +14,61 @@ class Source(metaclass=abc.ABCMeta):
     def __init__(self, **kwargs):
         '''Initialize the Source with empty strings for the isotope list
         and photon list'''
-        self.isotopeList = []   # LIST of isotopes and activities (Bq)
-        self.uniquePhotons = []  # LIST of unique photons and activities (Bq)
-        self.pointsPerDimension = [10, 10, 10]
+        self.isotope_list = []   # LIST of isotopes and activities (Bq)
+        self.unique_photons = []  # LIST of unique photons and activities (Bq)
+        self.points_per_dimension = [10, 10, 10]
         super().__init__(**kwargs)
 
-    def addIsotopeCuries(self, newIsotope, curies):
+    def add_isotope_curies(self, new_isotope, curies):
         "add an isotope and activity to the isotope list"
         # LIST of tuples, isotope object and activity
-        self.isotopeList.append((newIsotope, curies*3.7E10))
+        self.isotope_list.append((new_isotope, curies*3.7E10))
 
-    def addIsotopeBq(self, newIsotope, becquerels):
+    def add_isotope_bq(self, new_isotope, becquerels):
         "add an isotope and activity to the isotope list"
         # LIST of tuples, isotope object and activity
-        self.isotopeList.append((newIsotope, becquerels))
+        self.isotope_list.append((new_isotope, becquerels))
 
-    def addPhoton(self, energy, becquerels):
+    def add_photon(self, energy, becquerels):
         "add a photon and activity to the photon list"
-        self.uniquePhotons.append((energy, becquerels))
+        self.unique_photons.append((energy, becquerels))
 
-    def listIsotopes(self):
+    def list_isotopes(self):
         # echo back a list of the isotopes currently stored
-        return self.isotopeList
+        return self.isotope_list
 
-    def listUniquePhotons(self):
-        return self.uniquePhotons
+    def list_unique_photons(self):
+        return self.unique_photons
 
-    def getPhotonSourceList(self):
+    def get_photon_source_list(self):
         "returns a list of unique photon energies and activities"
-        photonDict = dict()
-        keys = photonDict.keys()
+        photon_dict = dict()
+        keys = photon_dict.keys()
         # test to see if photon energy is already on the list
         # and then add photon emmision rate (intensity*Bq).
 
-        # nextIsotope will be a tuple of name and Bq
-        for nextIsotope in self.isotopeList:
-            isotopeDetail = isotope.Isotope(nextIsotope[0])
-            for photon in isotopeDetail.photons:
+        # next_isotope will be a tuple of name and Bq
+        for next_isotope in self.isotope_list:
+            isotope_detail = isotope.Isotope(next_isotope[0])
+            for photon in isotope_detail.photons:
                 if photon[0] in keys:
-                    photonDict[photon[0]] = photonDict[photon[0]] + \
-                        photon[1]*nextIsotope[1]
+                    photon_dict[photon[0]] = photon_dict[photon[0]] + \
+                        photon[1]*next_isotope[1]
                 else:
-                    photonDict[photon[0]] = photon[1]*nextIsotope[1]
-        for photon in self.uniquePhotons:
+                    photon_dict[photon[0]] = photon[1]*next_isotope[1]
+        for photon in self.unique_photons:
             if photon[0] in keys:
-                photonDict[photon[0]] = photonDict[photon[0]] + photon[1]
+                photon_dict[photon[0]] = photon_dict[photon[0]] + photon[1]
             else:
-                photonDict[photon[0]] = photon[1]
-        photonList = []
-        scalingFactor = np.prod(self.pointsPerDimension)
-        for key, value in photonDict.items():
-            photonList.append((key, value/scalingFactor))
-        return sorted(photonList)
+                photon_dict[photon[0]] = photon[1]
+        photon_list = []
+        scaling_factor = np.prod(self.points_per_dimension)
+        for key, value in photon_dict.items():
+            photon_list.append((key, value/scaling_factor))
+        return sorted(photon_list)
 
-    @abc.abstractproperty
-    def getSourcePoints(self):
+    @abc.abstractmethod
+    def get_source_points(self):
         pass
 
 # -----------------------------------------------------------
@@ -82,30 +84,30 @@ class LineSource(Source, shield.Shield):
         self.length = np.linalg.norm(self.end - self.origin)
         self.dir = (self.end - self.origin)/self.length
         # let the point source have a dummy material of air at a zero density
-        kwargs['materialName'] = 'air'
+        kwargs['material_name'] = 'air'
         kwargs['density'] = 0
         super().__init__(**kwargs)
-        # initialize pointsPerDimension after super() to force a
+        # initialize points_per_dimension after super() to force a
         # single dimension
-        self.pointsPerDimension = 10
+        self.points_per_dimension = 10
 
-    def getSourcePoints(self):
-        spacings = np.linspace(1, self.pointsPerDimension,
-                               self.pointsPerDimension)
-        meshWidth = self.length/self.pointsPerDimension
-        spacings = spacings*meshWidth
-        spacings = spacings-(meshWidth/2)
-        sourcePoints = []
+    def get_source_points(self):
+        spacings = np.linspace(1, self.points_per_dimension,
+                               self.points_per_dimension)
+        mesh_width = self.length/self.points_per_dimension
+        spacings = spacings*mesh_width
+        spacings = spacings-(mesh_width/2)
+        source_points = []
         for dist in spacings:
             location = self.origin+self.dir*dist
-            sourcePoints.append(location)
-        return sourcePoints
+            source_points.append(location)
+        return source_points
 
-    def getCrossingLength(self, vector):
+    def get_crossing_length(self, ray):
         '''returns a  crossing length'''
         return 0
 
-    def getCrossingMFP(self, vector, photonEnergy):
+    def get_crossing_mfp(self, ray, photon_energy):
         '''returns the crossing mfp'''
         return 0
 
@@ -117,24 +119,23 @@ class PointSource(Source, shield.Shield):
 
     def __init__(self, x, y, z, **kwargs):
         '''Initialize with an x,y,z location in space'''
-        "Initialize"
         self.x = x
         self.y = y
         self.z = z
         # let the point source have a dummy material of air at a zero density
-        kwargs['materialName'] = 'air'
+        kwargs['material_name'] = 'air'
         kwargs['density'] = 0
         super().__init__(**kwargs)
-        self.pointsPerDimension = 1
+        self.points_per_dimension = 1
 
-    def getSourcePoints(self):
+    def get_source_points(self):
         return[(self.x, self.y, self.z)]
 
-    def getCrossingLength(self, vector):
+    def get_crossing_length(self, ray):
         '''returns a  crossing length'''
         return 0
 
-    def getCrossingMFP(self, vector, photonEnergy):
+    def get_crossing_mfp(self, ray, photon_energy):
         '''returns the crossing mfp'''
         return 0
 
@@ -143,72 +144,72 @@ class PointSource(Source, shield.Shield):
 
 # class SphereSource(Source, shield.Sphere):
 #     '''Axis-Aligned rectangular box source'''
-#     # initialize with boxCenter, boxDimensions, material(optional),
+#     # initialize with box_center, box_dimensions, material(optional),
 #     # density(optional)
 
 #     def __init__(self, **kwargs):
 #         super().__init__(**kwargs)
 
-#     def getSourcePoints(self):
+#     def get_source_points(self):
 
 #         # calculate the radius of each "equal area" annular region
 #         totalVolume = 4/3*math.pi*self.radius**3
-#         oldRadius = 0
-#         annularLocations = []
-#         for i in range(self.pointsPerDimension[0]):
-#             newRadius = math.sqrt((runningArea+annularArea)/math.pi)
-#             annularLocations.append((newRadius+oldRadius)/2)
-#             oldRadius = newRadius
+#         old_radius = 0
+#         annular_locations = []
+#         for i in range(self.points_per_dimension[0]):
+#             new_radius = math.sqrt((running_area+annular_area)/math.pi)
+#             annular_locations.append((new_radius+old_radius)/2)
+#             old_radius = new_radius
 
-#         angleIncrement = 2*math.py/self.pointsPerDimension[1]
-#         startAngle = angleIncrement/2
-#         angleLocations = []
-#         for i in range(self.pointsPerDimension[1]):
-#             angleLocations.append(startAngle + (i*angleIncrement))
+#         angle_increment = 2*math.pi/self.points_per_dimension[1]
+#         start_angle = angle_increment/2
+#         angle_locations = []
+#         for i in range(self.points_per_dimension[1]):
+#             angle_locations.append(start_angle + (i*angle_increment))
 
-#         lengthIncrement = self.length/self.pointsPerDimension[2]
-#         startLength = lengthIncrement/2
-#         lengthLocations = []
-#         for i in range(self.pointsPerDimension[2]):
-#             lengthLocations.append(startLength + (i*lengthIncrement))
+#         length_increment = self.length/self.points_per_dimension[2]
+#         start_length = length_increment/2
+#         length_locations = []
+#         for i in range(self.points_per_dimension[2]):
+#             length_locations.append(start_length + (i*length_increment))
 
 #         # iterate through each dimension, building a list of source points
-#         sourcePoints = []
-#         for radialLocation in annularLocations:
-#             r = radialLocation
-#             for angleLocation in angleLocations:
-#                 theta = angleLocation
-#                 for lengthLocation in lengthLocations:
-#                     z = lengthLocation
+#         source_points = []
+#         for radial_location in annular_locations:
+#             r = radial_location
+#             for angle_location in angle_locations:
+#                 theta = angle_location
+#                 for length_location in length_locations:
+#                     z = length_location
 #                     # convert cylintrical to rectangular coordinates
 #                     x = r * math.cos(theta)
 #                     y = r * math.sin(theta)
-#                     sourcePoints.append([x, y, z])
-#         return sourcePoints
+#                     source_points.append([x, y, z])
+#         return source_points
 
 # -----------------------------------------------------------
 
 
 class BoxSource(Source, shield.Box):
     '''Axis-Aligned rectangular box source'''
-    # initialize with boxCenter, boxDimensions, material(optional),
+    # initialize with box_center, box_dimensions, material(optional),
     # density(optional)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def getSourcePoints(self):
-        sourcePoints = []
-        meshWidth = self.boxDimensions/self.pointsPerDimension
-        startPoint = self.boxCenter-(self.boxDimensions)/2+(meshWidth/2)
-        for i in range(self.pointsPerDimension[0]):
-            x = startPoint[0]+meshWidth[0]*i
-            for j in range(self.pointsPerDimension[1]):
-                y = startPoint[1]+meshWidth[1]*j
-                for k in range(self.pointsPerDimension[2]):
-                    z = startPoint[2]+meshWidth[2]*k
-                    sourcePoints.append([x, y, z])
-        return sourcePoints
+    def get_source_points(self):
+        source_points = []
+        mesh_width = self.box_dimensions/self.points_per_dimension
+        start_point = self.box_center-(self.box_dimensions)/2+(mesh_width/2)
+        for i in range(self.points_per_dimension[0]):
+            x = start_point[0]+mesh_width[0]*i
+            for j in range(self.points_per_dimension[1]):
+                y = start_point[1]+mesh_width[1]*j
+                for k in range(self.points_per_dimension[2]):
+                    z = start_point[2]+mesh_width[2]*k
+                    source_points.append([x, y, z])
+        return source_points
 
 # -----------------------------------------------------------
 
@@ -221,45 +222,45 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def getSourcePoints(self):
+    def get_source_points(self):
 
         # calculate the radius of each "equal area" annular region
-        totalArea = math.pi*self.radius**2
-        annularArea = totalArea/self.pointsPerDimension[0]
-        oldRadius = 0
-        runningArea = 0
-        annularLocations = []
-        for i in range(self.pointsPerDimension[0]):
-            newRadius = math.sqrt((runningArea+annularArea)/math.pi)
-            annularLocations.append((newRadius+oldRadius)/2)
-            oldRadius = newRadius
-            runningArea = runningArea+annularArea
+        total_area = math.pi*self.radius**2
+        annular_area = total_area/self.points_per_dimension[0]
+        old_radius = 0
+        running_area = 0
+        annular_locations = []
+        for i in range(self.points_per_dimension[0]):
+            new_radius = math.sqrt((running_area+annular_area)/math.pi)
+            annular_locations.append((new_radius+old_radius)/2)
+            old_radius = new_radius
+            running_area = running_area+annular_area
 
-        angleIncrement = 2*math.pi/self.pointsPerDimension[1]
-        startAngle = angleIncrement/2
-        angleLocations = []
-        for i in range(self.pointsPerDimension[1]):
-            angleLocations.append(startAngle + (i*angleIncrement))
+        angle_increment = 2*math.pi/self.points_per_dimension[1]
+        start_angle = angle_increment/2
+        angle_locations = []
+        for i in range(self.points_per_dimension[1]):
+            angle_locations.append(start_angle + (i*angle_increment))
 
-        lengthIncrement = self.length/self.pointsPerDimension[2]
-        startLength = lengthIncrement/2
-        lengthLocations = []
-        for i in range(self.pointsPerDimension[2]):
-            lengthLocations.append(startLength + (i*lengthIncrement))
+        length_increment = self.length/self.points_per_dimension[2]
+        start_length = length_increment/2
+        length_locations = []
+        for i in range(self.points_per_dimension[2]):
+            length_locations.append(start_length + (i*length_increment))
 
         # iterate through each dimension, building a list of source points
-        sourcePoints = []
-        for radialLocation in annularLocations:
-            r = radialLocation
-            for angleLocation in angleLocations:
-                theta = angleLocation
-                for lengthLocation in lengthLocations:
-                    z = lengthLocation
+        source_points = []
+        for radial_location in annular_locations:
+            r = radial_location
+            for angle_location in angle_locations:
+                theta = angle_location
+                for length_location in length_locations:
+                    z = length_location
                     # convert cylintrical to rectangular coordinates
                     x = r * math.cos(theta)
                     y = r * math.sin(theta)
-                    sourcePoints.append([x, y, z])
-        return sourcePoints
+                    source_points.append([x, y, z])
+        return source_points
 
 # -----------------------------------------------------------
 
@@ -272,45 +273,45 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def getSourcePoints(self):
+    def get_source_points(self):
 
         # calculate the radius of each "equal area" annular region
-        totalArea = math.pi*self.radius**2
-        annularArea = totalArea/self.pointsPerDimension[0]
-        oldRadius = 0
-        runningArea = 0
-        annularLocations = []
-        for i in range(self.pointsPerDimension[0]):
-            newRadius = math.sqrt((runningArea+annularArea)/math.pi)
-            annularLocations.append((newRadius+oldRadius)/2)
-            oldRadius = newRadius
-            runningArea = runningArea+annularArea
+        total_area = math.pi*self.radius**2
+        annular_area = total_area/self.points_per_dimension[0]
+        old_radius = 0
+        running_area = 0
+        annular_locations = []
+        for i in range(self.points_per_dimension[0]):
+            new_radius = math.sqrt((running_area+annular_area)/math.pi)
+            annular_locations.append((new_radius+old_radius)/2)
+            old_radius = new_radius
+            running_area = running_area+annular_area
 
-        angleIncrement = 2*math.py/self.pointsPerDimension[1]
-        startAngle = angleIncrement/2
-        angleLocations = []
-        for i in range(self.pointsPerDimension[1]):
-            angleLocations.append(startAngle + (i*angleIncrement))
+        angle_increment = 2*math.pi/self.points_per_dimension[1]
+        start_angle = angle_increment/2
+        angle_locations = []
+        for i in range(self.points_per_dimension[1]):
+            angle_locations.append(start_angle + (i*angle_increment))
 
-        lengthIncrement = self.length/self.pointsPerDimension[2]
-        startLength = lengthIncrement/2
-        lengthLocations = []
-        for i in range(self.pointsPerDimension[2]):
-            lengthLocations.append(startLength + (i*lengthIncrement))
+        length_increment = self.length/self.points_per_dimension[2]
+        start_length = length_increment/2
+        length_locations = []
+        for i in range(self.points_per_dimension[2]):
+            length_locations.append(start_length + (i*length_increment))
 
         # iterate through each dimension, building a list of source points
-        sourcePoints = []
-        for radialLocation in annularLocations:
-            r = radialLocation
-            for angleLocation in angleLocations:
-                theta = angleLocation
-                for lengthLocation in lengthLocations:
-                    y = lengthLocation
+        source_points = []
+        for radial_location in annular_locations:
+            r = radial_location
+            for angle_location in angle_locations:
+                theta = angle_location
+                for length_location in length_locations:
+                    y = length_location
                     # convert cylintrical to rectangular coordinates
                     x = r * math.cos(theta)
                     z = r * math.sin(theta)
-                    sourcePoints.append([x, y, z])
-        return sourcePoints
+                    source_points.append([x, y, z])
+        return source_points
 
 # -----------------------------------------------------------
 
@@ -323,42 +324,42 @@ class XAlignedCylinderSource(Source, shield.YAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def getSourcePoints(self):
+    def get_source_points(self):
 
         # calculate the radius of each "equal area" annular region
-        totalArea = math.pi*self.radius**2
-        annularArea = totalArea/self.pointsPerDimension[0]
-        oldRadius = 0
-        runningArea = 0
-        annularLocations = []
-        for i in range(self.pointsPerDimension[0]):
-            newRadius = math.sqrt((runningArea+annularArea)/math.pi)
-            annularLocations.append((newRadius+oldRadius)/2)
-            oldRadius = newRadius
-            runningArea = runningArea+annularArea
+        total_area = math.pi*self.radius**2
+        annular_area = total_area/self.points_per_dimension[0]
+        old_radius = 0
+        running_area = 0
+        annular_locations = []
+        for i in range(self.points_per_dimension[0]):
+            new_radius = math.sqrt((running_area+annular_area)/math.pi)
+            annular_locations.append((new_radius+old_radius)/2)
+            old_radius = new_radius
+            running_area = running_area+annular_area
 
-        angleIncrement = 2*math.py/self.pointsPerDimension[1]
-        startAngle = angleIncrement/2
-        angleLocations = []
-        for i in range(self.pointsPerDimension[1]):
-            angleLocations.append(startAngle + (i*angleIncrement))
+        angle_increment = 2*math.pi/self.points_per_dimension[1]
+        start_angle = angle_increment/2
+        angle_locations = []
+        for i in range(self.points_per_dimension[1]):
+            angle_locations.append(start_angle + (i*angle_increment))
 
-        lengthIncrement = self.length/self.pointsPerDimension[2]
-        startLength = lengthIncrement/2
-        lengthLocations = []
-        for i in range(self.pointsPerDimension[2]):
-            lengthLocations.append(startLength + (i*lengthIncrement))
+        length_increment = self.length/self.points_per_dimension[2]
+        start_length = length_increment/2
+        length_locations = []
+        for i in range(self.points_per_dimension[2]):
+            length_locations.append(start_length + (i*length_increment))
 
         # iterate through each dimension, building a list of source points
-        sourcePoints = []
-        for radialLocation in annularLocations:
-            r = radialLocation
-            for angleLocation in angleLocations:
-                theta = angleLocation
-                for lengthLocation in lengthLocations:
-                    x = lengthLocation
+        source_points = []
+        for radial_location in annular_locations:
+            r = radial_location
+            for angle_location in angle_locations:
+                theta = angle_location
+                for length_location in length_locations:
+                    x = length_location
                     # convert cylintrical to rectangular coordinates
                     y = r * math.cos(theta)
                     z = r * math.sin(theta)
-                    sourcePoints.append([x, y, z])
-        return sourcePoints
+                    source_points.append([x, y, z])
+        return source_points

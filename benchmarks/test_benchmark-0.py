@@ -34,19 +34,19 @@ pytestmark = pytest.mark.benchmark
 # 3,000			4.5E-14 to 7.5E-14   7.941E-15
 # 5,000			3.5E-15 to 5.8E-15   6.091E-16
 def test_benchmark_0():
-	myModel = model.Model()
-	mySource = source.PointSource(0,0,0)
-	mySource.addPhoton(6.2,1)
-	myModel.addSource(mySource)
+	my_model = model.Model()
+	my_source = source.PointSource(0,0,0)
+	my_source.add_photon(6.2,1)
+	my_model.add_source(my_source)
 	# in the absence of a fill material option, a sphere shielf of air is used with 
 	#   a radius large enough to emcompass the range of detector locations
-	myModel.addShield(shield.Sphere(materialName="air", sphereRadius=6000*12*2.54, \
-		              sphereCenter=[0,0,0],density=0.00122))
-	myModel.setBuildupFactorMaterial(material.Material('air'))
+	my_model.add_shield(shield.Sphere(material_name="air", sphere_radius=6000*12*2.54, \
+		              sphere_center=[0,0,0],density=0.00122))
+	my_model.set_buildup_factor_material(material.Material('air'))
 	print("")
 	print('test_benchmark_0')
 	for distance in [200, 1000, 3000, 5000]:
-		myModel.addDetector(detector.Detector(distance*12*2.54,57*12*2.54,0))
-		result = myModel.calculateExposure()
+		my_model.add_detector(detector.Detector(distance*12*2.54,57*12*2.54,0))
+		result = my_model.calculate_exposure()
 		# convert from R/sec to mR/hr
 		print("At", distance, "ft, dose = ", result*0.877*8766*1e-3, "Rad/yr")

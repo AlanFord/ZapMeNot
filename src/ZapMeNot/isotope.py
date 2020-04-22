@@ -1,6 +1,25 @@
 import yaml
 import pkg_resources
 
+def convert_half_life(value, units):
+    if units == "usecond":
+        retval = value/1.0E6
+    elif units == "msecond":
+        retval = value/1000.
+    elif units == "second":
+        retval = value
+    elif units == "minute":
+        retval = value*60
+    elif units == "hour":
+        retval = value*60*60
+    elif units == "day":
+        retval = value*60*60*24
+    elif units == "year":
+        retval = value*60*60*24*365.25
+    # if all else fails, raise an error
+    else:
+        raise ValueError("Half-life units are not recognized")
+    return retval
 
 class Isotope:
     library = None
@@ -25,26 +44,8 @@ class Isotope:
         # convert the half-life to units of seconds
         half_life = properties.get("half-life")
         half_life_units = properties.get("half-life-units")
-        self.half_life = self.convert_half_life(half_life, half_life_units)
+        self.half_life = convert_half_life(half_life, half_life_units)
 
         # photon energies and intensities are stored as a list of tuples
         # 2D list of photon energies and intensities
         self.photons = properties.get("photon-intensity")
-
-    def convert_half_life(self, value, units):
-        if units == "usecond":
-            return value/1.0E6
-        if units == "msecond":
-            return value/1000.
-        if units == "second":
-            return value
-        if units == "minute":
-            return value*60
-        if units == "hour":
-            return value*60*60
-        if units == "day":
-            return value*60*60*24
-        if units == "year":
-            return value*60*60*24*365.25
-        # if all else fails, raise an error
-        raise ValueError("Half-life units are not recognized")

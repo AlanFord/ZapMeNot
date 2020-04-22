@@ -41,29 +41,29 @@ pytestmark = pytest.mark.benchmark
 # Benchmark acceptable results are 0.49E-3 to 2.46E-3 R/hr.
 # Microshield result is 1.89E-3 R/hr  
 def test_benchmark_3():
-	myModel = model.Model()
-	# mySource = source.ZAlignedCylinderSource(materialName="water", cylinderRadius=154, \
+	my_model = model.Model()
+	# my_source = source.ZAlignedCylinderSource(materialName="water", cylinderRadius=154, \
 	# 	       cylinderCenter=[0,0,54.15], cylinderLength=108.3)
-	mySource = source.ZAlignedCylinderSource(materialName="water", cylinderRadius=154, \
-		       cylinderCenter=[0,0,54.15], cylinderLength=108.3)
-	sourceVolume = 108.3*(154**2)*math.pi # cycinder volume in cm**3
-	mySource.addPhoton(0.4,4.0E+6*sourceVolume)
-	mySource.addPhoton(0.8,7.0E+6*sourceVolume)
-	mySource.addPhoton(1.3,2.8E+6*sourceVolume)
-	mySource.addPhoton(1.7,8.2E+6*sourceVolume)
-	mySource.addPhoton(2.2,4.0E+4*sourceVolume)
-	mySource.addPhoton(2.5,3.0E+4*sourceVolume)
-	mySource.addPhoton(3.5,1.2E+1*sourceVolume)
-	mySource.pointsPerDimension = [16,16,16]
-	myModel.addSource(mySource)
-	myModel.addShield(shield.ZAlignedInfiniteAnnulus("iron", cylinderInnerRadius=154, \
-		       cylinderCenter=[0,0,54.15], cylinderOuterRadius=154+2.54, density=7.8))
-	myModel.addShield(shield.SemiInfiniteXSlab("concrete", xStart=220, \
-		       xEnd=311, density=2.4))
-	myModel.setFillerMaterial('air',density=0.00122)
-	myModel.setBuildupFactorMaterial(material.Material('concrete'))
-	myModel.addDetector(detector.Detector(311, 0, 54.15))
-	result = myModel.calculateExposure()
+	my_source = source.ZAlignedCylinderSource(material_name="water", cylinder_radius=154, \
+		       cylinder_center=[0,0,54.15], cylinder_length=108.3)
+	source_volume = 108.3*(154**2)*math.pi # cycinder volume in cm**3
+	my_source.add_photon(0.4,4.0E+6*source_volume)
+	my_source.add_photon(0.8,7.0E+6*source_volume)
+	my_source.add_photon(1.3,2.8E+6*source_volume)
+	my_source.add_photon(1.7,8.2E+6*source_volume)
+	my_source.add_photon(2.2,4.0E+4*source_volume)
+	my_source.add_photon(2.5,3.0E+4*source_volume)
+	my_source.add_photon(3.5,1.2E+1*source_volume)
+	my_source.points_per_dimension = [16,16,16]
+	my_model.add_source(my_source)
+	my_model.add_shield(shield.ZAlignedInfiniteAnnulus("iron", cylinder_inner_radius=154, \
+		       cylinder_center=[0,0,54.15], cylinder_outer_radius=154+2.54, density=7.8))
+	my_model.add_shield(shield.SemiInfiniteXSlab("concrete", x_start=220, \
+		       x_end=311, density=2.4))
+	my_model.set_filler_material('air',density=0.00122)
+	my_model.set_buildup_factor_material(material.Material('concrete'))
+	my_model.add_detector(detector.Detector(311, 0, 54.15))
+	result = my_model.calculate_exposure()
 	# convert from mR/hr to R/hr
 	print("")
 	print('test_benchmark_3')

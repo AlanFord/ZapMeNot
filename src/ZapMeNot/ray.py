@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class Ray:
+class FiniteLengthRay:
     def __init__(self, start, end):
         self.start = start
         self.end = end

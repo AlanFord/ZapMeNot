@@ -38,20 +38,20 @@ def test_benchmark_1():
 	myModel = model.Model()
 	# mySource = source.ZAlignedCylinderSource(materialName="water", cylinderRadius=6*12*2.54, \
 	# 	       cylinderCenter=[0,0,35/2*12*2.54], cylinderLength=35*12*2.54)
-	mySource = source.ZAlignedCylinderSource(materialName="water", cylinderRadius=6*12*2.54, \
-		       cylinderCenter=[0,0,35/2*12*2.54], cylinderLength=35*12*2.54)
+	mySource = source.ZAlignedCylinderSource(material_name="water", cylinder_radius=6*12*2.54, \
+		       cylinder_center=[0,0,35/2*12*2.54], cylinder_length=35*12*2.54)
 	sourceVolume = 35*(6**2)*math.pi*((12*2.54)**3) # cycinder volume in cm**3
-	mySource.addPhoton(0.8,37.5*sourceVolume)
-	mySource.pointsPerDimension = [40,20,40]
-	myModel.addSource(mySource)
-	myModel.addShield(shield.ZAlignedCylinder("air", cylinderRadius=600*12*2.54, \
-		       cylinderCenter=[0,0,0], cylinderLength=100*12*2.54, density=0.00122))
-	myModel.setBuildupFactorMaterial(material.Material('air'))
+	mySource.add_photon(0.8,37.5*sourceVolume)
+	mySource.points_per_dimension = [40,20,40]
+	myModel.add_source(mySource)
+	myModel.add_shield(shield.ZAlignedCylinder("air", cylinder_radius=600*12*2.54, \
+		       cylinder_center=[0,0,0], cylinder_length=100*12*2.54, density=0.00122))
+	myModel.set_buildup_factor_material(material.Material('air'))
 	print("")
 	print('test_benchmark_1')
 	for distance in [20, 50, 200, 500]:
-		myModel.addDetector(detector.Detector(distance*12*2.54,3*12*2.54,0))
-		result = myModel.calculateExposure()
+		myModel.add_detector(detector.Detector(distance*12*2.54,3*12*2.54,0))
+		result = myModel.calculate_exposure()
 		# convert from R/sec to mR/hr
 		print("At", distance, "ft, dose = ", result*0.877*8766*1e-3, "Rad/yr")
 
