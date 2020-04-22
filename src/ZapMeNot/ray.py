@@ -3,10 +3,31 @@ import numpy as np
 
 class FiniteLengthRay:
     def __init__(self, start, end):
-        self.start = start
-        self.end = end
-        self.origin = np.array(start)
-        v = np.array(self.end) - self.origin
+        self._start = start
+        self._end = end
+        self.regularize()
+
+    @property
+    def start(self):
+        return self._start
+    
+    @start.setter
+    def start(self, value):
+        self._start = value
+        self.regularize()
+
+    @property
+    def end(self):
+        return self._end
+
+    @end.setter
+    def end(self, value):
+        self._end = value
+        self.regularize()
+
+    def regularize(self):
+        self.origin = np.array(self._start)
+        v = np.array(self._end) - self.origin
         self.length = np.linalg.norm(v)
         self.dir = v / self.length
         with np.errstate(divide='ignore'):
