@@ -3,7 +3,7 @@ import math
 
 import numpy as np
 
-from ZapMeNot import shield, isotope
+from . import shield, isotope
 
 
 class Source(metaclass=abc.ABCMeta):

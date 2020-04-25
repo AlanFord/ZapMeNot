@@ -1,6 +1,6 @@
-from ZapMeNot import ray, material
 import math
 
+from . import ray, material
 
 class Model:
     def __init__(self):

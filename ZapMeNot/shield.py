@@ -3,7 +3,7 @@ import math
 
 import numpy as np
 
-from ZapMeNot import material
+from . import material
 # import material
 
 # -----------------------------------------------------------
