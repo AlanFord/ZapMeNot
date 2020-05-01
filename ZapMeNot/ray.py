@@ -2,19 +2,31 @@ import numpy as np
 
 
 class FiniteLengthRay:
-    '''
-    The FiniteLengthRay object represents a ray in three-space
-    with a defined starting point, a defined end, and a resulting
-    direction.
+    """Represents a ray in three-space
 
-    Args:
-        start (list): A list or tuple defining the starting point of the ray in cartesian coordinates
-        end (list): A list or tuple defining the ending point of the ray in cartesian coordinates.
+    The FiniteLengthRay object has a defined starting point, a defined end, 
+    and a resulting direction.
 
-    Attributes:
-        length(float): The length of the ray
-        dir(:class:`numpy.ndarray`): A numpy vector holding the vector normal of the ray
-    '''
+    Parameters
+    ----------
+    start : :obj:`list` or :obj:`tuple`
+        Defines the starting point of the ray in cartesian coordinates
+    end : :obj:`list` or :obj:`tuple`
+        Defines the ending point of the ray in cartesian coordinates.
+
+    Attributes
+    ----------
+    start
+    end
+    origin : :class:`numpy.ndarray`
+        A vector implemenation of the starting point
+    length : float
+        The length of the ray
+    dir : :class:`numpy.ndarray`
+        A numpy vector holding the vector normal of the ray
+    sign : :class:`numpy.ndarray`
+        Indicates the signs of the components of `dir`
+    """
     def __init__(self, start, end):
         self._start = start
         self._end = end
@@ -22,7 +34,7 @@ class FiniteLengthRay:
 
     @property
     def start(self):
-        """list: A list defining the starting point of the ray in cartesian coordinates."""
+        """:obj:`list` : A list defining the starting point of the ray in cartesian coordinates."""
         return self._start
     
     @start.setter
@@ -32,7 +44,7 @@ class FiniteLengthRay:
 
     @property
     def end(self):
-         """list: A list defining the ending point of the ray in cartesian coordinates."""
+         """:obj:`list` : A list defining the ending point of the ray in cartesian coordinates."""
          return self._end
 
     @end.setter
@@ -49,7 +61,6 @@ class FiniteLengthRay:
             self.dir = np.zeros(3)
         else:
             self.dir = v / self.length
-        print("dir is ",self.dir)
         with np.errstate(divide='ignore'):
             self.invdir = 1/self.dir  # vector is opposite of vector dir
         self.sign = [0, 0, 0]

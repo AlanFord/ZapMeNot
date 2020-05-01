@@ -14,7 +14,7 @@ def test_a_bad_material_name():
 # test setting a new density
 def test_setDensity():
 	a = material.Material("air")
-	a.set_density(3.14)
+	a.density = 3.14
 	assert a.density == 3.14
 
 # test retrieval of the MFP

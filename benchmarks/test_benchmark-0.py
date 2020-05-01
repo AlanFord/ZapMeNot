@@ -38,10 +38,7 @@ def test_benchmark_0():
 	my_source = source.PointSource(0,0,0)
 	my_source.add_photon(6.2,1)
 	my_model.add_source(my_source)
-	# in the absence of a fill material option, a sphere shielf of air is used with 
-	#   a radius large enough to emcompass the range of detector locations
-	my_model.add_shield(shield.Sphere(material_name="air", sphere_radius=6000*12*2.54, \
-		              sphere_center=[0,0,0],density=0.00122))
+	my_model.set_filler_material('air',density=0.00122)
 	my_model.set_buildup_factor_material(material.Material('air'))
 	print("")
 	print('test_benchmark_0')

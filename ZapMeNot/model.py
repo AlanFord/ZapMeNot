@@ -16,7 +16,7 @@ class Model:
     def set_filler_material(self, fillerMaterial, density=None):
         self.fillerMaterial = material.Material(fillerMaterial)
         if density is not None:
-            self.fillerMaterial.set_density(density)
+            self.fillerMaterial.density = density
 
     def add_source(self, newSource):
         self.source = newSource

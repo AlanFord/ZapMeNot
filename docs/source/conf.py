@@ -12,7 +12,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.join(os.path.abspath('../..'),'src'))
+sys.path.insert(0, os.path.abspath('../..'))
+# sys.path.insert(0, os.path.join(os.path.abspath('../..'),'ZapMeNot'))
 
 
 # -- Project information -----------------------------------------------------
@@ -31,7 +32,7 @@ release = '0.0.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-	'sphinx.ext.napoleon',
+    'sphinx.ext.napoleon',
 	'sphinx.ext.todo',
 	'sphinx.ext.autodoc',
 	'sphinx.ext.viewcode',

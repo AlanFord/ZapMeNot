@@ -7,48 +7,112 @@ from . import shield, isotope
 
 
 class Source(metaclass=abc.ABCMeta):
-    '''Abtract class to model a radiation source.  Maintains a list of
-    isotopes and can returna list of point source locations within the
-    body of the Source'''
+    """Abtract class to model a radiation source.  
+
+    Maintains a list of isotopes and can return a list of point source 
+    locations within the body of the Source.
+
+    Parameters
+    ----------
+    **kwargs
+        Arbitrary keyword arguments.
+
+    Attributes
+    ----------
+    points_per_dimension : :obj:`list` of integers
+        The number of source points to be used in each dimension when modeling
+        the uniform source distribution throughout the body of the source.  Typically
+        a list of three integers for three-dimensional sources, one integer
+        for one diensional sources, and not significant for point sources.
+
+    """
 
     def __init__(self, **kwargs):
         '''Initialize the Source with empty strings for the isotope list
         and photon list'''
-        self.isotope_list = []   # LIST of isotopes and activities (Bq)
-        self.unique_photons = []  # LIST of unique photons and activities (Bq)
+        self._isotope_list = []   # LIST of isotopes and activities (Bq)
+        self._unique_photons = []  # LIST of unique photons and activities (Bq)
         self.points_per_dimension = [10, 10, 10]
         super().__init__(**kwargs)
 
     def add_isotope_curies(self, new_isotope, curies):
-        "add an isotope and activity to the isotope list"
-        # LIST of tuples, isotope object and activity
-        self.isotope_list.append((new_isotope, curies*3.7E10))
+        """Adds an isotope and activity in curies to the isotope list
+
+        Parameters
+        ----------
+        new_isotope : :obj:`isotope.Isotope`
+            The isotope to be added to the source.
+        curies : float
+            The activity in curies.
+        """
+        self._isotope_list.append((new_isotope, curies*3.7E10))
 
     def add_isotope_bq(self, new_isotope, becquerels):
-        "add an isotope and activity to the isotope list"
-        # LIST of tuples, isotope object and activity
-        self.isotope_list.append((new_isotope, becquerels))
+        """Adds an isotope and activity in becquerels to the isotope list
+
+        Parameters
+        ----------
+        new_isotope : :obj:`isotope.Isotope`
+            The isotope to be added to the source.
+        becquerels : float
+            The activity in becquerels.
+        """
+        self._isotope_list.append((new_isotope, becquerels))
 
     def add_photon(self, energy, becquerels):
-        "add a photon and activity to the photon list"
-        self.unique_photons.append((energy, becquerels))
+        """Adds a photon and activity to the photon list
+
+        Parameters
+        ----------
+        energy : float
+            The photon energy in MeV.
+        becquerels : float
+            The activity in becquerels.
+        """
+        self._unique_photons.append((energy, becquerels))
 
     def list_isotopes(self):
-        # echo back a list of the isotopes currently stored
-        return self.isotope_list
+        """Returns a list of isotopes in the source
+
+        Returns
+        -------
+        :obj:`list` of :obj:`tuple`
+            List of isotope tuples, each tuple containing a
+            Isotope object and an activity in Bq.
+        """
+        return self._isotope_list
 
     def list_unique_photons(self):
-        return self.unique_photons
+        """Returns a list of photons in the source
+
+        Returns
+        -------
+        :obj:`list` of :obj:`tuple`
+            List of photon tuples, each tuple containing a
+            photon energy in MeV and an activity in Bq.
+        """
+        return self._unique_photons
 
     def get_photon_source_list(self):
-        "returns a list of unique photon energies and activities"
+        """Returns a list of photons in the source
+
+        This list of photons combines the Isotopes and the
+        unique_photons specified in the Source definition.
+        The photon intensities are scaled to **one source point**.
+
+        Returns
+        -------
+        :obj:`list` of :obj:`tuple`
+            List of photon tuples, each tuple containing a
+            photon energy in MeV and an activity in **Bq//source point**.
+        """
         photon_dict = dict()
         keys = photon_dict.keys()
         # test to see if photon energy is already on the list
         # and then add photon emmision rate (intensity*Bq).
 
         # next_isotope will be a tuple of name and Bq
-        for next_isotope in self.isotope_list:
+        for next_isotope in self._isotope_list:
             isotope_detail = isotope.Isotope(next_isotope[0])
             for photon in isotope_detail.photons:
                 if photon[0] in keys:
@@ -56,7 +120,7 @@ class Source(metaclass=abc.ABCMeta):
                         photon[1]*next_isotope[1]
                 else:
                     photon_dict[photon[0]] = photon[1]*next_isotope[1]
-        for photon in self.unique_photons:
+        for photon in self._unique_photons:
             if photon[0] in keys:
                 photon_dict[photon[0]] = photon_dict[photon[0]] + photon[1]
             else:
@@ -75,14 +139,33 @@ class Source(metaclass=abc.ABCMeta):
 
 
 class LineSource(Source, shield.Shield):
-    '''Modeling a point source of radiation.'''
+    """Models a line radiation source 
+
+    Parameters
+    ----------
+    start : :obj:`list`
+        Cartiesian X, Y, and Z coordinates of the starting point of the line source.
+    end : :obj:`list`
+        Cartiesian X, Y, and Z coordinates of the ending point of the line source.
+    **kwargs
+        Arbitrary keyword arguments.
+
+    Attributes
+    ----------
+    material : :class: `material.Material`
+        Material properties of the shield
+    origin : :class:`numpy.ndarray`
+        Vector location of one end of the line source.
+    end : :class:`numpy.ndarray`
+        Vector location of one end of the line source.
+    """
 
     def __init__(self, start, end, **kwargs):
         "Initialize"
         self.origin = np.array(start)
         self.end = np.array(end)
-        self.length = np.linalg.norm(self.end - self.origin)
-        self.dir = (self.end - self.origin)/self.length
+        self._length = np.linalg.norm(self.end - self.origin)
+        self._dir = (self.end - self.origin)/self._length
         # let the point source have a dummy material of air at a zero density
         kwargs['material_name'] = 'air'
         kwargs['density'] = 0
@@ -92,36 +175,92 @@ class LineSource(Source, shield.Shield):
         self.points_per_dimension = 10
 
     def get_source_points(self):
+        """Generates a list of point sources within the Source geometry.
+
+        Returns
+        -------
+        :obj:`list` of :obj:`numpy.adarray`
+            A list of vector locations within the Source body
+        """
         spacings = np.linspace(1, self.points_per_dimension,
                                self.points_per_dimension)
-        mesh_width = self.length/self.points_per_dimension
+        mesh_width = self._length/self.points_per_dimension
         spacings = spacings*mesh_width
         spacings = spacings-(mesh_width/2)
         source_points = []
         for dist in spacings:
-            location = self.origin+self.dir*dist
+            location = self.origin+self._dir*dist
             source_points.append(location)
         return source_points
 
     def get_crossing_length(self, ray):
-        '''returns a  crossing length'''
+        """Calculates the linear intersection length of a ray and the shield
+
+        Parameters
+        ----------
+        ray : :class:`ray.FiniteLengthRay`
+            The finite length ray that is checked for intersections with the shield.
+
+        Returns
+        -------
+        int
+            Always returns 0
+        """
         return 0
 
     def get_crossing_mfp(self, ray, photon_energy):
-        '''returns the crossing mfp'''
+        """Calculates the mfp equivalent if a ray intersects the shield
+
+        Parameters
+        ----------
+        ray : :class:`ray.FiniteLengthRay`
+            The finite length ray that is checked for intersections with the shield.
+        photon_energy : float
+            The photon energy in MeV
+
+        Returns
+        -------
+        int
+            Always returns 0
+        """
         return 0
 
 # -----------------------------------------------------------
 
 
 class PointSource(Source, shield.Shield):
-    '''Modeling a point source of radiation.'''
+    """Models a point radiation source
+
+    Parameters
+    ----------
+    x : float
+        Cartiesian X coordinate of the point source.
+    y : float
+        Cartiesian Y coordinate of the point source.
+    z : float
+        Cartiesian Z coordinate of the point source.
+    **kwargs
+        Arbitrary keyword arguments.
+
+    Attributes
+    ----------
+    material : :class: `material.Material`
+        Material properties of the shield
+    inner_radius : float
+        Radius of the annulus inner surface.
+    outer_radius : float
+        Radius of the annulus outer surface.
+    origin : :class:`numpy.ndarray`
+        Vector location of a point on the annulus centerline.
+    dir : :class:`numpy.ndarray`
+        Vector normal of the annulus centerline.
+    """
 
     def __init__(self, x, y, z, **kwargs):
         '''Initialize with an x,y,z location in space'''
-        self.x = x
-        self.y = y
-        self.z = z
+        self._x = x
+        self._y = y
+        self._z = z
         # let the point source have a dummy material of air at a zero density
         kwargs['material_name'] = 'air'
         kwargs['density'] = 0
@@ -129,14 +268,47 @@ class PointSource(Source, shield.Shield):
         self.points_per_dimension = 1
 
     def get_source_points(self):
-        return[(self.x, self.y, self.z)]
+        """Generates a list of point sources within the Source geometry.
+
+        Returns
+        -------
+        :obj:`list` of :obj:`numpy.adarray`
+            A list of vector locations within the Source body.  In this class the
+            list is only a single entry.
+        """
+        return[(self._x, self._y, self._z)]
 
     def get_crossing_length(self, ray):
-        '''returns a  crossing length'''
+        """Calculates the linear intersection length of a ray and the shield
+
+        Parameters
+        ----------
+        ray : :class:`ray.FiniteLengthRay`
+            The finite length ray that is checked for intersections with the shield.
+
+        Returns
+        -------
+        int
+            Always returns 0
+        """
         return 0
 
     def get_crossing_mfp(self, ray, photon_energy):
-        '''returns the crossing mfp'''
+        """Calculates the mfp equivalent if a ray intersects the shield
+
+        Parameters
+        ----------
+        ray : :class:`ray.FiniteLengthRay`
+            The finite length ray that is checked for intersections with the shield.
+            Always returns 0 for the Point source.
+        photon_energy : float
+            The photon energy in MeV
+            
+        Returns
+        -------
+        int
+            Always returns 0
+        """
         return 0
 
 # -----------------------------------------------------------
@@ -191,14 +363,36 @@ class PointSource(Source, shield.Shield):
 
 
 class BoxSource(Source, shield.Box):
-    '''Axis-Aligned rectangular box source'''
-    # initialize with box_center, box_dimensions, material(optional),
-    # density(optional)
+    """Models a Axis-Aligned rectangular box source
+
+    Parameters
+    ----------
+    material_name : :obj:`material.Material`
+        Shield material type
+    box_center : :obj:`list`
+        X, Y, and Z coordinates of the box center.
+    box_dimensions : :obj:`list`
+        X, Y, and Z dimensions of the box.
+    density : float, optional
+        Material density in g/cm3.
+
+    Attributes
+    ----------
+    material : :class: `material.Material`
+        Material properties of the shield
+    """
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def get_source_points(self):
+        """Generates a list of point sources within the Source geometry.
+
+        Returns
+        -------
+        :obj:`list` of :obj:`numpy.adarray`
+            A list of vector locations within the Source body.
+        """
         source_points = []
         mesh_width = self.box_dimensions/self.points_per_dimension
         start_point = self.box_center-(self.box_dimensions)/2+(mesh_width/2)
