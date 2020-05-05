@@ -2,16 +2,16 @@ import numpy as np
 
 
 class FiniteLengthRay:
-    """Represents a ray in three-space
+    """Represents a ray in three-space.
 
     The FiniteLengthRay object has a defined starting point, a defined end, 
     and a resulting direction.
 
     Parameters
     ----------
-    start : :obj:`list` or :obj:`tuple`
-        Defines the starting point of the ray in cartesian coordinates
-    end : :obj:`list` or :obj:`tuple`
+    start : :class:`list` or :class:`tuple`
+        Defines the starting point of the ray in cartesian coordinates.
+    end : :class:`list` or :class:`tuple`
         Defines the ending point of the ray in cartesian coordinates.
 
     Attributes
@@ -19,13 +19,13 @@ class FiniteLengthRay:
     start
     end
     origin : :class:`numpy.ndarray`
-        A vector implemenation of the starting point
+        A vector implemenation of the starting point.
     length : float
-        The length of the ray
+        The length of the ray.
     dir : :class:`numpy.ndarray`
-        A numpy vector holding the vector normal of the ray
+        A numpy vector holding the vector normal of the ray.
     sign : :class:`numpy.ndarray`
-        Indicates the signs of the components of `dir`
+        Indicates the signs of the components of :py:obj:`dir`.
     """
     def __init__(self, start, end):
         self._start = start
@@ -34,7 +34,7 @@ class FiniteLengthRay:
 
     @property
     def start(self):
-        """:obj:`list` : A list defining the starting point of the ray in cartesian coordinates."""
+        """:class:`list` : A list defining the starting point of the ray in cartesian coordinates."""
         return self._start
     
     @start.setter
@@ -44,7 +44,7 @@ class FiniteLengthRay:
 
     @property
     def end(self):
-         """:obj:`list` : A list defining the ending point of the ray in cartesian coordinates."""
+         """:class:`list` : A list defining the ending point of the ray in cartesian coordinates."""
          return self._end
 
     @end.setter

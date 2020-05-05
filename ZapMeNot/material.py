@@ -19,7 +19,7 @@ class Material:
     ----------
     name
     density : float
-        Density of the material in g/cm3
+        Density of the material in g/cm\ :sup:`3`
     """
     _library = None
 
@@ -104,7 +104,7 @@ class Material:
         Returns
         -------
         float
-            The mass attenuation coefficient in cm2/g
+            The mass attenuation coefficient in cm\ :sup:`2`/g
         """
         if (energy < self._atten_energy_bins[0]) or \
                 (energy > self._atten_energy_bins[-1]):
@@ -129,7 +129,7 @@ class Material:
         Returns
         -------
         float
-            The mass energy absorption coefficient in cm2/g
+            The mass energy absorption coefficient in cm\ :sup:`2`/g
         """
         if (energy < self._en_abs_energy_bins[0]) or \
                 (energy > self._en_abs_energy_bins[-1]):

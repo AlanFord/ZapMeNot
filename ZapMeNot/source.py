@@ -19,7 +19,7 @@ class Source(metaclass=abc.ABCMeta):
 
     Attributes
     ----------
-    points_per_dimension : :obj:`list` of integers
+    points_per_dimension : :class:`list` of integers
         The number of source points to be used in each dimension when modeling
         the uniform source distribution throughout the body of the source.  Typically
         a list of three integers for three-dimensional sources, one integer
@@ -40,7 +40,7 @@ class Source(metaclass=abc.ABCMeta):
 
         Parameters
         ----------
-        new_isotope : :obj:`isotope.Isotope`
+        new_isotope : :class:`ZapMeNot.isotope.Isotope`
             The isotope to be added to the source.
         curies : float
             The activity in curies.
@@ -52,7 +52,7 @@ class Source(metaclass=abc.ABCMeta):
 
         Parameters
         ----------
-        new_isotope : :obj:`isotope.Isotope`
+        new_isotope : :class:`ZapMeNot.isotope.Isotope`
             The isotope to be added to the source.
         becquerels : float
             The activity in becquerels.
@@ -76,7 +76,7 @@ class Source(metaclass=abc.ABCMeta):
 
         Returns
         -------
-        :obj:`list` of :obj:`tuple`
+        :class:`list` of :class:`tuple`
             List of isotope tuples, each tuple containing a
             Isotope object and an activity in Bq.
         """
@@ -87,7 +87,7 @@ class Source(metaclass=abc.ABCMeta):
 
         Returns
         -------
-        :obj:`list` of :obj:`tuple`
+        :class:`list` of :class:`tuple`
             List of photon tuples, each tuple containing a
             photon energy in MeV and an activity in Bq.
         """
@@ -102,7 +102,7 @@ class Source(metaclass=abc.ABCMeta):
 
         Returns
         -------
-        :obj:`list` of :obj:`tuple`
+        :class:`list` of :class:`tuple`
             List of photon tuples, each tuple containing a
             photon energy in MeV and an activity in **Bq//source point**.
         """
@@ -143,9 +143,9 @@ class LineSource(Source, shield.Shield):
 
     Parameters
     ----------
-    start : :obj:`list`
+    start : :class:`list`
         Cartiesian X, Y, and Z coordinates of the starting point of the line source.
-    end : :obj:`list`
+    end : :class:`list`
         Cartiesian X, Y, and Z coordinates of the ending point of the line source.
     **kwargs
         Arbitrary keyword arguments.
@@ -179,7 +179,7 @@ class LineSource(Source, shield.Shield):
 
         Returns
         -------
-        :obj:`list` of :obj:`numpy.adarray`
+        :class:`list` of :class:`numpy.adarray`
             A list of vector locations within the Source body
         """
         spacings = np.linspace(1, self.points_per_dimension,
@@ -198,7 +198,7 @@ class LineSource(Source, shield.Shield):
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
+        ray : :class:`ZapMeNot.ray.FiniteLengthRay`
             The finite length ray that is checked for intersections with the shield.
 
         Returns
@@ -213,7 +213,7 @@ class LineSource(Source, shield.Shield):
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
+        ray : :class:`ZapMeNot.ray.FiniteLengthRay`
             The finite length ray that is checked for intersections with the shield.
         photon_energy : float
             The photon energy in MeV
@@ -244,7 +244,7 @@ class PointSource(Source, shield.Shield):
 
     Attributes
     ----------
-    material : :class: `material.Material`
+    material : :class: `ZapMeNot.material.Material`
         Material properties of the shield
     inner_radius : float
         Radius of the annulus inner surface.
@@ -272,7 +272,7 @@ class PointSource(Source, shield.Shield):
 
         Returns
         -------
-        :obj:`list` of :obj:`numpy.adarray`
+        :class:`list` of :class:`numpy.adarray`
             A list of vector locations within the Source body.  In this class the
             list is only a single entry.
         """
@@ -283,7 +283,7 @@ class PointSource(Source, shield.Shield):
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
+        ray : :class:`ZapMeNot.ray.FiniteLengthRay`
             The finite length ray that is checked for intersections with the shield.
 
         Returns
@@ -298,7 +298,7 @@ class PointSource(Source, shield.Shield):
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
+        ray : :class:`ZapMeNot.ray.FiniteLengthRay`
             The finite length ray that is checked for intersections with the shield.
             Always returns 0 for the Point source.
         photon_energy : float
@@ -367,11 +367,11 @@ class BoxSource(Source, shield.Box):
 
     Parameters
     ----------
-    material_name : :obj:`material.Material`
+    material_name : :class:`ZapMeNot.material.Material`
         Shield material type
-    box_center : :obj:`list`
+    box_center : :class:`list`
         X, Y, and Z coordinates of the box center.
-    box_dimensions : :obj:`list`
+    box_dimensions : :class:`list`
         X, Y, and Z dimensions of the box.
     density : float, optional
         Material density in g/cm3.
@@ -390,7 +390,7 @@ class BoxSource(Source, shield.Box):
 
         Returns
         -------
-        :obj:`list` of :obj:`numpy.adarray`
+        :class:`list` of :class:`numpy.adarray`
             A list of vector locations within the Source body.
         """
         source_points = []
@@ -409,7 +409,14 @@ class BoxSource(Source, shield.Box):
 
 
 class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
-    '''Axis-Aligned rectangular box source'''
+    """Models a cylindrical source axis-aligned with the Z axis.
+
+    Parameters
+    ----------
+    **kwargs
+        Arbitrary keyword arguments.
+
+    """
     # initialize with cylinderCenter, cylinderLength, cylinderRadius,
     # material(optional), density(optional)
 
@@ -417,6 +424,13 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         super().__init__(**kwargs)
 
     def get_source_points(self):
+        """Generates a list of point sources within the Source geometry.
+
+        Returns
+        -------
+        :class:`list` of :class:`numpy.adarray`
+            A list of vector locations within the Source body.
+        """
 
         # calculate the radius of each "equal area" annular region
         total_area = math.pi*self.radius**2
@@ -460,7 +474,14 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 
 
 class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
-    '''Axis-Aligned rectangular box source'''
+    """Models a cylindrical source axis-aligned with the Y axis.
+
+    Parameters
+    ----------
+    **kwargs
+        Arbitrary keyword arguments.
+
+    """
     # initialize with cylinderCenter, cylinderLength, cylinderRadius,
     # material(optional), density(optional)
 
@@ -468,6 +489,13 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         super().__init__(**kwargs)
 
     def get_source_points(self):
+        """Generates a list of point sources within the Source geometry.
+
+        Returns
+        -------
+        :class:`list` of :class:`numpy.adarray`
+            A list of vector locations within the Source body.
+        """
 
         # calculate the radius of each "equal area" annular region
         total_area = math.pi*self.radius**2
@@ -511,7 +539,14 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
 
 
 class XAlignedCylinderSource(Source, shield.YAlignedCylinder):
-    '''Axis-Aligned rectangular box source'''
+    """Models a cylindrical source axis-aligned with the X axis.
+
+    Parameters
+    ----------
+    **kwargs
+        Arbitrary keyword arguments.
+
+    """
     # initialize with cylinderCenter, cylinderLength, cylinderRadius,
     # material(optional), density(optional)
 
@@ -519,6 +554,13 @@ class XAlignedCylinderSource(Source, shield.YAlignedCylinder):
         super().__init__(**kwargs)
 
     def get_source_points(self):
+        """Generates a list of point sources within the Source geometry.
+
+        Returns
+        -------
+        :class:`list` of :class:`numpy.adarray`
+            A list of vector locations within the Source body.
+        """
 
         # calculate the radius of each "equal area" annular region
         total_area = math.pi*self.radius**2

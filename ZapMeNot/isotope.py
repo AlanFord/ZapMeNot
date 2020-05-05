@@ -11,7 +11,7 @@ def _convert_half_life(value, units):
     ----------
     value : float
         The half life to be converted
-    units : str
+    units : :class:`str`
         The units of the input half life
 
     Raises
@@ -51,7 +51,7 @@ class Isotope:
 
     Parameters
     ----------
-    name : str
+    name : :class:`str`
         The isotope to be extracted from the isotope library
     
     Attributes
@@ -90,16 +90,16 @@ class Isotope:
 
     @property
     def photons(self):
-        """:obj:`list` of :obj:`list` : A list of photon energies and intensities"""
+        """:class:`list` of :class:`list` : A list of photon energies and intensities"""
         return self._photons
 
     @property
     def name(self):
-        """str : The name of the isotope"""
+        """:class:`str` : The name of the isotope"""
         return self._name
 
     @property
     def half_life(self):
-        """str : The half life of the isotope"""
+        """:class:`str` : The half life of the isotope"""
         return self._half_life
 
