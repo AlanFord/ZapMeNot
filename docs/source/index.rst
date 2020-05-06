@@ -6,6 +6,8 @@ Welcome to ZapMeNot's documentation!
    :maxdepth: 4
 
    usage
+   materials
+   isotopes
    ZapMeNot
 
 

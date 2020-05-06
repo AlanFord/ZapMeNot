@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 
-from ZapMeNot import source
+from zap_me_not import source
 
 pytestmark = pytest.mark.basic
 

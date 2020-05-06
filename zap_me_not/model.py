@@ -11,19 +11,19 @@ class Model:
 
     Attributes
     ----------
-    source : :class:`ZapMeNot.source.Source`
+    source : :class:`zap_me_not.source.Source`
         The source distribution (point, line, or volume) included in the model.
 
-    shield_list : :class:`list` of :class:`ZapMeNot.shield.Shield`
+    shield_list : :class:`list` of :class:`zap_me_not.shield.Shield`
         A list of shields (including the source volume) contained in the model.
 
-    detector : :class:`ZapMeNot.detector.Detector`
+    detector : :class:`zap_me_not.detector.Detector`
         The single detector in the model used to determine the exposure.
 
-    filler_material : :class:`ZapMeNot.material.Material`
+    filler_material : :class:`zap_me_not.material.Material`
         The (optional) material used as fill around the formal shields.
 
-    buildup_factor_material : :class:`ZapMeNot.material.Material`
+    buildup_factor_material : :class:`zap_me_not.material.Material`
         The material used to calculate the exposure buildup factor. 
 
 
@@ -43,7 +43,7 @@ class Model:
 
         Parameters
         ----------
-        filler_material : :class:`ZapMeNot.material.Material`
+        filler_material : :class:`zap_me_not.material.Material`
             The material to be used.
         density : float, optional
             The density of the material in g/cm\ :sup:`3`.
@@ -57,7 +57,7 @@ class Model:
 
         Parameters
         ----------
-        new_source : :class:`ZapMeNot.source.Source`
+        new_source : :class:`zap_me_not.source.Source`
             The source to be used.
         """
         self.source = new_source
@@ -69,7 +69,7 @@ class Model:
 
         Parameters
         ----------
-        new_shield : :class:`ZapMeNot.shield.Shield`
+        new_shield : :class:`zap_me_not.shield.Shield`
             The shield to be added.
         """
         self.shield_list.append(new_shield)
@@ -79,7 +79,7 @@ class Model:
 
         Parameters
         ----------
-        new_detector : :class:`ZapMeNot.detector.Detector`
+        new_detector : :class:`zap_me_not.detector.Detector`
             The detector to be used in the model.
         """
         self.detector = new_detector
@@ -89,7 +89,7 @@ class Model:
 
         Parameters
         ----------
-        new_material : :class:`ZapMeNot.material.Material`
+        new_material : :class:`zap_me_not.material.Material`
             The material to be used in buildup factor calculations.
         """
         self.buildup_factor_material = new_material

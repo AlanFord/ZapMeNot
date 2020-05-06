@@ -1,5 +1,5 @@
-__package_name__ = 'zap-me-not'
-__import_name__ = 'zap-me-not'
+__package_name__ = 'zap_me_not'
+__import_name__ = 'zap_me_not'
 __version__ = '0.0.1'
 __author__ = 'Alan Ford'
 __author_email__ = ''

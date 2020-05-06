@@ -1,64 +1,64 @@
 ZapMeNot package
 ================
 
-ZapMeNot.detector module
-------------------------
+zap_me_not.detector module
+--------------------------
 
-.. automodule:: ZapMeNot.detector
+.. automodule:: zap_me_not.detector
    :members:
    :undoc-members:
    :inherited-members:
    :show-inheritance:
 
-ZapMeNot.isotope module
+zap_me_not.isotope module
+-------------------------
+
+.. automodule:: zap_me_not.isotope
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+
+zap_me_not.material module
+--------------------------
+
+.. automodule:: zap_me_not.material
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+
+zap_me_not.model module
 -----------------------
 
-.. automodule:: ZapMeNot.isotope
+.. automodule:: zap_me_not.model
    :members:
    :undoc-members:
    :inherited-members:
    :show-inheritance:
 
-ZapMeNot.material module
-------------------------
-
-.. automodule:: ZapMeNot.material
-   :members:
-   :undoc-members:
-   :inherited-members:
-   :show-inheritance:
-
-ZapMeNot.model module
+zap_me_not.ray module
 ---------------------
 
-.. automodule:: ZapMeNot.model
+.. automodule:: zap_me_not.ray
    :members:
    :undoc-members:
    :inherited-members:
    :show-inheritance:
 
-ZapMeNot.ray module
--------------------
+zap_me_not.shield module
+------------------------
 
-.. automodule:: ZapMeNot.ray
+.. automodule:: zap_me_not.shield
    :members:
    :undoc-members:
    :inherited-members:
    :show-inheritance:
 
-ZapMeNot.shield module
-----------------------
+zap_me_not.source module
+------------------------
 
-.. automodule:: ZapMeNot.shield
-   :members:
-   :undoc-members:
-   :inherited-members:
-   :show-inheritance:
-
-ZapMeNot.source module
-----------------------
-
-.. automodule:: ZapMeNot.source
+.. automodule:: zap_me_not.source
    :members:
    :undoc-members:
    :inherited-members:

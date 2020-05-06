@@ -15,13 +15,20 @@ Requirements for installing:
 
  - Python 3.4 or above
  - Numpy 1.18.1 or above
+ - SciPy 0.14 or above
  - Pytest 5.3.5 or above
  - Pyyaml 5.3 or above
 
 Installation:
 ------------------------------------------------------------------------------
 
-`pip install zap-me-not`
+Installing from a local source tree:
+
+`pip install ./ZapMeNot`
+
+You can also install in Development Mode:
+
+`pip install -e ./ZapMeNot`
 
 Contributions:
 ------------------------------------------------------------------------------
@@ -34,7 +41,7 @@ Quickstart
 
 .. code-block:: python
 
-    import ZapMeNot
+    import zap_me_not
     
     sample_sink = Model()
     sample_sink.addSource(PointSource([('Co-60',2.1),('Cs-137',0.3)], x=0, y=0, z=0)

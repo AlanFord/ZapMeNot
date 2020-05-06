@@ -40,7 +40,7 @@ class Source(metaclass=abc.ABCMeta):
 
         Parameters
         ----------
-        new_isotope : :class:`ZapMeNot.isotope.Isotope`
+        new_isotope : :class:`zap_me_not.isotope.Isotope`
             The isotope to be added to the source.
         curies : float
             The activity in curies.
@@ -52,7 +52,7 @@ class Source(metaclass=abc.ABCMeta):
 
         Parameters
         ----------
-        new_isotope : :class:`ZapMeNot.isotope.Isotope`
+        new_isotope : :class:`zap_me_not.isotope.Isotope`
             The isotope to be added to the source.
         becquerels : float
             The activity in becquerels.
@@ -198,7 +198,7 @@ class LineSource(Source, shield.Shield):
 
         Parameters
         ----------
-        ray : :class:`ZapMeNot.ray.FiniteLengthRay`
+        ray : :class:`zap_me_not.ray.FiniteLengthRay`
             The finite length ray that is checked for intersections with the shield.
 
         Returns
@@ -213,7 +213,7 @@ class LineSource(Source, shield.Shield):
 
         Parameters
         ----------
-        ray : :class:`ZapMeNot.ray.FiniteLengthRay`
+        ray : :class:`zap_me_not.ray.FiniteLengthRay`
             The finite length ray that is checked for intersections with the shield.
         photon_energy : float
             The photon energy in MeV
@@ -244,7 +244,7 @@ class PointSource(Source, shield.Shield):
 
     Attributes
     ----------
-    material : :class: `ZapMeNot.material.Material`
+    material : :class: `zap_me_not.material.Material`
         Material properties of the shield
     inner_radius : float
         Radius of the annulus inner surface.
@@ -283,7 +283,7 @@ class PointSource(Source, shield.Shield):
 
         Parameters
         ----------
-        ray : :class:`ZapMeNot.ray.FiniteLengthRay`
+        ray : :class:`zap_me_not.ray.FiniteLengthRay`
             The finite length ray that is checked for intersections with the shield.
 
         Returns
@@ -298,7 +298,7 @@ class PointSource(Source, shield.Shield):
 
         Parameters
         ----------
-        ray : :class:`ZapMeNot.ray.FiniteLengthRay`
+        ray : :class:`zap_me_not.ray.FiniteLengthRay`
             The finite length ray that is checked for intersections with the shield.
             Always returns 0 for the Point source.
         photon_energy : float
@@ -367,7 +367,7 @@ class BoxSource(Source, shield.Box):
 
     Parameters
     ----------
-    material_name : :class:`ZapMeNot.material.Material`
+    material_name : :class:`zap_me_not.material.Material`
         Shield material type
     box_center : :class:`list`
         X, Y, and Z coordinates of the box center.

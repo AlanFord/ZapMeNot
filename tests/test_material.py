@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from ZapMeNot import material
+from zap_me_not import material
 
 pytestmark = pytest.mark.basic
 

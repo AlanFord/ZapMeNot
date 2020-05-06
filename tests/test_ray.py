@@ -3,7 +3,7 @@ import math
 import numpy as np
 import pytest
 
-from ZapMeNot import ray
+from zap_me_not import ray
 
 pytestmark = pytest.mark.basic
 

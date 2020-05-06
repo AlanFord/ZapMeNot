@@ -1,6 +1,6 @@
 import pytest
 
-from ZapMeNot import detector
+from zap_me_not import detector
 
 pytestmark = pytest.mark.basic
 

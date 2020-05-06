@@ -15,8 +15,8 @@ import sys
 import datetime
 import numpy
 sys.path.insert(0, os.path.abspath('../..'))
-from ZapMeNot import __about__ as metadata
-# sys.path.insert(0, os.path.join(os.path.abspath('../..'),'ZapMeNot'))
+from zap_me_not import __about__ as metadata
+# sys.path.insert(0, os.path.join(os.path.abspath('../..'),'zap_me_not'))
 
 
 # -- Project information -----------------------------------------------------

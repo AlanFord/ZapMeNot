@@ -1,6 +1,6 @@
 import pytest
 
-from ZapMeNot import isotope
+from zap_me_not import isotope
 
 pytestmark = pytest.mark.basic
 
