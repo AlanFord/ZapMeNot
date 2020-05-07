@@ -1,48 +1,6 @@
 import yaml
 import pkg_resources
 
-def _convert_half_life(value, units):
-    """Converts a half life to units of seconds.
-
-    Input units can be microseconds, milliseconds, seconds,
-    minutes, hours, days, or years.
-
-    Parameters
-    ----------
-    value : float
-        The half life to be converted
-    units : :class:`str`
-        The units of the input half life
-
-    Raises
-    ------
-    ValueError
-        Half-life units are not recognized
-    
-    Returns
-    -------
-    float 
-        Half life in seconds
-    """
-    if units == "usecond":
-        retval = value/1.0E6
-    elif units == "msecond":
-        retval = value/1000.
-    elif units == "second":
-        retval = value
-    elif units == "minute":
-        retval = value*60
-    elif units == "hour":
-        retval = value*60*60
-    elif units == "day":
-        retval = value*60*60*24
-    elif units == "year":
-        retval = value*60*60*24*365.25
-    # if all else fails, raise an error
-    else:
-        raise ValueError("Half-life units are not recognized")
-    return retval
-
 class Isotope:
     """Encaplsulates isotope data from the IsotopeLibrary.yml file.
 
@@ -52,7 +10,7 @@ class Isotope:
     Parameters
     ----------
     name : :class:`str`
-        The isotope to be extracted from the isotope library
+        The isotope to be extracted from the isotope library.
     
     Attributes
     ----------
@@ -82,7 +40,7 @@ class Isotope:
         # convert the half-life to units of seconds
         half_life = properties.get("half-life")
         half_life_units = properties.get("half-life-units")
-        self._half_life = _convert_half_life(half_life, half_life_units)
+        self._half_life = Isotope._convert_half_life(half_life, half_life_units)
 
         # photon energies and intensities are stored as a list of tuples
         # 2D list of photon energies and intensities
@@ -90,16 +48,59 @@ class Isotope:
 
     @property
     def photons(self):
-        """:class:`list` of :class:`list` : A list of photon energies and intensities"""
+        """:class:`list` of :class:`list` : A list of photon energies and intensities."""
         return self._photons
 
     @property
     def name(self):
-        """:class:`str` : The name of the isotope"""
+        """:class:`str` : The name of the isotope."""
         return self._name
 
     @property
     def half_life(self):
-        """:class:`str` : The half life of the isotope"""
+        """:class:`str` : The half life of the isotope in seconds."""
         return self._half_life
+
+    @staticmethod
+    def _convert_half_life(value, units):
+        """Converts a half life to units of seconds.
+
+        Input units can be microseconds, milliseconds, seconds,
+        minutes, hours, days, or years.
+
+        Parameters
+        ----------
+        value : float
+            The half life to be converted
+        units : :class:`str`
+            The units of the input half life
+
+        Raises
+        ------
+        ValueError
+            Half-life units are not recognized
+        
+        Returns
+        -------
+        float 
+            Half life in seconds
+        """
+        if units == "usecond":
+            retval = value/1.0E6
+        elif units == "msecond":
+            retval = value/1000.
+        elif units == "second":
+            retval = value
+        elif units == "minute":
+            retval = value*60
+        elif units == "hour":
+            retval = value*60*60
+        elif units == "day":
+            retval = value*60*60*24
+        elif units == "year":
+            retval = value*60*60*24*365.25
+        # if all else fails, raise an error
+        else:
+            raise ValueError("Half-life units are not recognized")
+        return retval
 

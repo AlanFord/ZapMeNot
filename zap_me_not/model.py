@@ -107,8 +107,8 @@ class Model:
         flux_by_photon_energy = []
         # get a list of photons (energy/intensity per source point [gamma/sec])
         # from the source
-        spectrum = self.source.get_photon_source_list()
-        source_points = self.source.get_source_points()
+        spectrum = self.source._get_photon_source_list()
+        source_points = self.source._get_source_points()
         # iterate through the photons
         for photon in spectrum:
             uncollided_flux = 0
@@ -126,7 +126,7 @@ class Model:
                 shield_crossing_distance = 0.0
                 if self.filler_material is not None:
                     for shield in self.shield_list:
-                        distance = shield.get_crossing_length(vector)
+                        distance = shield._get_crossing_length(vector)
                         shield_crossing_distance += distance
                     total_mfp += self.filler_material.get_mfp(
                         photon_energy, vector.length - shield_crossing_distance)

@@ -28,14 +28,14 @@ class TestPointSource():
 		my_source.add_photon(0.9876,3.14E2)
 		my_source.add_photon(0.02,5)
 		my_list = [(0.9876,3.14E2),(0.02,5)]
-		assert my_list == my_source.list_unique_photons()
+		assert my_list == my_source.list_discrete_photons()
 
 	def test_getPhotonEnergyList(self):
 		my_source = source.PointSource(1,2,3)
 		my_source.add_isotope_curies('Ar-41',3.14)
 		my_source.add_isotope_bq('Br-80m',1E6)
 		my_source.add_photon(0.9876,3.14E2)
-		a = my_source.get_photon_source_list()
+		a = my_source._get_photon_source_list()
 		np.testing.assert_allclose(a, \
 			[(0.037052, 390000), \
 			 (0.0489, 3200), \
@@ -45,7 +45,7 @@ class TestPointSource():
 
 	def test_getSourcePoints(self):
 		my_source = source.PointSource(1,2,3)
-		np.testing.assert_allclose(my_source.get_source_points(), \
+		np.testing.assert_allclose(my_source._get_source_points(), \
 			[(1,2,3)])
 
 #=============================================================
@@ -72,14 +72,14 @@ class TestLineSource():
 		my_source.add_photon(0.9876,3.14E2)
 		my_source.add_photon(0.02,5)
 		my_list = [(0.9876,3.14E2),(0.02,5)]
-		assert my_list == my_source.list_unique_photons()
+		assert my_list == my_source.list_discrete_photons()
 
 	def test_getPhotonEnergyList(self):
 		my_source = source.LineSource([1,2,3], [11,12,13])
 		my_source.add_isotope_curies('Ar-41',3.14)
 		my_source.add_isotope_bq('Br-80m',1E6)
 		my_source.add_photon(0.9876,3.14E2)
-		a = my_source.get_photon_source_list()
+		a = my_source._get_photon_source_list()
 		# the following intensities are adjusted for the default 10 
 		# intervals in the line source
 		np.testing.assert_allclose(a, \
@@ -91,7 +91,7 @@ class TestLineSource():
 
 	def test_getSourcePoints(self):
 		my_source = source.LineSource([1,2,3], [11,12,13])
-		np.testing.assert_allclose(my_source.get_source_points(), \
+		np.testing.assert_allclose(my_source._get_source_points(), \
 			[[ 1.5, 2.5, 3.5], \
 			 [ 2.5, 3.5, 4.5], \
 			 [ 3.5, 4.5, 5.5], \
@@ -110,10 +110,10 @@ class TestBoxSource():
 	def test_getSourcePoints(self):
 		my_source = source.BoxSource(box_center=[4,5,6],box_dimensions=[10,10,10],material_name='iron')
 		my_source.points_per_dimension= [1,1,1]
-		np.testing.assert_allclose(my_source.get_source_points(), \
+		np.testing.assert_allclose(my_source._get_source_points(), \
 			[(4,5,6)])
 		my_source.points_per_dimension= [2,2,2]
-		np.testing.assert_allclose(my_source.get_source_points(), \
+		np.testing.assert_allclose(my_source._get_source_points(), \
 			[[4-2.5,5-2.5,6-2.5], \
 			 [4-2.5,5-2.5,6+2.5], \
 			 [4-2.5,5+2.5,6-2.5], \
@@ -125,7 +125,7 @@ class TestBoxSource():
 		my_source.add_isotope_curies('Ar-41',3.14)
 		my_source.add_isotope_bq('Br-80m',1E6)
 		my_source.add_photon(0.9876,3.14E2)
-		a = my_source.get_photon_source_list()
+		a = my_source._get_photon_source_list()
 		np.testing.assert_allclose(a, \
 			[(0.037052, 390000/8), \
 			 (0.0489, 3200/8), \
@@ -154,7 +154,7 @@ class TestZAlignedCylinderSource():
 	def test_getSourcePoints(self):
 		my_source = source.ZAlignedCylinderSource(cylinder_center=[0,0,0],cylinder_length=10,cylinder_radius=5,material_name='iron')
 		my_source.points_per_dimension= [3,3,3]
-		sourcePoints = my_source.get_source_points()
+		sourcePoints = my_source._get_source_points()
 		np.testing.assert_allclose(sourcePoints, \
 			[[7.2168783649e-01, 1.2500000000e+00, 1.6666666667e+00], \
 			[7.2168783649e-01, 1.2500000000e+00, 5], \
@@ -187,7 +187,7 @@ class TestZAlignedCylinderSource():
 		my_source.add_isotope_curies('Ar-41',3.14)
 		my_source.add_isotope_bq('Br-80m',1E6)
 		my_source.add_photon(0.9876,3.14E2)
-		a = my_source.get_photon_source_list()
+		a = my_source._get_photon_source_list()
 		# the following intensities are adjusted for 3 intervals 
 		# intervals in each dimension
 		np.testing.assert_allclose(a, \

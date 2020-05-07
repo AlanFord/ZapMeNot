@@ -22,6 +22,6 @@ class Detector:
 
     @property
     def location(self):
-        """:obj:`tuple` : The detector location in cartesian coordinates"""
+        """:class:`tuple` : The detector location in cartesian coordinates"""
         return self._location
      

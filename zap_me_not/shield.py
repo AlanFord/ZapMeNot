@@ -34,7 +34,7 @@ class Shield:
         super().__init__(**kwargs)
 
     @abc.abstractmethod
-    def get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -118,7 +118,7 @@ class SemiInfiniteXSlab(Shield):
         self.x_start = x_start
         self.x_end = x_end
 
-    def get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -174,7 +174,7 @@ class SemiInfiniteXSlab(Shield):
         photon_energy : float
             The photon energy in MeV
         """
-        distance = self.get_crossing_length(ray)
+        distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
 # -----------------------------------------------------------
@@ -189,10 +189,10 @@ class SemiInfiniteXSlab(Shield):
 
 #     def get_crossing_mfp(self, ray, photon_energy):
 #         '''returns the crossing mfp'''
-#         distance = self.get_crossing_length(ray)
+#         distance = self._get_crossing_length(ray)
 #         return self.material.get_mfp(photon_energy, distance)
 
-#     def get_crossing_length(self, ray):
+#     def _get_crossing_length(self, ray):
 #         # based on
 #         # http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
 #         a = np.dot(ray.dir, ray.dir)
@@ -275,10 +275,10 @@ class Box(Shield):
         photon_energy : float
             The photon energy in MeV
         """
-        distance = self.get_crossing_length(ray)
+        distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
-    def get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -286,7 +286,7 @@ class Box(Shield):
         ray : :class:`ray.FiniteLengthRay`
             The finite length ray that is checked for intersections with the shield.
         """
-        crossings = self.intersect_axis_aligned_box(ray)
+        crossings = self._intersect_axis_aligned_box(ray)
         # two crossings indicates a full-shield crossing
         # one crossing indicates that either (common) the source is
         #    in the shield or (uncommon) the dose point is in the
@@ -296,9 +296,9 @@ class Box(Shield):
         #    missed entirely
         if len(crossings) != 2:
             # check for start/end of ray within the box
-            if self.contains(ray.origin):
+            if self._contains(ray.origin):
                 crossings.insert(0, ray.origin)
-            if self.contains(np.array(ray.end)):
+            if self._contains(np.array(ray.end)):
                 crossings.append(np.array(ray.end))
         if len(crossings) == 0:
             # likely it's a complete miss
@@ -309,7 +309,7 @@ class Box(Shield):
         # let numpy do the heavy lifting
         return np.linalg.norm(crossings[0]-crossings[1])
 
-    def contains(self, point):
+    def _contains(self, point):
         """Determines if the shield contains a point
 
         Parameters
@@ -336,7 +336,7 @@ class Box(Shield):
             return True
         return False
 
-    def intersect_axis_aligned_box(self, ray):
+    def _intersect_axis_aligned_box(self, ray):
         """Calculates a list of point where a ray intersects the axis-aligned box
 
         Parameters
@@ -439,10 +439,10 @@ class InfiniteAnnulus(Shield):
         photon_energy : float
             The photon energy in MeV
         """
-        distance = self.get_crossing_length(ray)
+        distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
-    def get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -451,7 +451,7 @@ class InfiniteAnnulus(Shield):
             The finite length ray that is checked for intersections with the shield.
         """
         # get a list of crossing points
-        crossings = self.intersect(ray)
+        crossings = self._intersect(ray)
         # zero crossings can indicate that either both source and
         #    dose points are in the shield or that the shield is
         #    missed entirely
@@ -461,9 +461,9 @@ class InfiniteAnnulus(Shield):
         # two crossings indicates a single in/out or out/in crossing
         # four crossings indicate a full-shield crossing
         if len(crossings) not in [2, 4]:
-            if self.contains(ray.origin):
+            if self._contains(ray.origin):
                 crossings.append(0)
-            if self.contains(np.array(ray.end)):
+            if self._contains(np.array(ray.end)):
                 crossings.append(ray.length)
         if len(crossings) == 0:
             return 0
@@ -475,7 +475,7 @@ class InfiniteAnnulus(Shield):
         # let numpy do the heavy lifting
         return (crossings[1]-crossings[0]) + (crossings[3] - crossings[2])
 
-    def contains(self, point):
+    def _contains(self, point):
         """Determines if the shield contains a point
 
         Parameters
@@ -497,7 +497,7 @@ class InfiniteAnnulus(Shield):
             return False
         return True
 
-    def intersect(self, ray):
+    def _intersect(self, ray):
         """Calculates a list of points where a ray intersects the shield
 
         Parameters
@@ -718,10 +718,10 @@ class CappedCylinder(Shield):
         photon_energy : float
             The photon energy in MeV
         """
-        distance = self.get_crossing_length(ray)
+        distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
-    def get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -730,7 +730,7 @@ class CappedCylinder(Shield):
             The finite length ray that is checked for intersections with the shield.
         """
         # get a list of crossing points
-        crossings = self.intersect(ray)
+        crossings = self._intersect(ray)
         # two crossings indicates a full-shield crossing
         # one crossing indicates that either (common) the source is
         #    in the shield or (uncommon) the dose point is in the
@@ -740,9 +740,9 @@ class CappedCylinder(Shield):
         #    missed entirely
         if len(crossings) != 2:
             # check for start/end of ray within the cylinder
-            if self.contains(ray.origin):
+            if self._contains(ray.origin):
                 crossings.insert(0, ray.origin)
-            if self.contains(np.array(ray.end)):
+            if self._contains(np.array(ray.end)):
                 crossings.append(np.array(ray.end))
         if len(crossings) == 0:
             # likely it's a complete miss
@@ -753,7 +753,7 @@ class CappedCylinder(Shield):
         # let numpy do the heavy lifting
         return np.linalg.norm(crossings[0]-crossings[1])
 
-    def contains(self, point):
+    def _contains(self, point):
         """Determines if the shield contains a point
 
         Parameters
@@ -776,7 +776,7 @@ class CappedCylinder(Shield):
             return False
         return True
 
-    def intersect(self, ray):
+    def _intersect(self, ray):
         """Calculates a list of points where a ray intersects the shield
 
         Parameters

@@ -59,17 +59,17 @@ class Source(metaclass=abc.ABCMeta):
         """
         self._isotope_list.append((new_isotope, becquerels))
 
-    def add_photon(self, energy, becquerels):
-        """Adds a photon and activity to the photon list
+    def add_photon(self, energy, intensity):
+        """Adds a photon and intensity to the photon list
 
         Parameters
         ----------
         energy : float
             The photon energy in MeV.
-        becquerels : float
-            The activity in becquerels.
+        intensity : float
+            The intensity in photons/sec.
         """
-        self._unique_photons.append((energy, becquerels))
+        self._unique_photons.append((energy, intensity))
 
     def list_isotopes(self):
         """Returns a list of isotopes in the source
@@ -82,8 +82,12 @@ class Source(metaclass=abc.ABCMeta):
         """
         return self._isotope_list
 
-    def list_unique_photons(self):
-        """Returns a list of photons in the source
+    def list_discrete_photons(self):
+        """Returns a list of individual photons in the source.
+
+        The list includes only those photons that have been added
+        individually to the source.  It does not include the photons
+        that result from the isotopes added to the source.
 
         Returns
         -------
@@ -93,7 +97,7 @@ class Source(metaclass=abc.ABCMeta):
         """
         return self._unique_photons
 
-    def get_photon_source_list(self):
+    def _get_photon_source_list(self):
         """Returns a list of photons in the source
 
         This list of photons combines the Isotopes and the
@@ -132,7 +136,7 @@ class Source(metaclass=abc.ABCMeta):
         return sorted(photon_list)
 
     @abc.abstractmethod
-    def get_source_points(self):
+    def _get_source_points(self):
         pass
 
 # -----------------------------------------------------------
@@ -174,7 +178,7 @@ class LineSource(Source, shield.Shield):
         # single dimension
         self.points_per_dimension = 10
 
-    def get_source_points(self):
+    def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -193,7 +197,7 @@ class LineSource(Source, shield.Shield):
             source_points.append(location)
         return source_points
 
-    def get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -267,7 +271,7 @@ class PointSource(Source, shield.Shield):
         super().__init__(**kwargs)
         self.points_per_dimension = 1
 
-    def get_source_points(self):
+    def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -278,7 +282,7 @@ class PointSource(Source, shield.Shield):
         """
         return[(self._x, self._y, self._z)]
 
-    def get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -322,7 +326,7 @@ class PointSource(Source, shield.Shield):
 #     def __init__(self, **kwargs):
 #         super().__init__(**kwargs)
 
-#     def get_source_points(self):
+#     def _get_source_points(self):
 
 #         # calculate the radius of each "equal area" annular region
 #         totalVolume = 4/3*math.pi*self.radius**3
@@ -385,7 +389,7 @@ class BoxSource(Source, shield.Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def get_source_points(self):
+    def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -423,7 +427,7 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def get_source_points(self):
+    def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -488,7 +492,7 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def get_source_points(self):
+    def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -553,7 +557,7 @@ class XAlignedCylinderSource(Source, shield.YAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def get_source_points(self):
+    def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
 
         Returns
