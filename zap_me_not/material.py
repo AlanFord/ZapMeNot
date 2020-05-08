@@ -36,6 +36,7 @@ class Material:
             stream.close()
 
         # check to see if the name is in the library
+        name = name.lower()
         if name not in Material._library.keys():
             raise ValueError("Material not found in the Material Library")
 

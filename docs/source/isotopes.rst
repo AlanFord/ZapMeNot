@@ -9,5 +9,5 @@ lists the isotopes included in the library file
 
 .. csv-table:: ZapMeNot Isotopes
    :file: isotopes.csv
-   :widths: 7, 80
+   :widths: 12, 60
    :header-rows: 1
