@@ -1,0 +1,679 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>zap_me_not.source &#8212; Zap_me_not 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zap_me_not.source</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">shield</span><span class="p">,</span> <span class="n">isotope</span>
+
+
+<div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Abtract class to model a radiation source.  </span>
+
+<span class="sd">    Maintains a list of isotopes and can return a list of point source </span>
+<span class="sd">    locations within the body of the Source.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Arbitrary keyword arguments.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    points_per_dimension : :class:`list` of integers</span>
+<span class="sd">        The number of source points to be used in each dimension when modeling</span>
+<span class="sd">        the uniform source distribution throughout the body of the source.  Typically</span>
+<span class="sd">        a list of three integers for three-dimensional sources, one integer</span>
+<span class="sd">        for one diensional sources, and not significant for point sources.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Initialize the Source with empty strings for the isotope list</span>
+<span class="sd">        and photon list&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># LIST of isotopes and activities (Bq)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># LIST of unique photons and activities (Bq)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Source.add_isotope_curies"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source.add_isotope_curies">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_curies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds an isotope and activity in curies to the isotope list</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_isotope : :class:`zap_me_not.isotope.Isotope`</span>
+<span class="sd">            The isotope to be added to the source.</span>
+<span class="sd">        curies : float</span>
+<span class="sd">            The activity in curies.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="o">*</span><span class="mf">3.7E10</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Source.add_isotope_bq"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source.add_isotope_bq">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_bq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">becquerels</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds an isotope and activity in becquerels to the isotope list</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_isotope : :class:`zap_me_not.isotope.Isotope`</span>
+<span class="sd">            The isotope to be added to the source.</span>
+<span class="sd">        becquerels : float</span>
+<span class="sd">            The activity in becquerels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_isotope</span><span class="p">,</span> <span class="n">becquerels</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Source.add_photon"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source.add_photon">[docs]</a>    <span class="k">def</span> <span class="nf">add_photon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a photon and intensity to the photon list</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy : float</span>
+<span class="sd">            The photon energy in MeV.</span>
+<span class="sd">        intensity : float</span>
+<span class="sd">            The intensity in photons/sec.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Source.list_isotopes"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source.list_isotopes">[docs]</a>    <span class="k">def</span> <span class="nf">list_isotopes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of isotopes in the source</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`tuple`</span>
+<span class="sd">            List of isotope tuples, each tuple containing a</span>
+<span class="sd">            Isotope object and an activity in Bq.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span></div>
+
+<div class="viewcode-block" id="Source.list_discrete_photons"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source.list_discrete_photons">[docs]</a>    <span class="k">def</span> <span class="nf">list_discrete_photons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of individual photons in the source.</span>
+
+<span class="sd">        The list includes only those photons that have been added</span>
+<span class="sd">        individually to the source.  It does not include the photons</span>
+<span class="sd">        that result from the isotopes added to the source.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`tuple`</span>
+<span class="sd">            List of photon tuples, each tuple containing a</span>
+<span class="sd">            photon energy in MeV and an activity in Bq.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_photon_source_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of photons in the source</span>
+
+<span class="sd">        This list of photons combines the Isotopes and the</span>
+<span class="sd">        unique_photons specified in the Source definition.</span>
+<span class="sd">        The photon intensities are scaled to **one source point**.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`tuple`</span>
+<span class="sd">            List of photon tuples, each tuple containing a</span>
+<span class="sd">            photon energy in MeV and an activity in **Bq//source point**.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">photon_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="c1"># test to see if photon energy is already on the list</span>
+        <span class="c1"># and then add photon emmision rate (intensity*Bq).</span>
+
+        <span class="c1"># next_isotope will be a tuple of name and Bq</span>
+        <span class="k">for</span> <span class="n">next_isotope</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="p">:</span>
+            <span class="n">isotope_detail</span> <span class="o">=</span> <span class="n">isotope</span><span class="o">.</span><span class="n">Isotope</span><span class="p">(</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">photons</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                    <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> \
+                        <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">photon_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">scaling_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">photon_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">photon_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">/</span><span class="n">scaling_factor</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<span class="c1"># -----------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="LineSource"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.LineSource">[docs]</a><span class="k">class</span> <span class="nc">LineSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Models a line radiation source </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    start : :class:`list`</span>
+<span class="sd">        Cartiesian X, Y, and Z coordinates of the starting point of the line source.</span>
+<span class="sd">    end : :class:`list`</span>
+<span class="sd">        Cartiesian X, Y, and Z coordinates of the ending point of the line source.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Arbitrary keyword arguments.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    material : :class: `material.Material`</span>
+<span class="sd">        Material properties of the shield</span>
+<span class="sd">    origin : :class:`numpy.ndarray`</span>
+<span class="sd">        Vector location of one end of the line source.</span>
+<span class="sd">    end : :class:`numpy.ndarray`</span>
+<span class="sd">        Vector location of one end of the line source.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s2">&quot;Initialize&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dir</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_length</span>
+        <span class="c1"># let the point source have a dummy material of air at a zero density</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;material_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;air&#39;</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># initialize points_per_dimension after super() to force a</span>
+        <span class="c1"># single dimension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
+<span class="sd">            A list of vector locations within the Source body</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spacings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">,</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span>
+        <span class="n">spacings</span> <span class="o">=</span> <span class="n">spacings</span><span class="o">*</span><span class="n">mesh_width</span>
+        <span class="n">spacings</span> <span class="o">=</span> <span class="n">spacings</span><span class="o">-</span><span class="p">(</span><span class="n">mesh_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">spacings</span><span class="p">:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">_dir</span><span class="o">*</span><span class="n">dist</span>
+            <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">source_points</span>
+
+    <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculates the linear intersection length of a ray and the shield</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ray : :class:`zap_me_not.ray.FiniteLengthRay`</span>
+<span class="sd">            The finite length ray that is checked for intersections with the shield.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            Always returns 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="LineSource.get_crossing_mfp"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.LineSource.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ray : :class:`zap_me_not.ray.FiniteLengthRay`</span>
+<span class="sd">            The finite length ray that is checked for intersections with the shield.</span>
+<span class="sd">        photon_energy : float</span>
+<span class="sd">            The photon energy in MeV</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            Always returns 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">0</span></div></div>
+
+<span class="c1"># -----------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="PointSource"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.PointSource">[docs]</a><span class="k">class</span> <span class="nc">PointSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Models a point radiation source</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : float</span>
+<span class="sd">        Cartiesian X coordinate of the point source.</span>
+<span class="sd">    y : float</span>
+<span class="sd">        Cartiesian Y coordinate of the point source.</span>
+<span class="sd">    z : float</span>
+<span class="sd">        Cartiesian Z coordinate of the point source.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Arbitrary keyword arguments.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    material : :class: `zap_me_not.material.Material`</span>
+<span class="sd">        Material properties of the shield</span>
+<span class="sd">    inner_radius : float</span>
+<span class="sd">        Radius of the annulus inner surface.</span>
+<span class="sd">    outer_radius : float</span>
+<span class="sd">        Radius of the annulus outer surface.</span>
+<span class="sd">    origin : :class:`numpy.ndarray`</span>
+<span class="sd">        Vector location of a point on the annulus centerline.</span>
+<span class="sd">    dir : :class:`numpy.ndarray`</span>
+<span class="sd">        Vector normal of the annulus centerline.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Initialize with an x,y,z location in space&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_z</span> <span class="o">=</span> <span class="n">z</span>
+        <span class="c1"># let the point source have a dummy material of air at a zero density</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;material_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;air&#39;</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
+<span class="sd">            A list of vector locations within the Source body.  In this class the</span>
+<span class="sd">            list is only a single entry.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculates the linear intersection length of a ray and the shield</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ray : :class:`zap_me_not.ray.FiniteLengthRay`</span>
+<span class="sd">            The finite length ray that is checked for intersections with the shield.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            Always returns 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="PointSource.get_crossing_mfp"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.PointSource.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ray : :class:`zap_me_not.ray.FiniteLengthRay`</span>
+<span class="sd">            The finite length ray that is checked for intersections with the shield.</span>
+<span class="sd">            Always returns 0 for the Point source.</span>
+<span class="sd">        photon_energy : float</span>
+<span class="sd">            The photon energy in MeV</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            Always returns 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">0</span></div></div>
+
+<span class="c1"># -----------------------------------------------------------</span>
+
+
+<span class="c1"># class SphereSource(Source, shield.Sphere):</span>
+<span class="c1">#     &#39;&#39;&#39;Axis-Aligned rectangular box source&#39;&#39;&#39;</span>
+<span class="c1">#     # initialize with box_center, box_dimensions, material(optional),</span>
+<span class="c1">#     # density(optional)</span>
+
+<span class="c1">#     def __init__(self, **kwargs):</span>
+<span class="c1">#         super().__init__(**kwargs)</span>
+
+<span class="c1">#     def _get_source_points(self):</span>
+
+<span class="c1">#         # calculate the radius of each &quot;equal area&quot; annular region</span>
+<span class="c1">#         totalVolume = 4/3*math.pi*self.radius**3</span>
+<span class="c1">#         old_radius = 0</span>
+<span class="c1">#         annular_locations = []</span>
+<span class="c1">#         for i in range(self.points_per_dimension[0]):</span>
+<span class="c1">#             new_radius = math.sqrt((running_area+annular_area)/math.pi)</span>
+<span class="c1">#             annular_locations.append((new_radius+old_radius)/2)</span>
+<span class="c1">#             old_radius = new_radius</span>
+
+<span class="c1">#         angle_increment = 2*math.pi/self.points_per_dimension[1]</span>
+<span class="c1">#         start_angle = angle_increment/2</span>
+<span class="c1">#         angle_locations = []</span>
+<span class="c1">#         for i in range(self.points_per_dimension[1]):</span>
+<span class="c1">#             angle_locations.append(start_angle + (i*angle_increment))</span>
+
+<span class="c1">#         length_increment = self.length/self.points_per_dimension[2]</span>
+<span class="c1">#         start_length = length_increment/2</span>
+<span class="c1">#         length_locations = []</span>
+<span class="c1">#         for i in range(self.points_per_dimension[2]):</span>
+<span class="c1">#             length_locations.append(start_length + (i*length_increment))</span>
+
+<span class="c1">#         # iterate through each dimension, building a list of source points</span>
+<span class="c1">#         source_points = []</span>
+<span class="c1">#         for radial_location in annular_locations:</span>
+<span class="c1">#             r = radial_location</span>
+<span class="c1">#             for angle_location in angle_locations:</span>
+<span class="c1">#                 theta = angle_location</span>
+<span class="c1">#                 for length_location in length_locations:</span>
+<span class="c1">#                     z = length_location</span>
+<span class="c1">#                     # convert cylintrical to rectangular coordinates</span>
+<span class="c1">#                     x = r * math.cos(theta)</span>
+<span class="c1">#                     y = r * math.sin(theta)</span>
+<span class="c1">#                     source_points.append([x, y, z])</span>
+<span class="c1">#         return source_points</span>
+
+<span class="c1"># -----------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="BoxSource"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.BoxSource">[docs]</a><span class="k">class</span> <span class="nc">BoxSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Box</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Models a Axis-Aligned rectangular box source</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    material_name : :class:`zap_me_not.material.Material`</span>
+<span class="sd">        Shield material type</span>
+<span class="sd">    box_center : :class:`list`</span>
+<span class="sd">        X, Y, and Z coordinates of the box center.</span>
+<span class="sd">    box_dimensions : :class:`list`</span>
+<span class="sd">        X, Y, and Z dimensions of the box.</span>
+<span class="sd">    density : float, optional</span>
+<span class="sd">        Material density in g/cm3.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    material : :class: `material.Material`</span>
+<span class="sd">        Material properties of the shield</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
+<span class="sd">            A list of vector locations within the Source body.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span>
+        <span class="n">start_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">mesh_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">start_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">i</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">start_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">j</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="n">start_point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">k</span>
+                    <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">source_points</span></div>
+
+<span class="c1"># -----------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="ZAlignedCylinderSource"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.ZAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">ZAlignedCylinder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the Z axis.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Arbitrary keyword arguments.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
+    <span class="c1"># material(optional), density(optional)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
+<span class="sd">            A list of vector locations within the Source body.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
+        <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+            <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
+            <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
+
+        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
+
+        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">start_length</span> <span class="o">=</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
+
+        <span class="c1"># iterate through each dimension, building a list of source points</span>
+        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">radial_location</span> <span class="ow">in</span> <span class="n">annular_locations</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">radial_location</span>
+            <span class="k">for</span> <span class="n">angle_location</span> <span class="ow">in</span> <span class="n">angle_locations</span><span class="p">:</span>
+                <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
+                <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="n">length_location</span>
+                    <span class="c1"># convert cylintrical to rectangular coordinates</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                    <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">source_points</span></div>
+
+<span class="c1"># -----------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="YAlignedCylinderSource"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.YAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">YAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">YAlignedCylinder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the Y axis.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Arbitrary keyword arguments.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
+    <span class="c1"># material(optional), density(optional)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
+<span class="sd">            A list of vector locations within the Source body.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
+        <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+            <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
+            <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
+
+        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
+
+        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">start_length</span> <span class="o">=</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
+
+        <span class="c1"># iterate through each dimension, building a list of source points</span>
+        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">radial_location</span> <span class="ow">in</span> <span class="n">annular_locations</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">radial_location</span>
+            <span class="k">for</span> <span class="n">angle_location</span> <span class="ow">in</span> <span class="n">angle_locations</span><span class="p">:</span>
+                <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
+                <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">length_location</span>
+                    <span class="c1"># convert cylintrical to rectangular coordinates</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                    <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">source_points</span></div>
+
+<span class="c1"># -----------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="XAlignedCylinderSource"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.XAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">XAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">YAlignedCylinder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the X axis.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Arbitrary keyword arguments.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
+    <span class="c1"># material(optional), density(optional)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
+<span class="sd">            A list of vector locations within the Source body.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
+        <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+            <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
+            <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
+
+        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
+
+        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">start_length</span> <span class="o">=</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
+
+        <span class="c1"># iterate through each dimension, building a list of source points</span>
+        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">radial_location</span> <span class="ow">in</span> <span class="n">annular_locations</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">radial_location</span>
+            <span class="k">for</span> <span class="n">angle_location</span> <span class="ow">in</span> <span class="n">angle_locations</span><span class="p">:</span>
+                <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
+                <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="n">length_location</span>
+                    <span class="c1"># convert cylintrical to rectangular coordinates</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                    <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">source_points</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2020,  Alan Ford.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>

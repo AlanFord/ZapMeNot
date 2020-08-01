@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>zap_me_not.model &#8212; Zap_me_not 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zap_me_not.model</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ray</span><span class="p">,</span> <span class="n">material</span>
+
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Performs point-kernel shielding analysis.</span>
+
+<span class="sd">    The Model class combines various shielding elements to perform</span>
+<span class="sd">    the point-kernel photon shielding analysis.  These elements include</span>
+<span class="sd">    sources, shields, and detectors.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    source : :class:`zap_me_not.source.Source`</span>
+<span class="sd">        The source distribution (point, line, or volume) included in the model.</span>
+
+<span class="sd">    shield_list : :class:`list` of :class:`zap_me_not.shield.Shield`</span>
+<span class="sd">        A list of shields (including the source volume) contained in the model.</span>
+
+<span class="sd">    detector : :class:`zap_me_not.detector.Detector`</span>
+<span class="sd">        The single detector in the model used to determine the exposure.</span>
+
+<span class="sd">    filler_material : :class:`zap_me_not.material.Material`</span>
+<span class="sd">        The (optional) material used as fill around the formal shields.</span>
+
+<span class="sd">    buildup_factor_material : :class:`zap_me_not.material.Material`</span>
+<span class="sd">        The material used to calculate the exposure buildup factor. </span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># used to calculate exposure from flux, MeV,</span>
+        <span class="c1"># and linear energy absorption coeff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
+
+<div class="viewcode-block" id="Model.set_filler_material"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.set_filler_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_filler_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler_material</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the filler material used by the model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filler_material : :class:`zap_me_not.material.Material`</span>
+<span class="sd">            The material to be used.</span>
+<span class="sd">        density : float, optional</span>
+<span class="sd">            The density of the material in g/cm\ :sup:`3`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="n">filler_material</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span></div>
+
+<div class="viewcode-block" id="Model.add_source"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.add_source">[docs]</a>    <span class="k">def</span> <span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the source used by the model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_source : :class:`zap_me_not.source.Source`</span>
+<span class="sd">            The source to be used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">new_source</span>
+        <span class="c1"># don&#39;t forget that sources are shields too!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_source</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.add_shield"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.add_shield">[docs]</a>    <span class="k">def</span> <span class="nf">add_shield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shield</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a shield to the collection of shields used by the model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_shield : :class:`zap_me_not.shield.Shield`</span>
+<span class="sd">            The shield to be added.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_shield</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.add_detector"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.add_detector">[docs]</a>    <span class="k">def</span> <span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the detector used by the model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_detector : :class:`zap_me_not.detector.Detector`</span>
+<span class="sd">            The detector to be used in the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="n">new_detector</span></div>
+
+<div class="viewcode-block" id="Model.set_buildup_factor_material"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.set_buildup_factor_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_buildup_factor_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_material</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the material used to calculation exposure buildup factors.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_material : :class:`zap_me_not.material.Material`</span>
+<span class="sd">            The material to be used in buildup factor calculations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span> <span class="o">=</span> <span class="n">new_material</span></div>
+
+<div class="viewcode-block" id="Model.calculate_exposure"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.calculate_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculates the exposure at the detector location.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The exposure in units of mR/hr.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># flux by photon energy</span>
+        <span class="n">flux_by_photon_energy</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># get a list of photons (energy/intensity per source point [gamma/sec])</span>
+        <span class="c1"># from the source</span>
+        <span class="n">spectrum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_photon_source_list</span><span class="p">()</span>
+        <span class="n">source_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">()</span>
+        <span class="c1"># iterate through the photons</span>
+        <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="p">:</span>
+            <span class="n">uncollided_flux</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">total_flux</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">photon_energy</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># eneregy of the current photon</span>
+            <span class="c1"># photon source strength &gt;&gt;PER SOURCE POINT&lt;&lt;</span>
+            <span class="n">photon_yield</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># iterate through the source points</span>
+            <span class="k">for</span> <span class="n">nextPoint</span> <span class="ow">in</span> <span class="n">source_points</span><span class="p">:</span>
+                <span class="c1"># determine the vector from source to detector</span>
+                <span class="n">vector</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">(</span><span class="n">nextPoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+                <span class="c1"># vector = (nextPoint, self.detector.location)</span>
+                <span class="c1"># iterate through the shield list</span>
+                <span class="n">total_mfp</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">shield_crossing_distance</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">shield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+                        <span class="n">distance</span> <span class="o">=</span> <span class="n">shield</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+                        <span class="n">shield_crossing_distance</span> <span class="o">+=</span> <span class="n">distance</span>
+                    <span class="n">total_mfp</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span>
+                        <span class="n">photon_energy</span><span class="p">,</span> <span class="n">vector</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="n">shield_crossing_distance</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">shield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+                    <span class="n">mfp</span> <span class="o">=</span> <span class="n">shield</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
+                    <span class="n">total_mfp</span> <span class="o">+=</span> <span class="n">mfp</span>
+                <span class="n">total_flux_reduction_factor</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">total_mfp</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="n">buildup_factor</span> <span class="o">=</span> \
+                        <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span><span class="o">.</span><span class="n">get_buildup_factor</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">total_mfp</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">buildup_factor</span> <span class="o">=</span> <span class="mf">1.0</span>
+                <span class="n">uncollided_point_flux</span> <span class="o">=</span> <span class="n">photon_yield</span> <span class="o">*</span> \
+                    <span class="n">total_flux_reduction_factor</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">vector</span><span class="o">.</span><span class="n">length</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+                <span class="n">total_point_flux</span> <span class="o">=</span> <span class="n">uncollided_point_flux</span><span class="o">*</span><span class="n">buildup_factor</span>
+                <span class="n">uncollided_flux</span> <span class="o">+=</span> <span class="n">uncollided_point_flux</span>
+                <span class="n">total_flux</span> <span class="o">+=</span> <span class="n">total_point_flux</span>
+            <span class="n">flux_by_photon_energy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">uncollided_flux</span><span class="p">,</span> <span class="n">total_flux</span><span class="p">])</span>
+
+        <span class="n">air</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="s1">&#39;air&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">flux_by_photon_energy</span><span class="p">:</span>
+            <span class="n">photon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">photon</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">*</span>
+                <span class="n">air</span><span class="o">.</span><span class="n">get_mass_energy_abs_coeff</span><span class="p">(</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="c1"># sum exposure over all photons</span>
+        <span class="n">exposure_total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">flux_by_photon_energy</span><span class="p">:</span>
+            <span class="n">exposure_total</span> <span class="o">+=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">exposure_total</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="mi">3600</span>  <span class="c1"># convert from R/sec to mR/hr</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2020,  Alan Ford.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>
