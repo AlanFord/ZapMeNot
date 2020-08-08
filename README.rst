@@ -9,6 +9,7 @@ Links
 -----
 
  - The source: https://github.com/AlanFord/ZapMeNot
+ - The API: https://alanford.github.io/ZapMeNot/
 
 Requirements for installing:
 ------------------------------------------------------------------------------
