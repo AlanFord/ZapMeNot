@@ -4,8 +4,8 @@
 #
 # This library was derived primarily from ANSI/ANS-6.4.3-1991, "Gamma-ray 
 # Attenuation Coefficients and Buildup Factors for Engineering Materials."
-# Nominal densities of materials were taken from Appendix C of "Radiation
-# Shielding", J. K. Shultis and R. E. Faw, American Nuclear Society, 2000.
+# Nominal densities of materials were taken from PNNL-15870, Rev. 1,
+# "Compendium of Material Composition Data for Radiation Transport Modeling".
 #
 aluminum:
   density: 2.7
@@ -541,6 +541,7 @@ air:
     - [1.358, 0.875, 0.037, 14.01, -0.0226]
     - [1.267, 0.844, 0.048, 14.55, -0.0344]      
 concrete:
+  # density based on Concrete, Ordinary (NIST)
   density: 2.3
   density-units: g/cm3
   energy-units: MeV
