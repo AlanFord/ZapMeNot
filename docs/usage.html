@@ -53,6 +53,7 @@
 <blockquote>
 <div><ul class="simple">
 <li><p>The source: <a class="reference external" href="https://github.com/AlanFord/ZapMeNot">https://github.com/AlanFord/ZapMeNot</a></p></li>
+<li><p>The API: <a class="reference external" href="https://alanford.github.io/ZapMeNot/">https://alanford.github.io/ZapMeNot/</a></p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -74,6 +75,18 @@
 <p><cite>pip install ./ZapMeNot</cite></p>
 <p>You can also install in Development Mode:</p>
 <p><cite>pip install -e ./ZapMeNot</cite></p>
+<p>You can also install from Github:</p>
+<p><cite>pip install git+https://github.com/AlanFord/ZapMeNot.git</cite></p>
+</div>
+<div class="section" id="testing">
+<h2>Testing:<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>Testing is designed around the use of pytest.  From the root directory of
+the package, the basic unit tests can be run as follows:</p>
+<p><cite>pytest -m basic</cite></p>
+<p>Benchmark cases can be run using the following command.  Note that these
+cases are designed to fail PyTest. Each benchmark prints the calculation
+results and the difference (in percent) from the corresponding Microshield case.</p>
+<p><cite>pytest -s -m benchmark</cite></p>
 </div>
 <div class="section" id="quickstart">
 <h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
@@ -126,6 +139,7 @@
 <li><a class="reference internal" href="#links">Links</a></li>
 <li><a class="reference internal" href="#requirements-for-installing">Requirements for installing:</a></li>
 <li><a class="reference internal" href="#installation">Installation:</a></li>
+<li><a class="reference internal" href="#testing">Testing:</a></li>
 <li><a class="reference internal" href="#quickstart">Quickstart</a></li>
 </ul>
 </li>

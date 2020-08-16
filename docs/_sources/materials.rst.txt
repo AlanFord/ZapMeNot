@@ -13,4 +13,7 @@ materials and nominal densities include:
  - Air, 0.001205 g/cm\ :sup:`3`
  - Concrete, 2.3 g/cm\ :sup:`3`
  - Water, 1.0 g/cm\ :sup:`3`
+ - SS304L, 8.0 g/cm\ :sup:`3`
+ - UO2, 10.412 g/cm\ :sup:`3` (95% of theoretical density)
+
  
