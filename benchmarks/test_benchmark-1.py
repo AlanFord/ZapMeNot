@@ -23,35 +23,36 @@ pytestmark = pytest.mark.benchmark
 # volumetric source strength is 30 MeV/sec/cm3, or 37.5 photons/sec/cm3.  There is
 # no takn wall to be modeled.
 # The  detector locations are 20, 50, 200, and 500 feet from the bottom centerline of
-# the tank, offset to the side by 3 feet.
+# the tank, offset up by 3 feet.
 # The water density is 1 g/cm3 and the air density is 0.00122 g/cm3.  The buildup
 # reference material is air.
 # Acceptable Results:
 # Distance   	Dose Rate         Microshield
-# (feet)		(Rads/year)       (mrad/hr)
-# 20			6.0E-1 to 1.2E0   8.043E-2
-# 50			1.2E-1 to 2.2E-1  1.791E-2
-# 200			7.5E-3 to 1.5E-2  1.029E-3
-# 500			5.4E-4 to 1.2E-3  1.099E-4
+# (feet)		(Rads/year)       (mR/hr)
+# 20			6.0E-1 to 1.2E0   9.213E-02
+# 50			1.2E-1 to 2.2E-1  2.051e-02
+# 200			7.5E-3 to 1.5E-2  1.178e-03
+# 500			5.4E-4 to 1.2E-3  1.259e-04
 
 def test_benchmark_1():
-	myModel = model.Model()
-	# mySource = source.ZAlignedCylinderSource(materialName="water", cylinderRadius=6*12*2.54, \
-	# 	       cylinderCenter=[0,0,35/2*12*2.54], cylinderLength=35*12*2.54)
-	mySource = source.ZAlignedCylinderSource(material_name="water", cylinder_radius=6*12*2.54, \
+	my_model = model.Model()
+	my_source = source.ZAlignedCylinderSource(material_name="water", cylinder_radius=6*12*2.54, \
 		       cylinder_center=[0,0,35/2*12*2.54], cylinder_length=35*12*2.54)
-	sourceVolume = 35*(6**2)*math.pi*((12*2.54)**3) # cycinder volume in cm**3
-	mySource.add_photon(0.8,37.5*sourceVolume)
-	mySource.points_per_dimension = [40,20,40]
-	myModel.add_source(mySource)
-	myModel.add_shield(shield.ZAlignedCylinder("air", cylinder_radius=600*12*2.54, \
-		       cylinder_center=[0,0,0], cylinder_length=100*12*2.54, density=0.00122))
-	myModel.set_buildup_factor_material(material.Material('air'))
+	my_source.add_photon(0.8,4.2034E9)
+	my_source.points_per_dimension = [16,16,16]
+	my_model.add_source(my_source)
+	my_model.set_filler_material('air',density=0.00122)
+	my_model.set_buildup_factor_material(material.Material('air'))
 	print("")
 	print('test_benchmark_1')
-	for distance in [20, 50, 200, 500]:
-		myModel.add_detector(detector.Detector(distance*12*2.54,3*12*2.54,0))
-		result = myModel.calculate_exposure()
-		# convert from R/sec to mR/hr
-		print("At", distance, "ft, dose = ", result*0.877*8766*1e-3, "Rad/yr")
+	results = []
+	for case in [[20,9.213E-02], [50,2.051e-02], [200,1.178e-03], [500,1.259e-04]]:
+		distance = case[0]
+		expected_dose_rate = case[1]
+		my_model.add_detector(detector.Detector(distance*12*2.54, 0, 3*12*2.54))
+		result = my_model.calculate_exposure()
+		diff = (result - expected_dose_rate)/expected_dose_rate * 100
+		results.append([result,expected_dose_rate])
+		print("At ", distance, " ft, dose = ", result, " mR/hr, ", diff, "%")
+	assert True
 

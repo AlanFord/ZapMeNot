@@ -35,36 +35,37 @@ pytestmark = pytest.mark.benchmark
 # at the vertical centerline of the tank.
 # A concrete shield wall between tank and detector starts at
 # x = 228.6 cm and ends at x=320 cm.
-# The water density is 1 g/cm3 and the air density is 0.00122 g/cm3.
+# The water density is 1 g/cm3 and the air density is 0.00129 g/cm3.
 # The the steel density is 7.8 g/cm3.
 # The buildup material is iron.
 # Benchmark result is 3.15E-3 R/hr.
-# Microshield result is 3.01E-3 R/hr  
+# Microshield result is 3.009e+00 mR/hr  
 def test_benchmark_5():
 	my_model = model.Model()
-	my_source = source.BoxSource(material_name="water", box_center=[0,0,239.95], \
+	my_source = source.BoxSource(material_name="water", box_center=[136.5,0,239.95], \
 		       box_dimensions=[273,273,479.9])
-	source_volume = 273*273*479.9 
-	my_source.add_photon(0.4,4.0E+6*source_volume)
-	my_source.add_photon(0.8,7.0E+6*source_volume)
-	my_source.add_photon(1.3,2.8E+6*source_volume)
-	my_source.add_photon(1.7,8.2E+6*source_volume)
-	my_source.add_photon(2.2,4.0E+4*source_volume)
-	my_source.add_photon(2.5,3.0E+4*source_volume)
-	my_source.add_photon(3.5,1.2E+1*source_volume)
+	my_source.add_photon(0.4,1.4307e+014)
+	my_source.add_photon(0.8,2.5037e+014)
+	my_source.add_photon(1.3,1.0015e+014)
+	my_source.add_photon(1.7,2.9329e+014)
+	my_source.add_photon(2.2,1.4307e+012)
+	my_source.add_photon(2.5,1.0730e+012)
+	my_source.add_photon(3.5,4.2920e+008)
 	my_source.points_per_dimension = [16,16,16]
 	my_model.add_source(my_source)
-	my_model.add_shield(shield.SemiInfiniteXSlab("iron", x_start=136.5, \
-		       x_end=139.04, density=7.8))
-	my_model.add_shield(shield.SemiInfiniteXSlab("concrete", x_start=228.6, \
-		       x_end=320, density=2.4))
-	my_model.set_filler_material('air',density=0.00122)
-	my_model.set_buildup_factor_material(material.Material('iron'))
-	my_model.add_detector(detector.Detector(320,0,239.95))
+	my_model.add_shield(shield.SemiInfiniteXSlab("iron", x_start=273, \
+		       x_end=275.54, density=7.8))
+	my_model.add_shield(shield.SemiInfiniteXSlab("concrete", x_start=365.1, \
+		       x_end=465.5, density=2.4))
+	my_model.set_filler_material('air',density=0.00129)
+	my_model.set_buildup_factor_material(material.Material('concrete'))
+	my_model.add_detector(detector.Detector(456.5,0,239.95))
 	result = my_model.calculate_exposure()
-	# convert from mR/hr to R/hr
+	expected_dose_rate = 3.009e+00
+	diff = (result - expected_dose_rate)/expected_dose_rate * 100
 	print("")
 	print('test_benchmark_5')
-	print("At 320 cm, dose = ", result*1e-3, "R/hr")
+	print("At 456.5 cm, dose = ", result, " mR/hr, ", diff, "%")
+	assert True
 
 

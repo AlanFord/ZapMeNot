@@ -29,10 +29,10 @@ pytestmark = pytest.mark.benchmark
 # Acceptable Results:
 # Distance   	Dose Rate            Microshield 
 # (feet)		(Rads/year)          (mrad/hr)
-# 200			8.0E-11 to 1.2E-10   1.042E-11
-# 1,000			2.0E-12 to 3.0E-12   2.909E-13
-# 3,000			4.5E-14 to 7.5E-14   7.941E-15
-# 5,000			3.5E-15 to 5.8E-15   6.091E-16
+# 200			8.0E-11 to 1.2E-10   1.194e-11
+# 1,000			2.0E-12 to 3.0E-12   3.332e-13
+# 3,000			4.5E-14 to 7.5E-14   9.096e-15
+# 5,000			3.5E-15 to 5.8E-15   6.977e-16
 def test_benchmark_0():
 	my_model = model.Model()
 	my_source = source.PointSource(0,0,0)
@@ -42,8 +42,13 @@ def test_benchmark_0():
 	my_model.set_buildup_factor_material(material.Material('air'))
 	print("")
 	print('test_benchmark_0')
-	for distance in [200, 1000, 3000, 5000]:
-		my_model.add_detector(detector.Detector(distance*12*2.54,57*12*2.54,0))
+	results = []
+	for case in [[200,1.194e-11], [1000,3.332e-13], [3000,9.096e-15], [5000,6.977e-16]]:
+		distance = case[0]
+		expected_dose_rate = case[1]
+		my_model.add_detector(detector.Detector(distance*12*2.54,0,57*12*2.54))
 		result = my_model.calculate_exposure()
-		# convert from R/sec to mR/hr
-		print("At", distance, "ft, dose = ", result*0.877*8766*1e-3, "Rad/yr")
+		diff = (result - expected_dose_rate)/expected_dose_rate * 100
+		results.append([result,expected_dose_rate])
+		print("At ", distance, " ft, dose = ", result, " mR/hr, ", diff, "%")
+	assert True

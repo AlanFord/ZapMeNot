@@ -31,6 +31,23 @@ You can also install in Development Mode:
 
 `pip install -e ./ZapMeNot`
 
+You can also install from Github:
+
+`pip install git+https://github.com/AlanFord/ZapMeNot.git`
+
+Testing:
+------------------------------------------------------------------------------
+Testing is designed around the use of pytest.  From the root directory of 
+the package, the basic unit tests can be run as follows:
+
+`pytest -m basic`
+
+Benchmark cases can be run using the following command.  Note that these
+cases are designed to fail PyTest. Each benchmark prints the calculation
+results and the difference (in percent) from the corresponding Microshield case.
+
+`pytest -s -m benchmark`
+
 Quickstart
 ------------------------------------------------------------------------------
 
