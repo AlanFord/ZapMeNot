@@ -33,7 +33,7 @@ You can also install in Development Mode:
 
 You can also install from Github:
 
-`pip install git+https://github.com/AlanFord/ZapMeNot.git`
+`pip install git+git://github.com/AlanFord/ZapMeNot.git`
 
 Testing:
 ------------------------------------------------------------------------------

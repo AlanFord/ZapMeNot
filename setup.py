@@ -8,6 +8,7 @@ with open('zap_me_not/__about__.py') as fh:
 
 if __name__ == '__main__':
     setuptools.setup(
+        include_package_data=True,
         name=about['__package_name__'],
         version=about['__version__'],
         author=about['__author__'],
