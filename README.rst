@@ -25,24 +25,24 @@ Installation:
 
 Installing from a local source tree:
 
-`pip install ./ZapMeNot`
+:code:`pip install ./ZapMeNot`
 
 You can also install in Development Mode:
 
-`pip install -e ./ZapMeNot`
+:code:`pip install -e ./ZapMeNot`
 
 You can also install from Github:
 
-`pip install git+git://github.com/AlanFord/ZapMeNot.git`
+:code:`pip install git+git://github.com/AlanFord/ZapMeNot.git`
 
 Installing in Anaconda is a bit more complicated. You must first manually install the prerequisites in conda:
-`conda install pip`
-`conda install git`
-`conda install numpy`
-`conda install scipy`
-`conda install pytest`
-`conda install pyyaml`
-`pip install git+git://github.com/AlanFord/ZapMeNot.git`
+:code:`conda install pip`
+:code:`conda install git`
+:code:`conda install numpy`
+:code:`conda install scipy`
+:code:`conda install pytest`
+:code:`conda install pyyaml`
+:code:`pip install git+git://github.com/AlanFord/ZapMeNot.git`
 
 This may be simplified in the future as my knowledge of installation packages improves!
 
@@ -51,13 +51,13 @@ Testing:
 Testing is designed around the use of pytest.  From the root directory of 
 the package, the basic unit tests can be run as follows:
 
-`pytest -m basic`
+:code:`pytest -m basic`
 
 Benchmark cases can be run using the following command.  Note that these
 cases are designed to fail PyTest. Each benchmark prints the calculation
 results and the difference (in percent) from the corresponding Microshield case.
 
-`pytest -s -m benchmark`
+:code:`pytest -s -m benchmark`
 
 Quickstart
 ------------------------------------------------------------------------------
