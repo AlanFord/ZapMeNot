@@ -35,9 +35,8 @@ You can also install from Github:
 
 :code:`pip install git+git://github.com/AlanFord/ZapMeNot.git`
 
-Installing in Anaconda is a bit more complicated. You must first manually install the prerequisites in conda:
+Installing in Anaconda is a bit more complicated. You must first manually install the prerequisites in conda::
 
-.. code-block:: bash
     conda install pip
     conda install git
     conda install numpy
