@@ -36,13 +36,15 @@ You can also install from Github:
 :code:`pip install git+git://github.com/AlanFord/ZapMeNot.git`
 
 Installing in Anaconda is a bit more complicated. You must first manually install the prerequisites in conda:
-:code:`conda install pip`
-:code:`conda install git`
-:code:`conda install numpy`
-:code:`conda install scipy`
-:code:`conda install pytest`
-:code:`conda install pyyaml`
-:code:`pip install git+git://github.com/AlanFord/ZapMeNot.git`
+
+.. code-block:: bash
+    conda install pip
+    conda install git
+    conda install numpy
+    conda install scipy
+    conda install pytest
+    conda install pyyaml
+    pip install git+git://github.com/AlanFord/ZapMeNot.git
 
 This may be simplified in the future as my knowledge of installation packages improves!
 
