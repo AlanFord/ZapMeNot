@@ -1,0 +1,7 @@
+ - add files necessary for packaging.
+ - QA both html and pdf formats for the documentation.
+ - consider converting **kwargs to include formal arguments needed for parent classes.
+ - consider changing all "crossing" methods of shield classes to return a common value; either a list of vector points or a list of lengths along the associated ray object.
+ - standardize the signature of argument lists to set_buildup_factor_material and set_filler_material methods of the Model class.
+ - when passing strings for a material name, make sure the code is case-insensitive
+ - check for coverage (basic tests may not include filler material feature)

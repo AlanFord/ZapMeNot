@@ -9,13 +9,13 @@ pytestmark = pytest.mark.benchmark
 #===================================================
 # Summary:
 # Benchmark 0: ANSI/ANS-6.6.1 Reference Problem I.1
-# Benchmark 1: ANSI/ANS-6.6.1 Reference Problem II.1 Case 1
+# Benchmark 1: ANSI/ANS-6.6.1 Reference Problem II.1
 # Benchmark 2: ESIS Problem #1 - Dose Point D2 -Buildup with Steel
 # Benchmark 3: ESIS Problem #1 - Dose Point D3 - Buildup with Concrete
 # Benchmark 4: ESIS Problem #2 - Dose Point D5 - Steel Buildup
 # Benchmark 5: ESIS Problem #2 - Dose Point D6 - Concrete Buildup
-# Benchmark 6: User manual case for resin liner source inference
-# Benchmark 7: User manual case for resin liner source inference, iron shield
+# Benchmark 6: solidified resin container with concrete shield
+# Benchmark 7: solidified resin container with concrete and steel shields
 
 # Benchmark 0 is based on ANSI/ANS-6.6.1 Reference Problem I.1
 # The source is located at the origin.
