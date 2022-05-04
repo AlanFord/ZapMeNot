@@ -25,5 +25,5 @@ if __name__ == '__main__':
             'scipy>=0.14',
             'pyyaml>=5.3'],
         test_requires=['pytest'],
-        setup_requires=['pytest_runner']
+        setup_requires=['pytest-runner']
     )
