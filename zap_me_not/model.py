@@ -1,4 +1,5 @@
 import math
+import pyvista
 
 from . import ray, material
 
@@ -161,3 +162,23 @@ class Model:
         for photon in flux_by_photon_energy:
             exposure_total += photon[3]
         return exposure_total*1000*3600  # convert from R/sec to mR/hr
+
+    def display(self):
+        """Produces a graphic display of the model.
+        """
+        # basic test of pyvista plotter
+        sourceColor = 'red'
+        detectorColor = 'yellow'
+        shieldColor = 'blue'
+        # cylinder = pyvista.Cylinder(center=[0, 0, 0], direction=[0, 0, 1], radius=1, height=2)
+        pl = pyvista.Plotter()
+        for shield in self.shield_list:
+            pl.add_mesh(shield.vtk(), line_width=5, color=shieldColor,style='wireframe')
+        pl.add_axes(color='black', xlabel='X', labels_off=False)
+        pl.add_mesh(self.source.vtk(),line_width=5,color=sourceColor,label='source')
+        # detector = pyvista.Sphere(center=(4.5, 4.5, 4.5), radius=0.1)
+        pl.add_mesh(self.detector.vtk(), line_width=5, color=detectorColor,label='detector')
+        pl.set_background(color='white')
+        pl.add_legend(face=None,size=(0.1, 0.1))
+        pl.show()
+
