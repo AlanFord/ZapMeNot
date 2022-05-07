@@ -1,6 +1,6 @@
 __package_name__ = 'zap_me_not'
 __import_name__ = 'zap_me_not'
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __author__ = 'Alan Ford'
 __author_email__ = ''
 __description__ = ' '.join('''
