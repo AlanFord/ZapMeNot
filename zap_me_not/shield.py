@@ -178,6 +178,16 @@ class SemiInfiniteXSlab(Shield):
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A box object representing the slab shield.
+        """
+        return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000, -1000, 1000))
+
 # -----------------------------------------------------------
 
 
@@ -393,7 +403,7 @@ class Box(Shield):
         Returns
         -------
         :class:`pyvista.PolyData`
-            A small sphere object representing the box shield.
+            A box object representing the box shield.
         """
         xmin = self.box_center[0]-self.box_dimensions[0]/2
         xmax = self.box_center[0]+self.box_dimensions[0]/2
@@ -558,6 +568,21 @@ class InfiniteAnnulus(Shield):
                     if t >= 0 and t <= ray.length:
                         results.append(t)
         return results
+
+
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A boolean object representing the annular cylinder shield.
+        """
+        innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)
+        outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)
+        result = outerCylinder.boolean_difference(innerCylinder)
+        return result
+
 # -----------------------------------------------------------
 
 
@@ -851,6 +876,17 @@ class CappedCylinder(Shield):
                 if radial.dot(radial) < self.radius**2:
                     results.append(point)
         return results
+
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A cylinder object representing the capped cylinder shield.
+        """
+        center= (self.origin + self.end) / 2
+        return pyvista.Cylinder(center=(center[0],center[1],center[2]),direction=self.dir,height=self.length, radius=self.radius)
 
 # -----------------------------------------------------------
 
