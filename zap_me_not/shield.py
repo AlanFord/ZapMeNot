@@ -578,10 +578,12 @@ class InfiniteAnnulus(Shield):
         :class:`pyvista.PolyData`
             A boolean object representing the annular cylinder shield.
         """
-        innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)
-        outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)
-        result = outerCylinder.boolean_difference(innerCylinder)
-        return result
+        disc = pyvista.Disc(center=(self.origin[0],self.origin[1],self.origin[2]), inner=self.inner_radius,outer=self.outer_radius)
+        cyl1 = disc.extrude(self.dir*2000,capping=True)
+        # innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)
+        # outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)
+        # result = outerCylinder.boolean_difference(innerCylinder)
+        return cyl1
 
 # -----------------------------------------------------------
 
