@@ -6,12 +6,12 @@ from zap_me_not import model,source,shield,detector,material
 pytestmark = pytest.mark.graphics
 
 #=============================================================
+"""
 class TestVTK():
-
     def test_Case0(self):
-        # basic test of pyvista - plot a cylinder
-        cylinder = pyvista.Cylinder(center=[1, 2, 3], direction=[1, 1, 1], radius=1, height=2)
-        cylinder.plot(show_edges=False, line_width=5, cpos='xy')
+            # basic test of pyvista - plot a cylinder
+            cylinder = pyvista.Cylinder(center=[1, 2, 3], direction=[1, 1, 1], radius=1, height=2)
+            cylinder.plot(show_edges=False, line_width=5, cpos='xy')
 
     def test_Case1(self):
         # basic test of pyvista plotter
@@ -33,13 +33,22 @@ class TestVTK():
         pl = pyvista.Plotter()
         pl.add_mesh(result,line_width=5,color='tan',style='wireframe')
         pl.show()
-
+"""
 class TestModel():
 
-    def test_Case0(self):
-        # simple test of model display
-        # point source with no shielding
-        # reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
+    def test_PointSource(self):
+        # simple test of model display and a point source
+        myModel = model.Model()
+        mySource = source.PointSource(0,0,10)
+        photonEnergy = 1.0 # MeV
+        photonIntensity = 3E10 # photons/sec
+        mySource.add_photon(photonEnergy,photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100,0,0))
+        myModel.add_shield(shield.Box("iron", box_center=[15,0,0],box_dimensions=[10,30,30]))
+        myModel.display()
+
+    def test_Cylinder(self):
         myModel = model.Model()
         mySource = source.PointSource(0,0,0)
         photonEnergy = 1.0 # MeV

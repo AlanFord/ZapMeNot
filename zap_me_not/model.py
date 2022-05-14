@@ -170,11 +170,11 @@ class Model:
         pl = pyvista.Plotter()
         for shield in self.shield_list:
             pl.add_mesh(shield.vtk(), line_width=5, color=shieldColor,style='wireframe')
-        pl.add_axes(color='black', xlabel='X', labels_off=False)
+        # pl.add_axes(color='black', xlabel='X', labels_off=False)
         pl.add_mesh(self.source.vtk(),line_width=5,color=sourceColor,label='source')
-        # detector = pyvista.Sphere(center=(4.5, 4.5, 4.5), radius=0.1)
         pl.add_mesh(self.detector.vtk(), line_width=5, color=detectorColor,label='detector')
         pl.set_background(color='white')
-        pl.add_legend(face=None,size=(0.1, 0.1))
+        pl.show_bounds(grid='front', location='outer',all_edges=True)
+        # pl.add_legend(face=None,size=(0.1, 0.1))
         pl.show()
 
