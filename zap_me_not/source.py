@@ -230,6 +230,16 @@ class LineSource(Source, shield.Shield):
         """
         return 0
 
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A line object representing the line source.
+        """
+        return pyvista.Line(pointa=self.origin, pointb=self.end)
+
 # -----------------------------------------------------------
 
 
