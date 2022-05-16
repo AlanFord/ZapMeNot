@@ -33,6 +33,11 @@ class Shield:
         if density is not None:
             self.material.density = density
         super().__init__(**kwargs)
+        
+    @abc.abstractmethod
+    def is_infinite():
+		"""Returns true if any dimension is infinite, false otherwise
+		"""
 
     @abc.abstractmethod
     def _get_crossing_length(self, ray):
@@ -118,6 +123,11 @@ class SemiInfiniteXSlab(Shield):
         super().__init__(material_name=material_name, density=density)
         self.x_start = x_start
         self.x_end = x_end
+        
+    def is_infinite():
+		"""Returns true if any dimension is infinite, false otherwise
+		"""
+		return True
 
     def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
@@ -276,7 +286,12 @@ class Box(Shield):
         self.box_center = np.array(box_center)
         self.box_dimensions = np.array(box_dimensions)
 
-    def get_crossing_mfp(self, ray, photon_energy):
+     def is_infinite():
+		"""Returns true if any dimension is infinite, false otherwise
+		"""
+		return False
+
+   def get_crossing_mfp(self, ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -455,6 +470,11 @@ class InfiniteAnnulus(Shield):
         self.origin = np.array(cylinder_origin)
         axis = np.array(cylinder_axis)
         self.dir = axis/np.linalg.norm(axis)
+
+    def is_infinite():
+		"""Returns true if any dimension is infinite, false otherwise
+		"""
+		return True
 
     def get_crossing_mfp(self, ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
@@ -751,6 +771,12 @@ class CappedCylinder(Shield):
         self.end = np.array(cylinder_end)
         self.length = np.linalg.norm(self.end - self.origin)
         self.dir = (self.end - self.origin)/self.length
+
+    def is_infinite():
+		"""Returns true if any dimension is infinite, false otherwise
+		"""
+		return False
+
 
     def get_crossing_mfp(self, ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
