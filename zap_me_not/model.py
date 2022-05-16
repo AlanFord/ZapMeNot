@@ -173,7 +173,7 @@ class Model:
         # cylinder = pyvista.Cylinder(center=[0, 0, 0], direction=[0, 0, 1], radius=1, height=2)
         pl = pyvista.Plotter()
         for shield in self.shield_list:
-            pl.add_mesh(shield.vtk(), line_width=5, color=shieldColor,style='wireframe')
+            pl.add_mesh(shield.vtk(), line_width=5, color=shieldColor)
         # pl.add_axes(color='black', xlabel='X', labels_off=False)
         pl.add_mesh(self.source.vtk(),line_width=5,color=sourceColor,label='source')
         pl.add_mesh(self.detector.vtk(), line_width=5, color=detectorColor,label='detector')
