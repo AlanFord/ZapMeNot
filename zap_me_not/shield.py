@@ -35,9 +35,9 @@ class Shield:
         super().__init__(**kwargs)
         
     @abc.abstractmethod
-    def is_infinite():
-		"""Returns true if any dimension is infinite, false otherwise
-		"""
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
 
     @abc.abstractmethod
     def _get_crossing_length(self, ray):
@@ -124,10 +124,10 @@ class SemiInfiniteXSlab(Shield):
         self.x_start = x_start
         self.x_end = x_end
         
-    def is_infinite():
-		"""Returns true if any dimension is infinite, false otherwise
-		"""
-		return True
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
+        return True
 
     def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
@@ -286,12 +286,12 @@ class Box(Shield):
         self.box_center = np.array(box_center)
         self.box_dimensions = np.array(box_dimensions)
 
-     def is_infinite():
-		"""Returns true if any dimension is infinite, false otherwise
-		"""
-		return False
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
+        return False
 
-   def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -471,10 +471,10 @@ class InfiniteAnnulus(Shield):
         axis = np.array(cylinder_axis)
         self.dir = axis/np.linalg.norm(axis)
 
-    def is_infinite():
-		"""Returns true if any dimension is infinite, false otherwise
-		"""
-		return True
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
+        return True
 
     def get_crossing_mfp(self, ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
@@ -598,7 +598,7 @@ class InfiniteAnnulus(Shield):
         :class:`pyvista.PolyData`
             A boolean object representing the annular cylinder shield.
         """
-        disc = pyvista.Disc(center=(self.origin[0],self.origin[1],self.origin[2]), inner=self.inner_radius,outer=self.outer_radius)
+        disc = pyvista.Disc(center=(self.origin[0],self.origin[1],self.origin[2]), inner=self.inner_radius,outer=self.outer_radius,c_res=50)
         cyl1 = disc.extrude(self.dir*2000,capping=True)
         # innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)
         # outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)
@@ -772,10 +772,10 @@ class CappedCylinder(Shield):
         self.length = np.linalg.norm(self.end - self.origin)
         self.dir = (self.end - self.origin)/self.length
 
-    def is_infinite():
-		"""Returns true if any dimension is infinite, false otherwise
-		"""
-		return False
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
+        return False
 
 
     def get_crossing_mfp(self, ray, photon_energy):

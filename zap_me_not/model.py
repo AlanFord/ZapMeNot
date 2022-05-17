@@ -167,16 +167,15 @@ class Model:
         detectorColor = 'yellow'
         shieldColor = 'blue'
         # find the bounding box for all finite bodies
-        blocks = pv.Multiblock()
+        blocks = pyvista.MultiBlock()
         for shield in self.shield_list:
-			if not shield.is_infinite():
-				blocks.append(shield.vtk())
-		blocks.append(self.source.vtk())
-		blocks.append(self.detector.vtk())
-		bounds = blocks.bounds()				
+            if not shield.is_infinite():
+                blocks.append(shield.vtk())
+        blocks.append(self.source.vtk())
+        blocks.append(self.detector.vtk())
         pl = pyvista.Plotter()
         for shield in self.shield_list:
-			pl.add_mesh(shield.vtk().clip_box(bounds), color=shieldColor)
+            pl.add_mesh(shield.vtk().clip_box(blocks.bounds,invert=False), color=shieldColor)
         # pl.add_axes(color='black', xlabel='X', labels_off=False)
         pl.add_mesh(self.source.vtk(),line_width=5,color=sourceColor,label='source')
         pl.add_mesh(self.detector.vtk(), line_width=5, color=detectorColor,label='detector')
