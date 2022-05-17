@@ -35,5 +35,5 @@ class Detector:
         :class:`pyvista.PolyData`
             A small sphere object representing the detector.
         """
-        return pyvista.Sphere(center=(self.x, self.y, self.z), radius=1)
+        return pyvista.Sphere(center=(self.x, self.y, self.z), radius=10)
 
