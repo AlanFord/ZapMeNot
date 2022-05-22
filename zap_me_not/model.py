@@ -178,13 +178,23 @@ class Model:
         blocks.append(self.source.vtk())
         blocks.append(self.detector.vtk())
         pl = pyvista.Plotter()
+        # increase the display bounds by a smidge to avoid inadvertent clipping
+        bounds = [x * 1.01 for x in blocks.bounds]
         for shield in self.shield_list:
-            pl.add_mesh(shield.vtk().clip_box(blocks.bounds,invert=False), color=shieldColor)
-        # pl.add_axes(color='black', xlabel='X', labels_off=False)
+            if shield.is_infinite():
+                clip1 = shield.vtk().clip_closed_surface(normal='-z',origin=[0,0,bounds[5]])
+                clip2 =  clip1.clip_closed_surface(normal='z',origin=[0,0,bounds[4]])
+                clip3 =  clip2.clip_closed_surface(normal='-y',origin=[0,bounds[3],0])
+                clip4 =  clip3.clip_closed_surface(normal='y',origin=[0,bounds[2],0])
+                clip5 =  clip4.clip_closed_surface(normal='-x',origin=[bounds[1],0,0])
+                clip6 =  clip5.clip_closed_surface(normal='x',origin=[bounds[0],0,0])
+                pl.add_mesh(clip6, color=shieldColor)
+            else:
+                pl.add_mesh(shield.vtk(), color=shieldColor)
         pl.add_mesh(self.source.vtk(),line_width=5,color=sourceColor,label='source')
         pl.add_mesh(self.detector.vtk(), line_width=5, color=detectorColor,label='detector')
-        pl.set_background(color='white')
+        # pl.set_background(color='white')
         pl.show_bounds(grid='front', location='outer',all_edges=True)
-        # pl.add_legend(face=None,size=(0.1, 0.1))
+        pl.add_legend(face=None,size=(0.1, 0.1))
         pl.show()
 
