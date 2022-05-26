@@ -24,7 +24,7 @@ while True:
 		stream.readline()
 		nuclide = tokens[1]
 		halflifeUnits = int(tokens[2])
-		halflife = tokens[3]
+		halflife = float(tokens[3])
 		if halflifeUnits == 1:
 			halflifeUnits = "second"
 		elif halflifeUnits == 2:
