@@ -13,8 +13,8 @@ function case3()
     % - Use air response function
     % - Ar-41 photon spectrum:
     % - MeV            Yield
-    %   1.29364e+00    9.91600e-01
-    %   1.67700e+00    5.20000e-04
+    %   1.29360e+00    9.91600e-01
+    %   1.67700e+00    5.15630e-04
 
     
     format long
