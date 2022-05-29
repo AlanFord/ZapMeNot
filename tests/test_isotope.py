@@ -5,11 +5,13 @@ from zap_me_not import isotope
 pytestmark = pytest.mark.basic
 
 # request an invalid material
+# reference: none required
 def test_a_bad_isotope_name():
 	with pytest.raises(ValueError):
 		a = isotope.Isotope("wanker")
 
 # test using a capitalized isotope name and mixed-case name
+# reference: none required
 def test_name_case():
 	try:
 		a = isotope.Isotope("CO-60")
@@ -25,6 +27,7 @@ def test_name_case():
 		pytest.fail("Lower case isotope name failed")
 
 # test valid half life in years
+# reference: isotope library and hand calculation
 def test_halflife():
 	# years
 	a = isotope.Isotope("co-60")
@@ -47,6 +50,7 @@ def test_halflife():
 	# >>> nothing to test in library
 
 # test valid photon property read and store
+# reference: isotope library
 def test_photon_readAndStore():
 	a = isotope.Isotope("co-60")
 	assert a.photons ==[[3.47140e-01, 7.50000e-05], \

@@ -6,6 +6,8 @@ from zap_me_not import shield, ray, material
 
 pytestmark = pytest.mark.basic
 
+# test set/retrieve common shield properties
+# reference: none
 def test_GeneralShieldFeatures():
 	myShield = shield.SemiInfiniteXSlab("iron", 10, 20, density=0.123)
 	assert myShield.material.name == "iron"
@@ -14,11 +16,13 @@ def test_GeneralShieldFeatures():
 #=============================================================
 class TestSemiInfiniteXSlab():
 
+	# setup routine for subsequent tests
 	@pytest.fixture(scope="class")
 	def create_shield(self):
 		myShield = shield.SemiInfiniteXSlab("iron", 10, 20)
 		return myShield
 
+	# setup routine for subsequent tests
 	@pytest.fixture(scope="class")
 	def create_ray(self):
 		start = [0,0,0]
@@ -26,56 +30,74 @@ class TestSemiInfiniteXSlab():
 		aRay = ray.FiniteLengthRay(start, end)
 		return aRay
 
-	# test arguments
+
+	# test arguements used to create a slab shield
+	# reference: setup function create_shield()
 	def test_size(self,create_shield):
 		assert create_shield.material.name == "iron"
 		assert create_shield.x_start == 10
 		assert create_shield.x_end == 20
 
 	# test getting a crossing length
-	# reference value taken from matlab script slabCrossingLength.m
+	# reference: tests/reference_calculations/test_shield\slabCrossingLength.m (matlab script)
 	def test_crossing_length1(self, create_shield, create_ray):
 		length = create_shield._get_crossing_length(create_ray)
 		assert length == pytest.approx(17.320508)
 
+	# test getting a crossing length after reversing the directio of the ray
+	# reference: tests/reference_calculations/test_shield\slabCrossingLength.m (matlab script)
 	def test_crossing_length2(self, create_shield, create_ray):
-		# try reversing the direction
 		a=create_ray.start
 		create_ray.start=create_ray.end
 		create_ray.end=a
 		length = create_shield._get_crossing_length(create_ray)
 		assert length == pytest.approx(17.320508)
 
+	# test crossing length for a ray that misses the shield
+	# reference: none
 	def test_crossing_length3(self, create_shield):
 		# ray misses the slab
 		length = create_shield._get_crossing_length(ray.FiniteLengthRay([30,0,0], [30,0,30]))
 		assert length == 0
 
+	# test crossing length for ray originating inside shield
+	# reference: hand calculation based on previous result from
+	#     tests/reference_calculations/test_shield\slabCrossingLength.m (matlab script)
 	def test_crossing_length4(self, create_shield):
 		# two rays that start inside the slab and traverse outwards
 		length = create_shield._get_crossing_length(ray.FiniteLengthRay([15,15,15], [30,30,30]))
 		assert length == pytest.approx(17.320508/2)
 
+	# test crossing length for ray originating inside shield
+	# reference: hand calculation based on previous result from
+	#     tests/reference_calculations/test_shield\slabCrossingLength.m (matlab script)
 	def test_crossing_length5(self, create_shield):
 		length = create_shield._get_crossing_length(ray.FiniteLengthRay([30,30,30], [15,15,15]))
 		assert length == pytest.approx(17.320508/2)
 
+	# test crossing length for ray terminating inside shield
+	# reference: hand calculation based on previous result from
+	#     tests/reference_calculations/test_shield\slabCrossingLength.m (matlab script)
 	def test_crossing_length6(self, create_shield):
 		# ray start outside the slab and ends inside the slab
 		length = create_shield._get_crossing_length(ray.FiniteLengthRay([0,0,0], [15,15,15]))
 		assert length == pytest.approx(17.320508/2)
 
+	# test crossing length for ray entirely inside shield
+	# reference: hand calculation
 	def test_crossing_length7(self, create_shield):
 		# ray contained entirely within the slab
 		length = create_shield._get_crossing_length(ray.FiniteLengthRay([11,11,11], [16,16,16]))
 		assert length == pytest.approx(math.sqrt(25*3))
 
 	# test getting a crossing mfp
+	# reference:  NEED A REFERENCE
 	def test_get_MFP(self, create_shield, create_ray):
 		mfp = create_shield.get_crossing_mfp(create_ray, 0.66)
 		assert mfp == pytest.approx(9.923087573149688)
 
 	# test getting a crossing mfp
+	# reference:  materialLibrary.yml and hand calc
 	def test_get_special_MFP(self, create_shield):
 		start = [0,0,0]
 		end = [100,0,0]

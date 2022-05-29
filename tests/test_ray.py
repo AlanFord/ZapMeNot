@@ -7,7 +7,8 @@ from zap_me_not import ray
 
 pytestmark = pytest.mark.basic
 
-
+# test calculation of ray length
+# reference: hand calculation
 def test_ray_length():
     start = [1, 1, 1]
     end = [2, 2, 2]
@@ -15,7 +16,8 @@ def test_ray_length():
     assert (aaa.origin == np.array(start)).all
     assert aaa.length == pytest.approx(math.sqrt(3.))
 
-
+# test calculaton of ray properties dir, invdir, sign
+# reference: hand calculation
 def test_ray_unit_vector():
     start = [1, 1, 1]
     end = [2, 2, 2]

@@ -8,6 +8,8 @@ pytestmark = pytest.mark.basic
 
 class TestPointSource():
 
+	# test set/retrieve of isotopes in Curies
+	# reference: manual calculation
 	def test_addIsotopeCuries(self):
 		my_source = source.PointSource(1,2,3)
 		my_source.add_isotope_curies('Co-60',3.14)
@@ -16,6 +18,8 @@ class TestPointSource():
 		assert my_list == my_source.list_isotopes()
 
 
+	# test set/retrieve of isotopes in Bq
+	# reference: manual calculation
 	def test_addIsotopeBq(self):
 		my_source = source.PointSource(1,2,3)
 		my_source.add_isotope_bq('Co-60',3.14E9)
@@ -23,6 +27,8 @@ class TestPointSource():
 		my_list = [('Co-60',3.14E9), ('Cs-137',1E6)]
 		assert my_list ==my_source.list_isotopes()
 
+	# test set/retrieve of isotopes in Photons
+	# reference: manual calculation
 	def test_addPhoton(self):
 		my_source = source.PointSource(1,2,3)
 		my_source.add_photon(0.9876,3.14E2)
@@ -30,6 +36,8 @@ class TestPointSource():
 		my_list = [(0.9876,3.14E2),(0.02,5)]
 		assert my_list == my_source.list_discrete_photons()
 
+	# test retrieval of photon energies/intensities from photon library
+	# reference: manual calculation and isotope library
 	def test_getPhotonEnergyList(self):
 		my_source = source.PointSource(1,2,3)
 		my_source.add_isotope_curies('Ar-41',3.14)
@@ -43,6 +51,8 @@ class TestPointSource():
 			 (1.2936, 9.91600e-01 * 3.7e10 * 3.14), \
 			 (1.677, 5.15630e-04 * 3.7e10 * 3.14)])
 
+	# test set/retrieval of source points
+	# reference: manual calculation
 	def test_getSourcePoints(self):
 		my_source = source.PointSource(1,2,3)
 		np.testing.assert_allclose(my_source._get_source_points(), \
@@ -52,6 +62,8 @@ class TestPointSource():
 
 class TestLineSource():
 
+	# test set/retrieve of isotopes in Curies
+	# reference: manual calculation
 	def test_addIsotopeCuries(self):
 		my_source = source.LineSource([1,2,3], [11,12,13])
 		my_source.add_isotope_curies('Co-60',3.14)
@@ -60,6 +72,8 @@ class TestLineSource():
 		assert my_list == my_source.list_isotopes()
 
 
+	# test set/retrieve of isotopes in Bq
+	# reference: manual calculation
 	def test_addIsotopeBq(self):
 		my_source = source.LineSource([1,2,3], [11,12,13])
 		my_source.add_isotope_bq('Co-60',3.14E9)
@@ -67,6 +81,8 @@ class TestLineSource():
 		my_list = [('Co-60',3.14E9), ('Cs-137',1E6)]
 		assert my_list == my_source.list_isotopes()
 
+	# test set/retrieve of isotopes in Photons
+	# reference: manual calculation
 	def test_addPhoton(self):
 		my_source = source.LineSource([1,2,3], [11,12,13])
 		my_source.add_photon(0.9876,3.14E2)
@@ -74,6 +90,8 @@ class TestLineSource():
 		my_list = [(0.9876,3.14E2),(0.02,5)]
 		assert my_list == my_source.list_discrete_photons()
 
+	# test retrieval of photon energies/intensities from photon library
+	# reference: manual calculation and isotope library
 	def test_getPhotonEnergyList(self):
 		my_source = source.LineSource([1,2,3], [11,12,13])
 		my_source.add_isotope_curies('Ar-41',3.14)
@@ -89,6 +107,8 @@ class TestLineSource():
 			 (1.2936, 9.91600e-01 * 3.7e10 * 3.14 / 10), \
 			 (1.677, 5.15630e-04 * 3.7e10 * 3.14 / 10)])
 
+	# test set/retrieval of source points
+	# reference: manual calculation
 	def test_getSourcePoints(self):
 		my_source = source.LineSource([1,2,3], [11,12,13])
 		np.testing.assert_allclose(my_source._get_source_points(), \
@@ -107,6 +127,8 @@ class TestLineSource():
 
 class TestBoxSource():
 
+	# test source point locations and set/retrieve of photon source energies
+	# reference: manual calculation and isotope library
 	def test_getSourcePoints(self):
 		my_source = source.BoxSource(box_center=[4,5,6],box_dimensions=[10,10,10],material_name='iron')
 		my_source.points_per_dimension= [1,1,1]
@@ -151,6 +173,9 @@ class TestYAlignedCylinderSource():
 
 class TestZAlignedCylinderSource():
 
+	# test source point locations and set/retrieve of photon source energies
+	# reference: tests/reference_calculations/test_source/cylinder_unit_test.m (matlab script)
+	# reference: isotope library
 	def test_getSourcePoints(self):
 		my_source = source.ZAlignedCylinderSource(cylinder_center=[0,0,0],cylinder_length=10,cylinder_radius=5,material_name='iron')
 		my_source.points_per_dimension= [3,3,3]
