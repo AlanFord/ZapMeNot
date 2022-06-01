@@ -9,9 +9,9 @@ pytestmark = pytest.mark.basic
 #=============================================================
 class TestPointSource():
 
+	# point source with no shielding
+	# Reference: dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
 	def test_Case0(self):
-		# point source with no shielding
-		# reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
 		myModel = model.Model()
 		mySource = source.PointSource(0,0,0)
 		photonEnergy = 1.0 # MeV
@@ -26,8 +26,9 @@ class TestPointSource():
 		# the "other code" gives 440.1 mR/hr at an air density of 1e-12g/cc
 		assert result == pytest.approx(analyticalDose*1000*3600) # convert from R/sec to mR/hr
 
+	# a point source with infinite yz shields
+	# Reference: tests/reference_calculations/test_model/test_Case1.m (matlab script)
 	def test_Case1(self):
-		# a point source with infinite yz shields
 		myModel = model.Model()
 		mySource = source.PointSource(0,0,0)
 		mySource.add_photon(1.0,3e10)
@@ -39,8 +40,9 @@ class TestPointSource():
 		result = myModel.calculate_exposure()
 		assert result == pytest.approx(2.218926692201380e-06*1000*3600) # convert from R/sec to mR/hr
 
+	# a point source (single photon) with a single infinite yz shield
+	# Reference: tests/reference_calculations/test_model/test_Case2.m (matlab script)
 	def test_Case2(self):
-		# a point source with infinite yz shields
 		myModel = model.Model()
 		mySource = source.PointSource(0,0,0)
 		mySource.add_photon(1.0,3e10)
@@ -51,8 +53,9 @@ class TestPointSource():
 		result = myModel.calculate_exposure()
 		assert result == pytest.approx(7.057332942044014e-06*1000*3600) # convert from R/sec to mR/hr
 
+	# a point source (multiple photons) with two separate infinite yz shields, on-axis source/detector
+	# Reference: tests/reference_calculations/test_model/test_Case3.m (matlab script)
 	def test_Case3(self):
-		# a point source with infinite yz shields
 		myModel = model.Model()
 		mySource = source.PointSource(0,0,0)
 		mySource.add_isotope_bq('Ar-41',3e10)
@@ -62,10 +65,11 @@ class TestPointSource():
 		myModel.add_detector(detector.Detector(100,0,0))
 		myModel.set_buildup_factor_material(material.Material('iron'))
 		result = myModel.calculate_exposure()
-		assert result == pytest.approx(4.3979088503738596e-06*1000*3600) # convert from R/sec to mR/hr
+		assert result == pytest.approx(4.39752804914973e-06*1000*3600) # convert from R/sec to mR/hr
 
+	# a point source (multiple photons) with two separate infinite yz shields, off-axis source/detector
+	# Reference: tests/reference_calculations/test_model/test_Case4.m (matlab script)
 	def test_Case4(self):
-		# a point source with infinite yz shields
 		myModel = model.Model()
 		mySource = source.PointSource(1,2,3)
 		mySource.add_isotope_curies('Co-60',3)
@@ -75,16 +79,16 @@ class TestPointSource():
 		myModel.add_detector(detector.Detector(80,90,100))
 		myModel.set_buildup_factor_material(material.Material('iron'))
 		result = myModel.calculate_exposure()
-		assert result == pytest.approx(0.6090081012193129) # convert from R/sec to mR/hr
+		assert result == pytest.approx(1.691500568541137e-07*1000*3600) # convert from R/sec to mR/hr
 
 #=============================================================
 class TestLineSource():
 
+	# line source with no shielding
+	# reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
+	# from the reference, pages 132, 157, and 159, th dose rate is 64.66 mR/hr
+	# Microshield gives 64.74 mR/hr at an air density of 1e-12g/cc
 	def test_Case0(self):
-		# point source with no shielding
-		# reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
-		# from the reference, pages 132, 157, and 159, th dose rate is 64.66 mR/hr
-		# Microshield gives 64.74 mR/hr at an air density of 1e-12g/cc
 		myModel = model.Model()
 		mySource = source.LineSource([0,0,0],[0,0,1000])
 		mySource.points_per_dimension = 100
@@ -103,11 +107,11 @@ class TestLineSource():
 #=============================================================
 class TestZAlignedCylinderSource():
 
+	# line source with no shielding
+	# reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
+	# from the reference, pages 132, 157, and 159, the dose rate is 271.8 mR/hr
+	# Microshield gives 271.8 mR/hr at an air density of 1e-12g/cc
 	def test_Case0(self):
-		# point source with no shielding
-		# reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
-		# from the reference, pages 132, 157, and 159, th dose rate is 271.8 mR/hr
-		# Microshield gives 271.8 mR/hr at an air density of 1e-12g/cc
 		myModel = model.Model()
 		mySource = source.ZAlignedCylinderSource(material_name='air', \
 			cylinder_center=[0,0,500],cylinder_length=1000, \
