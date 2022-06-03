@@ -1,3 +1,8 @@
+# History
+# Rev. 0:  Limited data taken from http://physics.nist.gov
+# Rev. 1:  Data extracted from ICRP38.RAD, see https://www.ornl.gov/sites/default/files/TBoxMan.pdf
+#          and https://www.ornl.gov/crpk/software
+# Rev. 2:  Data derived from ORIGEN in SCALE 6.2.3
 ---
 Ac-224:
   half-life: 2.78000e+00
