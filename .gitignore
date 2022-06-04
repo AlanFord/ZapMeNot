@@ -121,3 +121,5 @@ dataConversion/updates/names
 dataConversion/updates/gamma.data
 
 dataConversion/updates/decay.data
+
+*.data
