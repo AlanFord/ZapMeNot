@@ -7,7 +7,7 @@ def float_representer(dumper, value):
 yaml.add_representer(float, float_representer)
 
 # open and read the decay data
-stream = open("decay.data", 'r')
+stream = open("origen.rev03.decay.data", 'r')
 isotopeLibrary = {}
 while True:
 	data = stream.readline() #read the title card and throw it away
@@ -57,7 +57,7 @@ stream.close()
 
 # -------------------------------------------------------------
 # open and read the photon data
-stream = open("gamma.data", 'r')
+stream = open("origen.rev04.mpdkxgam.data", 'r')
 finalLibrary = {}
 while True:
 	# read data until we run out
