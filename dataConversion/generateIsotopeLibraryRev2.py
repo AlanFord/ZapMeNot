@@ -1,4 +1,4 @@
-# program to read and parse decay.data
+# program to generate Rev 2 of isotopeLibrary.yml
 import yaml
 
 def float_representer(dumper, value):
@@ -115,7 +115,7 @@ while True:
 		# add the current isotope to the library dictionary
 		finalLibrary.update({name : currentIsotope})
 		
-yamlStream = open('spankynewIsotopeLibrary.yml', 'wt')
+yamlStream = open('isotopeLibraryRev2.yml', 'wt')
 yaml.dump(finalLibrary, yamlStream, default_flow_style=False, explicit_start=True, explicit_end=True)
 stream.close()
 yamlStream.close()
