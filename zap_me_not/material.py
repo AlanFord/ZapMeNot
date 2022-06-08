@@ -2,6 +2,8 @@ from scipy.interpolate import Akima1DInterpolator
 import numpy as np
 import yaml
 import pkg_resources
+import warnings
+
 
 class Material:
     """Encaplsulates the data in the MaterialLibrary.yml file.
@@ -207,4 +209,8 @@ class Material:
             (1 - np.tanh(-2))
         if K == 1:
             return 1 + (b-1) * mfp
+        with warnings.catch_warnings(record=True) as w:
+            retval = 1 + (b-1)*((K**mfp) - 1)/(K - 1)
+            if len(w) > 0:
+                print("mfp = " + str(mfp) + " K = " + str(K) + "\n")
         return 1 + (b-1)*((K**mfp) - 1)/(K - 1)
