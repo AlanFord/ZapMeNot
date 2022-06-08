@@ -205,12 +205,12 @@ class Material:
         float
             The photon buildup factor for exposure in air
         """
+        # limit the calculation to a mfp of 40 (the maximum of the tables
+        # in ANS 6.4.3)
+        if mfp > 40:
+            mfp = 40
         K = (c * (mfp**a)) + (d * (np.tanh(mfp/X - 2) - np.tanh(-2))) / \
             (1 - np.tanh(-2))
         if K == 1:
             return 1 + (b-1) * mfp
-        with warnings.catch_warnings(record=True) as w:
-            retval = 1 + (b-1)*((K**mfp) - 1)/(K - 1)
-            if len(w) > 0:
-                print("mfp = " + str(mfp) + " K = " + str(K) + "\n")
         return 1 + (b-1)*((K**mfp) - 1)/(K - 1)
