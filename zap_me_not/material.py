@@ -216,6 +216,7 @@ class Material:
         and other higher energy photons should dominate.  The exception would be xrays combined
         with very thick shiekding.  In those cases a higher-order shielding code should be used.
         """
+<<<<<<< HEAD
         if mfp > 40:
             used_mfp = 40
         else:
@@ -225,3 +226,14 @@ class Material:
         if K == 1:
             return 1 + (b-1) * used_mfp
         return 1 + (b-1)*((K**used_mfp) - 1)/(K - 1)
+=======
+        # limit the calculation to a mfp of 40 (the maximum of the tables
+        # in ANS 6.4.3)
+        if mfp > 40:
+            mfp = 40
+        K = (c * (mfp**a)) + (d * (np.tanh(mfp/X - 2) - np.tanh(-2))) / \
+            (1 - np.tanh(-2))
+        if K == 1:
+            return 1 + (b-1) * mfp
+        return 1 + (b-1)*((K**mfp) - 1)/(K - 1)
+>>>>>>> data-update
