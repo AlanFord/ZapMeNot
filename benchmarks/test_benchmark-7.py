@@ -35,7 +35,7 @@ pytestmark = pytest.mark.benchmark
 # the resin centerline and 2 ft (60.96 cm) above the bottom of the
 # resin cylinder.
 # The buildup material is concrete.
-# Microshield result is 2.200e-01 mR/hr  
+# Microshield result is 1.718E-01 mR/hr WHEN USING THE LINEAR ENERGY GROUP OPTION
 def test_benchmark_7():
 	my_model = model.Model()
 	my_source = source.ZAlignedCylinderSource(material_name="resin", cylinder_radius=60.96, \
