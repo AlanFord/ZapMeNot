@@ -115,3 +115,11 @@ venv.bak/
 dataConversion/compendium- Updated.xlsm
 
 docsrc/source/old_isotopes.csv
+
+dataConversion/updates/names
+
+dataConversion/updates/gamma.data
+
+dataConversion/updates/decay.data
+
+*.data

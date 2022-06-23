@@ -62,7 +62,7 @@ def convert():
 		currentIsotope.update({"photon-intensity" : photonIntensities})
 		# add the current isotope to the library dictionary
 		isotopeLibrary.update({name : currentIsotope})
-	yamlStream = open('newIsotopeLibrary.yml', 'wt')
+	yamlStream = open('isotopeLibraryRev1.yml', 'wt')
 	yaml.dump(isotopeLibrary, yamlStream, default_flow_style=False, explicit_start=True, explicit_end=True)
 	stream.close()
 	yamlStream.close()

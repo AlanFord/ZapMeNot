@@ -35,7 +35,7 @@ pytestmark = pytest.mark.benchmark
 # the resin centerline and 2 ft (60.96 cm) above the bottom of the
 # resin cylinder.
 # The buildup material is concrete.
-# Microshield result is 1.548e+00 mR/hr  
+# Microshield result is 1.362e+00 mR/hr WHEN USING THE LINEAR ENERGY GROUP OPTION
 def test_benchmark_6():
 	my_model = model.Model()
 	my_source = source.ZAlignedCylinderSource(material_name="resin", cylinder_radius=60.96, \
@@ -61,7 +61,7 @@ def test_benchmark_6():
 	my_model.set_buildup_factor_material(material.Material('concrete'))
 	my_model.add_detector(detector.Detector(487.68,0,60.96))
 	result = my_model.calculate_exposure()
-	expected_dose_rate = 1.548e+00
+	expected_dose_rate = 1.362e+00
 	diff = (result - expected_dose_rate)/expected_dose_rate * 100
 	print("")
 	print('test_benchmark_6')

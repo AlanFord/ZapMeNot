@@ -2,6 +2,8 @@ from scipy.interpolate import Akima1DInterpolator
 import numpy as np
 import yaml
 import pkg_resources
+import warnings
+
 
 class Material:
     """Encaplsulates the data in the MaterialLibrary.yml file.
@@ -202,9 +204,24 @@ class Material:
         -------
         float
             The photon buildup factor for exposure in air
+
+        Important Details
+        -----------------
+        The number of mean free paths (mfp) used to calculate the buildup factor is limited to
+        a value of 40 or less.  This is an inherent limitation of the source document,
+        ANS-6.4.3-1991.  In normal use this limitation is only expected to be encountered
+        in cases involving low energy photons (with a relatively small mean free path) and 
+        thick shields.  In those instances the uncolided flux should be very small.  Even with
+        a larger buildup factor the contribution of these photons to exposure should be minimal
+        and other higher energy photons should dominate.  The exception would be xrays combined
+        with very thick shiekding.  In those cases a higher-order shielding code should be used.
         """
-        K = (c * (mfp**a)) + (d * (np.tanh(mfp/X - 2) - np.tanh(-2))) / \
+        if mfp > 40:
+            used_mfp = 40
+        else:
+            used_mfp = mfp
+        K = (c * (used_mfp**a)) + (d * (np.tanh(used_mfp/X - 2) - np.tanh(-2))) / \
             (1 - np.tanh(-2))
         if K == 1:
-            return 1 + (b-1) * mfp
-        return 1 + (b-1)*((K**mfp) - 1)/(K - 1)
+            return 1 + (b-1) * used_mfp
+        return 1 + (b-1)*((K**used_mfp) - 1)/(K - 1)

@@ -1,7 +1,9 @@
-% MATLAB script to generate a reference value used in the
-% test_Case1 python unit test
+% MATLAB script to generate reference values 
+% In test_model.py
+%   See test_Case1()
+% Uses: 
 
-function case1()
+function test_Case1()
     % perform a simple point-source shielding calculation
     % with buildup to verify operation of ZapMeNot
     % Problem Description:

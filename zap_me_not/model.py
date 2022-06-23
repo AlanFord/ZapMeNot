@@ -34,8 +34,12 @@ class Model:
         self.detector = None
         self.filler_material = None
         self.buildup_factor_material = None
-        # used to calculate exposure from flux, MeV,
-        # and linear energy absorption coeff
+        # used to calculate exposure (R/sec) from flux (photon/cm2 sec), photon energy (MeV),
+        # and linear energy absorption coeff (cm2/g)
+        # aka, "flux to exposure conversion factor"
+        # for more information, see "Radiation Shielding", J. K. Shultis and R.E. Faw, 2000
+        # page 141.  This value is based on a value of energy deposition
+        # per ion in air of 33.85 [ICRU Report 39, 1979].
         self._conversion_factor = 1.835E-8
 
     def set_filler_material(self, filler_material, density=None):
