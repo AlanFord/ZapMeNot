@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 from . import ray, material
 
@@ -106,13 +107,23 @@ class Model:
         float
             The exposure in units of mR/hr.
         """
+        # build the transit list
+        source_points = self.source._get_source_points()
+        # create the numpy array
+        crossing_distances = np.zeros((len(source_points), len(self.shield_list)))
+        total_distance = np.zeros((len(source_points)))
+        for index, nextPoint in enumerate(source_points):
+            vector = ray.FiniteLengthRay(nextPoint, self.detector.location)
+            total_distance[index] = vector.length
+            for index2,shield in enumerate(self.shield_list):
+                crossing_distances[index,index2] = shield._get_crossing_length(vector)
+        gaps = total_distance - np.sum(crossing_distances, axis=1)
 
         # flux by photon energy
         flux_by_photon_energy = []
         # get a list of photons (energy/intensity per source point [gamma/sec])
         # from the source
         spectrum = self.source._get_photon_source_list()
-        source_points = self.source._get_source_points()
         # iterate through the photons
         for photon in spectrum:
             uncollided_flux = 0
@@ -120,34 +131,28 @@ class Model:
             photon_energy = photon[0]  # eneregy of the current photon
             # photon source strength >>PER SOURCE POINT<<
             photon_yield = photon[1]
-            # iterate through the source points
-            for nextPoint in source_points:
-                # determine the vector from source to detector
-                vector = ray.FiniteLengthRay(nextPoint, self.detector.location)
-                # vector = (nextPoint, self.detector.location)
-                # iterate through the shield list
-                total_mfp = 0.0
-                shield_crossing_distance = 0.0
-                if self.filler_material is not None:
-                    for shield in self.shield_list:
-                        distance = shield._get_crossing_length(vector)
-                        shield_crossing_distance += distance
-                    total_mfp += self.filler_material.get_mfp(
-                        photon_energy, vector.length - shield_crossing_distance)
-                for shield in self.shield_list:
-                    mfp = shield.get_crossing_mfp(vector, photon_energy)
-                    total_mfp += mfp
-                total_flux_reduction_factor = math.exp(-total_mfp)
-                if (self.buildup_factor_material is not None):
-                    buildup_factor = \
-                        self.buildup_factor_material.get_buildup_factor(photon_energy, total_mfp)
-                else:
-                    buildup_factor = 1.0
-                uncollided_point_flux = photon_yield * \
-                    total_flux_reduction_factor * (1/(4*math.pi*vector.length**2))
-                total_point_flux = uncollided_point_flux*buildup_factor
-                uncollided_flux += uncollided_point_flux
-                total_flux += total_point_flux
+            # determine the xsecs
+            xsecs = np.zeros((len(self.shield_list)))
+            for index,shield in enumerate(self.shield_list):
+                xsecs[index] = shield.material.density * shield.material.get_mass_atten_coeff(photon_energy)
+            #determine the mean free paths, one per source point
+            total_mfp = crossing_distances * xsecs
+            total_mfp = np.sum(total_mfp, axis=1)
+            # add the gaps if required
+            if self.filler_material is not None:
+                gap_xsec = self.filler_material.density * self.filler_material.get_mass_atten_coeff(photon_energy)
+                total_mfp = total_mfp + (gaps * gap_xsec)
+            total_flux_reduction_factor = np.exp(-total_mfp)
+            if (self.buildup_factor_material is not None):
+                buildup_factor = \
+                    self.buildup_factor_material.get_buildup_factor(photon_energy, total_mfp)
+            else:
+                buildup_factor = 1.0
+            uncollided_point_flux = photon_yield * \
+                total_flux_reduction_factor * (1/(4*math.pi*np.power(total_distance,2)))
+            total_point_flux = uncollided_point_flux*buildup_factor
+            uncollided_flux = np.sum(uncollided_point_flux)
+            total_flux = np.sum(total_point_flux)
             flux_by_photon_energy.append(
                 [photon_energy, uncollided_flux, total_flux])
 

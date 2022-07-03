@@ -55,6 +55,18 @@ def test_getBuildupFactor():
 	b = a.get_buildup_factor(0.66, 10, "GP")
 	assert b == pytest.approx(43.237787)
 
+# test calculation of a list of buildup factors
+# reference: tests/reference_calculations/test_material/buildupFactor.m (matlab script)
+def test_getBuildupFactor():
+	a = material.Material("air")
+	mfp_list = [0, 10]
+	b = a.get_buildup_factor
+	b = a.get_buildup_factor(0.66, mfp_list, "GP")
+	print(b)
+	assert b[0] == 1
+	assert b[1] == pytest.approx(43.237787)
+	assert len(b) == 2
+
 
 
 

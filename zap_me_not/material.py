@@ -141,14 +141,14 @@ class Material:
                                         np.log10(self._en_abs_energy_bins),
                                         np.log10(self._mass_en_abs_coff)))
 
-    def get_buildup_factor(self, energy, mfp, formula="GP"):
+    def get_buildup_factor(self, energy, mfps, formula="GP"):
         """Calculates the photon buildup factor at the given energy and mfp
 
         Parameters
         ----------
         energy : float
             The photon energy in MeV
-        mfp : float
+        mfps : list of float
             The mean free path through the material in cm
             formula (str): The format of the buildup factor
 
@@ -161,25 +161,34 @@ class Material:
 
         Returns
         -------
-        float
+        list of floats
             The photon buildup factor for exposure in air
         """
-        if mfp == 0:
-            return 1
-        if formula == "GP":
-            # find the bounding array indices
-            if (energy < self._gp_energy_bins[0]) or \
-                    (energy > self._gp_energy_bins[-1]):
-                raise ValueError("Photon energy is out of range")
+        if formula != "GP":
+            raise ValueError("Only GP Buildup Factors are currently supported")
+            
+        # find the bounding array indices
+        if (energy < self._gp_energy_bins[0]) or \
+                (energy > self._gp_energy_bins[-1]):
+            raise ValueError("Photon energy is out of range")
+        b = self._bi(energy)
+        c = self._ci(energy)
+        a = self._ai(energy)
+        X = self._Xi(energy)
+        d = self._di(energy)
 
-            b = self._bi(energy)
-            c = self._ci(energy)
-            a = self._ai(energy)
-            X = self._Xi(energy)
-            d = self._di(energy)
+        bf = []
+        # if mfps is a single value, convert to a list
+        if type(mfps) is not list: mfps = [ mfps ]
+        for mfp in mfps:
+            if mfp == 0:
+                bf.append(1)
+            else:
 
-            return Material._GP(a, b, c, d, X, mfp)
-        raise ValueError("Only GP Buildup Factors are currently supported")
+                bf.append(Material._GP(a, b, c, d, X, mfp))
+        # if only one mfp, return a value rather than a list
+        if len(bf) == 1: bf = bf[0]
+        return bf
 
     @staticmethod
     def _GP(a, b, c, d, X, mfp):
