@@ -177,17 +177,8 @@ class Material:
         X = self._Xi(energy)
         d = self._di(energy)
 
-        bf = []
-        # if mfps is a single value, convert to a list
-        if type(mfps) is not list: mfps = [ mfps ]
-        for mfp in mfps:
-            if mfp == 0:
-                bf.append(1)
-            else:
-
-                bf.append(Material._GP(a, b, c, d, X, mfp))
-        # if only one mfp, return a value rather than a list
-        if len(bf) == 1: bf = bf[0]
+        mfp = np.array(mfps)
+        bf = Material._GP(a, b, c, d, X, mfp)
         return bf
 
     @staticmethod
@@ -225,12 +216,22 @@ class Material:
         and other higher energy photons should dominate.  The exception would be xrays combined
         with very thick shiekding.  In those cases a higher-order shielding code should be used.
         """
-        if mfp > 40:
-            used_mfp = 40
+        if np.shape(mfp) == ():
+            if mfp == 0:
+                return 1
+            if mfp > 40:
+                mfp = 40
+            answer = 1 + (b-1) * mfp
+            K = (c * (mfp**a)) + (d * (np.tanh(mfp/X - 2) - np.tanh(-2))) / \
+                (1 - np.tanh(-2))
+            if K != 1:
+                answer = 1 + (b-1)*((K**mfp) - 1)/(K - 1)
+            return answer
         else:
-            used_mfp = mfp
-        K = (c * (used_mfp**a)) + (d * (np.tanh(used_mfp/X - 2) - np.tanh(-2))) / \
-            (1 - np.tanh(-2))
-        if K == 1:
-            return 1 + (b-1) * used_mfp
-        return 1 + (b-1)*((K**used_mfp) - 1)/(K - 1)
+            mfp[mfp > 40] = 40
+            answers = 1 + (b-1) * mfp
+            K = np.zeros(mfp.size)
+            K[mfp != 0] = (c * (mfp[mfp != 0]**a)) + (d * (np.tanh(mfp[mfp != 0]/X - 2) - np.tanh(-2))) / \
+                (1 - np.tanh(-2))
+            answers[K != 1] = 1 + (b-1)*((np.power(K[K != 1],mfp[K != 1])) - 1)/(K[K != 1] - 1)
+            return answers
