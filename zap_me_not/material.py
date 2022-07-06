@@ -2,7 +2,6 @@ from scipy.interpolate import Akima1DInterpolator
 import numpy as np
 import yaml
 import pkg_resources
-import warnings
 
 
 class Material:
@@ -16,7 +15,7 @@ class Material:
     ----------
     name : str
         The material to be extracted from the material library
-    
+
     Attributes
     ----------
     name
@@ -68,7 +67,7 @@ class Material:
         self._ai = Akima1DInterpolator(self._gp_energy_bins, self._gp_a)
         self._Xi = Akima1DInterpolator(self._gp_energy_bins, self._gp_X)
         self._di = Akima1DInterpolator(self._gp_energy_bins, self._gp_d)
-    
+
     @property
     def name(self):
         """str : The name of the material"""
@@ -166,7 +165,7 @@ class Material:
         """
         if formula != "GP":
             raise ValueError("Only GP Buildup Factors are currently supported")
-            
+
         # find the bounding array indices
         if (energy < self._gp_energy_bins[0]) or \
                 (energy > self._gp_energy_bins[-1]):
@@ -207,14 +206,17 @@ class Material:
 
         Important Details
         -----------------
-        The number of mean free paths (mfp) used to calculate the buildup factor is limited to
-        a value of 40 or less.  This is an inherent limitation of the source document,
-        ANS-6.4.3-1991.  In normal use this limitation is only expected to be encountered
-        in cases involving low energy photons (with a relatively small mean free path) and 
-        thick shields.  In those instances the uncolided flux should be very small.  Even with
-        a larger buildup factor the contribution of these photons to exposure should be minimal
-        and other higher energy photons should dominate.  The exception would be xrays combined
-        with very thick shiekding.  In those cases a higher-order shielding code should be used.
+        The number of mean free paths (mfp) used to calculate the buildup
+        factor is limited to a value of 40 or less.  This is an inherent
+        limitation of the source document, ANS-6.4.3-1991.  In normal use this
+        limitation is only expected to be encountered in cases involving low
+        energy photons (with a relatively small mean free path) and
+        thick shields.  In those instances the uncolided flux should be very
+        small.  Even with a larger buildup factor the contribution of these
+        photons to exposure should be minimal and other higher energy photons
+        should dominate.  The exception would be xrays combined with very thick
+        shiekding.  In those cases a higher-order shielding code
+        should be used.
         """
         if np.shape(mfp) == ():
             if mfp == 0:
@@ -231,7 +233,9 @@ class Material:
             mfp[mfp > 40] = 40
             answers = 1 + (b-1) * mfp
             K = np.zeros(mfp.size)
-            K[mfp != 0] = (c * (mfp[mfp != 0]**a)) + (d * (np.tanh(mfp[mfp != 0]/X - 2) - np.tanh(-2))) / \
+            K[mfp != 0] = (c * (mfp[mfp != 0]**a)) + \
+                (d * (np.tanh(mfp[mfp != 0]/X - 2) - np.tanh(-2))) / \
                 (1 - np.tanh(-2))
-            answers[K != 1] = 1 + (b-1)*((np.power(K[K != 1],mfp[K != 1])) - 1)/(K[K != 1] - 1)
+            answers[K != 1] = 1 + \
+                (b-1)*((np.power(K[K != 1], mfp[K != 1])) - 1)/(K[K != 1] - 1)
             return answers
