@@ -106,16 +106,22 @@ class Model:
         """Calculates the exposure at the detector location.
 
         Note:  Significant use of Numpy arrays to speed up evaluating the
-        dose from each source point.
+        dose from each source point.  A "for loop" is used to loop
+        through photon energies, but many of the iterations through
+        all source points is performed using matrix math.
 
         Returns
         -------
         float
             The exposure in units of mR/hr.
         """
-        # build the transit list
+        # build an array of shield crossing lengths.
+        # The first index is the source point.
+        # The second index is the shield (including the source body).
+        # The total transit distance in the "filler" material (if any)
+        # is determined by subtracting the sum of the shield crossing
+        # lengths from the total ray length.
         source_points = self.source._get_source_points()
-        # create the numpy array
         crossing_distances = np.zeros((len(source_points),
                                        len(self.shield_list)))
         total_distance = np.zeros((len(source_points)))
@@ -127,16 +133,15 @@ class Model:
                     shield._get_crossing_length(vector)
         gaps = total_distance - np.sum(crossing_distances, axis=1)
 
-        # flux by photon energy
         flux_by_photon_energy = []
-        # get a list of photons (energy/intensity per source point [gamma/sec])
-        # from the source
+        # get a list of photons (energy & intensity per
+        # source point [gamma/sec]) from the source
         spectrum = self.source._get_photon_source_list()
-        # iterate through the photons
+        # iterate through the photon list
         for photon in spectrum:
             uncollided_flux = 0
             total_flux = 0
-            photon_energy = photon[0]  # eneregy of the current photon
+            photon_energy = photon[0]
             # photon source strength >>PER SOURCE POINT<<
             photon_yield = photon[1]
             # determine the xsecs
@@ -144,7 +149,7 @@ class Model:
             for index, shield in enumerate(self.shield_list):
                 xsecs[index] = shield.material.density * \
                     shield.material.get_mass_atten_coeff(photon_energy)
-            # determine the mean free paths, one per source point
+            # determine an array of mean free paths, one per source point
             total_mfp = crossing_distances * xsecs
             total_mfp = np.sum(total_mfp, axis=1)
             # add the gaps if required
