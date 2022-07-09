@@ -147,9 +147,10 @@ class Material:
         ----------
         energy : float
             The photon energy in MeV
-        mfps :  a float, list of floats, or numpy vector of floats
-            The mean free path through the material in cm
-        formula (str): The format of the buildup factor
+        mfps : float, :class:`list`, or :class:`numpy.ndarray`
+            One or more mean free paths through the material
+        formula : string
+            The format of the buildup factor
 
         Raises
         ------
@@ -160,8 +161,8 @@ class Material:
 
         Returns
         -------
-        numpy 1-D array of floats
-            The photon buildup factors for exposure in air at
+        float or :class:`numpy.ndarray`
+            A vector of photon exposure buildup factors in air at
             each specified mfp
         """
         if formula != "GP":
@@ -202,8 +203,8 @@ class Material:
 
         Returns
         -------
-        float (for a single mfp) or a numpy array (for several mfp's)
-            The photon buildup factor for exposure in air
+        float or :class:`numpy.ndarray`
+            Vector of photon exposure buildup factors in air
 
         Important Details
         -----------------
