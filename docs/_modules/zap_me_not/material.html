@@ -1,17 +1,17 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>zap_me_not.material &#8212; Zap_me_not 0.0.1 documentation</title>
-    <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -29,7 +29,8 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">zap_me_not.material</a></li> 
       </ul>
     </div>  
 
@@ -44,6 +45,7 @@
 <span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">import</span> <span class="nn">pkg_resources</span>
 
+
 <div class="viewcode-block" id="Material"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.material.Material">[docs]</a><span class="k">class</span> <span class="nc">Material</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Encaplsulates the data in the MaterialLibrary.yml file.</span>
 
@@ -55,7 +57,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    name : str</span>
 <span class="sd">        The material to be extracted from the material library</span>
-<span class="sd">    </span>
+
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    name</span>
@@ -107,7 +109,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ai</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_a</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_X</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_di</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span><span class="p">)</span>
-    
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;str : The name of the material&quot;&quot;&quot;</span>
@@ -180,16 +182,17 @@
                                         <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_en_abs_energy_bins</span><span class="p">),</span>
                                         <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mass_en_abs_coff</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="Material.get_buildup_factor"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.material.Material.get_buildup_factor">[docs]</a>    <span class="k">def</span> <span class="nf">get_buildup_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">mfp</span><span class="p">,</span> <span class="n">formula</span><span class="o">=</span><span class="s2">&quot;GP&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Material.get_buildup_factor"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.material.Material.get_buildup_factor">[docs]</a>    <span class="k">def</span> <span class="nf">get_buildup_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">mfps</span><span class="p">,</span> <span class="n">formula</span><span class="o">=</span><span class="s2">&quot;GP&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the photon buildup factor at the given energy and mfp</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        energy : float</span>
 <span class="sd">            The photon energy in MeV</span>
-<span class="sd">        mfp : float</span>
-<span class="sd">            The mean free path through the material in cm</span>
-<span class="sd">            formula (str): The format of the buildup factor</span>
+<span class="sd">        mfps : float, :class:`list`, or :class:`numpy.ndarray`</span>
+<span class="sd">            One or more mean free paths through the material</span>
+<span class="sd">        formula : string</span>
+<span class="sd">            The format of the buildup factor</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
@@ -200,25 +203,26 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        float</span>
-<span class="sd">            The photon buildup factor for exposure in air</span>
+<span class="sd">        float or :class:`numpy.ndarray`</span>
+<span class="sd">            A vector of photon exposure buildup factors in air at</span>
+<span class="sd">            each specified mfp</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">mfp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">formula</span> <span class="o">==</span> <span class="s2">&quot;GP&quot;</span><span class="p">:</span>
-            <span class="c1"># find the bounding array indices</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">energy</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> \
-                    <span class="p">(</span><span class="n">energy</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Photon energy is out of range&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">formula</span> <span class="o">!=</span> <span class="s2">&quot;GP&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only GP Buildup Factors are currently supported&quot;</span><span class="p">)</span>
 
-            <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bi</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
-            <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ci</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ai</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
-            <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_di</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+        <span class="c1"># find the bounding array indices</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">energy</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">energy</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Photon energy is out of range&quot;</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bi</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ci</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ai</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_di</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
 
-            <span class="k">return</span> <span class="n">Material</span><span class="o">.</span><span class="n">_GP</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">mfp</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only GP Buildup Factors are currently supported&quot;</span><span class="p">)</span></div>
+        <span class="n">mfp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mfps</span><span class="p">)</span>
+        <span class="n">bf</span> <span class="o">=</span> <span class="n">Material</span><span class="o">.</span><span class="n">_GP</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">mfp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bf</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_GP</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">mfp</span><span class="p">):</span>
@@ -236,21 +240,52 @@
 <span class="sd">            A GP fitting coefficient</span>
 <span class="sd">        X : float</span>
 <span class="sd">            A GP fitting coefficient</span>
-<span class="sd">        mfp : float</span>
+<span class="sd">        mfp : float (for a single mfp) or a numpy array (for several mfp&#39;s)</span>
 <span class="sd">            The mean free path through the material in cm</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        float</span>
-<span class="sd">            The photon buildup factor for exposure in air</span>
+<span class="sd">        float or :class:`numpy.ndarray`</span>
+<span class="sd">            Vector of photon exposure buildup factors in air</span>
+
+<span class="sd">        Important Details</span>
+<span class="sd">        -----------------</span>
+<span class="sd">        The number of mean free paths (mfp) used to calculate the buildup</span>
+<span class="sd">        factor is limited to a value of 40 or less.  This is an inherent</span>
+<span class="sd">        limitation of the source document, ANS-6.4.3-1991.  In normal use this</span>
+<span class="sd">        limitation is only expected to be encountered in cases involving low</span>
+<span class="sd">        energy photons (with a relatively small mean free path) and</span>
+<span class="sd">        thick shields.  In those instances the uncolided flux should be very</span>
+<span class="sd">        small.  Even with a larger buildup factor the contribution of these</span>
+<span class="sd">        photons to exposure should be minimal and other higher energy photons</span>
+<span class="sd">        should dominate.  The exception would be xrays combined with very thick</span>
+<span class="sd">        shiekding.  In those cases a higher-order shielding code</span>
+<span class="sd">        should be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">K</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="p">(</span><span class="n">mfp</span><span class="o">**</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">mfp</span><span class="o">/</span><span class="n">X</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span> <span class="o">/</span> \
-            <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">K</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">mfp</span>
-        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="n">K</span><span class="o">**</span><span class="n">mfp</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">mfp</span><span class="p">)</span> <span class="o">==</span> <span class="p">():</span>
+            <span class="k">if</span> <span class="n">mfp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">mfp</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">:</span>
+                <span class="n">mfp</span> <span class="o">=</span> <span class="mi">40</span>
+            <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">mfp</span>
+            <span class="n">K</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="p">(</span><span class="n">mfp</span><span class="o">**</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">mfp</span><span class="o">/</span><span class="n">X</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span> <span class="o">/</span> \
+                <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">K</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="n">K</span><span class="o">**</span><span class="n">mfp</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">answer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mfp</span><span class="p">[</span><span class="n">mfp</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="mi">40</span>
+            <span class="n">answers</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">mfp</span>
+            <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">mfp</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+            <span class="n">K</span><span class="p">[</span><span class="n">mfp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="p">(</span><span class="n">mfp</span><span class="p">[</span><span class="n">mfp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> \
+                <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">mfp</span><span class="p">[</span><span class="n">mfp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">X</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span> <span class="o">/</span> \
+                <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">answers</span><span class="p">[</span><span class="n">K</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> \
+                <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">K</span><span class="p">[</span><span class="n">K</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">],</span> <span class="n">mfp</span><span class="p">[</span><span class="n">K</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K</span><span class="p">[</span><span class="n">K</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">answers</span></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -271,13 +306,13 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy; Copyright 2020,  Alan Ford.
+      &copy; Copyright 2022,  Alan Ford.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
     </div>
   </body>

@@ -1,17 +1,17 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ZapMeNot Summary &#8212; Zap_me_not 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Material Library" href="materials.html" />
@@ -36,7 +36,8 @@
         <li class="right" >
           <a href="index.html" title="Welcome to ZapMeNot’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ZapMeNot Summary</a></li> 
       </ul>
     </div>  
 
@@ -72,21 +73,32 @@
 <div class="section" id="installation">
 <h2>Installation:<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Installing from a local source tree:</p>
-<p><cite>pip install ./ZapMeNot</cite></p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">./ZapMeNot</span></code></p>
 <p>You can also install in Development Mode:</p>
-<p><cite>pip install -e ./ZapMeNot</cite></p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">./ZapMeNot</span></code></p>
 <p>You can also install from Github:</p>
-<p><cite>pip install git+https://github.com/AlanFord/ZapMeNot.git</cite></p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+git://github.com/AlanFord/ZapMeNot.git</span></code></p>
+<p>Installing in Anaconda is a bit more complicated. You must first manually install the prerequisites in conda:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">pip</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">git</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">scipy</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pytest</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pyyaml</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AlanFord</span><span class="o">/</span><span class="n">ZapMeNot</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>This may be simplified in the future as my knowledge of installation packages improves!</p>
 </div>
 <div class="section" id="testing">
 <h2>Testing:<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
 <p>Testing is designed around the use of pytest.  From the root directory of
 the package, the basic unit tests can be run as follows:</p>
-<p><cite>pytest -m basic</cite></p>
+<p><code class="code docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">basic</span></code></p>
 <p>Benchmark cases can be run using the following command.  Note that these
 cases are designed to fail PyTest. Each benchmark prints the calculation
 results and the difference (in percent) from the corresponding Microshield case.</p>
-<p><cite>pytest -s -m benchmark</cite></p>
+<p><code class="code docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-s</span> <span class="pre">-m</span> <span class="pre">benchmark</span></code></p>
 </div>
 <div class="section" id="quickstart">
 <h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
@@ -128,6 +140,7 @@ results and the difference (in percent) from the corresponding Microshield case.
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -167,13 +180,13 @@ results and the difference (in percent) from the corresponding Microshield case.
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy; Copyright 2020,  Alan Ford.
+      &copy; Copyright 2022,  Alan Ford.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
     </div>
   </body>

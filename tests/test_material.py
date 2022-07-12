@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 import pytest
 
@@ -54,6 +55,31 @@ def test_getBuildupFactor():
 	assert b == 1
 	b = a.get_buildup_factor(0.66, 10, "GP")
 	assert b == pytest.approx(43.237787)
+
+# test calculation of a list of buildup factors
+# reference: tests/reference_calculations/test_material/buildupFactor.m (matlab script)
+def test_getBuildupFactor2():
+	a = material.Material("air")
+	mfp_list = [0, 10]
+	b = a.get_buildup_factor(0.66, mfp_list, "GP")
+	print(b)
+	assert b[0] == 1
+	assert b[1] == pytest.approx(43.237787)
+	assert len(b) == 2
+
+# test calculation of a list of buildup factors
+# reference: tests/reference_calculations/test_material/buildupFactor.m (matlab script)
+def test_getBuildupFactor3():
+	a = material.Material("air")
+	mfp_array = np.array([0, 10])
+	# print("mfp_array is\n")
+	# print(mfp_array)
+	# print(type(mfp_array))
+	b = a.get_buildup_factor
+	b = a.get_buildup_factor(0.66, mfp_array, "GP")
+	assert b[0] == 1
+	assert b[1] == pytest.approx(43.237787)
+	assert len(b) == 2
 
 
 
