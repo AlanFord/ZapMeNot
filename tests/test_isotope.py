@@ -60,5 +60,18 @@ def test_photon_readAndStore():
 						[2.15860e+00, 1.20000e-05], \
 						[2.50570e+00, 2.00000e-08]]
 
+# test retrieval of key progeny
+# reference: isotope library
+def test_progeny_readAndStore():
+	a = isotope.Isotope("Ce-144")
+	assert a.key_progeny == {"Pr-144":0.999993,"Pr-144m":0.0954780}
+
+# test retrieval of key progeny from isotope that has none
+# reference: isotope library
+def test_blank_progeny():
+	a = isotope.Isotope("O-19")
+	assert a.key_progeny == None
+
+
 
 

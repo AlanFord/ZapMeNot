@@ -17,6 +17,7 @@ class Isotope:
     name
     half_life
     photons
+    key_progeny
     """
     _library = None
 
@@ -41,6 +42,7 @@ class Isotope:
         half_life = properties.get("half-life")
         half_life_units = properties.get("half-life-units")
         self._half_life = Isotope._convert_half_life(half_life, half_life_units)
+        self._key_progeny = properties.get("key_progeny")
 
         # photon energies and intensities are stored as a list of tuples
         # 2D list of photon energies and intensities
@@ -60,6 +62,11 @@ class Isotope:
     def half_life(self):
         """:class:`str` : The half life of the isotope in seconds."""
         return self._half_life
+        
+    @property
+    def key_progeny(self):
+        """:class:`dict` : The list of progeny that can be in secular or transient equilibrium."""
+        return self._key_progeny
 
     @staticmethod
     def _convert_half_life(value, units):

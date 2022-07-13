@@ -27,7 +27,18 @@ class TestPointSource():
 		my_list = [('Co-60',3.14E9), ('Cs-137',1E6)]
 		assert my_list ==my_source.list_isotopes()
 
-	# test set/retrieve of isotopes in Photons
+	# test addition of key progeny
+	# reference: manual calculation
+	def test_addIsotopeBq(self):
+		my_source = source.PointSource(1,2,3)
+		my_source.add_isotope_bq('Co-60',3.14E9)
+		my_source.add_isotope_bq('Cs-137',1E6)
+		my_source.include_key_progeny = True
+		my_list = [('Co-60',3.14E9), ('Cs-137',1E6)]
+		assert my_list ==my_source.list_isotopes()
+
+
+	# test set/retrieve of Photons
 	# reference: manual calculation
 	def test_addPhoton(self):
 		my_source = source.PointSource(1,2,3)
@@ -50,6 +61,23 @@ class TestPointSource():
 			 (0.9876, 3.14E2), \
 			 (1.2936, 9.91600e-01 * 3.7e10 * 3.14), \
 			 (1.677, 5.15630e-04 * 3.7e10 * 3.14)])
+
+	# test retrieval of photon energies/intensities from photon library
+	# reference: manual calculation and isotope library
+	def test_getProgenyPhotonEnergyList(self):
+		my_source = source.PointSource(1,2,3)
+		my_source.add_isotope_curies('Sr-90',3.14)
+		my_source.add_isotope_bq('Br-80m',1E6)
+		my_source.add_photon(0.9876,3.14E2)
+		my_source.include_key_progeny = True
+		a = my_source._get_photon_source_list()
+		np.testing.assert_allclose(a, \
+			[(0.037052, (3.91850e-01)*1e6), \
+			 (0.04885, (3.31130e-03)*1e6), \
+			 (0.9876, 3.14E2), \
+			 (1.2936, 9.91600e-01 * 3.7e10 * 3.14), \
+			 (1.677, 5.15630e-04 * 3.7e10 * 3.14)])
+
 
 	# test set/retrieval of source points
 	# reference: manual calculation
