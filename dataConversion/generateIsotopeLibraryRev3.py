@@ -113,7 +113,7 @@ while True:
 		currentIsotope.update({"photon-energy-units" : "MeV"})
 		currentIsotope.update({"photon-intensity" : photonIntensities})
 		# "key_products" is a placeholder that will be filled in later
-		currentIsotope.update({"key_products" : None})
+		currentIsotope.update({"key_progeny" : None})
 		# add the current isotope to the library dictionary
 		finalLibrary.update({name : currentIsotope})
 
@@ -123,14 +123,14 @@ nuclide = "380900"
 currentIsotope = isotopeLibrary[nuclide]
 currentIsotope.update({"photon-energy-units" : "MeV"})
 currentIsotope.update({"photon-intensity" : None})
-currentIsotope.update({"key_products" : None})
+currentIsotope.update({"key_progeny" : None})
 finalLibrary.update({name : currentIsotope})
 name = "Ru-106"
 nuclide = "441060"
 currentIsotope = isotopeLibrary[nuclide]
 currentIsotope.update({"photon-energy-units" : "MeV"})
 currentIsotope.update({"photon-intensity" : None})
-currentIsotope.update({"key_products" : None})
+currentIsotope.update({"key_progeny" : None})
 finalLibrary.update({name : currentIsotope})
 
 # The following is a list of parent isotopes and products for select
@@ -139,13 +139,20 @@ finalLibrary.update({name : currentIsotope})
 # provides the equilibrium relative concentration of the products.
 # The data was taken from the JANIS database of ENDF/B-VIII.0 data
 # see https://www.oecd-nea.org/janisweb/tree/RDD/'ENDF/B-VIII.0'/RDD
-products = {"Ba-140":{"nuclide":"561400", products:{"La-140":1.0}}, 
-			"Cs-137":{"nuclide":"551370", products:{"Ba-137m":0.9469945}}, 
-			"Ce-144":{"nuclide":"581440", products:{"Pr-144":0.9904522+0.095478*0.9993,"Pr-144m":0.095478}},
-			"Ru-106":{"nuclide":"441060", products:{"Rh-106":1.0}},
-			"Sr-90" :{"nuclide":"380900", products:{"Y-90":1.0}}, 
-			"Sn-113":{"nuclide":"501130", products:{"In-113m":1.0}}, 
-			"Ru-103":{"nuclide":"441030", products:{"Rh-103m":0.988259}}}
+parents_progeny = {"Ba-140":{"La-140":1.15157373}, 
+			"Cs-137":{"Ba-137m":0.9469945}, 
+			"Ce-144":{"Pr-144":0.99999331654,"Pr-144m":0.095478},
+			"Ru-106":{"Rh-106":1.0},
+			"Sr-90" :{"Y-90":1.0}, 
+			"Sn-113":{"In-113m":1.0}, 
+			"Ru-103":{"Rh-103m":0.988259}}
+			
+for key in parents_progeny:
+	if key in finalLibrary.keys():
+		data_to_be_modified = finalLibrary.get(key)
+		progeny_to_add = parents_progeny.get(key)
+		data_to_be_modified.update({"key_progeny" : progeny_to_add})
+		finalLibrary.update({key : data_to_be_modified})
 
 # write out the yaml library		
 yamlStream = open('isotopeLibraryRev3.yml', 'wt')
