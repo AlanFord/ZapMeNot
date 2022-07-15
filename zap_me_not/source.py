@@ -38,12 +38,12 @@ class Source(metaclass=abc.ABCMeta):
 
     @property
     def include_key_progeny(self):
-        """boolean : State defining if key progeny should be included."""
+        """bool : State defining if key progeny should be included."""
         return self._include_key_progeny
         
     @include_key_progeny.setter
     def include_key_progeny(self, value):
-        """boolean : State defining if key progeny should be included."""
+        """bool : State defining if key progeny should be included."""
         self._include_key_progeny = value
     
 
