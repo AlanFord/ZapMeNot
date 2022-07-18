@@ -1,17 +1,17 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>zap_me_not.isotope &#8212; Zap_me_not 0.0.1 documentation</title>
-    <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -29,7 +29,8 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">zap_me_not.isotope</a></li> 
       </ul>
     </div>  
 
@@ -58,6 +59,7 @@
 <span class="sd">    name</span>
 <span class="sd">    half_life</span>
 <span class="sd">    photons</span>
+<span class="sd">    key_progeny</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_library</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -82,6 +84,7 @@
         <span class="n">half_life</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;half-life&quot;</span><span class="p">)</span>
         <span class="n">half_life_units</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;half-life-units&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_half_life</span> <span class="o">=</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">_convert_half_life</span><span class="p">(</span><span class="n">half_life</span><span class="p">,</span> <span class="n">half_life_units</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_key_progeny</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key_progeny&quot;</span><span class="p">)</span>
 
         <span class="c1"># photon energies and intensities are stored as a list of tuples</span>
         <span class="c1"># 2D list of photon energies and intensities</span>
@@ -101,6 +104,11 @@
     <span class="k">def</span> <span class="nf">half_life</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;:class:`str` : The half life of the isotope in seconds.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_half_life</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">key_progeny</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:class:`dict` : The list of progeny that can be in secular or transient equilibrium.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key_progeny</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_convert_half_life</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
@@ -147,6 +155,7 @@
 
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -167,13 +176,13 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy; Copyright 2020,  Alan Ford.
+      &copy; Copyright 2022,  Alan Ford.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
     </div>
   </body>

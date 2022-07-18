@@ -75,7 +75,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># LIST of isotopes and activities (Bq)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># LIST of unique photons and activities (Bq)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">include_key_progeny</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;bool : State defining if key progeny should be included.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span>
+        
+    <span class="nd">@include_key_progeny</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">include_key_progeny</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;bool : State defining if key progeny should be included.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span> <span class="o">=</span> <span class="n">value</span>
+    
 
 <div class="viewcode-block" id="Source.add_isotope_curies"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source.add_isotope_curies">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_curies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds an isotope and activity in curies to the isotope list</span>
@@ -154,19 +166,32 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">photon_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-        <span class="c1"># test to see if photon energy is already on the list</span>
-        <span class="c1"># and then add photon emmision rate (intensity*Bq).</span>
+        
+        <span class="n">temporary_isotope_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="p">[:]</span>
+        <span class="c1"># add key progeny if required</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">next_isotope</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="p">:</span> 			
+                <span class="n">isotope_detail</span> <span class="o">=</span> <span class="n">isotope</span><span class="o">.</span><span class="n">Isotope</span><span class="p">(</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">key_progeny</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">key_progeny</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">temporary_isotope_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">value</span><span class="p">))</span>
 
+        <span class="c1"># search isotope list for photons to be added to the photon list</span>
         <span class="c1"># next_isotope will be a tuple of name and Bq</span>
-        <span class="k">for</span> <span class="n">next_isotope</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">next_isotope</span> <span class="ow">in</span> <span class="n">temporary_isotope_list</span><span class="p">:</span>
             <span class="n">isotope_detail</span> <span class="o">=</span> <span class="n">isotope</span><span class="o">.</span><span class="n">Isotope</span><span class="p">(</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">photons</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
-                    <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> \
-                        <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">photons</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">photons</span><span class="p">:</span>
+                    <span class="c1"># test to see if photon energy is already on the list</span>
+                    <span class="c1"># and then add photon emmision rate (intensity*Bq).</span>
+                    <span class="k">if</span> <span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                        <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> \
+                            <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span><span class="p">:</span>
+            <span class="c1"># test to see if photon energy is already on the list</span>
+            <span class="c1"># and then add photon emmision rate.</span>
             <span class="k">if</span> <span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
                 <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>

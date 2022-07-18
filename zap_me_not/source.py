@@ -33,7 +33,19 @@ class Source(metaclass=abc.ABCMeta):
         self._isotope_list = []   # LIST of isotopes and activities (Bq)
         self._unique_photons = []  # LIST of unique photons and activities (Bq)
         self.points_per_dimension = [10, 10, 10]
+        self._include_key_progeny = False
         super().__init__(**kwargs)
+
+    @property
+    def include_key_progeny(self):
+        """bool : State defining if key progeny should be included."""
+        return self._include_key_progeny
+        
+    @include_key_progeny.setter
+    def include_key_progeny(self, value):
+        """bool : State defining if key progeny should be included."""
+        self._include_key_progeny = value
+    
 
     def add_isotope_curies(self, new_isotope, curies):
         """Adds an isotope and activity in curies to the isotope list
@@ -112,19 +124,32 @@ class Source(metaclass=abc.ABCMeta):
         """
         photon_dict = dict()
         keys = photon_dict.keys()
-        # test to see if photon energy is already on the list
-        # and then add photon emmision rate (intensity*Bq).
+        
+        temporary_isotope_list = self._isotope_list[:]
+        # add key progeny if required
+        if self._include_key_progeny == True:
+            for next_isotope in self._isotope_list: 			
+                isotope_detail = isotope.Isotope(next_isotope[0])
+                if isotope_detail.key_progeny != None:
+                    for key, value in isotope_detail.key_progeny.items():
+                        temporary_isotope_list.append((key, next_isotope[1]*value))
 
+        # search isotope list for photons to be added to the photon list
         # next_isotope will be a tuple of name and Bq
-        for next_isotope in self._isotope_list:
+        for next_isotope in temporary_isotope_list:
             isotope_detail = isotope.Isotope(next_isotope[0])
-            for photon in isotope_detail.photons:
-                if photon[0] in keys:
-                    photon_dict[photon[0]] = photon_dict[photon[0]] + \
-                        photon[1]*next_isotope[1]
-                else:
-                    photon_dict[photon[0]] = photon[1]*next_isotope[1]
+            if isotope_detail.photons != None:
+                for photon in isotope_detail.photons:
+                    # test to see if photon energy is already on the list
+                    # and then add photon emmision rate (intensity*Bq).
+                    if photon[0] in keys:
+                        photon_dict[photon[0]] = photon_dict[photon[0]] + \
+                            photon[1]*next_isotope[1]
+                    else:
+                        photon_dict[photon[0]] = photon[1]*next_isotope[1]
         for photon in self._unique_photons:
+            # test to see if photon energy is already on the list
+            # and then add photon emmision rate.
             if photon[0] in keys:
                 photon_dict[photon[0]] = photon_dict[photon[0]] + photon[1]
             else:
