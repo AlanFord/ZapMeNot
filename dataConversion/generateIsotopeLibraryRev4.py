@@ -4,7 +4,6 @@ import yaml
 def float_representer(dumper, value):
     text = '{0:.5e}'.format(value)
     return dumper.represent_scalar(u'tag:yaml.org,2002:float', text)
-yaml.add_representer(float, float_representer
 
 def parse_radiation(name, rad_stream, rad_count):
 	photonIntensities = []
@@ -13,8 +12,8 @@ def parse_radiation(name, rad_stream, rad_count):
 		card = rad_stream.readline()
 		rad_type = int(card[0:2].strip())
 		if rad_type < 4:
-			photon_energy = float(card[2:14].strip())
-			photon_intensity = float(card[14:26].strip())
+			photon_energy = card[2:14].strip()
+			photon_intensity = card[14:26].strip()
 			# check for valid photon energy
 			if float(photon_energy) >15:  # flag photons > 15 MeV
 				print("Skipping nuclide "+ name + ": photon energy = "+ photon_energy +", intensity = " + photon_intensity)
@@ -49,11 +48,11 @@ def add_progeny(finalLibrary):
 
 			
 	
-
+yaml.add_representer(float, float_representer)
 finalLibrary = {}
 rad_stream = open("icrp/ICRP-07.RAD", 'r')
 while True:
-	data = stream.readline() 
+	data = rad_stream.readline() 
 	if not data:
 		break
 	# parse an isotope title card
@@ -64,17 +63,20 @@ while True:
 	# change the halflife units to the ZapMeNot standards
 	if halflifeUnits == "us":
 		halflifeUnits = "usecond"
-	if halflifeUnits == "ms":
+	elif halflifeUnits == "ms":
 		halflifeUnits = "msecond"
-	if halflifeUnits == "s":
+	elif halflifeUnits == "s":
 		halflifeUnits = "second"
 	elif halflifeUnits == "m":
 		halflifeUnits = "minute"
+	elif halflifeUnits == "h":
+		halflifeUnits = "hour"
 	elif halflifeUnits == "d":
 		halflifeUnits = "day"
 	elif halflifeUnits == "y":
 		halflifeUnits = "year"
 	else:
+		print(halflifeUnits)
 		raise ValueError("Unknown halflife units")
 	# now read rad_count cards and collect the xrays and gamma rays
 	photonIntensities = parse_radiation(name, rad_stream, rad_count)
@@ -97,7 +99,8 @@ add_progeny(finalLibrary)
 # write out the yaml library		
 yamlStream = open('isotopeLibraryRev4.yml', 'wt')
 yaml.dump(finalLibrary, yamlStream, default_flow_style=False, explicit_start=True, explicit_end=True)
-stream.close()
+print("All Done!")
+rad_stream.close()
 yamlStream.close()
 
 
