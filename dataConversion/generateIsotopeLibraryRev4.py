@@ -12,8 +12,8 @@ def parse_radiation(name, rad_stream, rad_count):
 		card = rad_stream.readline()
 		rad_type = int(card[0:2].strip())
 		if rad_type < 4:
-			photon_energy = card[2:14].strip()
-			photon_intensity = card[14:26].strip()
+			photon_intensity = card[2:14].strip()
+			photon_energy = card[14:26].strip()
 			# check for valid photon energy
 			if float(photon_energy) >15:  # flag photons > 15 MeV
 				print("Skipping nuclide "+ name + ": photon energy = "+ photon_energy +", intensity = " + photon_intensity)
