@@ -19526,7 +19526,7 @@ Ba-140:
   half-life: 1.27520e+01
   half-life-units: day
   key_progeny:
-    La-140: 1.15157e+00
+    La-140: 1.15154e+00
   photon-energy-units: MeV
   photon-intensity:
   - - 2.99660e-02
@@ -32336,7 +32336,7 @@ Ce-144:
   half-life-units: day
   key_progeny:
     Pr-144: 9.99993e-01
-    Pr-144m: 9.54780e-02
+    Pr-144m: 9.76990e-02
   photon-energy-units: MeV
   photon-intensity:
   - - 3.35680e-02
@@ -41007,7 +41007,7 @@ Cs-137:
   half-life: 3.01671e+01
   half-life-units: year
   key_progeny:
-    Ba-137m: 9.46994e-01
+    Ba-137m: 9.43990e-01
   photon-energy-units: MeV
   photon-intensity:
   - - 3.18187e-02
@@ -132790,7 +132790,7 @@ Ru-103:
   half-life: 3.92600e+01
   half-life-units: day
   key_progeny:
-    Rh-103m: 9.88259e-01
+    Rh-103m: 9.87550e-01
   photon-energy-units: MeV
   photon-intensity:
   - - 2.00395e-02
@@ -139994,7 +139994,7 @@ Sn-113:
   half-life: 1.15090e+02
   half-life-units: day
   key_progeny:
-    In-113m: 1.00000e+00
+    In-113m: 9.99980e-01
   photon-energy-units: MeV
   photon-intensity:
   - - 2.39785e-02

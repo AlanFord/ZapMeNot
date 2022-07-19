@@ -66,7 +66,7 @@ def test_photon_readAndStore():
 # reference: isotope library
 def test_progeny_readAndStore():
 	a = isotope.Isotope("Ce-144")
-	assert a.key_progeny == {"Pr-144":0.999993,"Pr-144m":0.0954780}
+	assert a.key_progeny == {"Pr-144":0.999993,"Pr-144m":0.097699}
 
 # test retrieval of key progeny from isotope that has none
 # reference: isotope library

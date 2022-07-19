@@ -1,5 +1,5 @@
-Data Source: JANIS Server using ENDF/B-VIII.0 data
-https://www.oecd-nea.org/janisweb/tree/RDD/'ENDF/B-VIII.0'/RDD
+Data Source: ICRP Publication 107
+
 
 Secular Equilibrium
 	Parent half-life is more than 100X product half life
@@ -9,61 +9,62 @@ Transient Equilibrium
 	Product activity = Parent activity * branching fraction * (Parent halflife)/(Parent halflife - Product halflife
 	
 Ba-140 decay path
-#	Parent	Product	Half-Life		Half-Life error	Branching	Branching error	Decay mode
-0	Ba140	La140	1101833 s		198.7200 s		100 %	 					Beta-
-1	La140	Ce140	145026.7 s		10.36800 s		100 %	 					Beta-
+#	Parent	Product	Half-Life		Branching	
+0	Ba140	La140	12.752 d  		100 %	 
+1	La140	Ce140	1.6781 d		100 %	
 Activity Ratio (Transient Equilibrium)
-La140/Ba140 = 1.00 * 1101833/(1101833 - 145026.7) = 1.15157373
+La140/Ba140 = 1.00 * 12.752/(12.752 - 1.6781) = 1.15153649572
 
 Cs-137 decay path
-#	Parent	Product	Half-Life		Half-Life error	Branching	Branching error	Decay mode
-0	Cs137	Ba137m	9.492526E+8 s	2840184 s		94.69945 %	0.1999988 %		Beta-
-1	Cs137	Ba137	9.492526E+8 s	2840184 s		5.300549 %	0.1999988 %		Beta-
-2	Ba137m	Ba137	153.1200 s		0.06000000 s	100 %	 					Isomeric transition
+#	Parent	Product	Half-Life		Branching	
+0	Cs137	Ba137m	30.1671 y   	94.399 %	
+1	Cs137	Ba137	30.1671 y   	5.6005 %	
+2	Ba137m	Ba137	2.552 m 		100 %	
 Activity Ratio (Secular Equilibrium)
-Ba137m/Cs137 = 0.9469945
+Ba137m/Cs137 = 0.94399
 
 Ce-144 decay path
-#	Parent	Product	Half-Life		Half-Life error	Branching	Branching error	Decay mode
-0	Ce144	Pr144	2.461622E+7 s	4320.000 s		99.04522 %	0.06684509 %	Beta-
-1	Ce144	Pr144m	2.461622E+7 s	4320.000 s		0.95478 %	0.06684509 %	Beta-
-2	Pr144	Nd144	1036.800 s		3.000000 s		100 %	 					Beta-
-3	Pr144m	Pr144	432.0000 s		18.00000 s		99.93 %		0.01 %			Isomeric transition
-4	Pr144m	Nd144	432.0000 s		18.00000 s		0.07 %		0.01 %			Beta-
-5	Nd144	Ce140	7.22669E+22 s	5.04922E+21 s	100 %	 					Alpha
+#	Parent	Product	Half-Life		Branching
+0	Ce144	Pr144	284.91 d    	99.023 %
+1	Ce144	Pr144m	284.91 d    	0.97699 %
+2	Pr144	Nd144	17.28 m  		100 %	
+3	Pr144m	Pr144	7.2m	    	99.93 %	
+4	Pr144m	Nd144	7.2m	    	0.07 %
+5	Nd144	Ce140	2.29E+15 y  	100 %
 Activity Ratio (Secular Equilibrium)
-Pr144/Ce144 = 0.9904522 + 0.0095478*0.9993 = 0.99999331654
-Pr144m/Ce144 = 0.095478
+Pr144/Ce144 = 0.99023 + 0.0097699*0.9993 = 0.99999306107
+Pr144m/Ce144 = 0.097699
 Nd144/Ce144 ignored due to long half-life (effectively stable)
 
 Ru-106 decay path
-#	Parent	Product	Half-Life		Half-Life error	Branching	Branching error	Decay mode
-0	Ru106	Rh106	3.212352E+7 s	155520.0 s		100 %	 					Beta-
-1	Rh106	Pd106	30.07000 s		0.3500000 s		100 %	 					Beta-
+#	Parent	Product	Half-Life		Branching
+0	Ru106	Rh106	373.59 d    	100 %	 
+1	Rh106	Pd106	29.80 s	    	100 %	 
 Activity Ratio (Secular Equilibrium)
 Rh106/Ru106 = 1.0
 
 Sr-90 decay path
-#	Parent	Product	Half-Life		Half-Life error	Branching	Branching error	Decay mode
-0	Sr90	Y90		9.085433E+8 s	1893456 s		100 %	 					Beta-
-1	Y90		Zr90	230400.0 s		756.0000 s		100 %	 					Beta-
+#	Parent	Product	Half-Life		Branching
+0	Sr90	Y90		28.79 y     	100 %	
+1	Y90		Zr90	64.10 h	    	100 %
 Activity Ratio (Secular Equilibrium)
 Y90/Sr90 = 1.0
 
 Sn-113 decay path
-#	Parent	Product	Half-Life		Half-Life error	Branching	Branching error	Decay mode
-0	Sn113	In113m	9943776 s		2592.000 s		100 %	 					Beta+ and/or e.c.
-1	In113m	In113	5968.560 s		1.380000 s		100 %	 					Isomeric transition
+#	Parent	Product	Half-Life		Branching
+0	Sn113	In113m	115.09 d		99.998 %
+1	Sn113	In113	115.09 d		0.002352 %
+2	In113m	In113	1.6579h 		100 %	
 Activity Ratio (Secular Equilibrium)
-In113m/SN113 = 1.0
+In113m/SN113 = 0.99998
 
 Ru-103 decay path
-#	Parent	Product	Half-Life		Half-Life error	Branching	Branching error	Decay mode
-0	Ru103	Rh103m	3390941 s		259.2000 s		98.8259 %	0.05017745 %	Beta-
-1	Ru103	Rh103	3390941 s		259.2000 s		1.1741 %	0.05017745 %	Beta-
-2	Rh103m	Rh103	3366.840 s		1.200000 s		100 %	 					Isomeric transition
+#	Parent	Product	Half-Life		Branching
+0	Ru103	Rh103m	39.26 d	    	98.755 %
+1	Ru103	Rh103	39.26 d 		1.2453 %
+2	Rh103m	Rh103	56.114 m		100 %
 Activity Ratio (Secular Equilibrium)
-Rh103m/Ru103 = 0.988259
+Rh103m/Ru103 = 0.98755
 
 
 

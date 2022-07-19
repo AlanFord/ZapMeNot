@@ -31,13 +31,13 @@ def add_progeny(finalLibrary):
 	# provides the equilibrium relative concentration of the products.
 	# The data was taken from the JANIS database of ENDF/B-VIII.0 data
 	# see https://www.oecd-nea.org/janisweb/tree/RDD/'ENDF/B-VIII.0'/RDD
-	parents_progeny = {"Ba-140":{"La-140":1.15157373}, 
-				"Cs-137":{"Ba-137m":0.9469945}, 
-				"Ce-144":{"Pr-144":0.99999331654,"Pr-144m":0.095478},
+	parents_progeny = {"Ba-140":{"La-140":1.15153649572}, 
+				"Cs-137":{"Ba-137m":0.94399}, 
+				"Ce-144":{"Pr-144":0.99999306107,"Pr-144m":0.097699},
 				"Ru-106":{"Rh-106":1.0},
 				"Sr-90" :{"Y-90":1.0}, 
-				"Sn-113":{"In-113m":1.0}, 
-				"Ru-103":{"Rh-103m":0.988259}}
+				"Sn-113":{"In-113m":0.99998}, 
+				"Ru-103":{"Rh-103m":0.98755}}
 				
 	for key in parents_progeny:
 		if key in finalLibrary.keys():
