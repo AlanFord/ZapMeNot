@@ -1,3 +1,5 @@
+import pyvista
+
 class Detector:
     """A location used to calculate exposure
 
@@ -25,3 +27,13 @@ class Detector:
         """:class:`tuple` : The detector location in cartesian coordinates"""
         return self._location
      
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A small sphere object representing the detector.
+        """
+        return pyvista.Sphere(center=(self.x, self.y, self.z), radius=1)
+
