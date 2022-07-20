@@ -13,8 +13,8 @@ function test_Case3()
     % - Use air response function
     % - Ar-41 photon spectrum:
     % - MeV            Yield
-    %   1.29360e+00    9.91600e-01
-    %   1.67700e+00    5.15630e-04
+    %   1.29364e+00    9.91600e-01
+    %   1.67700e+00    5.15632e-04
 
     
     format long
@@ -24,8 +24,8 @@ function test_Case3()
     concreteShieldThickness = 10;
     bq = 3E10;
     detectorDistance = 100;
-    photons = [1.29360e+00, 9.91600e-01; ...
-               1.67700e+00, 5.15630e-04];
+    photons = [1.29364e+00, 9.91600e-01; ...
+               1.67700e+00, 5.15632e-04];
 
     totalExposure = 0;
     for i = 1:length(photons(:,1))

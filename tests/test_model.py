@@ -65,7 +65,7 @@ class TestPointSource():
 		myModel.add_detector(detector.Detector(100,0,0))
 		myModel.set_buildup_factor_material(material.Material('iron'))
 		result = myModel.calculate_exposure()
-		assert result == pytest.approx(4.39752804914973e-06*1000*3600) # convert from R/sec to mR/hr
+		assert result == pytest.approx(4.397872839310016e-06*1000*3600) # convert from R/sec to mR/hr
 
 	# a point source (multiple photons) with two separate infinite yz shields, off-axis source/detector
 	# Reference: tests/reference_calculations/test_model/test_Case4.m (matlab script)
@@ -79,7 +79,7 @@ class TestPointSource():
 		myModel.add_detector(detector.Detector(80,90,100))
 		myModel.set_buildup_factor_material(material.Material('iron'))
 		result = myModel.calculate_exposure()
-		assert result == pytest.approx(1.691500568541137e-07*1000*3600) # convert from R/sec to mR/hr
+		assert result == pytest.approx(1.691532556992041e-07*1000*3600) # convert from R/sec to mR/hr
 
 #=============================================================
 class TestLineSource():

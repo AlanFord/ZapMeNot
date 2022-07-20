@@ -3,7 +3,9 @@ Isotope Library
 
 
 Photon emmisision data for a large number of radioisotopes are
-available for use in building sources.
+available for use in building sources.  The isotope library is
+based on ICRP Publication 107, "Nuclear Decay Data for Dosimetric Calculations."
+Photons with energies below 15 keV are excluded.
 
 Note that some isotopes emit no x-rays or photons, e.g. Sr-90 and Cs-137.
 In those cases the progeny may emit significant x-rays or photons.

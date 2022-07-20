@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>ZapMeNot Summary &#8212; Zap_me_not 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Material Library" href="materials.html" />
+    <link rel="prev" title="Welcome to ZapMeNot’s documentation!" href="index.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="materials.html" title="Material Library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to ZapMeNot’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="zapmenot-summary">
+<h1>ZapMeNot Summary<a class="headerlink" href="#zapmenot-summary" title="Permalink to this headline">¶</a></h1>
+<p>A Python library for simple point-kernel photon shielding analyses.</p>
+<div class="section" id="links">
+<h2>Links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>The source: <a class="reference external" href="https://github.com/AlanFord/ZapMeNot">https://github.com/AlanFord/ZapMeNot</a></p></li>
+<li><p>The API: <a class="reference external" href="https://alanford.github.io/ZapMeNot/">https://alanford.github.io/ZapMeNot/</a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="requirements-for-installing">
+<h2>Requirements for installing:<a class="headerlink" href="#requirements-for-installing" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>Python 3.4 or above</p></li>
+<li><p>Numpy 1.18.1 or above</p></li>
+<li><p>SciPy 0.14 or above</p></li>
+<li><p>Pytest 5.3.5 or above</p></li>
+<li><p>Pyyaml 5.3 or above</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="installation">
+<h2>Installation:<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Installing from a local source tree:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">./ZapMeNot</span></code></p>
+<p>You can also install in Development Mode:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">./ZapMeNot</span></code></p>
+<p>You can also install from Github:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+git://github.com/AlanFord/ZapMeNot.git</span></code></p>
+<p>Installing in Anaconda is a bit more complicated. You must first manually install the prerequisites in conda:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">pip</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">git</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">scipy</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pytest</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">pyyaml</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AlanFord</span><span class="o">/</span><span class="n">ZapMeNot</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>This may be simplified in the future as my knowledge of installation packages improves!</p>
+</div>
+<div class="section" id="testing">
+<h2>Testing:<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>Testing is designed around the use of pytest.  From the root directory of
+the package, the basic unit tests can be run as follows:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">basic</span></code></p>
+<p>Benchmark cases can be run using the following command.  Note that these
+cases are designed to fail PyTest. Each benchmark prints the calculation
+results and the difference (in percent) from the corresponding Microshield case.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-s</span> <span class="pre">-m</span> <span class="pre">benchmark</span></code></p>
+</div>
+<div class="section" id="quickstart">
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zap_me_not</span> <span class="kn">import</span> <span class="n">model</span><span class="p">,</span><span class="n">source</span><span class="p">,</span><span class="n">shield</span><span class="p">,</span><span class="n">detector</span><span class="p">,</span><span class="n">material</span>
+
+<span class="n">sample_sink</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
+
+<span class="c1"># create the source</span>
+<span class="n">a_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">PointSource</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Co-60&#39;</span><span class="p">,</span><span class="mf">2.1</span><span class="p">)</span>
+<span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Cs-137&#39;</span><span class="p">,</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">sample_sink</span><span class="o">.</span><span class="n">add_source</span><span class="p">(</span><span class="n">a_source</span><span class="p">)</span>
+
+<span class="c1"># define the location where the dose will be calculated</span>
+<span class="n">exposure_detector</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">sample_sink</span><span class="o">.</span><span class="n">add_detector</span><span class="p">(</span><span class="n">exposure_detector</span><span class="p">)</span>
+
+<span class="c1"># define a shield and add it to the model</span>
+<span class="n">first_shield</span> <span class="o">=</span> <span class="n">shield</span><span class="o">.</span><span class="n">SemiInfiniteXSlab</span><span class="p">(</span><span class="s1">&#39;concrete&#39;</span><span class="p">,</span> <span class="n">x_start</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">x_end</span><span class="o">=</span><span class="mf">32.1</span><span class="p">)</span>
+<span class="n">sample_sink</span><span class="o">.</span><span class="n">add_shield</span><span class="p">(</span><span class="n">first_shield</span><span class="p">)</span>
+
+<span class="c1"># define a second shield and add it to the model</span>
+<span class="n">second_shield</span> <span class="o">=</span> <span class="n">shield</span><span class="o">.</span><span class="n">SemiInfiniteXSlab</span><span class="p">(</span><span class="s1">&#39;iron&#39;</span><span class="p">,</span> <span class="n">x_start</span><span class="o">=</span><span class="mf">32.1</span><span class="p">,</span> <span class="n">x_end</span><span class="o">=</span><span class="mf">33.1</span><span class="p">)</span>
+<span class="n">sample_sink</span><span class="o">.</span><span class="n">add_shield</span><span class="p">(</span><span class="n">second_shield</span><span class="p">)</span>
+
+<span class="c1"># declare which shield material will be used for buildup factor calculations</span>
+<span class="n">buildup_factor_material</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="s1">&#39;iron&#39;</span><span class="p">)</span>
+<span class="n">sample_sink</span><span class="o">.</span><span class="n">set_buildup_factor_material</span><span class="p">(</span><span class="n">buildup_factor_material</span><span class="p">)</span>
+
+<span class="c1"># (optionally) declare a meterial to fill all non-defined regions</span>
+<span class="n">sample_sink</span><span class="o">.</span><span class="n">set_filler_material</span><span class="p">(</span><span class="s1">&#39;air&#39;</span><span class="p">)</span>
+
+<span class="c1"># calculate exposure in mR/hr</span>
+<span class="n">exposure</span> <span class="o">=</span> <span class="n">sample_sink</span><span class="o">.</span><span class="n">calculate_exposure</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The exposure is &#39;</span><span class="p">,</span> <span class="n">exposure</span><span class="p">,</span> <span class="s1">&#39; mR/hr&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ZapMeNot Summary</a><ul>
+<li><a class="reference internal" href="#links">Links</a></li>
+<li><a class="reference internal" href="#requirements-for-installing">Requirements for installing:</a></li>
+<li><a class="reference internal" href="#installation">Installation:</a></li>
+<li><a class="reference internal" href="#testing">Testing:</a></li>
+<li><a class="reference internal" href="#quickstart">Quickstart</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to ZapMeNot’s documentation!</a></li>
+      <li>Next: <a href="materials.html" title="next chapter">Material Library</a></li>
+  </ul></li>
+</ul>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/usage.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2022,  Alan Ford.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>
