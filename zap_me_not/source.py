@@ -1,5 +1,6 @@
 import abc
 import math
+import pyvista
 
 import numpy as np
 
@@ -339,6 +340,17 @@ class PointSource(Source, shield.Shield):
             Always returns 0
         """
         return 0
+
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A small sphere object representing the point source.
+        """
+        return pyvista.Sphere(center=(self._x, self._y, self._z), radius=1)
+
 
 # -----------------------------------------------------------
 

@@ -1,5 +1,6 @@
 import abc
 import math
+import pyvista
 
 import numpy as np
 
@@ -385,6 +386,22 @@ class Box(Shield):
             results.append(ray.origin + ray.dir*tmax)
 
         return results
+
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A small sphere object representing the box shield.
+        """
+        xmin = self.box_center[0]-self.box_dimensions[0]/2
+        xmax = self.box_center[0]+self.box_dimensions[0]/2
+        ymin = self.box_center[1]-self.box_dimensions[1]/2
+        ymax = self.box_center[1]+self.box_dimensions[1]/2
+        zmin = self.box_center[2]-self.box_dimensions[2]/2
+        zmax = self.box_center[2]+self.box_dimensions[2]/2
+        return pyvista.Box(bounds=(xmin, xmax, ymin, ymax, zmin, zmax))
 
 # -----------------------------------------------------------
 
