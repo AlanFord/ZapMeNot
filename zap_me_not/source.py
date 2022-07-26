@@ -194,13 +194,12 @@ class Source(metaclass=abc.ABCMeta):
             returnValue = np.zeros((self._max_photon_energies,2))
             for i in range(1,self._max_photon_energies+1):
                 # determine which photons are in each bin
-                # photon_energy = np.array(photon_list)[:,0]
-                # photon_freq = np.array(photon_list)[:,1]
                 subset = photonArray[np.where(binplace == i)]
                 csum = np.sum(subset[:,1]) # total emission rate
                 if (csum != 0):
                     returnValue[i-1,0] = np.sum(subset[:,0]*subset[:,1])/csum
                     returnValue[i-1,1] = csum
+            returnValue = returnValue[np.all(returnValue, axis=1)] # keep only groups with non-zero intensity
             photon_list = returnValue.tolist()
         return photon_list
 
