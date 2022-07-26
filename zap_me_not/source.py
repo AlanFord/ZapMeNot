@@ -5,6 +5,12 @@ import numpy as np
 
 from . import shield, isotope
 
+from enum import Enum
+
+class GroupOption(Enum):
+    GROUP = "group"
+    HYBRID = "hybrid"
+    DISCRETE = "discrete"
 
 class Source(metaclass=abc.ABCMeta):
     """Abtract class to model a radiation source.  
@@ -35,7 +41,23 @@ class Source(metaclass=abc.ABCMeta):
         self.points_per_dimension = [10, 10, 10]
         self._include_key_progeny = False
         self._max_photon_energies = 30
+        self._grouping_option = GroupOption.HYBRID
         super().__init__(**kwargs)
+
+    @property
+    def grouping(self):
+        return self._grouping_option
+
+    @grouping.setter
+    def grouping(self, value):
+        if value == GroupOption.HYBRID.value:
+            self._grouping_option = GroupOption.HYBRID
+        elif value == GroupOption.GROUP.value:
+            self._grouping_option = GroupOption.GROUP
+        elif value == GroupOption.DISCRETE.value:
+            self._grouping_option = GroupOption.DISCRETE
+        else:
+            raise ValueError("Invalid grouping option "+ str(value))
 
     @property
     def include_key_progeny(self):
@@ -160,7 +182,7 @@ class Source(metaclass=abc.ABCMeta):
         for key, value in photon_dict.items():
             photon_list.append((key, value/scaling_factor))
         photon_list = sorted(photon_list)
-        if len(photon_list) > self._max_photon_energies:
+        if self._grouping_option == GroupOption.GROUP or ((self._grouping_option == GroupOption.HYBRID) and (len(photon_list) > self._max_photon_energies)):
             # group the photons
             minEnergy = photon_list[0][0]
             maxEnergy = photon_list[-1][0]

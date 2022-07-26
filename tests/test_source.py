@@ -25,7 +25,7 @@ class TestPointSource():
         my_source.add_isotope_bq('Co-60',3.14E9)
         my_source.add_isotope_bq('Cs-137',1E6)
         my_list = [('Co-60',3.14E9), ('Cs-137',1E6)]
-        assert my_list ==my_source.list_isotopes()
+        assert my_list == my_source.list_isotopes()
 
     # test addition of key progeny
     # reference: manual calculation
@@ -35,7 +35,7 @@ class TestPointSource():
         my_source.add_isotope_bq('Cs-137',1E6)
         my_source.include_key_progeny = True
         my_list = [('Co-60',3.14E9), ('Cs-137',1E6)]
-        assert my_list ==my_source.list_isotopes()
+        assert my_list == my_source.list_isotopes()
 
 
     # test set/retrieve of Photons
@@ -93,6 +93,17 @@ class TestPointSource():
         my_source.add_isotope_bq('Ac-223',1) # A whole lot'a photons
         a = my_source._get_photon_source_list()
         # print(a)
+
+        
+    # test binning of large photon sets
+    def test_binOptions(self):
+        my_source = source.PointSource(1,2,3)
+        my_source.grouping = "discrete"
+        assert my_source.grouping == source.GroupOption.DISCRETE
+        my_source.grouping = "group"
+        assert my_source.grouping == source.GroupOption.GROUP
+        my_source.grouping = "hybrid"
+        assert my_source.grouping == source.GroupOption.HYBRID
 
 
     # test set/retrieval of source points
