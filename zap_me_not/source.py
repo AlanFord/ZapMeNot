@@ -34,6 +34,7 @@ class Source(metaclass=abc.ABCMeta):
         self._unique_photons = []  # LIST of unique photons and activities (Bq)
         self.points_per_dimension = [10, 10, 10]
         self._include_key_progeny = False
+        self._max_photon_energies = 30
         super().__init__(**kwargs)
 
     @property
@@ -158,7 +159,28 @@ class Source(metaclass=abc.ABCMeta):
         scaling_factor = np.prod(self.points_per_dimension)
         for key, value in photon_dict.items():
             photon_list.append((key, value/scaling_factor))
-        return sorted(photon_list)
+        photon_list = sorted(photon_list)
+        if len(photon_list) > self._max_photon_energies:
+            # group the photons
+            minEnergy = photon_list[0][0]
+            maxEnergy = photon_list[-1][0]
+            (groupEnergies, stepSize) = np.linspace(minEnergy, maxEnergy, self._max_photon_energies, retstep=True)
+            binBoundaries = groupEnergies + (stepSize/2)
+            binBoundaries = np.concatenate([np.array([binBoundaries[0]-stepSize]),binBoundaries])
+            binplace = np.digitize(photon_list, binBoundaries)[:,0] # Returns the appropriate bin for each photon
+            photonArray = np.array(photon_list) # convert the photon list to an array for further processing
+            returnValue = np.zeros((self._max_photon_energies,2))
+            for i in range(1,self._max_photon_energies+1):
+                # determine which photons are in each bin
+                # photon_energy = np.array(photon_list)[:,0]
+                # photon_freq = np.array(photon_list)[:,1]
+                subset = photonArray[np.where(binplace == i)]
+                csum = np.sum(subset[:,1]) # total emission rate
+                if (csum != 0):
+                    returnValue[i-1,0] = np.sum(subset[:,0]*subset[:,1])/csum
+                    returnValue[i-1,1] = csum
+            photon_list = returnValue.tolist()
+        return photon_list
 
     @abc.abstractmethod
     def _get_source_points(self):
