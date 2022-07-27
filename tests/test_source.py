@@ -88,14 +88,40 @@ class TestPointSource():
              (2.18624e+00, 1.40000e-08 * 3.7e10 * 3.14)])
 
     # test binning of large photon sets
+    # reference: manual calculation and isotope library
     def test_binSources(self):
         my_source = source.PointSource(1,2,3)
         my_source.add_isotope_bq('Ac-223',1) # A whole lot'a photons
         a = my_source._get_photon_source_list()
-        # print(a)
+        np.testing.assert_allclose(a, \
+            [[1.7469949E-02, 1.0045970E-02],
+            [3.8215385E-02, 5.1480000E-04],
+            [5.3241176E-02, 5.0490000E-04],
+            [6.8039216E-02, 5.0490000E-04],
+            [8.5893078E-02, 3.0383270E-02],
+            [9.8586524E-02, 1.4786456E-02],
+            [1.2204762E-01, 2.0790000E-03],
+            [1.3186667E-01, 2.9700000E-04],
+            [1.7559231E-01, 1.2870000E-03],
+            [1.9228919E-01, 7.3260000E-03],
+            [2.1269063E-01, 6.3360000E-03],
+            [2.2970000E-01, 6.9300000E-04],
+            [2.4369063E-01, 3.1680000E-03],
+            [2.6920000E-01, 9.9000000E-04],
+            [2.8310976E-01, 4.0590000E-03],
+            [3.0458571E-01, 2.0790000E-03],
+            [3.2361667E-01, 5.9400000E-04],
+            [3.3584375E-01, 1.5840000E-03],
+            [3.5740000E-01, 1.7820000E-03],
+            [3.7305455E-01, 2.1780000E-03],
+            [4.3420000E-01, 5.2470000E-03],
+            [4.6220000E-01, 3.9600000E-04],
+            [4.7520000E-01, 2.6730000E-03],
+            [5.1575000E-01, 1.1880000E-03],
+            [5.3000000E-01, 2.9700000E-04]])
 
-        
-    # test binning of large photon sets
+    # test set/retrieval of photon binning option
+    # reference: none needed
     def test_binOptions(self):
         my_source = source.PointSource(1,2,3)
         my_source.grouping = "discrete"
@@ -104,7 +130,27 @@ class TestPointSource():
         assert my_source.grouping == source.GroupOption.GROUP
         my_source.grouping = "hybrid"
         assert my_source.grouping == source.GroupOption.HYBRID
-
+        
+    # test binning of small number of photons
+    def test_binOptions(self):
+        my_source = source.PointSource(1,2,3)
+        my_source.add_isotope_bq('Co-60',1)
+        photons = [[3.47140e-01, 7.50000e-05],
+            [8.26100e-01, 7.60000e-05],
+            [1.17323e+00, 9.98500e-01],
+            [1.33249e+00, 9.99826e-01],
+            [2.15857e+00, 1.20000e-05],
+            [2.50569e+00, 2.00000e-08]]
+        my_source.grouping = "discrete"
+        np.testing.assert_allclose(my_source._get_photon_source_list(), \
+            photons)
+        assert my_source.grouping == source.GroupOption.DISCRETE
+        my_source.grouping = "group"
+        np.testing.assert_allclose(my_source._get_photon_source_list(), \
+            photons)
+        my_source.grouping = "hybrid"
+        np.testing.assert_allclose(my_source._get_photon_source_list(), \
+            photons)
 
     # test set/retrieval of source points
     # reference: manual calculation

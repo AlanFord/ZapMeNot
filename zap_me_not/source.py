@@ -46,10 +46,12 @@ class Source(metaclass=abc.ABCMeta):
 
     @property
     def grouping(self):
+        """:class:`GroupOption` : State defining the photon energy group option."""
         return self._grouping_option
 
     @grouping.setter
     def grouping(self, value):
+        """:class:`GroupOption` : State defining the photon energy group option."""
         if value == GroupOption.HYBRID.value:
             self._grouping_option = GroupOption.HYBRID
         elif value == GroupOption.GROUP.value:
