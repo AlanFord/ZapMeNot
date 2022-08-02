@@ -1,6 +1,11 @@
 import abc
 import math
-import pyvista
+
+import importlib
+pyvista_spec = importlib.util.find_spec("pyvista")
+pyvista_found = pyvista_spec is not None
+if pyvista_found:
+    import pyvista
 
 import numpy as np
 
@@ -154,7 +159,7 @@ class Source(metaclass=abc.ABCMeta):
         temporary_isotope_list = self._isotope_list[:]
         # add key progeny if required
         if self._include_key_progeny == True:
-            for next_isotope in self._isotope_list: 			
+            for next_isotope in self._isotope_list:             
                 isotope_detail = isotope.Isotope(next_isotope[0])
                 if isotope_detail.key_progeny != None:
                     for key, value in isotope_detail.key_progeny.items():
@@ -308,7 +313,8 @@ class LineSource(Source, shield.Shield):
         :class:`pyvista.PolyData`
             A line object representing the line source.
         """
-        return pyvista.Line(pointa=self.origin, pointb=self.end)
+        if pyvista_found:
+            return pyvista.Line(pointa=self.origin, pointb=self.end)
 
 # -----------------------------------------------------------
 
@@ -404,7 +410,8 @@ class PointSource(Source, shield.Shield):
         :class:`pyvista.PolyData`
             A small sphere object representing the point source.
         """
-        return pyvista.Sphere(center=(self._x, self._y, self._z), radius=1)
+        if pyvista_found:
+            return pyvista.Sphere(center=(self._x, self._y, self._z), radius=1)
 
 
 # -----------------------------------------------------------

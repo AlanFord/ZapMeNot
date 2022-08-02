@@ -1,6 +1,11 @@
 import abc
 import math
-import pyvista
+
+import importlib
+pyvista_spec = importlib.util.find_spec("pyvista")
+pyvista_found = pyvista_spec is not None
+if pyvista_found:
+    import pyvista
 
 import numpy as np
 
@@ -196,7 +201,8 @@ class SemiInfiniteXSlab(Shield):
         :class:`pyvista.PolyData`
             A box object representing the slab shield.
         """
-        return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000, -1000, 1000))
+        if pyvista_found:
+            return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000, -1000, 1000))
 
 # -----------------------------------------------------------
 
@@ -420,13 +426,14 @@ class Box(Shield):
         :class:`pyvista.PolyData`
             A box object representing the box shield.
         """
-        xmin = self.box_center[0]-self.box_dimensions[0]/2
-        xmax = self.box_center[0]+self.box_dimensions[0]/2
-        ymin = self.box_center[1]-self.box_dimensions[1]/2
-        ymax = self.box_center[1]+self.box_dimensions[1]/2
-        zmin = self.box_center[2]-self.box_dimensions[2]/2
-        zmax = self.box_center[2]+self.box_dimensions[2]/2
-        return pyvista.Box(bounds=(xmin, xmax, ymin, ymax, zmin, zmax))
+        if pyvista_found:
+            xmin = self.box_center[0]-self.box_dimensions[0]/2
+            xmax = self.box_center[0]+self.box_dimensions[0]/2
+            ymin = self.box_center[1]-self.box_dimensions[1]/2
+            ymax = self.box_center[1]+self.box_dimensions[1]/2
+            zmin = self.box_center[2]-self.box_dimensions[2]/2
+            zmax = self.box_center[2]+self.box_dimensions[2]/2
+            return pyvista.Box(bounds=(xmin, xmax, ymin, ymax, zmin, zmax))
 
 # -----------------------------------------------------------
 
@@ -598,14 +605,15 @@ class InfiniteAnnulus(Shield):
         :class:`pyvista.PolyData`
             A boolean object representing the annular cylinder shield.
         """
-        # define an imaginary bottom of the shield at a distance of -2000 from the origin
-        bottom = self.dir*(-2000.)
-        disc = pyvista.Disc(center=(bottom[0],bottom[1],bottom[2]), inner=self.inner_radius,outer=self.outer_radius,c_res=50)
-        cyl1 = disc.extrude(self.dir*4000,capping=True)
-        # innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)
-        # outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)
-        # result = outerCylinder.boolean_difference(innerCylinder)
-        return cyl1
+        if pyvista_found:
+            # define an imaginary bottom of the shield at a distance of -2000 from the origin
+            bottom = self.dir*(-2000.)
+            disc = pyvista.Disc(center=(bottom[0],bottom[1],bottom[2]), inner=self.inner_radius,outer=self.outer_radius,c_res=50)
+            cyl1 = disc.extrude(self.dir*4000,capping=True)
+            # innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)
+            # outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)
+            # result = outerCylinder.boolean_difference(innerCylinder)
+            return cyl1
 
 # -----------------------------------------------------------
 
@@ -915,8 +923,9 @@ class CappedCylinder(Shield):
         :class:`pyvista.PolyData`
             A cylinder object representing the capped cylinder shield.
         """
-        center= (self.origin + self.end) / 2
-        return pyvista.Cylinder(center=(center[0],center[1],center[2]),direction=self.dir,height=self.length, radius=self.radius)
+        if pyvista_found:
+            center= (self.origin + self.end) / 2
+            return pyvista.Cylinder(center=(center[0],center[1],center[2]),direction=self.dir,height=self.length, radius=self.radius)
 
 # -----------------------------------------------------------
 

@@ -1,4 +1,8 @@
-import pyvista
+import importlib
+pyvista_spec = importlib.util.find_spec("pyvista")
+pyvista_found = pyvista_spec is not None
+if pyvista_found:
+    import pyvista
 
 class Detector:
     """A location used to calculate exposure
@@ -35,5 +39,6 @@ class Detector:
         :class:`pyvista.PolyData`
             A small sphere object representing the detector.
         """
-        return pyvista.Sphere(center=(self.x, self.y, self.z), radius=10)
+        if pyvista_found:
+            return pyvista.Sphere(center=(self.x, self.y, self.z), radius=10)
 
