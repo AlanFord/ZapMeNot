@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>zap_me_not.model &#8212; Zap_me_not 0.0.1 documentation</title>
+    <title>zap_me_not.model &#8212; Zap_me_not 0.0.2 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Zap_me_not 0.0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">zap_me_not.model</a></li> 
       </ul>
@@ -43,6 +43,12 @@
 <span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
+<span class="n">pyvista_found</span> <span class="o">=</span> <span class="n">pyvista_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pyvista</span>
+    
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ray</span><span class="p">,</span> <span class="n">material</span>
 
 
@@ -213,7 +219,7 @@
             <span class="n">uncollided_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uncollided_point_flux</span><span class="p">)</span>
             <span class="n">total_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">total_point_flux</span><span class="p">)</span>
             <span class="n">flux_by_photon_energy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">uncollided_flux</span><span class="p">,</span> <span class="n">total_flux</span><span class="p">])</span>
+                <span class="p">[</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">uncollided_flux</span><span class="p">,</span> <span class="n">total_flux</span><span class="p">])</span>    
 
         <span class="n">air</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="s1">&#39;air&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">flux_by_photon_energy</span><span class="p">:</span>
@@ -224,7 +230,44 @@
         <span class="n">exposure_total</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">flux_by_photon_energy</span><span class="p">:</span>
             <span class="n">exposure_total</span> <span class="o">+=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">exposure_total</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="mi">3600</span>  <span class="c1"># convert from R/sec to mR/hr</span></div></div>
+        <span class="k">return</span> <span class="n">exposure_total</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="mi">3600</span>  <span class="c1"># convert from R/sec to mR/hr</span></div>
+
+<div class="viewcode-block" id="Model.display"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Produces a graphic display of the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
+            <span class="c1"># basic test of pyvista plotter</span>
+            <span class="n">sourceColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+            <span class="n">detectorColor</span> <span class="o">=</span> <span class="s1">&#39;yellow&#39;</span>
+            <span class="n">shieldColor</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+            <span class="c1"># find the bounding box for all finite bodies</span>
+            <span class="n">blocks</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">MultiBlock</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">shield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">shield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
+                    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shield</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
+            <span class="n">pl</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Plotter</span><span class="p">()</span>
+            <span class="c1"># increase the display bounds by a smidge to avoid inadvertent clipping</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="mf">1.01</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">blocks</span><span class="o">.</span><span class="n">bounds</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">shield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">shield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
+                    <span class="n">clip1</span> <span class="o">=</span> <span class="n">shield</span><span class="o">.</span><span class="n">vtk</span><span class="p">()</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span><span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-z&#39;</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]])</span>
+                    <span class="n">clip2</span> <span class="o">=</span>  <span class="n">clip1</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span><span class="n">normal</span><span class="o">=</span><span class="s1">&#39;z&#39;</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
+                    <span class="n">clip3</span> <span class="o">=</span>  <span class="n">clip2</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span><span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-y&#39;</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">clip4</span> <span class="o">=</span>  <span class="n">clip3</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span><span class="n">normal</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">clip5</span> <span class="o">=</span>  <span class="n">clip4</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span><span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-x&#39;</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">clip6</span> <span class="o">=</span>  <span class="n">clip5</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span><span class="n">normal</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clip6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">shield</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span><span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">sourceColor</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">)</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">detectorColor</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;detector&#39;</span><span class="p">)</span>
+            <span class="c1"># pl.set_background(color=&#39;white&#39;)</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">show_bounds</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="s1">&#39;front&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span><span class="n">all_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">add_legend</span><span class="p">(</span><span class="n">face</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
+
 </pre></div>
 
             <div class="clearer"></div>

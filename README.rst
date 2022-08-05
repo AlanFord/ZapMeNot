@@ -19,6 +19,8 @@ Requirements for installing:
  - SciPy 0.14 or above
  - Pytest 5.3.5 or above
  - Pyyaml 5.3 or above
+ - PyVista
+ - vtk
 
 Installation:
 ------------------------------------------------------------------------------
