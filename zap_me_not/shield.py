@@ -1,6 +1,12 @@
 import abc
 import math
 
+import importlib
+pyvista_spec = importlib.util.find_spec("pyvista")
+pyvista_found = pyvista_spec is not None
+if pyvista_found:
+    import pyvista
+
 import numpy as np
 
 from . import material
@@ -32,6 +38,11 @@ class Shield:
         if density is not None:
             self.material.density = density
         super().__init__(**kwargs)
+        
+    @abc.abstractmethod
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
 
     @abc.abstractmethod
     def _get_crossing_length(self, ray):
@@ -117,6 +128,11 @@ class SemiInfiniteXSlab(Shield):
         super().__init__(material_name=material_name, density=density)
         self.x_start = x_start
         self.x_end = x_end
+        
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
+        return True
 
     def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
@@ -176,6 +192,17 @@ class SemiInfiniteXSlab(Shield):
         """
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
+
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A box object representing the slab shield.
+        """
+        if pyvista_found:
+            return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000, -1000, 1000))
 
 # -----------------------------------------------------------
 
@@ -264,6 +291,11 @@ class Box(Shield):
         super().__init__(material_name=material_name, density=density)
         self.box_center = np.array(box_center)
         self.box_dimensions = np.array(box_dimensions)
+
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
+        return False
 
     def get_crossing_mfp(self, ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
@@ -386,6 +418,23 @@ class Box(Shield):
 
         return results
 
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A box object representing the box shield.
+        """
+        if pyvista_found:
+            xmin = self.box_center[0]-self.box_dimensions[0]/2
+            xmax = self.box_center[0]+self.box_dimensions[0]/2
+            ymin = self.box_center[1]-self.box_dimensions[1]/2
+            ymax = self.box_center[1]+self.box_dimensions[1]/2
+            zmin = self.box_center[2]-self.box_dimensions[2]/2
+            zmax = self.box_center[2]+self.box_dimensions[2]/2
+            return pyvista.Box(bounds=(xmin, xmax, ymin, ymax, zmin, zmax))
+
 # -----------------------------------------------------------
 
 
@@ -428,6 +477,11 @@ class InfiniteAnnulus(Shield):
         self.origin = np.array(cylinder_origin)
         axis = np.array(cylinder_axis)
         self.dir = axis/np.linalg.norm(axis)
+
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
+        return True
 
     def get_crossing_mfp(self, ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
@@ -541,6 +595,26 @@ class InfiniteAnnulus(Shield):
                     if t >= 0 and t <= ray.length:
                         results.append(t)
         return results
+
+
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A boolean object representing the annular cylinder shield.
+        """
+        if pyvista_found:
+            # define an imaginary bottom of the shield at a distance of -2000 from the origin
+            bottom = self.dir*(-2000.)
+            disc = pyvista.Disc(center=(bottom[0],bottom[1],bottom[2]), inner=self.inner_radius,outer=self.outer_radius,c_res=50)
+            cyl1 = disc.extrude(self.dir*4000,capping=True)
+            # innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)
+            # outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)
+            # result = outerCylinder.boolean_difference(innerCylinder)
+            return cyl1
+
 # -----------------------------------------------------------
 
 
@@ -708,6 +782,12 @@ class CappedCylinder(Shield):
         self.length = np.linalg.norm(self.end - self.origin)
         self.dir = (self.end - self.origin)/self.length
 
+    def is_infinite(self):
+        """Returns true if any dimension is infinite, false otherwise
+        """
+        return False
+
+
     def get_crossing_mfp(self, ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
 
@@ -834,6 +914,18 @@ class CappedCylinder(Shield):
                 if radial.dot(radial) < self.radius**2:
                     results.append(point)
         return results
+
+    def vtk(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A cylinder object representing the capped cylinder shield.
+        """
+        if pyvista_found:
+            center= (self.origin + self.end) / 2
+            return pyvista.Cylinder(center=(center[0],center[1],center[2]),direction=self.dir,height=self.length, radius=self.radius)
 
 # -----------------------------------------------------------
 

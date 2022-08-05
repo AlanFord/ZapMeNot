@@ -23,7 +23,8 @@ if __name__ == '__main__':
         intall_requires=[
             'numpy>=1.18.1',
             'scipy>=0.14',
-            'pyyaml>=5.3'],
+            'pyyaml>=5.3',
+            'pyvista'],
         test_requires=['pytest'],
         setup_requires=['pytest-runner']
     )

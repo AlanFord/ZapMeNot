@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ZapMeNot package &#8212; Zap_me_not 0.0.1 documentation</title>
+    <title>ZapMeNot package &#8212; Zap_me_not 0.0.2 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="isotopes.html" title="Isotope Library"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Zap_me_not 0.0.2 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">ZapMeNot package</a></li> 
       </ul>
     </div>  
@@ -70,6 +70,20 @@
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.detector.Detector.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/detector.html#Detector.vtk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.detector.Detector.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A small sphere object representing the detector.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -342,6 +356,12 @@ all source points is performed using matrix math.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.model.Model.display">
+<code class="sig-name descname"><span class="pre">display</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/model.html#Model.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.model.Model.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produces a graphic display of the model.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.model.Model.set_buildup_factor_material">
 <code class="sig-name descname"><span class="pre">set_buildup_factor_material</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_material</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/model.html#Model.set_buildup_factor_material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.model.Model.set_buildup_factor_material" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the material used to calculation exposure buildup factors.</p>
@@ -460,6 +480,26 @@ and a resulting direction.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="zap_me_not.shield.Box.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#Box.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.Box.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.Box.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#Box.vtk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.Box.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A box object representing the box shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -498,6 +538,26 @@ and a resulting direction.</p>
 <li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections with the shield.</p></li>
 <li><p><strong>photon_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The photon energy in MeV</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.CappedCylinder.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#CappedCylinder.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.CappedCylinder.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.CappedCylinder.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#CappedCylinder.vtk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.CappedCylinder.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -544,6 +604,26 @@ and a resulting direction.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="zap_me_not.shield.InfiniteAnnulus.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#InfiniteAnnulus.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.InfiniteAnnulus.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.InfiniteAnnulus.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#InfiniteAnnulus.vtk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.InfiniteAnnulus.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A boolean object representing the annular cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -582,6 +662,26 @@ and a resulting direction.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="zap_me_not.shield.SemiInfiniteXSlab.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#SemiInfiniteXSlab.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.SemiInfiniteXSlab.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.SemiInfiniteXSlab.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#SemiInfiniteXSlab.vtk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.SemiInfiniteXSlab.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A box object representing the slab shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -613,6 +713,12 @@ and a resulting direction.</p>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.Shield.is_infinite">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#Shield.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.Shield.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
 </dd></dl>
@@ -657,6 +763,26 @@ and a resulting direction.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="zap_me_not.shield.XAlignedCylinder.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedCylinder.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.XAlignedCylinder.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedCylinder.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -694,6 +820,26 @@ and a resulting direction.</p>
 <li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections with the shield.</p></li>
 <li><p><strong>photon_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The photon energy in MeV</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.XAlignedInfiniteAnnulus.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedInfiniteAnnulus.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.XAlignedInfiniteAnnulus.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedInfiniteAnnulus.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A boolean object representing the annular cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -740,6 +886,26 @@ and a resulting direction.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="zap_me_not.shield.YAlignedCylinder.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedCylinder.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.YAlignedCylinder.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedCylinder.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -777,6 +943,26 @@ and a resulting direction.</p>
 <li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections with the shield.</p></li>
 <li><p><strong>photon_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The photon energy in MeV</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.YAlignedInfiniteAnnulus.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedInfiniteAnnulus.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.YAlignedInfiniteAnnulus.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedInfiniteAnnulus.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A boolean object representing the annular cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -823,6 +1009,26 @@ and a resulting direction.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="zap_me_not.shield.ZAlignedCylinder.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedCylinder.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.ZAlignedCylinder.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedCylinder.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -860,6 +1066,26 @@ and a resulting direction.</p>
 <li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections with the shield.</p></li>
 <li><p><strong>photon_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The photon energy in MeV</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.ZAlignedInfiniteAnnulus.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedInfiniteAnnulus.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.shield.ZAlignedInfiniteAnnulus.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedInfiniteAnnulus.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A boolean object representing the annular cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -944,6 +1170,17 @@ and a resulting direction.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.BoxSource.grouping">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.BoxSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.BoxSource.include_key_progeny">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">include_key_progeny</span></code><a class="headerlink" href="#zap_me_not.source.BoxSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining if key progeny should be included.</p>
@@ -952,6 +1189,12 @@ and a resulting direction.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.BoxSource.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -986,6 +1229,42 @@ Isotope object and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.BoxSource.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A box object representing the box shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="zap_me_not.source.GroupOption">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">zap_me_not.source.</span></code><code class="sig-name descname"><span class="pre">GroupOption</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#GroupOption"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.GroupOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="zap_me_not.source.GroupOption.DISCRETE">
+<code class="sig-name descname"><span class="pre">DISCRETE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'discrete'</span></em><a class="headerlink" href="#zap_me_not.source.GroupOption.DISCRETE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="zap_me_not.source.GroupOption.GROUP">
+<code class="sig-name descname"><span class="pre">GROUP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'group'</span></em><a class="headerlink" href="#zap_me_not.source.GroupOption.GROUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="zap_me_not.source.GroupOption.HYBRID">
+<code class="sig-name descname"><span class="pre">HYBRID</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'hybrid'</span></em><a class="headerlink" href="#zap_me_not.source.GroupOption.HYBRID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1073,6 +1352,17 @@ Isotope object and an activity in Bq.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.LineSource.grouping">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.LineSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.LineSource.include_key_progeny">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">include_key_progeny</span></code><a class="headerlink" href="#zap_me_not.source.LineSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining if key progeny should be included.</p>
@@ -1081,6 +1371,12 @@ Isotope object and an activity in Bq.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.LineSource.is_infinite">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.LineSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1112,6 +1408,20 @@ Isotope object and an activity in Bq.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.LineSource.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#LineSource.vtk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.LineSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A line object representing the line source.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1206,6 +1516,17 @@ Always returns 0 for the Point source.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.PointSource.grouping">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.PointSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.PointSource.include_key_progeny">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">include_key_progeny</span></code><a class="headerlink" href="#zap_me_not.source.PointSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining if key progeny should be included.</p>
@@ -1214,6 +1535,12 @@ Always returns 0 for the Point source.</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.PointSource.is_infinite">
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.PointSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1245,6 +1572,20 @@ Isotope object and an activity in Bq.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.PointSource.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#PointSource.vtk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.PointSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A small sphere object representing the point source.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1307,6 +1648,17 @@ for one diensional sources, and not significant for point sources.</p>
 <li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The photon energy in MeV.</p></li>
 <li><p><strong>intensity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The intensity in photons/sec.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.Source.grouping">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.Source.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1424,6 +1776,17 @@ Isotope object and an activity in Bq.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.XAlignedCylinderSource.grouping">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.XAlignedCylinderSource.include_key_progeny">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">include_key_progeny</span></code><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining if key progeny should be included.</p>
@@ -1432,6 +1795,12 @@ Isotope object and an activity in Bq.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.XAlignedCylinderSource.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1463,6 +1832,20 @@ Isotope object and an activity in Bq.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.XAlignedCylinderSource.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1536,6 +1919,17 @@ Isotope object and an activity in Bq.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.YAlignedCylinderSource.grouping">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.YAlignedCylinderSource.include_key_progeny">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">include_key_progeny</span></code><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining if key progeny should be included.</p>
@@ -1544,6 +1938,12 @@ Isotope object and an activity in Bq.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.YAlignedCylinderSource.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1575,6 +1975,20 @@ Isotope object and an activity in Bq.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.YAlignedCylinderSource.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1648,6 +2062,17 @@ Isotope object and an activity in Bq.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.ZAlignedCylinderSource.grouping">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.ZAlignedCylinderSource.include_key_progeny">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">include_key_progeny</span></code><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining if key progeny should be included.</p>
@@ -1656,6 +2081,12 @@ Isotope object and an activity in Bq.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.ZAlignedCylinderSource.is_infinite">
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1687,6 +2118,20 @@ Isotope object and an activity in Bq.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.ZAlignedCylinderSource.vtk">
+<code class="sig-name descname"><span class="pre">vtk</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
 </dd>
 </dl>
 </dd></dl>

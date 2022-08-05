@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>zap_me_not.detector &#8212; Zap_me_not 0.0.1 documentation</title>
+    <title>zap_me_not.detector &#8212; Zap_me_not 0.0.2 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Zap_me_not 0.0.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">zap_me_not.detector</a></li> 
       </ul>
@@ -40,7 +40,13 @@
           <div class="body" role="main">
             
   <h1>Source code for zap_me_not.detector</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="Detector"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.detector.Detector">[docs]</a><span></span><span class="k">class</span> <span class="nc">Detector</span><span class="p">:</span>
+<span></span><span class="kn">import</span> <span class="nn">importlib</span>
+<span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
+<span class="n">pyvista_found</span> <span class="o">=</span> <span class="n">pyvista_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pyvista</span>
+
+<div class="viewcode-block" id="Detector"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.detector.Detector">[docs]</a><span class="k">class</span> <span class="nc">Detector</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A location used to calculate exposure</span>
 
 <span class="sd">    Parameters</span>
@@ -65,8 +71,19 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;:class:`tuple` : The detector location in cartesian coordinates&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_location</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_location</span>
      
+<div class="viewcode-block" id="Detector.vtk"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.detector.Detector.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a display object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`pyvista.PolyData`</span>
+<span class="sd">            A small sphere object representing the detector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div></div>
+
 </pre></div>
 
             <div class="clearer"></div>
