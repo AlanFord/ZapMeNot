@@ -4,8 +4,7 @@ Documentation
 About
 -----
 
-`ZapMeNot` is a Python library for photon buildup factor shielding
-calculations
+`ZapMeNot` is a Python library of functions for point-kernel photon shielding analyses.
 
 .. toctree::
    :maxdepth: 1
@@ -32,7 +31,7 @@ Contents
 --------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    usage.rst
    materials.rst
@@ -44,10 +43,9 @@ Code
 `Repository <https://github.com/AlanFord/ZapMeNot>`__
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     ZapMeNot.rst
-
 
 License
 -------

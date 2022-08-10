@@ -1,5 +1,7 @@
 Material Library
-==============================================================================
+================
+
+.. index:: single: Material Library
 
 
 A number of materials are available for use as shielding,
@@ -15,5 +17,6 @@ materials and nominal densities include:
  - Water, 1.0 g/cm\ :sup:`3`
  - SS304L, 8.0 g/cm\ :sup:`3`
  - UO2, 10.412 g/cm\ :sup:`3` (95% of theoretical density)
+ - Resin, 2.01 g/cm\ :sup:`3` (a mixture of resin in concrete)
 
  

@@ -1,5 +1,7 @@
 Isotope Library
-==============================================================================
+===============
+
+.. index:: single: Isotope Library
 
 
 Photon emmisision data for a large number of radioisotopes are
