@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Read Me &#8212; Zap_me_not 0.0.2 documentation</title>
+    <title>Quick Start Guide &#8212; Zap_me_not 0.0.2 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Material Library" href="materials.html" />
-    <link rel="prev" title="Tutorial" href="tutorial.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Read Me" href="readme.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -32,34 +32,10 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="read-me">
-<h1>Read Me<a class="headerlink" href="#read-me" title="Permalink to this headline">¶</a></h1>
-<p><cite>ZapMeNot</cite> is a Python library of functions for point-kernel photon shielding analyses.</p>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://alanford.github.io/ZapMeNot/quickstart.html">Quick Start Docs</a>
-<a class="reference external" href="https://alanford.github.io/ZapMeNot/">Full documentation</a></p>
-</div>
-<div class="section" id="version-changelog">
-<h2>Version Changelog<a class="headerlink" href="#version-changelog" title="Permalink to this headline">¶</a></h2>
-<p>ZapMeNot is still in its alpha release</p>
-</div>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><p>Python 3.4 or above</p></li>
-<li><p>Numpy 1.18.1 or above</p></li>
-<li><p>SciPy 0.14 or above</p></li>
-<li><p>Pytest 5.3.5 or above</p></li>
-<li><p>Pyyaml 5.3 or above</p></li>
-<li><p>PyVista (optional for graphics)</p></li>
-<li><p>vtk (optional for graphics)</p></li>
-</ul>
-</div></blockquote>
-</div>
+  <div class="section" id="quick-start-guide">
+<h1>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installation">
-<h2>Installation:<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<span id="index-0"></span><h2>Installation:<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Installing from a local source tree:</p>
 <p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">./ZapMeNot</span></code></p>
 <p>You can also install in Development Mode:</p>
@@ -87,32 +63,32 @@ the package, the basic unit tests can be run as follows:</p>
 cases are designed to fail PyTest. Each benchmark prints the calculation
 results and the difference (in percent) from the corresponding Microshield case.</p>
 <p><code class="code docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-s</span> <span class="pre">-m</span> <span class="pre">benchmark</span></code></p>
+<p>Testing the vtk graphics can be performed as follows:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">graphics</span></code></p>
 </div>
-<div class="section" id="valuable-references">
-<h2>Valuable References<a class="headerlink" href="#valuable-references" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p><a class="reference external" href="https://alanford.github.io/ZapMeNot/">ZapMeNot Documentation</a></p>
-<p><a class="reference external" href="https://github.com/alanford/zapmenot">Github Repo</a></p>
-<p><a class="reference external" href="https://www.python.org/downloads/">Download Python</a></p>
-</div></blockquote>
-</div>
-<div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>The <a class="reference external" href="https://github.com/alanford/zapmenot/blob/master/LICENSE">GNU general public license</a></p>
-</div></blockquote>
-</div>
-<div class="section" id="quickstart">
-<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-quick-demonstration">
+<h2>A Quick Demonstration<a class="headerlink" href="#a-quick-demonstration" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>Using ZapMeNot entails</dt><dd><ol class="arabic simple">
+<li><p>creating a model</p></li>
+<li><p>adding a source</p></li>
+<li><p>(optionally) adding a shield</p></li>
+<li><p>adding a detector (dose) location</p></li>
+<li><p>(optionally) adding air or water around everything</p></li>
+<li><p>calculate the exposure in mR/hr</p></li>
+</ol>
+</dd>
+</dl>
+<p>What follows is a short Python script that performs a shielding calculation.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zap_me_not</span> <span class="kn">import</span> <span class="n">model</span><span class="p">,</span><span class="n">source</span><span class="p">,</span><span class="n">shield</span><span class="p">,</span><span class="n">detector</span><span class="p">,</span><span class="n">material</span>
 
 <span class="n">sample_sink</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 
 <span class="c1"># create the source</span>
-<span class="n">a_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">PointSource</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Co-60&#39;</span><span class="p">,</span><span class="mf">2.1</span><span class="p">)</span>
-<span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Cs-137&#39;</span><span class="p">,</span><span class="mf">0.3</span><span class="p">)</span>
-<span class="n">sample_sink</span><span class="o">.</span><span class="n">add_source</span><span class="p">(</span><span class="n">a_source</span><span class="p">)</span>
+<span class="n">the_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">PointSource</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">the_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Co-60&#39;</span><span class="p">,</span><span class="mf">2.1</span><span class="p">)</span>
+<span class="n">the_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Cs-137&#39;</span><span class="p">,</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">sample_sink</span><span class="o">.</span><span class="n">add_source</span><span class="p">(</span><span class="n">the_source</span><span class="p">)</span>
 
 <span class="c1"># define the location where the dose will be calculated</span>
 <span class="n">exposure_detector</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
@@ -161,24 +137,14 @@ results and the difference (in percent) from the corresponding Microshield case.
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="readme.html">Read Me</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start Guide</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Read Me</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#version-changelog">Version Changelog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#testing">Testing:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#valuable-references">Valuable References</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#quickstart">Quickstart</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Read Me</a></li>
 <li class="toctree-l1"><a class="reference internal" href="materials.html">Material Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="isotopes.html">Isotope Library</a></li>
 </ul>
@@ -199,8 +165,8 @@ results and the difference (in percent) from the corresponding Microshield case.
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="tutorial.html" title="previous chapter">Tutorial</a></li>
-      <li>Next: <a href="materials.html" title="next chapter">Material Library</a></li>
+      <li>Previous: <a href="readme.html" title="previous chapter">Read Me</a></li>
+      <li>Next: <a href="tutorial.html" title="next chapter">Tutorial</a></li>
   </ul></li>
 </ul>
 </div>
@@ -234,7 +200,7 @@ results and the difference (in percent) from the corresponding Microshield case.
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/usage.rst.txt"
+      <a href="_sources/quickstart.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

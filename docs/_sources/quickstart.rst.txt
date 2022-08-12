@@ -1,33 +1,12 @@
-Read Me
-==============================================================================
+Quick Start Guide
+=================
+
+.. index:: single: Quick Start Guide
 
 
-
-`ZapMeNot` is a Python library of functions for point-kernel photon shielding analyses.
-
-Getting Started
----------------
-`Quick Start Docs <https://alanford.github.io/ZapMeNot/quickstart.html>`__
-`Full documentation <https://alanford.github.io/ZapMeNot/>`__
-
-Version Changelog
------------------
-
-ZapMeNot is still in its alpha release
-
-Requirements
-------------
-
- - Python 3.4 or above
- - Numpy 1.18.1 or above
- - SciPy 0.14 or above
- - Pytest 5.3.5 or above
- - Pyyaml 5.3 or above
- - PyVista (optional for graphics)
- - vtk (optional for graphics)
 
 Installation:
-------------------------------------------------------------------------------
+-------------
 
 Installing from a local source tree:
 
@@ -54,7 +33,7 @@ Installing in Anaconda is a bit more complicated. You must first manually instal
 This may be simplified in the future as my knowledge of installation packages improves!
 
 Testing:
-------------------------------------------------------------------------------
+--------
 Testing is designed around the use of pytest.  From the root directory of 
 the package, the basic unit tests can be run as follows:
 
@@ -66,22 +45,22 @@ results and the difference (in percent) from the corresponding Microshield case.
 
 :code:`pytest -s -m benchmark`
 
-Valuable References
--------------------
+Testing the vtk graphics can be performed as follows:
 
-    `ZapMeNot Documentation <https://alanford.github.io/ZapMeNot/>`__
+:code:`pytest -m graphics`
 
-    `Github Repo <https://github.com/alanford/zapmenot>`__
+A Quick Demonstration
+---------------------
 
-    `Download Python <https://www.python.org/downloads/>`__
-
-License
--------
-
-    The `GNU general public license <https://github.com/alanford/zapmenot/blob/master/LICENSE>`__
-
-Quickstart
-----------
+Using ZapMeNot entails 
+ #. creating a model 
+ #. adding a source
+ #. (optionally) adding a shield
+ #. adding a detector (dose) location
+ #. (optionally) adding air or water around everything
+ #. calculate the exposure in mR/hr
+ 
+What follows is a short Python script that performs a shielding calculation.
 
 .. code-block:: python
 
@@ -90,10 +69,10 @@ Quickstart
     sample_sink = model.Model()
 
     # create the source
-    a_source = source.PointSource(x=0, y=0, z=0)
-    a_source.add_isotope_curies('Co-60',2.1)
-    a_source.add_isotope_curies('Cs-137',0.3)
-    sample_sink.add_source(a_source)
+    the_source = source.PointSource(x=0, y=0, z=0)
+    the_source.add_isotope_curies('Co-60',2.1)
+    the_source.add_isotope_curies('Cs-137',0.3)
+    sample_sink.add_source(the_source)
 
     # define the location where the dose will be calculated
     exposure_detector = detector.Detector(x=200, y=40, z=40)
@@ -117,4 +96,3 @@ Quickstart
     # calculate exposure in mR/hr
     exposure = sample_sink.calculate_exposure()
     print('The exposure is ', exposure, ' mR/hr')
-

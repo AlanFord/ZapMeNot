@@ -1,64 +1,51 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>ZapMeNot Summary &#8212; Zap_me_not 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Read Me &#8212; Zap_me_not 0.0.2 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Material Library" href="materials.html" />
-    <link rel="prev" title="Welcome to ZapMeNot’s documentation!" href="index.html" />
+    <link rel="next" title="Quick Start Guide" href="quickstart.html" />
+    <link rel="prev" title="Documentation" href="index.html" />
    
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
-  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="materials.html" title="Material Library"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to ZapMeNot’s documentation!"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Zap_me_not 0.0.1 documentation</a> &#187;</li> 
-      </ul>
-    </div>  
+  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
-  <div class="section" id="zapmenot-summary">
-<h1>ZapMeNot Summary<a class="headerlink" href="#zapmenot-summary" title="Permalink to this headline">¶</a></h1>
-<p>A Python library for simple point-kernel photon shielding analyses.</p>
-<div class="section" id="links">
-<h2>Links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><p>The source: <a class="reference external" href="https://github.com/AlanFord/ZapMeNot">https://github.com/AlanFord/ZapMeNot</a></p></li>
-<li><p>The API: <a class="reference external" href="https://alanford.github.io/ZapMeNot/">https://alanford.github.io/ZapMeNot/</a></p></li>
-</ul>
-</div></blockquote>
+  <div class="section" id="read-me">
+<h1>Read Me<a class="headerlink" href="#read-me" title="Permalink to this headline">¶</a></h1>
+<p><cite>ZapMeNot</cite> is a Python library of functions for point-kernel photon shielding analyses.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://alanford.github.io/ZapMeNot/quickstart.html">Quick Start Docs</a>
+<a class="reference external" href="https://alanford.github.io/ZapMeNot/">Full documentation</a></p>
 </div>
-<div class="section" id="requirements-for-installing">
-<h2>Requirements for installing:<a class="headerlink" href="#requirements-for-installing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="version-changelog">
+<h2>Version Changelog<a class="headerlink" href="#version-changelog" title="Permalink to this headline">¶</a></h2>
+<p>ZapMeNot is still in its alpha release</p>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>Python 3.4 or above</p></li>
@@ -66,6 +53,8 @@
 <li><p>SciPy 0.14 or above</p></li>
 <li><p>Pytest 5.3.5 or above</p></li>
 <li><p>Pyyaml 5.3 or above</p></li>
+<li><p>PyVista (optional for graphics)</p></li>
+<li><p>vtk (optional for graphics)</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -98,6 +87,20 @@ the package, the basic unit tests can be run as follows:</p>
 cases are designed to fail PyTest. Each benchmark prints the calculation
 results and the difference (in percent) from the corresponding Microshield case.</p>
 <p><code class="code docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-s</span> <span class="pre">-m</span> <span class="pre">benchmark</span></code></p>
+</div>
+<div class="section" id="valuable-references">
+<h2>Valuable References<a class="headerlink" href="#valuable-references" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><a class="reference external" href="https://alanford.github.io/ZapMeNot/">ZapMeNot Documentation</a></p>
+<p><a class="reference external" href="https://github.com/alanford/zapmenot">Github Repo</a></p>
+<p><a class="reference external" href="https://www.python.org/downloads/">Download Python</a></p>
+</div></blockquote>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The <a class="reference external" href="https://github.com/alanford/zapmenot/blob/master/LICENSE">GNU general public license</a></p>
+</div></blockquote>
 </div>
 <div class="section" id="quickstart">
 <h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
@@ -140,35 +143,57 @@ results and the difference (in percent) from the corresponding Microshield case.
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">ZapMeNot Summary</a><ul>
-<li><a class="reference internal" href="#links">Links</a></li>
-<li><a class="reference internal" href="#requirements-for-installing">Requirements for installing:</a></li>
-<li><a class="reference internal" href="#installation">Installation:</a></li>
-<li><a class="reference internal" href="#testing">Testing:</a></li>
-<li><a class="reference internal" href="#quickstart">Quickstart</a></li>
+<h1 class="logo"><a href="index.html">Zap_me_not</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Read Me</a></li>
 </ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Read Me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="materials.html">Material Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="isotopes.html">Isotope Library</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ZapMeNot.html"><code class="docutils literal notranslate"><span class="pre">zap_me_not.detector</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ZapMeNot.html#module-zap_me_not.isotope"><code class="docutils literal notranslate"><span class="pre">zap_me_not.isotope</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ZapMeNot.html#module-zap_me_not.material"><code class="docutils literal notranslate"><span class="pre">zap_me_not.material</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ZapMeNot.html#module-zap_me_not.model"><code class="docutils literal notranslate"><span class="pre">zap_me_not.model</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ZapMeNot.html#module-zap_me_not.ray"><code class="docutils literal notranslate"><span class="pre">zap_me_not.ray</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ZapMeNot.html#module-zap_me_not.shield"><code class="docutils literal notranslate"><span class="pre">zap_me_not.shield</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ZapMeNot.html#module-zap_me_not.source"><code class="docutils literal notranslate"><span class="pre">zap_me_not.source</span></code></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">GNU General Public License</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to ZapMeNot’s documentation!</a></li>
-      <li>Next: <a href="materials.html" title="next chapter">Material Library</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">Documentation</a></li>
+      <li>Next: <a href="quickstart.html" title="next chapter">Quick Start Guide</a></li>
   </ul></li>
 </ul>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/usage.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+</div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -179,13 +204,32 @@ results and the difference (in percent) from the corresponding Microshield case.
     </div>
 </div>
 <script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy; Copyright 2022,  Alan Ford.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+      &copy;2022,  Alan Ford.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/readme.rst.txt"
+          rel="nofollow">Page source</a>
     </div>
+
+    
+
+    
   </body>
 </html>

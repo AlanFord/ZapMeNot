@@ -1,8 +1,6 @@
-ZapMeNot package
-================
 
-zap_me_not.detector module
---------------------------
+``zap_me_not.detector``
+-----------------------
 
 .. automodule:: zap_me_not.detector
    :members:
@@ -10,8 +8,10 @@ zap_me_not.detector module
    :inherited-members:
    :show-inheritance:
 
-zap_me_not.isotope module
--------------------------
+____
+
+``zap_me_not.isotope``
+----------------------
 
 .. automodule:: zap_me_not.isotope
    :members:
@@ -19,8 +19,10 @@ zap_me_not.isotope module
    :inherited-members:
    :show-inheritance:
 
-zap_me_not.material module
---------------------------
+____
+
+``zap_me_not.material``
+-----------------------
 
 .. automodule:: zap_me_not.material
    :members:
@@ -28,8 +30,10 @@ zap_me_not.material module
    :inherited-members:
    :show-inheritance:
 
-zap_me_not.model module
------------------------
+____
+
+``zap_me_not.model``
+--------------------
 
 .. automodule:: zap_me_not.model
    :members:
@@ -37,8 +41,10 @@ zap_me_not.model module
    :inherited-members:
    :show-inheritance:
 
-zap_me_not.ray module
----------------------
+____
+
+``zap_me_not.ray``
+------------------
 
 .. automodule:: zap_me_not.ray
    :members:
@@ -46,8 +52,10 @@ zap_me_not.ray module
    :inherited-members:
    :show-inheritance:
 
-zap_me_not.shield module
-------------------------
+____
+
+``zap_me_not.shield``
+---------------------
 
 .. automodule:: zap_me_not.shield
    :members:
@@ -55,8 +63,10 @@ zap_me_not.shield module
    :inherited-members:
    :show-inheritance:
 
-zap_me_not.source module
-------------------------
+____
+
+``zap_me_not.source``
+---------------------
 
 .. automodule:: zap_me_not.source
    :members:
