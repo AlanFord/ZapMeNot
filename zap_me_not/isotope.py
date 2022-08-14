@@ -1,6 +1,7 @@
 import yaml
 import pkg_resources
 
+
 class Isotope:
     """Encaplsulates isotope data from the IsotopeLibrary.yml file.
 
@@ -41,7 +42,8 @@ class Isotope:
         # convert the half-life to units of seconds
         half_life = properties.get("half-life")
         half_life_units = properties.get("half-life-units")
-        self._half_life = Isotope._convert_half_life(half_life, half_life_units)
+        self._half_life = Isotope._convert_half_life(
+            half_life, half_life_units)
         self._key_progeny = properties.get("key_progeny")
 
         # photon energies and intensities are stored as a list of tuples
@@ -50,7 +52,8 @@ class Isotope:
 
     @property
     def photons(self):
-        """:class:`list` of :class:`list` : A list of photon energies and intensities."""
+        """:class:`list` of :class:`list` : A list of photon energies and
+        intensities."""
         return self._photons
 
     @property
@@ -65,7 +68,8 @@ class Isotope:
         
     @property
     def key_progeny(self):
-        """:class:`dict` : The list of progeny that can be in secular or transient equilibrium."""
+        """:class:`dict` : The list of progeny that can be in secular or
+        transient equilibrium."""
         return self._key_progeny
 
     @staticmethod
@@ -86,10 +90,10 @@ class Isotope:
         ------
         ValueError
             Half-life units are not recognized
-        
+
         Returns
         -------
-        float 
+        float
             Half life in seconds
         """
         if units == "usecond":
@@ -110,4 +114,3 @@ class Isotope:
         else:
             raise ValueError("Half-life units are not recognized")
         return retval
-

@@ -33,6 +33,10 @@
   <h1>Source code for zap_me_not.source</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">abc</span>
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">shield</span><span class="p">,</span> <span class="n">isotope</span>
 
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
@@ -40,21 +44,17 @@
 <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pyvista</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">shield</span><span class="p">,</span> <span class="n">isotope</span>
-
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <div class="viewcode-block" id="GroupOption"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.GroupOption">[docs]</a><span class="k">class</span> <span class="nc">GroupOption</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">GROUP</span> <span class="o">=</span> <span class="s2">&quot;group&quot;</span>
     <span class="n">HYBRID</span> <span class="o">=</span> <span class="s2">&quot;hybrid&quot;</span>
     <span class="n">DISCRETE</span> <span class="o">=</span> <span class="s2">&quot;discrete&quot;</span></div>
 
-<div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Abtract class to model a radiation source.  </span>
 
-<span class="sd">    Maintains a list of isotopes and can return a list of point source </span>
+<div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Abtract class to model a radiation source.</span>
+
+<span class="sd">    Maintains a list of isotopes and can return a list of point source</span>
 <span class="sd">    locations within the body of the Source.</span>
 
 <span class="sd">    Parameters</span>
@@ -66,10 +66,10 @@
 <span class="sd">    ----------</span>
 <span class="sd">    points_per_dimension : :class:`list` of integers</span>
 <span class="sd">        The number of source points to be used in each dimension when modeling</span>
-<span class="sd">        the uniform source distribution throughout the body of the source.  Typically</span>
-<span class="sd">        a list of three integers for three-dimensional sources, one integer</span>
-<span class="sd">        for one diensional sources, and not significant for point sources.</span>
-
+<span class="sd">        the uniform source distribution throughout the body of the source.</span>
+<span class="sd">        Typically a list of three integers for three-dimensional sources, one</span>
+<span class="sd">        integer for one diensional sources, and not significant for point</span>
+<span class="sd">        sources.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -85,12 +85,14 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">grouping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;:class:`GroupOption` : State defining the photon energy group option.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;:class:`GroupOption` : State defining the photon energy group</span>
+<span class="sd">        option.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span>
 
     <span class="nd">@grouping</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">grouping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;:class:`GroupOption` : State defining the photon energy group option.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;:class:`GroupOption` : State defining the photon energy group</span>
+<span class="sd">        option.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">HYBRID</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">=</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">HYBRID</span>
         <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">GROUP</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
@@ -98,18 +100,17 @@
         <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">DISCRETE</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">=</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">DISCRETE</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid grouping option &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid grouping option &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">include_key_progeny</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;bool : State defining if key progeny should be included.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span>
-        
+
     <span class="nd">@include_key_progeny</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">include_key_progeny</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;bool : State defining if key progeny should be included.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span> <span class="o">=</span> <span class="n">value</span>
-    
 
 <div class="viewcode-block" id="Source.add_isotope_curies"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source.add_isotope_curies">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_curies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds an isotope and activity in curies to the isotope list</span>
@@ -188,21 +189,22 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">photon_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-        
+
         <span class="n">temporary_isotope_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="p">[:]</span>
         <span class="c1"># add key progeny if required</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">next_isotope</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="p">:</span>             
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">next_isotope</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="p">:</span>
                 <span class="n">isotope_detail</span> <span class="o">=</span> <span class="n">isotope</span><span class="o">.</span><span class="n">Isotope</span><span class="p">(</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="k">if</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">key_progeny</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">key_progeny</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">key_progeny</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                        <span class="n">temporary_isotope_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">value</span><span class="p">))</span>
+                        <span class="n">temporary_isotope_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                           <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">value</span><span class="p">))</span>
 
         <span class="c1"># search isotope list for photons to be added to the photon list</span>
         <span class="c1"># next_isotope will be a tuple of name and Bq</span>
         <span class="k">for</span> <span class="n">next_isotope</span> <span class="ow">in</span> <span class="n">temporary_isotope_list</span><span class="p">:</span>
             <span class="n">isotope_detail</span> <span class="o">=</span> <span class="n">isotope</span><span class="o">.</span><span class="n">Isotope</span><span class="p">(</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">photons</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">photons</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">photons</span><span class="p">:</span>
                     <span class="c1"># test to see if photon energy is already on the list</span>
                     <span class="c1"># and then add photon emmision rate (intensity*Bq).</span>
@@ -223,24 +225,29 @@
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">photon_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">photon_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">/</span><span class="n">scaling_factor</span><span class="p">))</span>
         <span class="n">photon_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">GROUP</span> <span class="ow">or</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">HYBRID</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">GROUP</span> <span class="ow">or</span> \
+                <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">HYBRID</span><span class="p">)</span> <span class="ow">and</span>
+                    <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="p">)):</span>
             <span class="c1"># group the photons</span>
             <span class="n">minEnergy</span> <span class="o">=</span> <span class="n">photon_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">maxEnergy</span> <span class="o">=</span> <span class="n">photon_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="p">(</span><span class="n">groupEnergies</span><span class="p">,</span> <span class="n">stepSize</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">minEnergy</span><span class="p">,</span> <span class="n">maxEnergy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="p">,</span> <span class="n">retstep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">groupEnergies</span><span class="p">,</span> <span class="n">stepSize</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+                <span class="n">minEnergy</span><span class="p">,</span> <span class="n">maxEnergy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="p">,</span> <span class="n">retstep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">binBoundaries</span> <span class="o">=</span> <span class="n">groupEnergies</span> <span class="o">+</span> <span class="p">(</span><span class="n">stepSize</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">binBoundaries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">binBoundaries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">stepSize</span><span class="p">]),</span><span class="n">binBoundaries</span><span class="p">])</span>
-            <span class="n">binplace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">photon_list</span><span class="p">,</span> <span class="n">binBoundaries</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Returns the appropriate bin for each photon</span>
-            <span class="n">photonArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span> <span class="c1"># convert the photon list to an array for further processing</span>
-            <span class="n">returnValue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">binBoundaries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">binBoundaries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">stepSize</span><span class="p">]),</span> <span class="n">binBoundaries</span><span class="p">])</span>
+            <span class="n">binplace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">photon_list</span><span class="p">,</span> <span class="n">binBoundaries</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># Returns the appropriate bin for each photon</span>
+            <span class="n">photonArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span>  <span class="c1"># convert the photon list to an array for further processing</span>
+            <span class="n">returnValue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
                 <span class="c1"># determine which photons are in each bin</span>
                 <span class="n">subset</span> <span class="o">=</span> <span class="n">photonArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">binplace</span> <span class="o">==</span> <span class="n">i</span><span class="p">)]</span>
-                <span class="n">csum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">subset</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># total emission rate</span>
+                <span class="n">csum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">subset</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># total emission rate</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">csum</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
-                    <span class="n">returnValue</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">subset</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">subset</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">csum</span>
-                    <span class="n">returnValue</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">csum</span>
-            <span class="n">returnValue</span> <span class="o">=</span> <span class="n">returnValue</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">returnValue</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span> <span class="c1"># keep only groups with non-zero intensity</span>
+                    <span class="n">returnValue</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> \
+                        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">subset</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">subset</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">csum</span>
+                    <span class="n">returnValue</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">csum</span>
+            <span class="c1"># keep only groups with non-zero intensity</span>
+            <span class="n">returnValue</span> <span class="o">=</span> <span class="n">returnValue</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">returnValue</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
             <span class="n">photon_list</span> <span class="o">=</span> <span class="n">returnValue</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">photon_list</span>
 
@@ -252,14 +259,16 @@
 
 
 <div class="viewcode-block" id="LineSource"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.LineSource">[docs]</a><span class="k">class</span> <span class="nc">LineSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Models a line radiation source </span>
+    <span class="sd">&quot;&quot;&quot;Models a line radiation source</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    start : :class:`list`</span>
-<span class="sd">        Cartiesian X, Y, and Z coordinates of the starting point of the line source.</span>
+<span class="sd">        Cartiesian X, Y, and Z coordinates of the starting point of the</span>
+<span class="sd">        line source.</span>
 <span class="sd">    end : :class:`list`</span>
-<span class="sd">        Cartiesian X, Y, and Z coordinates of the ending point of the line source.</span>
+<span class="sd">        Cartiesian X, Y, and Z coordinates of the ending point of the</span>
+<span class="sd">        line source.</span>
 <span class="sd">    **kwargs</span>
 <span class="sd">        Arbitrary keyword arguments.</span>
 
@@ -312,7 +321,8 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        ray : :class:`zap_me_not.ray.FiniteLengthRay`</span>
-<span class="sd">            The finite length ray that is checked for intersections with the shield.</span>
+<span class="sd">            The finite length ray that is checked for intersections with</span>
+<span class="sd">            the shield.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -327,7 +337,8 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        ray : :class:`zap_me_not.ray.FiniteLengthRay`</span>
-<span class="sd">            The finite length ray that is checked for intersections with the shield.</span>
+<span class="sd">            The finite length ray that is checked for intersections with</span>
+<span class="sd">            the shield.</span>
 <span class="sd">        photon_energy : float</span>
 <span class="sd">            The photon energy in MeV</span>
 
@@ -397,8 +408,8 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
-<span class="sd">            A list of vector locations within the Source body.  In this class the</span>
-<span class="sd">            list is only a single entry.</span>
+<span class="sd">            A list of vector locations within the Source body.  In this class</span>
+<span class="sd">            the list is only a single entry.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="p">)]</span>
 
@@ -408,7 +419,8 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        ray : :class:`zap_me_not.ray.FiniteLengthRay`</span>
-<span class="sd">            The finite length ray that is checked for intersections with the shield.</span>
+<span class="sd">            The finite length ray that is checked for intersections with</span>
+<span class="sd">            the shield.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -423,11 +435,12 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        ray : :class:`zap_me_not.ray.FiniteLengthRay`</span>
-<span class="sd">            The finite length ray that is checked for intersections with the shield.</span>
+<span class="sd">            The finite length ray that is checked for intersections with</span>
+<span class="sd">            the shield.</span>
 <span class="sd">            Always returns 0 for the Point source.</span>
 <span class="sd">        photon_energy : float</span>
 <span class="sd">            The photon energy in MeV</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        int</span>

@@ -1,15 +1,15 @@
 import abc
 import math
 
+import numpy as np
+
+from . import material
+
 import importlib
 pyvista_spec = importlib.util.find_spec("pyvista")
 pyvista_found = pyvista_spec is not None
 if pyvista_found:
     import pyvista
-
-import numpy as np
-
-from . import material
 
 # -----------------------------------------------------------
 
@@ -38,7 +38,7 @@ class Shield:
         if density is not None:
             self.material.density = density
         super().__init__(**kwargs)
-        
+
     @abc.abstractmethod
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
@@ -51,7 +51,8 @@ class Shield:
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections
+            with the shield.
         """
 
     @abc.abstractmethod
@@ -61,14 +62,15 @@ class Shield:
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections
+            with the shield.
         photon_energy : float
             The photon energy in MeV
         """
 
     @staticmethod
     def _line_plane_collision(plane_normal, plane_point, ray_origin,
-                             ray_normal, epsilon=1e-6):
+                              ray_normal, epsilon=1e-6):
         """Calculates the distance from the ray origin to the intersection with a plane
 
         Parameters
@@ -80,7 +82,7 @@ class Shield:
         ray_origin : :class:`numpy.ndarray`
             The vector location of the ray origin
         ray_normal : :class:`numpy.ndarray`
-            The vector normal of the ray 
+            The vector normal of the ray
         photon_energy : float
             The photon energy in MeV
 
@@ -128,7 +130,7 @@ class SemiInfiniteXSlab(Shield):
         super().__init__(material_name=material_name, density=density)
         self.x_start = x_start
         self.x_end = x_end
-        
+
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
         """
@@ -140,7 +142,8 @@ class SemiInfiniteXSlab(Shield):
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections with
+            the shield.
         """
         ray_origin = ray.origin
         ray_unit_vector = ray.dir
@@ -186,7 +189,8 @@ class SemiInfiniteXSlab(Shield):
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections with
+            the shield.
         photon_energy : float
             The photon energy in MeV
         """
@@ -202,7 +206,8 @@ class SemiInfiniteXSlab(Shield):
             A box object representing the slab shield.
         """
         if pyvista_found:
-            return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000, -1000, 1000))
+            return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000,
+                                       -1000, 1000))
 
 # -----------------------------------------------------------
 
@@ -260,7 +265,7 @@ class SemiInfiniteXSlab(Shield):
 # -----------------------------------------------------------
 
 
-class Box(Shield):  
+class Box(Shield):
     """A rectangular polyhedron shield.
 
     All sides of the box shield must be axis-aligned.
@@ -285,9 +290,10 @@ class Box(Shield):
     box_dimensions :  :class:numpy.ndarray
         Vector holding the dimensions of the box.
 
-        
+
     """
-    def __init__(self, material_name, box_center, box_dimensions, density=None):
+    def __init__(self, material_name, box_center, box_dimensions,
+                 density=None):
         super().__init__(material_name=material_name, density=density)
         self.box_center = np.array(box_center)
         self.box_dimensions = np.array(box_dimensions)
@@ -303,7 +309,8 @@ class Box(Shield):
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections with
+            the shield.
         photon_energy : float
             The photon energy in MeV
         """
@@ -316,7 +323,8 @@ class Box(Shield):
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections with
+            the shield.
         """
         crossings = self._intersect_axis_aligned_box(ray)
         # two crossings indicates a full-shield crossing
@@ -379,8 +387,8 @@ class Box(Shield):
         Returns
         -------
         :obj:`list`
-            List of vector locations of intersection points.  These will include
-            the ray endpoints if they are located within the shield.
+            List of vector locations of intersection points.  These will
+            include the ray endpoints if they are located within the shield.
         """
         'returns 0, 1, or 2 points of intersection'
         results = []
@@ -439,7 +447,7 @@ class Box(Shield):
 
 
 class InfiniteAnnulus(Shield):
-    """An annular shield of infinite length 
+    """An annular shield of infinite length
 
     Parameters
     ----------
@@ -489,7 +497,8 @@ class InfiniteAnnulus(Shield):
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections
+            with the shield.
         photon_energy : float
             The photon energy in MeV
         """
@@ -502,7 +511,8 @@ class InfiniteAnnulus(Shield):
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections
+            with the shield.
         """
         # get a list of crossing points
         crossings = self._intersect(ray)
@@ -596,7 +606,6 @@ class InfiniteAnnulus(Shield):
                         results.append(t)
         return results
 
-
     def vtk(self):
         """Creates a display object
 
@@ -606,10 +615,13 @@ class InfiniteAnnulus(Shield):
             A boolean object representing the annular cylinder shield.
         """
         if pyvista_found:
-            # define an imaginary bottom of the shield at a distance of -2000 from the origin
+            # define an imaginary bottom of the shield at a distance
+            # of -2000 from the origin
             bottom = self.dir*(-2000.)
-            disc = pyvista.Disc(center=(bottom[0],bottom[1],bottom[2]), inner=self.inner_radius,outer=self.outer_radius,c_res=50)
-            cyl1 = disc.extrude(self.dir*4000,capping=True)
+            disc = pyvista.Disc(center=(bottom[0], bottom[1], bottom[2]),
+                                inner=self.inner_radius,
+                                outer=self.outer_radius, c_res=50)
+            cyl1 = disc.extrude(self.dir*4000, capping=True)
             # innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)
             # outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)
             # result = outerCylinder.boolean_difference(innerCylinder)
@@ -787,14 +799,14 @@ class CappedCylinder(Shield):
         """
         return False
 
-
     def get_crossing_mfp(self, ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections
+            with the shield.
         photon_energy : float
             The photon energy in MeV
         """
@@ -807,7 +819,8 @@ class CappedCylinder(Shield):
         Parameters
         ----------
         ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections
+            with the shield.
         """
         # get a list of crossing points
         crossings = self._intersect(ray)
@@ -924,8 +937,10 @@ class CappedCylinder(Shield):
             A cylinder object representing the capped cylinder shield.
         """
         if pyvista_found:
-            center= (self.origin + self.end) / 2
-            return pyvista.Cylinder(center=(center[0],center[1],center[2]),direction=self.dir,height=self.length, radius=self.radius)
+            center = (self.origin + self.end) / 2
+            return pyvista.Cylinder(center=(center[0], center[1], center[2]),
+                                    direction=self.dir, height=self.length,
+                                    radius=self.radius)
 
 # -----------------------------------------------------------
 
@@ -965,11 +980,13 @@ class YAlignedCylinder(CappedCylinder):
     def __init__(self, material_name, cylinder_center, cylinder_length,
                  cylinder_radius, density=None):
         cylinder_start = [cylinder_center[0],
-                          cylinder_center[1]-cylinder_length/2, cylinder_center[2]]
+                          cylinder_center[1]-cylinder_length/2,
+                          cylinder_center[2]]
         cylinder_end = [cylinder_center[0], cylinder_center[1] +
                         cylinder_length/2, cylinder_center[2]]
         super().__init__(material_name=material_name, density=density,
-                         cylinder_start=cylinder_start, cylinder_end=cylinder_end,
+                         cylinder_start=cylinder_start,
+                         cylinder_end=cylinder_end,
                          cylinder_radius=cylinder_radius)
 
 # -----------------------------------------------------------
@@ -1014,7 +1031,8 @@ class XAlignedCylinder(CappedCylinder):
         cylinder_end = [cylinder_center[0]+cylinder_length /
                         2, cylinder_center[1], cylinder_center[2]]
         super().__init__(material_name=material_name, density=density,
-                         cylinder_start=cylinder_start, cylinder_end=cylinder_end,
+                         cylinder_start=cylinder_start,
+                         cylinder_end=cylinder_end,
                          cylinder_radius=cylinder_radius)
 
 # -----------------------------------------------------------
@@ -1059,5 +1077,6 @@ class ZAlignedCylinder(CappedCylinder):
         cylinder_end = [cylinder_center[0], cylinder_center[1],
                         cylinder_center[2]+cylinder_length/2]
         super().__init__(material_name=material_name, density=density,
-                         cylinder_start=cylinder_start, cylinder_end=cylinder_end,
+                         cylinder_start=cylinder_start,
+                         cylinder_end=cylinder_end,
                          cylinder_radius=cylinder_radius)

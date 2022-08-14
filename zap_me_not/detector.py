@@ -4,6 +4,7 @@ pyvista_found = pyvista_spec is not None
 if pyvista_found:
     import pyvista
 
+
 class Detector:
     """A location used to calculate exposure
 

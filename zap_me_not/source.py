@@ -1,5 +1,9 @@
 import abc
 import math
+import numpy as np
+from enum import Enum
+
+from . import shield, isotope
 
 import importlib
 pyvista_spec = importlib.util.find_spec("pyvista")
@@ -7,21 +11,17 @@ pyvista_found = pyvista_spec is not None
 if pyvista_found:
     import pyvista
 
-import numpy as np
-
-from . import shield, isotope
-
-from enum import Enum
 
 class GroupOption(Enum):
     GROUP = "group"
     HYBRID = "hybrid"
     DISCRETE = "discrete"
 
-class Source(metaclass=abc.ABCMeta):
-    """Abtract class to model a radiation source.  
 
-    Maintains a list of isotopes and can return a list of point source 
+class Source(metaclass=abc.ABCMeta):
+    """Abtract class to model a radiation source.
+
+    Maintains a list of isotopes and can return a list of point source
     locations within the body of the Source.
 
     Parameters
@@ -33,10 +33,10 @@ class Source(metaclass=abc.ABCMeta):
     ----------
     points_per_dimension : :class:`list` of integers
         The number of source points to be used in each dimension when modeling
-        the uniform source distribution throughout the body of the source.  Typically
-        a list of three integers for three-dimensional sources, one integer
-        for one diensional sources, and not significant for point sources.
-
+        the uniform source distribution throughout the body of the source.
+        Typically a list of three integers for three-dimensional sources, one
+        integer for one diensional sources, and not significant for point
+        sources.
     """
 
     def __init__(self, **kwargs):
@@ -52,12 +52,14 @@ class Source(metaclass=abc.ABCMeta):
 
     @property
     def grouping(self):
-        """:class:`GroupOption` : State defining the photon energy group option."""
+        """:class:`GroupOption` : State defining the photon energy group
+        option."""
         return self._grouping_option
 
     @grouping.setter
     def grouping(self, value):
-        """:class:`GroupOption` : State defining the photon energy group option."""
+        """:class:`GroupOption` : State defining the photon energy group
+        option."""
         if value == GroupOption.HYBRID.value:
             self._grouping_option = GroupOption.HYBRID
         elif value == GroupOption.GROUP.value:
@@ -65,18 +67,17 @@ class Source(metaclass=abc.ABCMeta):
         elif value == GroupOption.DISCRETE.value:
             self._grouping_option = GroupOption.DISCRETE
         else:
-            raise ValueError("Invalid grouping option "+ str(value))
+            raise ValueError("Invalid grouping option " + str(value))
 
     @property
     def include_key_progeny(self):
         """bool : State defining if key progeny should be included."""
         return self._include_key_progeny
-        
+
     @include_key_progeny.setter
     def include_key_progeny(self, value):
         """bool : State defining if key progeny should be included."""
         self._include_key_progeny = value
-    
 
     def add_isotope_curies(self, new_isotope, curies):
         """Adds an isotope and activity in curies to the isotope list
@@ -155,21 +156,22 @@ class Source(metaclass=abc.ABCMeta):
         """
         photon_dict = dict()
         keys = photon_dict.keys()
-        
+
         temporary_isotope_list = self._isotope_list[:]
         # add key progeny if required
-        if self._include_key_progeny == True:
-            for next_isotope in self._isotope_list:             
+        if self._include_key_progeny is True:
+            for next_isotope in self._isotope_list:
                 isotope_detail = isotope.Isotope(next_isotope[0])
-                if isotope_detail.key_progeny != None:
+                if isotope_detail.key_progeny is not None:
                     for key, value in isotope_detail.key_progeny.items():
-                        temporary_isotope_list.append((key, next_isotope[1]*value))
+                        temporary_isotope_list.append(
+                           (key, next_isotope[1]*value))
 
         # search isotope list for photons to be added to the photon list
         # next_isotope will be a tuple of name and Bq
         for next_isotope in temporary_isotope_list:
             isotope_detail = isotope.Isotope(next_isotope[0])
-            if isotope_detail.photons != None:
+            if isotope_detail.photons is not None:
                 for photon in isotope_detail.photons:
                     # test to see if photon energy is already on the list
                     # and then add photon emmision rate (intensity*Bq).
@@ -190,24 +192,29 @@ class Source(metaclass=abc.ABCMeta):
         for key, value in photon_dict.items():
             photon_list.append((key, value/scaling_factor))
         photon_list = sorted(photon_list)
-        if self._grouping_option == GroupOption.GROUP or ((self._grouping_option == GroupOption.HYBRID) and (len(photon_list) > self._max_photon_energies)):
+        if self._grouping_option == GroupOption.GROUP or \
+                ((self._grouping_option == GroupOption.HYBRID) and
+                    (len(photon_list) > self._max_photon_energies)):
             # group the photons
             minEnergy = photon_list[0][0]
             maxEnergy = photon_list[-1][0]
-            (groupEnergies, stepSize) = np.linspace(minEnergy, maxEnergy, self._max_photon_energies, retstep=True)
+            (groupEnergies, stepSize) = np.linspace(
+                minEnergy, maxEnergy, self._max_photon_energies, retstep=True)
             binBoundaries = groupEnergies + (stepSize/2)
-            binBoundaries = np.concatenate([np.array([binBoundaries[0]-stepSize]),binBoundaries])
-            binplace = np.digitize(photon_list, binBoundaries)[:,0] # Returns the appropriate bin for each photon
-            photonArray = np.array(photon_list) # convert the photon list to an array for further processing
-            returnValue = np.zeros((self._max_photon_energies,2))
-            for i in range(1,self._max_photon_energies+1):
+            binBoundaries = np.concatenate([np.array([binBoundaries[0]-stepSize]), binBoundaries])
+            binplace = np.digitize(photon_list, binBoundaries)[:, 0]   # Returns the appropriate bin for each photon
+            photonArray = np.array(photon_list)  # convert the photon list to an array for further processing
+            returnValue = np.zeros((self._max_photon_energies, 2))
+            for i in range(1, self._max_photon_energies+1):
                 # determine which photons are in each bin
                 subset = photonArray[np.where(binplace == i)]
-                csum = np.sum(subset[:,1]) # total emission rate
+                csum = np.sum(subset[:, 1])  # total emission rate
                 if (csum != 0):
-                    returnValue[i-1,0] = np.sum(subset[:,0]*subset[:,1])/csum
-                    returnValue[i-1,1] = csum
-            returnValue = returnValue[np.all(returnValue, axis=1)] # keep only groups with non-zero intensity
+                    returnValue[i-1, 0] = \
+                        np.sum(subset[:, 0]*subset[:, 1])/csum
+                    returnValue[i-1, 1] = csum
+            # keep only groups with non-zero intensity
+            returnValue = returnValue[np.all(returnValue, axis=1)]
             photon_list = returnValue.tolist()
         return photon_list
 
@@ -219,14 +226,16 @@ class Source(metaclass=abc.ABCMeta):
 
 
 class LineSource(Source, shield.Shield):
-    """Models a line radiation source 
+    """Models a line radiation source
 
     Parameters
     ----------
     start : :class:`list`
-        Cartiesian X, Y, and Z coordinates of the starting point of the line source.
+        Cartiesian X, Y, and Z coordinates of the starting point of the
+        line source.
     end : :class:`list`
-        Cartiesian X, Y, and Z coordinates of the ending point of the line source.
+        Cartiesian X, Y, and Z coordinates of the ending point of the
+        line source.
     **kwargs
         Arbitrary keyword arguments.
 
@@ -279,7 +288,8 @@ class LineSource(Source, shield.Shield):
         Parameters
         ----------
         ray : :class:`zap_me_not.ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections with
+            the shield.
 
         Returns
         -------
@@ -294,7 +304,8 @@ class LineSource(Source, shield.Shield):
         Parameters
         ----------
         ray : :class:`zap_me_not.ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections with
+            the shield.
         photon_energy : float
             The photon energy in MeV
 
@@ -364,8 +375,8 @@ class PointSource(Source, shield.Shield):
         Returns
         -------
         :class:`list` of :class:`numpy.adarray`
-            A list of vector locations within the Source body.  In this class the
-            list is only a single entry.
+            A list of vector locations within the Source body.  In this class
+            the list is only a single entry.
         """
         return[(self._x, self._y, self._z)]
 
@@ -375,7 +386,8 @@ class PointSource(Source, shield.Shield):
         Parameters
         ----------
         ray : :class:`zap_me_not.ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections with
+            the shield.
 
         Returns
         -------
@@ -390,11 +402,12 @@ class PointSource(Source, shield.Shield):
         Parameters
         ----------
         ray : :class:`zap_me_not.ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with the shield.
+            The finite length ray that is checked for intersections with
+            the shield.
             Always returns 0 for the Point source.
         photon_energy : float
             The photon energy in MeV
-            
+
         Returns
         -------
         int

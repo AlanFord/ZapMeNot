@@ -34,7 +34,8 @@ class FiniteLengthRay:
 
     @property
     def start(self):
-        """:class:`list` : A list defining the starting point of the ray in cartesian coordinates."""
+        """:class:`list` : A list defining the starting point of the ray in
+        cartesian coordinates."""
         return self._start
     
     @start.setter
@@ -44,8 +45,9 @@ class FiniteLengthRay:
 
     @property
     def end(self):
-         """:class:`list` : A list defining the ending point of the ray in cartesian coordinates."""
-         return self._end
+        """:class:`list` : A list defining the ending point of the ray in
+        cartesian coordinates."""
+        return self._end
 
     @end.setter
     def end(self, value):
