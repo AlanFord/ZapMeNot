@@ -12,7 +12,7 @@ class Isotope:
     ----------
     name : :class:`str`
         The isotope to be extracted from the isotope library.
-    
+
     Attributes
     ----------
     name
@@ -65,7 +65,7 @@ class Isotope:
     def half_life(self):
         """:class:`str` : The half life of the isotope in seconds."""
         return self._half_life
-        
+
     @property
     def key_progeny(self):
         """:class:`dict` : The list of progeny that can be in secular or

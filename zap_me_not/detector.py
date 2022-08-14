@@ -31,7 +31,7 @@ class Detector:
     def location(self):
         """:class:`tuple` : The detector location in cartesian coordinates"""
         return self._location
-     
+
     def vtk(self):
         """Creates a display object
 
@@ -42,4 +42,3 @@ class Detector:
         """
         if pyvista_found:
             return pyvista.Sphere(center=(self.x, self.y, self.z), radius=10)
-

@@ -4,7 +4,7 @@ import numpy as np
 class FiniteLengthRay:
     """Represents a ray in three-space.
 
-    The FiniteLengthRay object has a defined starting point, a defined end, 
+    The FiniteLengthRay object has a defined starting point, a defined end,
     and a resulting direction.
 
     Parameters
@@ -37,7 +37,7 @@ class FiniteLengthRay:
         """:class:`list` : A list defining the starting point of the ray in
         cartesian coordinates."""
         return self._start
-    
+
     @start.setter
     def start(self, value):
         self._start = value

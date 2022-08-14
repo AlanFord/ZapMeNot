@@ -52,7 +52,7 @@ class Model:
         self._conversion_factor = 1.835E-8
 
     def set_filler_material(self, filler_material, density=None):
-        """Set the filler material used by the model
+        r"""Set the filler material used by the model
 
         Parameters
         ----------

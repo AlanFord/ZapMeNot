@@ -201,9 +201,13 @@ class Source(metaclass=abc.ABCMeta):
             (groupEnergies, stepSize) = np.linspace(
                 minEnergy, maxEnergy, self._max_photon_energies, retstep=True)
             binBoundaries = groupEnergies + (stepSize/2)
-            binBoundaries = np.concatenate([np.array([binBoundaries[0]-stepSize]), binBoundaries])
-            binplace = np.digitize(photon_list, binBoundaries)[:, 0]   # Returns the appropriate bin for each photon
-            photonArray = np.array(photon_list)  # convert the photon list to an array for further processing
+            binBoundaries = \
+                np.concatenate([np.array([binBoundaries[0]-stepSize]),
+                                binBoundaries])
+            # Returns the appropriate bin for each photon
+            binplace = np.digitize(photon_list, binBoundaries)[:, 0]
+            # convert the photon list to an array for further processing
+            photonArray = np.array(photon_list)
             returnValue = np.zeros((self._max_photon_energies, 2))
             for i in range(1, self._max_photon_energies+1):
                 # determine which photons are in each bin

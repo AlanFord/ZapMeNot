@@ -5,7 +5,7 @@ import pkg_resources
 
 
 class Material:
-    """Encaplsulates the data in the MaterialLibrary.yml file.
+    r"""Encaplsulates the data in the MaterialLibrary.yml file.
 
     Makes available the mean free path, mass
     energy absorption coefficient, the mass attenuation coefficient,
@@ -91,7 +91,7 @@ class Material:
         return distance * self.density * self.get_mass_atten_coeff(energy)
 
     def get_mass_atten_coeff(self, energy):
-        """Calculates the mass attenuation coefficient at the given energy
+        r"""Calculates the mass attenuation coefficient at the given energy
 
         Parameters
         ----------
@@ -116,7 +116,7 @@ class Material:
                                         np.log10(self._mass_atten_coff)))
 
     def get_mass_energy_abs_coeff(self, energy):
-        """Calculates the mass energy absorption coefficient at the given energy
+        r"""Calculates the mass energy absorption coefficient at the given energy
 
         Parameters
         ----------
