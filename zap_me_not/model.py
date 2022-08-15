@@ -138,7 +138,7 @@ class Model:
                     shield._get_crossing_length(vector)
         gaps = total_distance - np.sum(crossing_distances, axis=1)
 
-        flux_by_photon_energy = []
+        results_by_photon_energy = []
         # get a list of photons (energy & intensity per
         # source point [gamma/sec]) from the source
         spectrum = self.source._get_photon_source_list()
@@ -175,17 +175,17 @@ class Model:
             total_point_flux = uncollided_point_flux*buildup_factor
             uncollided_flux = np.sum(uncollided_point_flux)
             total_flux = np.sum(total_point_flux)
-            flux_by_photon_energy.append(
+            results_by_photon_energy.append(
                 [photon_energy, uncollided_flux, total_flux])
 
         air = material.Material('air')
-        for photon in flux_by_photon_energy:
+        for photon in results_by_photon_energy:
             photon.append(
                 photon[2]*photon[0]*self._conversion_factor *
                 air.get_mass_energy_abs_coeff(photon[0]))
         # sum exposure over all photons
         exposure_total = 0
-        for photon in flux_by_photon_energy:
+        for photon in results_by_photon_energy:
             exposure_total += photon[3]
         return exposure_total*1000*3600  # convert from R/sec to mR/hr
 

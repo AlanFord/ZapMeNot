@@ -141,7 +141,7 @@ class Source(metaclass=abc.ABCMeta):
         """
         return self._unique_photons
 
-    def _get_photon_source_list(self):
+    def _get_distributed_source_list(self):
         """Returns a list of photons in the source
 
         This list of photons combines the Isotopes and the
@@ -153,6 +153,23 @@ class Source(metaclass=abc.ABCMeta):
         :class:`list` of :class:`tuple`
             List of photon tuples, each tuple containing a
             photon energy in MeV and an activity in **Bq//source point**.
+        """
+        list = self.get_photon_source_list()
+        scaling_factor = np.prod(self.points_per_dimension)
+
+
+    def get_photon_source_list(self):
+        """Returns a list of photons in the source
+
+        This list of photons combines the Isotopes and the
+        unique_photons specified in the Source definition.
+        The photon intensities are scaled to **one source point**.
+
+        Returns
+        -------
+        :class:`list` of :class:`tuple`
+            List of photon tuples, each tuple containing a
+            photon energy in MeV and an activity in **Bq**.
         """
         photon_dict = dict()
         keys = photon_dict.keys()
