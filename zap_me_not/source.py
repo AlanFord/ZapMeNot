@@ -141,22 +141,21 @@ class Source(metaclass=abc.ABCMeta):
         """
         return self._unique_photons
 
-    def _get_distributed_source_list(self):
-        """Returns a list of photons in the source
+    # def _get_distributed_source_list(self):
+    #     """Returns a list of photons in the source
 
-        This list of photons combines the Isotopes and the
-        unique_photons specified in the Source definition.
-        The photon intensities are scaled to **one source point**.
+    #     This list of photons combines the Isotopes and the
+    #     unique_photons specified in the Source definition.
+    #     The photon intensities are scaled to **one source point**.
 
-        Returns
-        -------
-        :class:`list` of :class:`tuple`
-            List of photon tuples, each tuple containing a
-            photon energy in MeV and an activity in **Bq//source point**.
-        """
-        list = self.get_photon_source_list()
-        scaling_factor = np.prod(self.points_per_dimension)
-
+    #     Returns
+    #     -------
+    #     :class:`list` of :class:`tuple`
+    #         List of photon tuples, each tuple containing a
+    #         photon energy in MeV and an activity in **Bq//source point**.
+    #     """
+    #     list = self.get_photon_source_list()
+    #     scaling_factor = np.prod(self.points_per_dimension)
 
     def get_photon_source_list(self):
         """Returns a list of photons in the source
@@ -205,9 +204,9 @@ class Source(metaclass=abc.ABCMeta):
             else:
                 photon_dict[photon[0]] = photon[1]
         photon_list = []
-        scaling_factor = np.prod(self.points_per_dimension)
+        # scaling_factor = np.prod(self.points_per_dimension)
         for key, value in photon_dict.items():
-            photon_list.append((key, value/scaling_factor))
+            photon_list.append((key, value))
         photon_list = sorted(photon_list)
         if self._grouping_option == GroupOption.GROUP or \
                 ((self._grouping_option == GroupOption.HYBRID) and
@@ -241,6 +240,10 @@ class Source(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def _get_source_points(self):
+        pass
+
+    @abc.abstractmethod
+    def _get_source_point_weights(self):
         pass
 
 # -----------------------------------------------------------
@@ -283,6 +286,9 @@ class LineSource(Source, shield.Shield):
         # initialize points_per_dimension after super() to force a
         # single dimension
         self.points_per_dimension = 10
+
+    def _get_source_point_weights(self):
+        return 1.0 / self.points_per_dimension
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -390,6 +396,9 @@ class PointSource(Source, shield.Shield):
         super().__init__(**kwargs)
         self.points_per_dimension = 1
 
+    def _get_source_point_weights(self):
+        return 1.0
+
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
 
@@ -459,6 +468,9 @@ class PointSource(Source, shield.Shield):
 #     def __init__(self, **kwargs):
 #         super().__init__(**kwargs)
 
+#    def _get_source_point_weights(self):
+#         pass
+
 #     def _get_source_points(self):
 
 #         # calculate the radius of each "equal area" annular region
@@ -522,6 +534,9 @@ class BoxSource(Source, shield.Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    def _get_source_point_weights(self):
+        return 1.0 / np.product(self.points_per_dimension)
+
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
 
@@ -559,6 +574,9 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def _get_source_point_weights(self):
+        return 1.0 / np.product(self.points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -625,6 +643,9 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    def _get_source_point_weights(self):
+        return 1.0 / np.product(self.points_per_dimension)
+
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
 
@@ -689,6 +710,9 @@ class XAlignedCylinderSource(Source, shield.YAlignedCylinder):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def _get_source_point_weights(self):
+        return 1.0 / np.product(self.points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
