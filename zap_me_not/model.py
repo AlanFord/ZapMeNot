@@ -120,6 +120,31 @@ class Model:
         float
             The exposure in units of mR/hr.
         """
+        results_by_photon_energy = self.generate_summary()
+        # print(len(results_by_photon_energy))
+        if len(results_by_photon_energy) == 1:
+            return results_by_photon_energy[0][4] * \
+                1000*3600  # convert from R/sec to mR/hr
+        else:
+            # sum exposure over all photons
+            an_array = np.array(results_by_photon_energy)
+            integral_results = np.sum(an_array[:, 4])
+            return integral_results*1000*3600  # convert from R/sec to mR/hr
+
+    def generate_summary(self):
+        """Calculates the energy flux and exposure at the detector location.
+
+        Note:  Significant use of Numpy arrays to speed up evaluating the
+        dose from each source point.  A "for loop" is used to loop
+        through photon energies, but many of the iterations through
+        all source points is performed using matrix math.
+
+        Returns
+        -------
+        :class:`list` of :class:`list`
+            List, by photon energy, of photon energy, photon emmission rate,
+            uncollided energy flux, uncollided exposure, and total exposure
+        """
         # build an array of shield crossing lengths.
         # The first index is the source point.
         # The second index is the shield (including the source body).
@@ -191,12 +216,8 @@ class Model:
                 [photon_energy, photon_yield, total_uncollided_energy_flux,
                  total_uncollided_exposure, total_collided_exposure])
 
-        # sum exposure over all photons
-        integral_results = np.sum(results_by_photon_energy, axis=0)
-        exposure_total = 0
-        for photon in results_by_photon_energy:
-            exposure_total += photon[3]
-        return integral_results[4]*1000*3600  # convert from R/sec to mR/hr
+        # print(results_by_photon_energy)
+        return results_by_photon_energy
 
     def display(self):
         """Produces a graphic display of the model.
