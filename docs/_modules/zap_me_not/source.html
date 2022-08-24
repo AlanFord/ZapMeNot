@@ -174,7 +174,23 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_photon_source_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># def _get_distributed_source_list(self):</span>
+    <span class="c1">#     &quot;&quot;&quot;Returns a list of photons in the source</span>
+
+    <span class="c1">#     This list of photons combines the Isotopes and the</span>
+    <span class="c1">#     unique_photons specified in the Source definition.</span>
+    <span class="c1">#     The photon intensities are scaled to **one source point**.</span>
+
+    <span class="c1">#     Returns</span>
+    <span class="c1">#     -------</span>
+    <span class="c1">#     :class:`list` of :class:`tuple`</span>
+    <span class="c1">#         List of photon tuples, each tuple containing a</span>
+    <span class="c1">#         photon energy in MeV and an activity in **Bq//source point**.</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     list = self.get_photon_source_list()</span>
+    <span class="c1">#     scaling_factor = np.prod(self.points_per_dimension)</span>
+
+<div class="viewcode-block" id="Source.get_photon_source_list"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source.get_photon_source_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_photon_source_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a list of photons in the source</span>
 
 <span class="sd">        This list of photons combines the Isotopes and the</span>
@@ -185,7 +201,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        :class:`list` of :class:`tuple`</span>
 <span class="sd">            List of photon tuples, each tuple containing a</span>
-<span class="sd">            photon energy in MeV and an activity in **Bq//source point**.</span>
+<span class="sd">            photon energy in MeV and an activity in **Bq**.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">photon_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
@@ -221,9 +237,9 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">photon_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">scaling_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="c1"># scaling_factor = np.prod(self.points_per_dimension)</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">photon_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">photon_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">/</span><span class="n">scaling_factor</span><span class="p">))</span>
+            <span class="n">photon_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
         <span class="n">photon_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">GROUP</span> <span class="ow">or</span> \
                 <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">HYBRID</span><span class="p">)</span> <span class="ow">and</span>
@@ -234,9 +250,13 @@
             <span class="p">(</span><span class="n">groupEnergies</span><span class="p">,</span> <span class="n">stepSize</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
                 <span class="n">minEnergy</span><span class="p">,</span> <span class="n">maxEnergy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="p">,</span> <span class="n">retstep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">binBoundaries</span> <span class="o">=</span> <span class="n">groupEnergies</span> <span class="o">+</span> <span class="p">(</span><span class="n">stepSize</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">binBoundaries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">binBoundaries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">stepSize</span><span class="p">]),</span> <span class="n">binBoundaries</span><span class="p">])</span>
-            <span class="n">binplace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">photon_list</span><span class="p">,</span> <span class="n">binBoundaries</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># Returns the appropriate bin for each photon</span>
-            <span class="n">photonArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span>  <span class="c1"># convert the photon list to an array for further processing</span>
+            <span class="n">binBoundaries</span> <span class="o">=</span> \
+                <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">binBoundaries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">stepSize</span><span class="p">]),</span>
+                                <span class="n">binBoundaries</span><span class="p">])</span>
+            <span class="c1"># Returns the appropriate bin for each photon</span>
+            <span class="n">binplace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">photon_list</span><span class="p">,</span> <span class="n">binBoundaries</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># convert the photon list to an array for further processing</span>
+            <span class="n">photonArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span>
             <span class="n">returnValue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
                 <span class="c1"># determine which photons are in each bin</span>
@@ -249,10 +269,14 @@
             <span class="c1"># keep only groups with non-zero intensity</span>
             <span class="n">returnValue</span> <span class="o">=</span> <span class="n">returnValue</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">returnValue</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
             <span class="n">photon_list</span> <span class="o">=</span> <span class="n">returnValue</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">photon_list</span>
+        <span class="k">return</span> <span class="n">photon_list</span></div>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span></div>
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -295,6 +319,9 @@
         <span class="c1"># initialize points_per_dimension after super() to force a</span>
         <span class="c1"># single dimension</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -402,6 +429,9 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="mi">1</span>
 
+    <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">1.0</span>
+
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
 
@@ -471,6 +501,9 @@
 <span class="c1">#     def __init__(self, **kwargs):</span>
 <span class="c1">#         super().__init__(**kwargs)</span>
 
+<span class="c1">#    def _get_source_point_weights(self):</span>
+<span class="c1">#         pass</span>
+
 <span class="c1">#     def _get_source_points(self):</span>
 
 <span class="c1">#         # calculate the radius of each &quot;equal area&quot; annular region</span>
@@ -534,6 +567,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
 
@@ -571,6 +607,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -637,6 +676,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
 
@@ -701,6 +743,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>

@@ -38,7 +38,7 @@
 
 
 <div class="viewcode-block" id="Material"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.material.Material">[docs]</a><span class="k">class</span> <span class="nc">Material</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Encaplsulates the data in the MaterialLibrary.yml file.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Encaplsulates the data in the MaterialLibrary.yml file.</span>
 
 <span class="sd">    Makes available the mean free path, mass</span>
 <span class="sd">    energy absorption coefficient, the mass attenuation coefficient,</span>
@@ -124,7 +124,7 @@
         <span class="k">return</span> <span class="n">distance</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mass_atten_coeff</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Material.get_mass_atten_coeff"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.material.Material.get_mass_atten_coeff">[docs]</a>    <span class="k">def</span> <span class="nf">get_mass_atten_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculates the mass attenuation coefficient at the given energy</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculates the mass attenuation coefficient at the given energy</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -149,7 +149,7 @@
                                         <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mass_atten_coff</span><span class="p">)))</span></div>
 
 <div class="viewcode-block" id="Material.get_mass_energy_abs_coeff"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.material.Material.get_mass_energy_abs_coeff">[docs]</a>    <span class="k">def</span> <span class="nf">get_mass_energy_abs_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculates the mass energy absorption coefficient at the given energy</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculates the mass energy absorption coefficient at the given energy</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
