@@ -1,0 +1,154 @@
+detector.py:	
+	class Detector:
+		def __init__(self, x, y, z):
+		def location(self):
+		def vtk(self):
+		
+isotope.py:		
+	class Isotope:
+		def __init__(self, name):
+		def photons(self):
+		def name(self):
+		def half_life(self):
+		def key_progeny(self):
+		def _convert_half_life(value, units):
+
+material.py:
+	class Material:
+		def __init__(self, name):
+		def name(self):
+		def get_mfp(self, energy, distance):
+		def get_mass_atten_coeff(self, energy):
+		def get_mass_energy_abs_coeff(self, energy):
+		def get_buildup_factor(self, energy, mfps, formula="GP"):
+		def _GP(a, b, c, d, X, mfp):
+
+model.py:
+	class Model:
+		def __init__(self):
+		def set_filler_material(self, filler_material, density=None):
+		def add_source(self, new_source):
+		def add_shield(self, new_shield):
+		def add_detector(self, new_detector):
+		def set_buildup_factor_material(self, new_material):
+		def calculate_exposure(self):
+		def generate_summary(self):
+		def display(self):
+
+ray.py:
+	class FiniteLengthRay:
+		def __init__(self, start, end):
+		def start(self):
+		def start(self, value):
+		def end(self):
+		def end(self, value):
+		def _regularize(self):
+
+shield.py:
+	class Shield:
+		def __init__(self, material_name=None, density=None, **kwargs):
+		def is_infinite(self):
+		def _get_crossing_length(self, ray):
+		def get_crossing_mfp(self, ray, photon_energy):
+		def _line_plane_collision(plane_normal, plane_point, ray_origin,
+                              ray_normal, epsilon=1e-6):
+	class SemiInfiniteXSlab(Shield):
+		def __init__(self, material_name, x_start, x_end, density=None):
+		def is_infinite(self):
+		def _get_crossing_length(self, ray):
+		def get_crossing_mfp(self, ray, photon_energy):
+		def vtk(self):
+	class Sphere(Shield):
+		#     def __init__(self, material_name, sphere_center, sphere_radius, density=None):
+		#     def get_crossing_mfp(self, ray, photon_energy):
+		#     def _get_crossing_length(self, ray):
+		#     def contains(self, point):
+	class Box(Shield):
+		def __init__(self, material_name, box_center, box_dimensions,
+		def is_infinite(self):
+		def get_crossing_mfp(self, ray, photon_energy):
+		def _get_crossing_length(self, ray):
+		def _contains(self, point):
+		def _intersect_axis_aligned_box(self, ray):
+		def vtk(self):
+	class InfiniteAnnulus(Shield):
+		def __init__(self, material_name, cylinder_origin, cylinder_axis,
+		def is_infinite(self):
+		def get_crossing_mfp(self, ray, photon_energy):
+		def _get_crossing_length(self, ray):
+		def _contains(self, point):
+		def _intersect(self, ray):
+		def vtk(self):
+	class YAlignedInfiniteAnnulus(InfiniteAnnulus):
+		def __init__(self, material_name, cylinder_center, cylinder_inner_radius,
+	class XAlignedInfiniteAnnulus(InfiniteAnnulus):
+		def __init__(self, material_name, cylinder_center, cylinder_inner_radius,
+	class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
+		def __init__(self, material_name, cylinder_center, cylinder_inner_radius,
+	class CappedCylinder(Shield):
+		def __init__(self, material_name, cylinder_start, cylinder_end,
+		def is_infinite(self):
+		def get_crossing_mfp(self, ray, photon_energy):
+		def _get_crossing_length(self, ray):
+		def _contains(self, point):
+		def _intersect(self, ray):
+		def vtk(self):
+	class YAlignedCylinder(CappedCylinder):
+		def __init__(self, material_name, cylinder_center, cylinder_length,
+	class XAlignedCylinder(CappedCylinder):
+		def __init__(self, material_name, cylinder_center, cylinder_length,
+	class ZAlignedCylinder(CappedCylinder):
+		def __init__(self, material_name, cylinder_center, cylinder_length,
+
+source.py:
+	class GroupOption(Enum):
+		GROUP = "group"
+		HYBRID = "hybrid"
+		DISCRETE = "discrete"
+	class Source(metaclass=abc.ABCMeta):
+		def __init__(self, **kwargs):
+		def grouping(self):
+		def grouping(self, value):
+		def include_key_progeny(self):
+		def include_key_progeny(self, value):
+		def add_isotope_curies(self, new_isotope, curies):
+		def add_isotope_bq(self, new_isotope, becquerels):
+		def add_photon(self, energy, intensity):
+		def list_isotopes(self):
+		def list_discrete_photons(self):
+		# def _get_distributed_source_list(self):
+		def get_photon_source_list(self):
+	class LineSource(Source, shield.Shield):
+		def __init__(self, start, end, **kwargs):
+		def _get_source_point_weights(self):
+		def _get_source_points(self):
+		def _get_crossing_length(self, ray):
+		def get_crossing_mfp(self, ray, photon_energy):
+		def vtk(self):
+	class PointSource(Source, shield.Shield):
+		def __init__(self, x, y, z, **kwargs):
+		def _get_source_point_weights(self):
+		def _get_source_points(self):
+		def _get_crossing_length(self, ray):
+		def get_crossing_mfp(self, ray, photon_energy):
+		def vtk(self):
+	class SphereSource(Source, shield.Sphere):
+		#     def __init__(self, **kwargs):
+		#    def _get_source_point_weights(self):
+		#     def _get_source_points(self):
+	class BoxSource(Source, shield.Box):
+		def __init__(self, **kwargs):
+		def _get_source_point_weights(self):
+		def _get_source_points(self):
+	class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
+	    def __init__(self, **kwargs):
+		def _get_source_point_weights(self):
+		def _get_source_points(self):
+	class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
+		def __init__(self, **kwargs):
+		def _get_source_point_weights(self):
+		def _get_source_points(self):
+	class XAlignedCylinderSource(Source, shield.YAlignedCylinder):
+		def __init__(self, **kwargs):
+		def _get_source_point_weights(self):
+		def _get_source_points(self):
