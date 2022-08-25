@@ -1,48 +1,117 @@
+Note1: check validation of input values only for user-facing functions
+
+Note2: errors should be trapped and re-thrown with a user-friendly description
+
 detector.py:	
 	class Detector:
 		def __init__(self, x, y, z):
 		def location(self):
+			> set, retrieve, validate a location
 		def vtk(self):
+			> verify detector display
 		
 isotope.py:		
 	class Isotope:
 		def __init__(self, name):
+			> valid name
+			> invalid name ('Doxygen')
+			> mixed case name
+			> non-alpha name
 		def photons(self):
+			> validate proper retrieval of photons
 		def name(self):
+			> set, retrieve, validate name
 		def half_life(self):
+			> validate half_life
 		def key_progeny(self):
+			> set set and retrieve
+			> test non-logical value
 		def _convert_half_life(value, units):
+			> verify conversion from a range of input units
 
 material.py:
 	class Material:
 		def __init__(self, name):
+			> valid name
+			> invalid name ('Doxygen')
+			> mixed case name
+			> non-alpha name
 		def name(self):
+			> set, retrieve, validate name
 		def get_mfp(self, energy, distance):
+			> validate correct mfp calculation
+			> test negative distance
+			> test zero distance
+			> test negative energy
+			> test OOB low energy
+			> test OOB high energy
+			> test non-numeric energy
+			> test non-numeric distance
 		def get_mass_atten_coeff(self, energy):
+			> verify correct calculation
+			> test negative energy
+			> test OOB low energy
+			> test OOB high energy
 		def get_mass_energy_abs_coeff(self, energy):
+			> verify correct calculation
+			> test negative energy
+			> test OOB low energy
+			> test OOB high energy
 		def get_buildup_factor(self, energy, mfps, formula="GP"):
+			> validate proper math
+			> test bad formula
+			> test lowercase formula
+			> test negative energy
+			> test OOB low energy
+			> test OOB high energy
+			> negative mfps
+			> single mfp
+			> non-numeric mfps
 		def _GP(a, b, c, d, X, mfp):
+			> validation implicit in get_buildup_factor()
 
 model.py:
 	class Model:
 		def __init__(self):
 		def set_filler_material(self, filler_material, density=None):
+			> invalid filler_material
+			> negative density
+			> non-numeric density
 		def add_source(self, new_source):
+			> set and verify source addition
 		def add_shield(self, new_shield):
+			> set and verify shield addition
 		def add_detector(self, new_detector):
+			> set and verify detector
+			> set and verify detector replacement
 		def set_buildup_factor_material(self, new_material):
+			> set and retrieve buildup factor material
+			> invalid filler_material
 		def calculate_exposure(self):
+			> validate an exposure calculation
 		def generate_summary(self):
+			> validate a summary calculation
 		def display(self):
+			> validate graphic display
 
 ray.py:
 	class FiniteLengthRay:
 		def __init__(self, start, end):
+			> validate set and retrieval of start and end
+			> non-numeric start
+			> non-numeric end
 		def start(self):
+			> validate setting start
+			> non-numeric start
 		def start(self, value):
+			> validate set and retrieval of start
 		def end(self):
+			> validate setting start
+			> non-numeric start
 		def end(self, value):
+			> validate set and retrieval of end
 		def _regularize(self):
+			> validate origin, length, dir, and sign
 
 shield.py:
 	class Shield:
