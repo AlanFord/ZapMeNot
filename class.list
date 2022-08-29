@@ -7,6 +7,7 @@ detector.py:
 		def __init__(self, x, y, z):
 		def location(self):
 			> set, retrieve, validate a location
+			> invalid x, y,and/or z
 		def vtk(self):
 			> verify detector display
 		
@@ -24,8 +25,8 @@ isotope.py:
 		def half_life(self):
 			> validate half_life
 		def key_progeny(self):
-			> set set and retrieve
-			> test non-logical value
+			> validate after retrieval
+			> validate None
 		def _convert_half_life(value, units):
 			> verify conversion from a range of input units
 
@@ -89,6 +90,9 @@ model.py:
 			> invalid filler_material
 		def calculate_exposure(self):
 			> validate an exposure calculation
+			> missing source
+			> missing detector
+			> missing shield
 		def generate_summary(self):
 			> validate a summary calculation
 		def display(self):
@@ -179,6 +183,9 @@ source.py:
 		def grouping(self):
 		def grouping(self, value):
 		def include_key_progeny(self):
+			> validate after retrieval
+			> validate None
+			> test non-logical value
 		def include_key_progeny(self, value):
 		def add_isotope_curies(self, new_isotope, curies):
 		def add_isotope_bq(self, new_isotope, becquerels):
