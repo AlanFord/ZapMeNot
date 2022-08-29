@@ -23,6 +23,11 @@ def test_nonalpha_name():
         a = isotope.Isotope(-13)
 
 
+def test_missing_name():
+    with pytest.raises(ValueError):
+        a = isotope.Isotope()
+
+
 # test using a capitalized isotope name and mixed-case name
 # reference: none required
 def test_name_case():
