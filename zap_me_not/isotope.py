@@ -32,6 +32,8 @@ class Isotope:
             stream.close()
 
         # check to see if the name is in the library
+        if not isinstance(name, str):
+            raise ValueError("Isotope name is not a string: " + str(name))
         name = name.lower().capitalize()
         if name not in Isotope._library.keys():
             raise ValueError("Isotope not found in the Isotope Library")

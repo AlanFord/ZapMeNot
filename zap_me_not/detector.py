@@ -1,3 +1,4 @@
+import numbers
 import importlib
 pyvista_spec = importlib.util.find_spec("pyvista")
 pyvista_found = pyvista_spec is not None
@@ -22,10 +23,16 @@ class Detector:
     location
     """
     def __init__(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
-        self._location = (x, y, z)
+        if isinstance(x, numbers.Number) and \
+            isinstance(y, numbers.Number) and \
+            isinstance(z, numbers.Number):
+            self.x = x
+            self.y = y
+            self.z = z
+            self._location = (x, y, z)
+        else:
+            raise ValueError("Invalid coordinates:" + str(x) + ", "+str(y)+", " + str(z))
+            
 
     @property
     def location(self):

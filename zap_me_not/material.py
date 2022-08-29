@@ -1,5 +1,7 @@
 from scipy.interpolate import Akima1DInterpolator
 import numpy as np
+import numbers
+from collections.abc import Iterable
 import yaml
 import pkg_resources
 
@@ -25,8 +27,8 @@ class Material:
     _library = None
 
     def __init__(self, name):
-        if name is None:
-            raise ValueError("Material type not specified")
+        if not isinstance(name, str):
+            raise ValueError("Material name is not a string: " + str(name))
 
         # initialize the class library if it has not already been done
         if Material._library is None:
@@ -88,6 +90,12 @@ class Material:
         float
             The mean free path in the material
         """
+        if not isinstance(energy, numbers.Number):
+            raise ValueError("Invalid energy: " + str(energy))
+        if not isinstance(distance, numbers.Number) or \
+            distance < 0:
+            raise ValueError("Invalid distance: " + str(distance))
+
         return distance * self.density * self.get_mass_atten_coeff(energy)
 
     def get_mass_atten_coeff(self, energy):
@@ -165,8 +173,23 @@ class Material:
             A vector of photon exposure buildup factors in air at
             each specified mfp
         """
-        if formula != "GP":
+        if not isinstance(formula, str):
+            raise ValueError("Buildup factor type is not a string: " + str(formula))
+        if formula.upper() != "GP":
             raise ValueError("Only GP Buildup Factors are currently supported")
+        if not isinstance(energy, numbers.Number):
+            raise ValueError("Invalid energy: " + str(energy))
+        if isinstance(mfps, Iterable):
+            if not all([isinstance(item, numbers.Number) for item in mfps]):
+                raise ValueError("Non-numeric mfps")
+            if not all([item >= 0 for item in mfps]):
+                raise ValueError("A mfp is less than 0")
+        else:
+            if not isinstance(mfps, numbers.Number):
+                raise ValueError("Non-numeric mfps")
+            if mfps < 0:
+                raise ValueError("A mfp is less than 0")
+
 
         # find the bounding array indices
         if (energy < self._gp_energy_bins[0]) or \

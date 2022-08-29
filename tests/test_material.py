@@ -16,8 +16,6 @@ def test_material_name():
         a = material.Material("wanker")  # non-existant name
     with pytest.raises(ValueError): 
         a = material.Material(32)  # non-alpha name
-    with pytest.raises(ValueError): 
-        a = material.Material()  # missing name
     a = material.Material("WATER")  # Upper-case name
     assert a._name == "water"
     a = material.Material("Water")  # Mixed-case name
@@ -42,8 +40,6 @@ def test_getMfp():
     assert b == pytest.approx(0.00092827901)
     assert a.get_mfp(0.66, 0) == 0  # zero distance
     with pytest.raises(ValueError): 
-        b = a.get_mfp()  # missing values
-    with pytest.raises(ValueError): 
         b = a.get_mfp(-0.66, 10)  # negative photon energy
     with pytest.raises(ValueError): 
         b = a.get_mfp(0, 10)  # zero photon energy
@@ -57,8 +53,6 @@ def test_getMfp():
         b = a.get_mfp(0.66, -10)  # negative distance
     with pytest.raises(ValueError): 
         b = a.get_mfp(0.66, "waffle")  # non-numeric distance
-    with pytest.raises(ValueError): 
-        b = a.get_mfp(0.66)  # missing distance
 
 # test retrieval of a mass attenuation coefficient
 # reference: tests/reference_calculations/test_material/getattenCoeff.m (matlab script)
@@ -75,7 +69,7 @@ def test_getMassAttenCoff():
     with pytest.raises(ValueError):
         b = a.get_mass_atten_coeff(0)
     with pytest.raises(ValueError):
-        b = a.get_mass_atten_coeff(-0.001
+        b = a.get_mass_atten_coeff(-0.001)
     # test bad argument
     with pytest.raises(ValueError):
         b = a.get_mass_atten_coeff()
