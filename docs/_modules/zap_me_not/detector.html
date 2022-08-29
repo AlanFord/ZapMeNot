@@ -64,7 +64,7 @@
     <span class="k">def</span> <span class="nf">location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;:class:`tuple` : The detector location in cartesian coordinates&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_location</span>
-     
+
 <div class="viewcode-block" id="Detector.vtk"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.detector.Detector.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
@@ -75,7 +75,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div></div>
-
 </pre></div>
 
           </div>

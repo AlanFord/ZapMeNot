@@ -85,7 +85,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
 
 <div class="viewcode-block" id="Model.set_filler_material"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.set_filler_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_filler_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler_material</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the filler material used by the model</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Set the filler material used by the model</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -153,6 +153,31 @@
 <span class="sd">        float</span>
 <span class="sd">            The exposure in units of mR/hr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results_by_photon_energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_summary</span><span class="p">()</span>
+        <span class="c1"># print(len(results_by_photon_energy))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results_by_photon_energy</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">results_by_photon_energy</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> \
+                <span class="mi">1000</span><span class="o">*</span><span class="mi">3600</span>  <span class="c1"># convert from R/sec to mR/hr</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># sum exposure over all photons</span>
+            <span class="n">an_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results_by_photon_energy</span><span class="p">)</span>
+            <span class="n">integral_results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">an_array</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">integral_results</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="mi">3600</span>  <span class="c1"># convert from R/sec to mR/hr</span></div>
+
+<div class="viewcode-block" id="Model.generate_summary"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.generate_summary">[docs]</a>    <span class="k">def</span> <span class="nf">generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculates the energy flux and exposure at the detector location.</span>
+
+<span class="sd">        Note:  Significant use of Numpy arrays to speed up evaluating the</span>
+<span class="sd">        dose from each source point.  A &quot;for loop&quot; is used to loop</span>
+<span class="sd">        through photon energies, but many of the iterations through</span>
+<span class="sd">        all source points is performed using matrix math.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`list`</span>
+<span class="sd">            List, by photon energy, of photon energy, photon emmission rate,</span>
+<span class="sd">            uncollided energy flux, uncollided exposure, and total exposure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># build an array of shield crossing lengths.</span>
         <span class="c1"># The first index is the source point.</span>
         <span class="c1"># The second index is the shield (including the source body).</span>
@@ -160,6 +185,7 @@
         <span class="c1"># is determined by subtracting the sum of the shield crossing</span>
         <span class="c1"># lengths from the total ray length.</span>
         <span class="n">source_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">()</span>
+        <span class="n">source_point_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_point_weights</span><span class="p">()</span>
         <span class="n">crossing_distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">source_points</span><span class="p">),</span>
                                        <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">)))</span>
         <span class="n">total_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">source_points</span><span class="p">)))</span>
@@ -171,17 +197,20 @@
                     <span class="n">shield</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
         <span class="n">gaps</span> <span class="o">=</span> <span class="n">total_distance</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">crossing_distances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">flux_by_photon_energy</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c1"># get a list of photons (energy &amp; intensity per</span>
-        <span class="c1"># source point [gamma/sec]) from the source</span>
-        <span class="n">spectrum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_photon_source_list</span><span class="p">()</span>
+        <span class="n">results_by_photon_energy</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># get a list of photons (energy &amp; intensity) from the source</span>
+        <span class="n">spectrum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">get_photon_source_list</span><span class="p">()</span>
+
+        <span class="n">air</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="s1">&#39;air&#39;</span><span class="p">)</span>
+
         <span class="c1"># iterate through the photon list</span>
         <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="p">:</span>
-            <span class="n">uncollided_flux</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">total_flux</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">photon_energy</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="c1"># photon source strength &gt;&gt;PER SOURCE POINT&lt;&lt;</span>
+            <span class="c1"># photon source strength</span>
             <span class="n">photon_yield</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">dose_coeff</span> <span class="o">=</span> <span class="n">air</span><span class="o">.</span><span class="n">get_mass_energy_abs_coeff</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">)</span>
+
             <span class="c1"># determine the xsecs</span>
             <span class="n">xsecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">)))</span>
             <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">shield</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">):</span>
@@ -195,32 +224,33 @@
                 <span class="n">gap_xsec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> \
                     <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="o">.</span><span class="n">get_mass_atten_coeff</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">)</span>
                 <span class="n">total_mfp</span> <span class="o">=</span> <span class="n">total_mfp</span> <span class="o">+</span> <span class="p">(</span><span class="n">gaps</span> <span class="o">*</span> <span class="n">gap_xsec</span><span class="p">)</span>
-            <span class="n">total_flux_reduction_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">total_mfp</span><span class="p">)</span>
+            <span class="n">uncollided_flux_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">total_mfp</span><span class="p">)</span>
             <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="n">buildup_factor</span> <span class="o">=</span> \
                     <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span><span class="o">.</span><span class="n">get_buildup_factor</span><span class="p">(</span>
                         <span class="n">photon_energy</span><span class="p">,</span> <span class="n">total_mfp</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">buildup_factor</span> <span class="o">=</span> <span class="mf">1.0</span>
-            <span class="n">uncollided_point_flux</span> <span class="o">=</span> <span class="n">photon_yield</span> <span class="o">*</span> \
-                <span class="n">total_flux_reduction_factor</span> <span class="o">*</span> \
-                <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">total_distance</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
-            <span class="n">total_point_flux</span> <span class="o">=</span> <span class="n">uncollided_point_flux</span><span class="o">*</span><span class="n">buildup_factor</span>
-            <span class="n">uncollided_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uncollided_point_flux</span><span class="p">)</span>
-            <span class="n">total_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">total_point_flux</span><span class="p">)</span>
-            <span class="n">flux_by_photon_energy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">uncollided_flux</span><span class="p">,</span> <span class="n">total_flux</span><span class="p">])</span>
 
-        <span class="n">air</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="s1">&#39;air&#39;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">flux_by_photon_energy</span><span class="p">:</span>
-            <span class="n">photon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">photon</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">*</span>
-                <span class="n">air</span><span class="o">.</span><span class="n">get_mass_energy_abs_coeff</span><span class="p">(</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="c1"># sum exposure over all photons</span>
-        <span class="n">exposure_total</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">flux_by_photon_energy</span><span class="p">:</span>
-            <span class="n">exposure_total</span> <span class="o">+=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">exposure_total</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="mi">3600</span>  <span class="c1"># convert from R/sec to mR/hr</span></div>
+            <span class="n">uncollided_point_energy_flux</span> <span class="o">=</span> <span class="n">photon_yield</span> <span class="o">*</span> <span class="n">source_point_weights</span>\
+                <span class="o">*</span> <span class="n">uncollided_flux_factor</span> <span class="o">*</span> <span class="n">photon_energy</span> <span class="o">*</span> \
+                <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">total_distance</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+            <span class="n">total_uncollided_energy_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uncollided_point_energy_flux</span><span class="p">)</span>
+
+            <span class="n">uncollided_point_exposure</span> <span class="o">=</span> <span class="n">uncollided_point_energy_flux</span> <span class="o">*</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">*</span> <span class="n">dose_coeff</span>
+            <span class="n">total_uncollided_exposure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uncollided_point_exposure</span><span class="p">)</span>
+
+            <span class="n">collided_point_exposure</span> <span class="o">=</span> <span class="n">uncollided_point_exposure</span> <span class="o">*</span> \
+                <span class="n">buildup_factor</span>
+            <span class="n">total_collided_exposure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">collided_point_exposure</span><span class="p">)</span>
+
+            <span class="n">results_by_photon_energy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">photon_yield</span><span class="p">,</span> <span class="n">total_uncollided_energy_flux</span><span class="p">,</span>
+                 <span class="n">total_uncollided_exposure</span><span class="p">,</span> <span class="n">total_collided_exposure</span><span class="p">])</span>
+
+        <span class="c1"># print(results_by_photon_energy)</span>
+        <span class="k">return</span> <span class="n">results_by_photon_energy</span></div>
 
 <div class="viewcode-block" id="Model.display"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Produces a graphic display of the model.</span>

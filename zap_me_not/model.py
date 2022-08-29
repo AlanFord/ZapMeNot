@@ -120,6 +120,31 @@ class Model:
         float
             The exposure in units of mR/hr.
         """
+        results_by_photon_energy = self.generate_summary()
+        # print(len(results_by_photon_energy))
+        if len(results_by_photon_energy) == 1:
+            return results_by_photon_energy[0][4] * \
+                1000*3600  # convert from R/sec to mR/hr
+        else:
+            # sum exposure over all photons
+            an_array = np.array(results_by_photon_energy)
+            integral_results = np.sum(an_array[:, 4])
+            return integral_results*1000*3600  # convert from R/sec to mR/hr
+
+    def generate_summary(self):
+        """Calculates the energy flux and exposure at the detector location.
+
+        Note:  Significant use of Numpy arrays to speed up evaluating the
+        dose from each source point.  A "for loop" is used to loop
+        through photon energies, but many of the iterations through
+        all source points is performed using matrix math.
+
+        Returns
+        -------
+        :class:`list` of :class:`list`
+            List, by photon energy, of photon energy, photon emmission rate,
+            uncollided energy flux, uncollided exposure, and total exposure
+        """
         # build an array of shield crossing lengths.
         # The first index is the source point.
         # The second index is the shield (including the source body).
@@ -127,6 +152,7 @@ class Model:
         # is determined by subtracting the sum of the shield crossing
         # lengths from the total ray length.
         source_points = self.source._get_source_points()
+        source_point_weights = self.source._get_source_point_weights()
         crossing_distances = np.zeros((len(source_points),
                                        len(self.shield_list)))
         total_distance = np.zeros((len(source_points)))
@@ -138,17 +164,20 @@ class Model:
                     shield._get_crossing_length(vector)
         gaps = total_distance - np.sum(crossing_distances, axis=1)
 
-        flux_by_photon_energy = []
-        # get a list of photons (energy & intensity per
-        # source point [gamma/sec]) from the source
-        spectrum = self.source._get_photon_source_list()
+        results_by_photon_energy = []
+        # get a list of photons (energy & intensity) from the source
+        spectrum = self.source.get_photon_source_list()
+
+        air = material.Material('air')
+
         # iterate through the photon list
         for photon in spectrum:
-            uncollided_flux = 0
-            total_flux = 0
             photon_energy = photon[0]
-            # photon source strength >>PER SOURCE POINT<<
+            # photon source strength
             photon_yield = photon[1]
+
+            dose_coeff = air.get_mass_energy_abs_coeff(photon_energy)
+
             # determine the xsecs
             xsecs = np.zeros((len(self.shield_list)))
             for index, shield in enumerate(self.shield_list):
@@ -162,32 +191,33 @@ class Model:
                 gap_xsec = self.filler_material.density * \
                     self.filler_material.get_mass_atten_coeff(photon_energy)
                 total_mfp = total_mfp + (gaps * gap_xsec)
-            total_flux_reduction_factor = np.exp(-total_mfp)
+            uncollided_flux_factor = np.exp(-total_mfp)
             if (self.buildup_factor_material is not None):
                 buildup_factor = \
                     self.buildup_factor_material.get_buildup_factor(
                         photon_energy, total_mfp)
             else:
                 buildup_factor = 1.0
-            uncollided_point_flux = photon_yield * \
-                total_flux_reduction_factor * \
-                (1/(4*math.pi*np.power(total_distance, 2)))
-            total_point_flux = uncollided_point_flux*buildup_factor
-            uncollided_flux = np.sum(uncollided_point_flux)
-            total_flux = np.sum(total_point_flux)
-            flux_by_photon_energy.append(
-                [photon_energy, uncollided_flux, total_flux])
 
-        air = material.Material('air')
-        for photon in flux_by_photon_energy:
-            photon.append(
-                photon[2]*photon[0]*self._conversion_factor *
-                air.get_mass_energy_abs_coeff(photon[0]))
-        # sum exposure over all photons
-        exposure_total = 0
-        for photon in flux_by_photon_energy:
-            exposure_total += photon[3]
-        return exposure_total*1000*3600  # convert from R/sec to mR/hr
+            uncollided_point_energy_flux = photon_yield * source_point_weights\
+                * uncollided_flux_factor * photon_energy * \
+                (1/(4*math.pi*np.power(total_distance, 2)))
+            total_uncollided_energy_flux = np.sum(uncollided_point_energy_flux)
+
+            uncollided_point_exposure = uncollided_point_energy_flux * \
+                self._conversion_factor * dose_coeff
+            total_uncollided_exposure = np.sum(uncollided_point_exposure)
+
+            collided_point_exposure = uncollided_point_exposure * \
+                buildup_factor
+            total_collided_exposure = np.sum(collided_point_exposure)
+
+            results_by_photon_energy.append(
+                [photon_energy, photon_yield, total_uncollided_energy_flux,
+                 total_uncollided_exposure, total_collided_exposure])
+
+        # print(results_by_photon_energy)
+        return results_by_photon_energy
 
     def display(self):
         """Produces a graphic display of the model.

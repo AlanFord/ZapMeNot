@@ -355,6 +355,25 @@ all source points is performed using matrix math.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.model.Model.generate_summary">
+<code class="sig-name descname"><span class="pre">generate_summary</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/model.html#Model.generate_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.model.Model.generate_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the energy flux and exposure at the detector location.</p>
+<p>Note:  Significant use of Numpy arrays to speed up evaluating the
+dose from each source point.  A “for loop” is used to loop
+through photon energies, but many of the iterations through
+all source points is performed using matrix math.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List, by photon energy, of photon energy, photon emmission rate,
+uncollided energy flux, uncollided exposure, and total exposure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.model.Model.set_buildup_factor_material">
 <code class="sig-name descname"><span class="pre">set_buildup_factor_material</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_material</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/model.html#Model.set_buildup_factor_material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.model.Model.set_buildup_factor_material" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the material used to calculation exposure buildup factors.</p>
@@ -1180,6 +1199,24 @@ the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.BoxSource.get_photon_source_list">
+<code class="sig-name descname"><span class="pre">get_photon_source_list</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.BoxSource.grouping">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.BoxSource.grouping" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining the photon energy group
@@ -1366,6 +1403,24 @@ the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.LineSource.get_photon_source_list">
+<code class="sig-name descname"><span class="pre">get_photon_source_list</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.LineSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.LineSource.grouping">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.LineSource.grouping" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining the photon energy group
@@ -1532,6 +1587,24 @@ Always returns 0 for the Point source.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.PointSource.get_photon_source_list">
+<code class="sig-name descname"><span class="pre">get_photon_source_list</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.PointSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.PointSource.grouping">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.PointSource.grouping" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining the photon energy group
@@ -1671,6 +1744,24 @@ sources.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.Source.get_photon_source_list">
+<code class="sig-name descname"><span class="pre">get_photon_source_list</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#Source.get_photon_source_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.Source.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.Source.grouping">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.Source.grouping" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining the photon energy group
@@ -1791,6 +1882,24 @@ Isotope object and an activity in Bq.</p>
 with the shield.</p></li>
 <li><p><strong>photon_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The photon energy in MeV</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.XAlignedCylinderSource.get_photon_source_list">
+<code class="sig-name descname"><span class="pre">get_photon_source_list</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1941,6 +2050,24 @@ with the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt id="zap_me_not.source.YAlignedCylinderSource.get_photon_source_list">
+<code class="sig-name descname"><span class="pre">get_photon_source_list</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="zap_me_not.source.YAlignedCylinderSource.grouping">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">grouping</span></code><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.grouping" title="Permalink to this definition">¶</a></dt>
 <dd><p>State defining the photon energy group
@@ -2081,6 +2208,24 @@ Isotope object and an activity in Bq.</p>
 with the shield.</p></li>
 <li><p><strong>photon_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The photon energy in MeV</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zap_me_not.source.ZAlignedCylinderSource.get_photon_source_list">
+<code class="sig-name descname"><span class="pre">get_photon_source_list</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
