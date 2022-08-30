@@ -201,16 +201,14 @@ class Material:
             raise ValueError("Only GP Buildup Factors are currently supported")
         if not isinstance(energy, numbers.Number):
             raise ValueError("Invalid energy: " + str(energy))
-        if isinstance(mfps, Iterable):
-            if not all([isinstance(item, numbers.Number) for item in mfps]):
-                raise ValueError("Non-numeric mfps")
-            if not all([item >= 0 for item in mfps]):
-                raise ValueError("A mfp is less than 0")
-        else:
-            if not isinstance(mfps, numbers.Number):
-                raise ValueError("Non-numeric mfps")
-            if mfps < 0:
-                raise ValueError("A mfp is less than 0")
+            
+        try:
+            mfp = np.array(mfps, dtype=float)
+        except:
+            raise ValueError("mfps have invalid array structure")
+        # mfps must be non-negative
+        if np.amin(mfp) < 0:
+            raise ValueError("negative mfp")
 
         # find the bounding array indices
         if (energy < self._gp_energy_bins[0]) or \
@@ -222,7 +220,6 @@ class Material:
         X = self._Xi(energy)
         d = self._di(energy)
 
-        mfp = np.array(mfps)
         bf = Material._GP(a, b, c, d, X, mfp)
         return bf
 
