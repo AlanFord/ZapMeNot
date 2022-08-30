@@ -1,9 +1,10 @@
 import abc
 import math
+import numbers
 
 import numpy as np
 
-from . import material
+from . import material, ray
 
 import importlib
 pyvista_spec = importlib.util.find_spec("pyvista")
@@ -14,7 +15,7 @@ if pyvista_found:
 # -----------------------------------------------------------
 
 
-class Shield:
+class Shield(abc.ABC):
     """Abtract class to model a photon shield.
 
     Parameters
@@ -34,8 +35,11 @@ class Shield:
 
     """
     def __init__(self, material_name=None, density=None, **kwargs):
+        # the material name is validated by the Material class
         self.material = material.Material(material_name)
         if density is not None:
+            if not isinstance(density, numbers.Number):
+                raise ValueError("Invalid density: " + str(density))
             self.material.density = density
         super().__init__(**kwargs)
 
@@ -45,28 +49,34 @@ class Shield:
         """
 
     @abc.abstractmethod
-    def _get_crossing_length(self, ray):
+    def _get_crossing_length(self, a_ray):
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
+        a_ray : :class:`ray.FiniteLengthRay`
             The finite length ray that is checked for intersections
             with the shield.
         """
+        if not isinstance(a_ray, ray.FiniteLengthRay):
+            raise ValueError("Invalid ray object")
 
     @abc.abstractmethod
-    def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, a_ray, photon_energy):
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
+        a_ray : :class:`ray.FiniteLengthRay`
             The finite length ray that is checked for intersections
             with the shield.
         photon_energy : float
             The photon energy in MeV
         """
+        if not isinstance(a_ray, ray.FiniteLengthRay):
+            raise ValueError("Invalid ray object")
+        if not isinstance(photon_energy, numbers.Number):
+            raise ValueError("Invalid photon energy")
 
     @staticmethod
     def _line_plane_collision(plane_normal, plane_point, ray_origin,
@@ -145,6 +155,7 @@ class SemiInfiniteXSlab(Shield):
             The finite length ray that is checked for intersections with
             the shield.
         """
+        super()._get_crossing_length(ray)  # validate the arguments
         ray_origin = ray.origin
         ray_unit_vector = ray.dir
         plane_normal = np.array([1, 0, 0])
@@ -194,6 +205,7 @@ class SemiInfiniteXSlab(Shield):
         photon_energy : float
             The photon energy in MeV
         """
+        super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
@@ -227,6 +239,7 @@ class SemiInfiniteXSlab(Shield):
 #     def _get_crossing_length(self, ray):
 #         # based on
 #         # http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
+#         super()._get_crossing_length(ray)  # validate the arguments
 #         a = np.dot(ray.dir, ray.dir)
 #         b = 2 * np.dot(ray.dir, ray.origin - self.center)
 #         c = np.dot(ray.origin-self.center, ray.origin -
@@ -326,6 +339,7 @@ class Box(Shield):
             The finite length ray that is checked for intersections with
             the shield.
         """
+        super()._get_crossing_length(ray)  # validate the arguments
         crossings = self._intersect_axis_aligned_box(ray)
         # two crossings indicates a full-shield crossing
         # one crossing indicates that either (common) the source is
@@ -514,6 +528,7 @@ class InfiniteAnnulus(Shield):
             The finite length ray that is checked for intersections
             with the shield.
         """
+        super()._get_crossing_length(ray)  # validate the arguments
         # get a list of crossing points
         crossings = self._intersect(ray)
         # zero crossings can indicate that either both source and
@@ -822,6 +837,7 @@ class CappedCylinder(Shield):
             The finite length ray that is checked for intersections
             with the shield.
         """
+        super()._get_crossing_length(ray)  # validate the arguments
         # get a list of crossing points
         crossings = self._intersect(ray)
         # two crossings indicates a full-shield crossing
