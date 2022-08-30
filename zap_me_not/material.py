@@ -46,7 +46,7 @@ class Material:
         # initialize the object
         self._name = name
         properties = Material._library.get(self._name)
-        self.density = properties.get("density")
+        self._density = properties.get("density")
         self._atten_energy_bins = np.array(
             properties.get("mass-atten-coff-energy"))
         self._mass_atten_coff = np.array(properties.get("mass-atten-coff"))
@@ -75,6 +75,19 @@ class Material:
         """str : The name of the material"""
         return self._name
 
+    @property
+    def density(self):
+        """float : The density of the material"""
+        return self._density
+
+    @density.setter
+    def density(self, value):
+        if not isinstance(value, numbers.Number):
+            raise ValueError("Invalid density")
+        if value < 0:
+            raise ValueError("Invalid density")
+        self._density = value
+
     def get_mfp(self, energy, distance):
         """Calculates the mean free path for a given distance and photon energy
 
@@ -93,10 +106,10 @@ class Material:
         if not isinstance(energy, numbers.Number):
             raise ValueError("Invalid energy: " + str(energy))
         if not isinstance(distance, numbers.Number) or \
-            distance < 0:
+           distance < 0:
             raise ValueError("Invalid distance: " + str(distance))
 
-        return distance * self.density * self.get_mass_atten_coeff(energy)
+        return distance * self._density * self.get_mass_atten_coeff(energy)
 
     def get_mass_atten_coeff(self, energy):
         r"""Calculates the mass attenuation coefficient at the given energy
@@ -116,9 +129,13 @@ class Material:
         float
             The mass attenuation coefficient in cm\ :sup:`2`/g
         """
+        if not isinstance(energy, numbers.Number):
+            raise ValueError("Invalid energy: " + str(energy))
+
         if (energy < self._atten_energy_bins[0]) or \
                 (energy > self._atten_energy_bins[-1]):
             raise ValueError("Photon energy is out of range")
+
         return np.power(10.0, np.interp(np.log10(energy),
                                         np.log10(self._atten_energy_bins),
                                         np.log10(self._mass_atten_coff)))
@@ -141,9 +158,13 @@ class Material:
         float
             The mass energy absorption coefficient in cm\ :sup:`2`/g
         """
+        if not isinstance(energy, numbers.Number):
+            raise ValueError("Invalid energy: " + str(energy))
+
         if (energy < self._en_abs_energy_bins[0]) or \
                 (energy > self._en_abs_energy_bins[-1]):
             raise ValueError("Photon energy is out of range")
+
         return np.power(10.0, np.interp(np.log10(energy),
                                         np.log10(self._en_abs_energy_bins),
                                         np.log10(self._mass_en_abs_coff)))
@@ -174,7 +195,8 @@ class Material:
             each specified mfp
         """
         if not isinstance(formula, str):
-            raise ValueError("Buildup factor type is not a string: " + str(formula))
+            raise ValueError("Buildup factor type is not a string: " +
+                             str(formula))
         if formula.upper() != "GP":
             raise ValueError("Only GP Buildup Factors are currently supported")
         if not isinstance(energy, numbers.Number):
@@ -189,7 +211,6 @@ class Material:
                 raise ValueError("Non-numeric mfps")
             if mfps < 0:
                 raise ValueError("A mfp is less than 0")
-
 
         # find the bounding array indices
         if (energy < self._gp_energy_bins[0]) or \
