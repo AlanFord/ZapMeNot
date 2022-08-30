@@ -233,6 +233,7 @@ class SemiInfiniteXSlab(Shield):
 
 #     def get_crossing_mfp(self, ray, photon_energy):
 #         '''returns the crossing mfp'''
+#         super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
 #         distance = self._get_crossing_length(ray)
 #         return self.material.get_mfp(photon_energy, distance)
 
@@ -327,6 +328,7 @@ class Box(Shield):
         photon_energy : float
             The photon energy in MeV
         """
+        super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
@@ -516,6 +518,7 @@ class InfiniteAnnulus(Shield):
         photon_energy : float
             The photon energy in MeV
         """
+        super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
@@ -825,6 +828,7 @@ class CappedCylinder(Shield):
         photon_energy : float
             The photon energy in MeV
         """
+        super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 

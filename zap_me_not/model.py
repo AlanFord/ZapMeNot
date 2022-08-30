@@ -1,6 +1,7 @@
 import math
 import numpy as np
-from . import ray, material
+import numbers
+from . import ray, material, source, shield, detector
 
 import importlib
 pyvista_spec = importlib.util.find_spec("pyvista")
@@ -61,8 +62,12 @@ class Model:
         density : float, optional
             The density of the material in g/cm\ :sup:`3`.
         """
+        if not isinstance(filler_material, material.Material):
+            raise ValueError("Invalid filler material")
         self.filler_material = material.Material(filler_material)
         if density is not None:
+            if not isinstance(density, numbers.Number):
+                raise ValueError("Invalid density: " + str(density))
             self.filler_material.density = density
 
     def add_source(self, new_source):
@@ -73,6 +78,9 @@ class Model:
         new_source : :class:`zap_me_not.source.Source`
             The source to be used.
         """
+        if not isinstance(new_source, source.Source):
+            raise ValueError("Invalid source")
+            
         self.source = new_source
         # don't forget that sources are shields too!
         self.shield_list.append(new_source)
@@ -85,6 +93,8 @@ class Model:
         new_shield : :class:`zap_me_not.shield.Shield`
             The shield to be added.
         """
+        if not isinstance(new_shield, shield.Shield):
+            raise ValueError("Invalid shield")
         self.shield_list.append(new_shield)
 
     def add_detector(self, new_detector):
@@ -95,6 +105,8 @@ class Model:
         new_detector : :class:`zap_me_not.detector.Detector`
             The detector to be used in the model.
         """
+        if not isinstance(new_detector, detector.Detector):
+            raise ValueError("Invalid detector")
         self.detector = new_detector
 
     def set_buildup_factor_material(self, new_material):
@@ -105,6 +117,8 @@ class Model:
         new_material : :class:`zap_me_not.material.Material`
             The material to be used in buildup factor calculations.
         """
+        if not isinstance(new_material, material.Material):
+            raise ValueError("Invalid buildup factor material")
         self.buildup_factor_material = new_material
 
     def calculate_exposure(self):

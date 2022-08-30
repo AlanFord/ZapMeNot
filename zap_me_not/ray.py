@@ -1,5 +1,6 @@
 import numpy as np
-
+import numbers
+from collections.abc import Iterable
 
 class FiniteLengthRay:
     """Represents a ray in three-space.
@@ -28,6 +29,10 @@ class FiniteLengthRay:
         Indicates the signs of the components of :py:obj:`dir`.
     """
     def __init__(self, start, end):
+        if not FiniteLengthRay._is_validate_vector(start):
+            raise ValueError("Invalid ray start")
+        if not FiniteLengthRay._is_validate_vector(end):
+            raise ValueError("Invalid ray end")
         self._start = start
         self._end = end
         self._regularize()
@@ -40,6 +45,8 @@ class FiniteLengthRay:
 
     @start.setter
     def start(self, value):
+        if not FiniteLengthRay._is_validate_vector(value):
+            raise ValueError("Invalid ray start")
         self._start = value
         self._regularize()
 
@@ -51,6 +58,8 @@ class FiniteLengthRay:
 
     @end.setter
     def end(self, value):
+        if not FiniteLengthRay._is_validate_vector(value):
+            raise ValueError("Invalid ray end")
         self._end = value
         self._regularize()
 
@@ -69,3 +78,18 @@ class FiniteLengthRay:
         self.sign[0] = int((self.invdir[0] < 0))
         self.sign[1] = int((self.invdir[1] < 0))
         self.sign[2] = int((self.invdir[2] < 0))
+        
+    @staticmethod
+    def _is_validate_vector(vector):
+        # vector should be a list
+        if not (isinstance(vector, Iterable)):
+            return False
+        # vector should have a length of 3
+        if not (len(vector) == 3):
+            return False
+        # each element should be a number
+        if not all([isinstance(item, numbers.Number) for item in vector]):
+            return False
+        return True
+        
+    
