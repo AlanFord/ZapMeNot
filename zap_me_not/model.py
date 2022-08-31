@@ -57,12 +57,12 @@ class Model:
 
         Parameters
         ----------
-        filler_material : :class:`zap_me_not.material.Material`
+        filler_material : str
             The material to be used.
         density : float, optional
             The density of the material in g/cm\ :sup:`3`.
         """
-        if not isinstance(filler_material, material.Material):
+        if not isinstance(filler_material, str):
             raise ValueError("Invalid filler material")
         self.filler_material = material.Material(filler_material)
         if density is not None:
