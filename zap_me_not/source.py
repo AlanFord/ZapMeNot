@@ -544,11 +544,6 @@ class BoxSource(Source, shield.Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-    def is_infinite(self):
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return False
-
     def _get_source_point_weights(self):
         return 1.0 / np.product(self.points_per_dimension)
 
@@ -590,11 +585,6 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-    def is_infinite(self):
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return False
-
     def _get_source_point_weights(self):
         return 1.0 / np.product(self.points_per_dimension)
 
@@ -663,11 +653,6 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-    def is_infinite(self):
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return False
-
     def _get_source_point_weights(self):
         return 1.0 / np.product(self.points_per_dimension)
 
@@ -736,11 +721,6 @@ class XAlignedCylinderSource(Source, shield.YAlignedCylinder):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-    def is_infinite(self):
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return False
-
     def _get_source_point_weights(self):
         return 1.0 / np.product(self.points_per_dimension)
 
