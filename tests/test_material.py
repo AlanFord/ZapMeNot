@@ -135,6 +135,9 @@ def test_getBuildupFactor():
     b = a.get_buildup_factor(0.66, 40, "GP")
     c = a.get_buildup_factor(0.66, 100, "GP")
     assert b == c
+    # using list of mfps
+    d = a.get_buildup_factor(0.66,[10,10], "GP")
+    assert d == pytest.approx([43.237787,43.237787])
 
 
 # test calculation of a list of buildup factors from a list of mfp
