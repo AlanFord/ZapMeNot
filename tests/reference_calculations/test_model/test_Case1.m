@@ -33,19 +33,20 @@ function test_Case1()
     
     ironMFP = 10 * ironMassAttenCoeff * ironDensity
     concreteMFP = 10 * concreteMassAttenCoeff * concreteDensity
-    mfp = ironMFP + concreteMFP
+    mfp = ironMFP + concreteMFP;
 
-    K = (c * (mfp^a)) + (d * (tanh(mfp/Xk -2) - tanh(-2))) / (1 - tanh(-2))
+    K = (c * (mfp^a)) + (d * (tanh(mfp/Xk -2) - tanh(-2))) / (1 - tanh(-2));
 
     if K == 1
-        ironBuildupFactor = 1 + (b-1)*mfp
+        ironBuildupFactor = 1 + (b-1)*mfp;
     else
-        ironBuildupFactor = 1 + (b-1)*((K^mfp) - 1)/(K -1)
+        ironBuildupFactor = 1 + (b-1)*((K^mfp) - 1)/(K -1);
     end
-    shieldingFactor = exp(-mfp)
+    shieldingFactor = exp(-mfp);
     uncollidedFlux = 3E10 / (4*pi()*100^2) * shieldingFactor
-    buildupFlux = uncollidedFlux * ironBuildupFactor
-    exposure = buildupFlux * 1.835E-8 * 1.0 * airMassEnAbsCoeff
+    uncollidedEnergyFlux = uncollidedFlux * 1
+    uncollidedExposure = uncollidedEnergyFlux * 1.835E-8 * airMassEnAbsCoeff
+    totalExposure = uncollidedExposure * ironBuildupFactor
 
 end          
           
