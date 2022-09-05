@@ -135,15 +135,15 @@ class Model:
             The exposure in units of mR/hr.
         """
         results_by_photon_energy = self.generate_summary()
-        # print(len(results_by_photon_energy))
-        if len(results_by_photon_energy) == 1:
-            return results_by_photon_energy[0][4] * \
-                1000*3600  # convert from R/sec to mR/hr
+        if len(results_by_photon_energy) == 0:
+            return 0  # may occur if source has no photons
+        elif len(results_by_photon_energy) == 1:
+            return results_by_photon_energy[0][4]  # mR/hr
         else:
             # sum exposure over all photons
             an_array = np.array(results_by_photon_energy)
             integral_results = np.sum(an_array[:, 4])
-            return integral_results*1000*3600  # convert from R/sec to mR/hr
+            return integral_results  # mR/hr
 
     def generate_summary(self):
         """Calculates the energy flux and exposure at the detector location.
@@ -165,6 +165,10 @@ class Model:
         # The total transit distance in the "filler" material (if any)
         # is determined by subtracting the sum of the shield crossing
         # lengths from the total ray length.
+        if self.source is None:
+            raise ValueError("Model is missing a source")
+        if self.detector is None:
+            raise ValueError("Model is missing a detector")
         source_points = self.source._get_source_points()
         source_point_weights = self.source._get_source_point_weights()
         crossing_distances = np.zeros((len(source_points),
@@ -219,7 +223,7 @@ class Model:
             total_uncollided_energy_flux = np.sum(uncollided_point_energy_flux)
 
             uncollided_point_exposure = uncollided_point_energy_flux * \
-                self._conversion_factor * dose_coeff
+                self._conversion_factor * dose_coeff * 1000 * 3600  # mR/hr
             total_uncollided_exposure = np.sum(uncollided_point_exposure)
 
             collided_point_exposure = uncollided_point_exposure * \
