@@ -207,7 +207,7 @@ def test_bad_model():
     myModel.add_detector(detector.Detector(100, 0, 0))
     myModel.set_buildup_factor_material(material.Material('iron'))
     with pytest.raises(ValueError):
-        result = myModel.calculate_exposure()  # missing source
+        myModel.calculate_exposure()  # missing source
 
 
 def test_bad_model2():
@@ -217,9 +217,11 @@ def test_bad_model2():
     myModel.add_source(mySource)
     myModel.set_buildup_factor_material(material.Material('iron'))
     with pytest.raises(ValueError):
-        result = myModel.calculate_exposure()  # missing detector
+        myModel.calculate_exposure()  # missing detector
 
 
+# a point source (multiple photons) with two separate infinite yz shields, on-axis source/detector
+# Reference: tests/reference_calculations/test_model/test_Case3.m (matlab script)
 def test_generate_summary():
     myModel = model.Model()
     mySource = source.PointSource(0, 0, 0)
@@ -233,6 +235,14 @@ def test_generate_summary():
     myModel.set_buildup_factor_material(material.Material('iron'))
     result = myModel.calculate_exposure()
     assert result == pytest.approx(4.397872839310016e-06*1000*3600)  # convert from R/sec to mR/hr
+    expected_summary = [[1.29364, 29748000000, 1371.11990617,
+                         6.61910474907e-07*1000*3600,
+                         4.39362181896e-06*1000*3600],
+                        [1.677, 15468960, 1.76805726932,
+                         7.99508312077e-10*1000*3600,
+                         4.25102034665e-09*1000*3600]]
+    summary = myModel.generate_summary()
+    np.testing.assert_allclose(expected_summary, summary)
 
 
 # a point source with infinite yz shields
@@ -254,7 +264,7 @@ def test_generate_summary_single_photon():
     # energy (MeV), photon emmission rate (photons/sec),
     # uncollided energy flux (MeV/sec), uncollided exposure (mR/hr), and total exposure (mR/hr)
     expected_summary = [[1.0, 3.0E10, 5.066988280960838e+02,
-                         2.591331278213446e-07*1000*3600, 
+                         2.591331278213446e-07*1000*3600,
                          2.218926692201381e-06*1000*3600]]
     summary = myModel.generate_summary()
     np.testing.assert_allclose(expected_summary, summary)
@@ -263,14 +273,11 @@ def test_generate_summary_single_photon():
 def test_generate_summary_no_photon():
     myModel = model.Model()
     mySource = source.PointSource(0, 0, 0)
-    photonEnergy = 1.0  # MeV
-    photonIntensity = 3E10  # photons/sec
-    mySource.add_photon(photonEnergy, photonIntensity)
+    mySource.add_isotope_curies('Sr-90', 3)
     myModel.add_source(mySource)
     myModel.add_detector(detector.Detector(100, 0, 0))
     result = myModel.calculate_exposure()
-    photonFlux = photonIntensity/(4*math.pi*100**2)  # photons/sec/cm2
-    responseFunction = 1.835E-8*1.0*2.787E-02
-    analyticalDose = photonFlux*responseFunction  # R/sec
-    # the "other code" gives 440.1 mR/hr at an air density of 1e-12g/cc
-    assert result == pytest.approx(analyticalDose*1000*3600)  # convert from R/sec to mR/hr
+    assert result == pytest.approx(0)  # convert from R/sec to mR/hr
+    expected_summary = []
+    summary = myModel.generate_summary()
+    np.testing.assert_allclose(expected_summary, summary)

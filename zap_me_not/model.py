@@ -80,7 +80,7 @@ class Model:
         """
         if not isinstance(new_source, source.Source):
             raise ValueError("Invalid source")
-            
+
         self.source = new_source
         # don't forget that sources are shields too!
         self.shield_list.append(new_source)
@@ -177,9 +177,9 @@ class Model:
         for index, nextPoint in enumerate(source_points):
             vector = ray.FiniteLengthRay(nextPoint, self.detector.location)
             total_distance[index] = vector.length
-            for index2, shield in enumerate(self.shield_list):
+            for index2, thisShield in enumerate(self.shield_list):
                 crossing_distances[index, index2] = \
-                    shield._get_crossing_length(vector)
+                    thisShield._get_crossing_length(vector)
         gaps = total_distance - np.sum(crossing_distances, axis=1)
 
         results_by_photon_energy = []
@@ -198,9 +198,9 @@ class Model:
 
             # determine the xsecs
             xsecs = np.zeros((len(self.shield_list)))
-            for index, shield in enumerate(self.shield_list):
-                xsecs[index] = shield.material.density * \
-                    shield.material.get_mass_atten_coeff(photon_energy)
+            for index, thisShield in enumerate(self.shield_list):
+                xsecs[index] = thisShield.material.density * \
+                    thisShield.material.get_mass_atten_coeff(photon_energy)
             # determine an array of mean free paths, one per source point
             total_mfp = crossing_distances * xsecs
             total_mfp = np.sum(total_mfp, axis=1)
@@ -247,18 +247,18 @@ class Model:
             shieldColor = 'blue'
             # find the bounding box for all finite bodies
             blocks = pyvista.MultiBlock()
-            for shield in self.shield_list:
-                if not shield.is_infinite():
-                    blocks.append(shield.vtk())
+            for thisShield in self.shield_list:
+                if not thisShield.is_infinite():
+                    blocks.append(thisShield.vtk())
             blocks.append(self.source.vtk())
             blocks.append(self.detector.vtk())
             pl = pyvista.Plotter()
             # increase the display bounds by a smidge to avoid
             #   inadvertent clipping
             bounds = [x * 1.01 for x in blocks.bounds]
-            for shield in self.shield_list:
-                if shield.is_infinite():
-                    clip1 = shield.vtk().clip_closed_surface(
+            for thisShield in self.shield_list:
+                if thisShield.is_infinite():
+                    clip1 = thisShield.vtk().clip_closed_surface(
                         normal='-z', origin=[0, 0, bounds[5]])
                     clip2 = clip1.clip_closed_surface(
                         normal='z', origin=[0, 0, bounds[4]])
@@ -272,7 +272,7 @@ class Model:
                         normal='x', origin=[bounds[0], 0, 0])
                     pl.add_mesh(clip6, color=shieldColor)
                 else:
-                    pl.add_mesh(shield.vtk(), color=shieldColor)
+                    pl.add_mesh(thisShield.vtk(), color=shieldColor)
             pl.add_mesh(
                 self.source.vtk(), line_width=5, color=sourceColor,
                 label='source')

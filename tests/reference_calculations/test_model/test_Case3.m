@@ -28,6 +28,7 @@ function test_Case3()
                1.67700e+00, 5.15632e-04];
 
     totalExposure = 0;
+    summaryData = [];
     for i = 1:length(photons(:,1))
         energy = photons(i,1);
         intensity = photons(i,2);
@@ -38,13 +39,20 @@ function test_Case3()
         mfp = ironMFP + concreteMFP;
         shieldingFactor = exp(-mfp);
         uncollidedFlux = (bq * intensity) / (4*pi()*detectorDistance^2) * shieldingFactor;
+        uncollidedEnergyFlux = uncollidedFlux * energy;
+        
+        uncollidedPhotonExposure = uncollidedEnergyFlux * 1.835E-8 * getabsCoeff(energy);
         buildupFactor9 = buildupFactor(energy, mfp, 'iron');
-        buildupFlux = uncollidedFlux * buildupFactor9;
-        exposure = buildupFlux * 1.835E-8 * energy * getabsCoeff(energy);
-        totalExposure = totalExposure + exposure;
+        totalPhotonExposure = uncollidedPhotonExposure * buildupFactor9;
+
+        totalExposure = totalExposure + totalPhotonExposure;
+        
+        newRow = [energy bq*intensity uncollidedEnergyFlux uncollidedPhotonExposure totalPhotonExposure];
+        summaryData = [summaryData; newRow];
     end
-fprintf('Total Exposure = %.16g R/sec \n', totalExposure)
-    
+    fprintf('Total Exposure = %.16g R/sec \n', totalExposure)
+    fprintf('Summary data \n')
+    fprintf('%.12g %.12g %.12g %.12g %.12g\n', summaryData.')    
 end          
           
     
