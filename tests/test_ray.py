@@ -13,7 +13,7 @@ def test_ray_length():
     start = [1, 1, 1]
     end = [2, 2, 2]
     aaa = ray.FiniteLengthRay(start, end)
-    assert (aaa.origin == np.array(start)).all
+    assert all(aaa.origin == np.array(start))
     assert aaa.length == pytest.approx(math.sqrt(3.))
 
 # test calculaton of ray properties dir, invdir, sign
@@ -25,11 +25,11 @@ def test_ray_unit_vector():
     part = 1./math.sqrt(3.)
     # the following creates a vector of numerical tests and then
     # checks to ensure they all came back true
-    assert (aaa.origin == [1, 1, 1]).all
+    assert all(aaa.origin == [1, 1, 1])
     assert aaa.length == math.sqrt(3.)
-    assert (aaa.dir == np.array([part, part, part])).all
-    assert (aaa.invdir == np.array([1/part, 1/part, 1/part])).all
-    assert (aaa.sign == np.array([False, False, False])).all
+    assert all(aaa.dir == np.array([part, part, part]))
+    assert all(aaa.invdir == np.array([1/part, 1/part, 1/part]))
+    assert all(aaa.sign == np.array([False, False, False]))
     
 # test invalid initializations
 def test_ray_error_trapping():
