@@ -24,6 +24,10 @@ class TestSemiInfiniteXSlab():
         myShield = shield.SemiInfiniteXSlab("iron", 10, 20)
         return myShield
 
+    def test_init(self, create_shield):
+        assert create_shield.x_start == 10
+        assert create_shield.x_end == 20
+
     # setup routine for subsequent tests
     @pytest.fixture(scope="class")
     def create_ray(self):
@@ -115,6 +119,10 @@ class TestSemiInfiniteXSlab():
         calculated_mfp = xsec*density*10  # 10 cm width of shield
         assert mfp == pytest.approx(calculated_mfp)
 
+    def test_infinite(self, create_shield):
+        assert create_shield.is_infinite() is True
+
+
 # =============================================================
 # class TestSphere():
 
@@ -122,6 +130,12 @@ class TestSemiInfiniteXSlab():
 # 	def create_shield(self):
 # 		myShield = shield.Sphere("iron", sphere_radius=10, sphere_center=[0,0,0])
 # 		return myShield
+
+#   def test_init(self, create_shield):
+#       assert create_shield.inner_radius == 2
+#       assert create_shield.outer_radius == 4
+#       assert all(create_shield.origin == [0, 0, -50])
+#       assert all(create_shield.dir == [0, 0, 1])
 
 # 	def test_crossing_length0(self, create_shield):
 # 		# basic ray crossing
@@ -171,21 +185,28 @@ class TestSemiInfiniteXSlab():
 # 		calculated_mfp = xsec*density*10 # 10 cm crossing width of shield
 # 		assert mfp == pytest.approx(calculated_mfp)
 
+#   def test_infinite(self, create_shield):
+#       assert create_shield.is_infinite() is False
+
 
 # =============================================================
 class TestBox():
 
     @pytest.fixture(scope="class")
     def create_shield(self):
-        myShield = shield.Box("iron", box_center=[0, 0, 0],
+        myShield = shield.Box("iron", box_center=[1, 0, 0],
                               box_dimensions=[10, 10, 10])
         return myShield
+
+    def test_init(self, create_shield):
+        assert all(create_shield.box_center == [1, 0, 0])
+        assert all(create_shield.box_dimensions == [10, 10, 10])
 
     # test getting a crossing length
     def test_crossing_length0(self, create_shield):
         # test a pure diagonal crossing
         length = create_shield._get_crossing_length(
-            ray.FiniteLengthRay([-5, -5, -5], [15, 15, 15]))
+            ray.FiniteLengthRay([-4, -5, -5], [16, 15, 15]))
         assert length == math.sqrt(3*(10**2))
 
     def test_crossing_length1(self, create_shield):
@@ -209,18 +230,18 @@ class TestBox():
     def test_crossing_length4(self, create_shield):
         # two rays that start inside the box and traverse outwards
         length = create_shield._get_crossing_length(
-            ray.FiniteLengthRay([2, 3, 3], [20, 3, 3]))
+            ray.FiniteLengthRay([3, 3, 3], [21, 3, 3]))
         assert length == 3
 
     def test_crossing_length5(self, create_shield):
         length = create_shield._get_crossing_length(
-            ray.FiniteLengthRay([2, 3, 3], [-20, 3, 3]))
+            ray.FiniteLengthRay([3, 3, 3], [-19, 3, 3]))
         assert length == 7
 
     def test_crossing_length6(self, create_shield):
         # ray start outside the box and ends inside the box
         length = create_shield._get_crossing_length(
-            ray.FiniteLengthRay([20, 3, 3], [2, 3, 3]))
+            ray.FiniteLengthRay([21, 3, 3], [3, 3, 3]))
         assert length == 3
 
     def test_crossing_length7(self, create_shield):
@@ -231,8 +252,8 @@ class TestBox():
 
     # test getting a crossing mfp
     def test_get_special_MFP(self, create_shield):
-        start = [0, 0, 0]
-        end = [100, 0, 0]
+        start = [1, 0, 0]
+        end = [101, 0, 0]
         aRay = ray.FiniteLengthRay(start, end)
         mfp = create_shield.get_crossing_mfp(aRay, 1)
         # data extracted from materialLibrary.yml for iron at 1 MeV
@@ -240,6 +261,9 @@ class TestBox():
         density = 7.874
         calculated_mfp = xsec*density*5  # 5 cm crossing width of shield
         assert mfp == pytest.approx(calculated_mfp)
+
+    def test_infinite(self, create_shield):
+        assert create_shield.is_infinite() is False
 
 
 # =============================================================
@@ -252,6 +276,12 @@ class TestInfiniteAnnulus():
                                           cylinder_inner_radius=2,
                                           cylinder_outer_radius=4, density=2)
         return myShield
+
+    def test_init(self, create_shield):
+        assert create_shield.inner_radius == 2
+        assert create_shield.outer_radius == 4
+        assert all(create_shield.origin == [0, 0, -50])
+        assert all(create_shield.dir == [0, 0, 1])
 
     def test_density(self, create_shield):
         assert create_shield.material.density == 2
@@ -328,6 +358,9 @@ class TestInfiniteAnnulus():
         calculated_mfp = xsec*density*2  # 2 cm crossing width of shield
         assert mfp == pytest.approx(calculated_mfp)
 
+    def test_infinite(self, create_shield):
+        assert create_shield.is_infinite() is True
+
 
 # =============================================================
 class TestCappedCylinder():
@@ -339,6 +372,13 @@ class TestCappedCylinder():
                                          cylinder_end=[0, 0, 50],
                                          cylinder_radius=10)
         return myShield
+
+    def test_init(self, create_shield):
+        assert create_shield.radius == 10
+        assert all(create_shield.origin == [0, 0, -50])
+        assert all(create_shield.end == [0, 0, 50])
+        assert create_shield.length == 100
+        assert all(create_shield.dir == [0, 0, 1])
 
     def test_crossing_length0(self, create_shield):
         # complete miss
@@ -420,6 +460,9 @@ class TestCappedCylinder():
         calculated_mfp = xsec*density*10  # 10 cm crossing width of shield
         assert mfp == pytest.approx(calculated_mfp)
 
+    def test_infinite(self, create_shield):
+        assert create_shield.is_infinite() is False
+
 
 # =============================================================
 class TestYAlignedCylinder():
@@ -432,10 +475,20 @@ class TestYAlignedCylinder():
                                            cylinder_radius=10)
         return myShield
 
+    def test_init(self, create_shield):
+        assert create_shield.radius == 10
+        assert all(create_shield.origin == [0, -50, 0])
+        assert all(create_shield.end == [0, 50, 0])
+        assert create_shield.length == 100
+        assert all(create_shield.dir == [0, 1, 0])
+
     def test_crossing_length(self, create_shield):
         length = create_shield._get_crossing_length(
             ray.FiniteLengthRay([2, -60, 2], [2, 60, 2]))
         assert length == 100
+
+    def test_infinite(self, create_shield):
+        assert create_shield.is_infinite() is False
 
 
 # =============================================================
@@ -449,10 +502,20 @@ class TestXAlignedCylinder():
                                            cylinder_radius=10)
         return myShield
 
+    def test_init(self, create_shield):
+        assert create_shield.radius == 10
+        assert all(create_shield.origin == [-50, 0, 0])
+        assert all(create_shield.end == [50, 0, 0])
+        assert create_shield.length == 100
+        assert all(create_shield.dir == [1, 0, 0])
+
     def test_crossing_length(self, create_shield):
         length = create_shield._get_crossing_length(
             ray.FiniteLengthRay([-60, 2, 2], [60, 2, 2]))
         assert length == 100
+
+    def test_infinite(self, create_shield):
+        assert create_shield.is_infinite() is False
 
 
 # =============================================================
@@ -466,7 +529,17 @@ class TestZAlignedCylinder():
                                            cylinder_radius=10)
         return myShield
 
+    def test_init(self, create_shield):
+        assert create_shield.radius == 10
+        assert all(create_shield.origin == [0, 0, -50])
+        assert all(create_shield.end == [0, 0, 50])
+        assert create_shield.length == 100
+        assert all(create_shield.dir == [0, 0, 1])
+
     def test_crossing_length(self, create_shield):
         length = create_shield._get_crossing_length(
             ray.FiniteLengthRay([2, 2, -60], [2, 2, 60]))
         assert length == 100
+
+    def test_infinite(self, create_shield):
+        assert create_shield.is_infinite() is False
