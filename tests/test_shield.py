@@ -363,6 +363,57 @@ class TestInfiniteAnnulus():
 
 
 # =============================================================
+class TestYAlignedInfiniteAnnulus():
+
+    @pytest.fixture(scope="class")
+    def create_shield(self):
+        myShield = shield.YAlignedInfiniteAnnulus("iron", cylinder_center=[0, 0, -50],
+                                          cylinder_inner_radius=2,
+                                          cylinder_outer_radius=4, density=2)
+        return myShield
+
+    def test_init(self, create_shield):
+        assert create_shield.inner_radius == 2
+        assert create_shield.outer_radius == 4
+        assert all(create_shield.origin == [0, 0, -50])
+        assert all(create_shield.dir == [0, 1, 0])
+
+
+# =============================================================
+class TestXAlignedInfiniteAnnulus():
+
+    @pytest.fixture(scope="class")
+    def create_shield(self):
+        myShield = shield.XAlignedInfiniteAnnulus("iron", cylinder_center=[0, 0, -50],
+                                          cylinder_inner_radius=2,
+                                          cylinder_outer_radius=4, density=2)
+        return myShield
+
+    def test_init(self, create_shield):
+        assert create_shield.inner_radius == 2
+        assert create_shield.outer_radius == 4
+        assert all(create_shield.origin == [0, 0, -50])
+        assert all(create_shield.dir == [1, 0, 0])
+
+
+# =============================================================
+class TestZAlignedInfiniteAnnulus():
+
+    @pytest.fixture(scope="class")
+    def create_shield(self):
+        myShield = shield.ZAlignedInfiniteAnnulus("iron", cylinder_center=[0, 0, -50],
+                                          cylinder_inner_radius=2,
+                                          cylinder_outer_radius=4, density=2)
+        return myShield
+
+    def test_init(self, create_shield):
+        assert create_shield.inner_radius == 2
+        assert create_shield.outer_radius == 4
+        assert all(create_shield.origin == [0, 0, -50])
+        assert all(create_shield.dir == [0, 0, 1])
+
+
+# =============================================================
 class TestCappedCylinder():
 
     @pytest.fixture(scope="class")
