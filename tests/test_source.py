@@ -6,53 +6,54 @@ from zap_me_not import source
 pytestmark = pytest.mark.basic
 
 
-class TestPointSource():
+class TestGenericSourceFeatures():
+
+    # setup routine for subsequent tests
+    @pytest.fixture(scope="function")
+    def create_source(self):
+        my_source = source.PointSource(1, 2, 3)
+        return my_source
 
     # test set/retrieve of isotopes in Curies
     # reference: manual calculation
-    def test_addIsotopeCuries(self):
-        my_source = source.PointSource(1, 2, 3)
-        my_source.add_isotope_curies('Co-60', 3.14)
-        my_source.add_isotope_curies('Cu-11', 8)
+    def test_addIsotopeCuries(self, create_source):
+        create_source.add_isotope_curies('Co-60', 3.14)
+        create_source.add_isotope_curies('Cu-11', 8)
         my_list = [('Co-60', 3.14*3.7E10), ('Cu-11', 8*3.7E10)]
-        assert my_list == my_source.list_isotopes()
+        assert my_list == create_source.list_isotopes()
 
     # test set/retrieve of isotopes in Bq
     # reference: manual calculation
-    def test_addIsotopeBq(self):
-        my_source = source.PointSource(1, 2, 3)
-        my_source.add_isotope_bq('Co-60', 3.14E9)
-        my_source.add_isotope_bq('Cs-137', 1E6)
+    def test_addIsotopeBq(self, create_source):
+        create_source.add_isotope_bq('Co-60', 3.14E9)
+        create_source.add_isotope_bq('Cs-137', 1E6)
         my_list = [('Co-60', 3.14E9), ('Cs-137', 1E6)]
-        assert my_list == my_source.list_isotopes()
+        assert my_list == create_source.list_isotopes()
 
     # test addition of key progeny
     # reference: manual calculation
-    def test_include_key_progeny(self):
-        my_source = source.PointSource(1, 2, 3)
-        my_source.add_isotope_bq('Co-60', 3.14E9)
-        my_source.add_isotope_bq('Cs-137', 1E6)
-        my_source.include_key_progeny = True
+    def test_include_key_progeny(self, create_source):
+        create_source.add_isotope_bq('Co-60', 3.14E9)
+        create_source.add_isotope_bq('Cs-137', 1E6)
+        create_source.include_key_progeny = True
         my_list = [('Co-60', 3.14E9), ('Cs-137', 1E6)]
-        assert my_list == my_source.list_isotopes()
+        assert my_list == create_source.list_isotopes()
 
     # test set/retrieve of Photons
     # reference: manual calculation
-    def test_addPhoton(self):
-        my_source = source.PointSource(1, 2, 3)
-        my_source.add_photon(0.9876, 3.14E2)
-        my_source.add_photon(0.02, 5)
+    def test_addPhoton(self, create_source):
+        create_source.add_photon(0.9876, 3.14E2)
+        create_source.add_photon(0.02, 5)
         my_list = [(0.9876, 3.14E2), (0.02, 5)]
-        assert my_list == my_source.list_discrete_photons()
+        assert my_list == create_source.list_discrete_photons()
 
     # test retrieval of photon energies/intensities from photon library
     # reference: manual calculation and isotope library
-    def test_getPhotonEnergyList(self):
-        my_source = source.PointSource(1, 2, 3)
-        my_source.add_isotope_curies('Ar-41', 3.14)
-        my_source.add_isotope_bq('Br-80m', 1E6)
-        my_source.add_photon(0.9876, 3.14E2)
-        a = my_source.get_photon_source_list()
+    def test_getPhotonEnergyList(self, create_source):
+        create_source.add_isotope_curies('Ar-41', 3.14)
+        create_source.add_isotope_bq('Br-80m', 1E6)
+        create_source.add_photon(0.9876, 3.14E2)
+        a = create_source.get_photon_source_list()
         np.testing.assert_allclose(a,
                                    [(0.037052, (3.90540e-01)*1e6),
                                     (0.04885, (3.26673e-03)*1e6),
@@ -62,13 +63,12 @@ class TestPointSource():
 
     # test retrieval of photon energies/intensities from photon library
     # reference: manual calculation and isotope library
-    def test_getProgenyPhotonEnergyList(self):
-        my_source = source.PointSource(1, 2, 3)
-        my_source.add_isotope_curies('Sr-90', 3.14)
-        my_source.add_isotope_bq('Br-80m', 1E6)
-        my_source.add_photon(0.9876, 3.14E2)
-        my_source.include_key_progeny = True
-        a = my_source.get_photon_source_list()
+    def test_getProgenyPhotonEnergyList(self, create_source):
+        create_source.add_isotope_curies('Sr-90', 3.14)
+        create_source.add_isotope_bq('Br-80m', 1E6)
+        create_source.add_photon(0.9876, 3.14E2)
+        create_source.include_key_progeny = True
+        a = create_source.get_photon_source_list()
         np.testing.assert_allclose(a,
                                    [(1.56498e-02, 2.15532e-05 * 3.7e10 * 3.14),
                                     (1.57372e-02, 4.12457e-05 * 3.7e10 * 3.14),
@@ -88,10 +88,9 @@ class TestPointSource():
 
     # test binning of large photon sets
     # reference: manual calculation and isotope library
-    def test_binSources(self):
-        my_source = source.PointSource(1, 2, 3)
-        my_source.add_isotope_bq('Ac-223', 1)  # A whole lot'a photons
-        a = my_source.get_photon_source_list()
+    def test_binSources(self, create_source):
+        create_source.add_isotope_bq('Ac-223', 1)  # A whole lot'a photons
+        a = create_source.get_photon_source_list()
         np.testing.assert_allclose(a,
                                    [[1.7469949E-02, 1.0045970E-02],
                                     [3.8215385E-02, 5.1480000E-04],
@@ -121,42 +120,53 @@ class TestPointSource():
 
     # test set/retrieval of photon binning option
     # reference: none needed
-    def test_binOptions(self):
-        my_source = source.PointSource(1, 2, 3)
-        my_source.grouping = "discrete"
-        assert my_source.grouping == source.GroupOption.DISCRETE
-        my_source.grouping = "group"
-        assert my_source.grouping == source.GroupOption.GROUP
-        my_source.grouping = "hybrid"
-        assert my_source.grouping == source.GroupOption.HYBRID
+    def test_binOptions(self, create_source):
+        create_source.grouping = "discrete"
+        assert create_source.grouping == source.GroupOption.DISCRETE
+        create_source.grouping = "group"
+        assert create_source.grouping == source.GroupOption.GROUP
+        create_source.grouping = "hybrid"
+        assert create_source.grouping == source.GroupOption.HYBRID
 
     # test binning of small number of photons
-    def test_bins(self):
-        my_source = source.PointSource(1, 2, 3)
-        my_source.add_isotope_bq('Co-60', 1)
+    def test_bins(self, create_source):
+        create_source.add_isotope_bq('Co-60', 1)
         photons = [[3.47140e-01, 7.50000e-05],
                    [8.26100e-01, 7.60000e-05],
                    [1.17323e+00, 9.98500e-01],
                    [1.33249e+00, 9.99826e-01],
                    [2.15857e+00, 1.20000e-05],
                    [2.50569e+00, 2.00000e-08]]
-        my_source.grouping = "discrete"
-        np.testing.assert_allclose(my_source.get_photon_source_list(),
+        create_source.grouping = "discrete"
+        np.testing.assert_allclose(create_source.get_photon_source_list(),
                                    photons)
-        assert my_source.grouping == source.GroupOption.DISCRETE
-        my_source.grouping = "group"
-        np.testing.assert_allclose(my_source.get_photon_source_list(),
+        assert create_source.grouping == source.GroupOption.DISCRETE
+        create_source.grouping = "group"
+        np.testing.assert_allclose(create_source.get_photon_source_list(),
                                    photons)
-        my_source.grouping = "hybrid"
-        np.testing.assert_allclose(my_source.get_photon_source_list(),
+        create_source.grouping = "hybrid"
+        np.testing.assert_allclose(create_source.get_photon_source_list(),
                                    photons)
+
+# =============================================================
+
+
+class TestPointSource():
+
+    # setup routine for subsequent tests
+    @pytest.fixture(scope="class")
+    def create_source(self):
+        my_source = source.PointSource(1, 2, 3)
+        return my_source
 
     # test set/retrieval of source points
     # reference: manual calculation
-    def test_getSourcePoints(self):
-        my_source = source.PointSource(1, 2, 3)
-        np.testing.assert_allclose(my_source._get_source_points(),
+    def test_getSourcePoints(self, create_source):
+        np.testing.assert_allclose(create_source._get_source_points(),
                                    [(1, 2, 3)])
+
+    def test_getSourcePointWeights(self, create_source):
+        assert create_source._get_source_point_weights() == 1.0
 
 # =============================================================
 
