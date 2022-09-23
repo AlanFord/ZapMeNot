@@ -286,7 +286,7 @@ class LineSource(Source, shield.Shield):
         # initialize points_per_dimension after super() to force a
         # single dimension
         self.points_per_dimension = 10
-        
+
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
         """
@@ -400,7 +400,7 @@ class PointSource(Source, shield.Shield):
         kwargs['density'] = 0
         super().__init__(**kwargs)
         self.points_per_dimension = 1
-        
+
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
         """
@@ -543,7 +543,7 @@ class BoxSource(Source, shield.Box):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+
     def _get_source_point_weights(self):
         return 1.0 / np.product(self.points_per_dimension)
 
@@ -584,7 +584,7 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+
     def _get_source_point_weights(self):
         return 1.0 / np.product(self.points_per_dimension)
 
@@ -652,7 +652,7 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+
     def _get_source_point_weights(self):
         return 1.0 / np.product(self.points_per_dimension)
 
@@ -720,7 +720,7 @@ class XAlignedCylinderSource(Source, shield.YAlignedCylinder):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+
     def _get_source_point_weights(self):
         return 1.0 / np.product(self.points_per_dimension)
 
