@@ -247,7 +247,6 @@ class TestBoxSource():
         assert create_source.material.name == "iron"
         # test attribute of source class
         assert create_source._include_key_progeny is False
-        print(type(create_source.points_per_dimension))
         assert create_source.points_per_dimension == [10, 10, 10]
 
     # test source point locations and set/retrieve of photon source energies

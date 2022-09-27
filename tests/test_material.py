@@ -146,7 +146,6 @@ def test_getBuildupFactor2():
     a = material.Material("air")
     mfp_list = [0, 10]
     b = a.get_buildup_factor(0.66, mfp_list, "GP")
-    print(b)
     assert b[0] == 1
     assert b[1] == pytest.approx(43.237787)
     assert len(b) == 2
