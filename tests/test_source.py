@@ -288,16 +288,134 @@ class TestBoxSource():
 
 class TestXAlignedCylinderSource():
 
-    def test_getSourcePoints(self):
-        pass
+    # setup routine for subsequent tests
+    @pytest.fixture(scope="function")
+    def create_source(self):
+        my_source = source.XAlignedCylinderSource(
+            cylinder_center=[0, 0, 0],
+            cylinder_length=10, cylinder_radius=5, material_name='iron')
+        my_source.points_per_dimension = [3, 3, 3]
+        return my_source
+
+    def test_init(self, create_source):
+        # test attribute of shield class
+        assert create_source.radius == 5
+        assert create_source.length == 10
+        assert all(create_source.origin == [-5, 0, 0])
+        assert all(create_source.end == [5, 0, 0])
+        assert all(create_source.dir == [1, 0, 0])
+        assert create_source.material.name == "iron"
+        # test attribute of source class
+        assert create_source._include_key_progeny is False
+        assert create_source.points_per_dimension == [3, 3, 3]
+
+    # test source point locations and set/retrieve of photon source energies
+    # reference: cylinder_unit_test.m (matlab script)
+    # reference: isotope library
+    def test_getSourcePoints(self, create_source):
+        sourcePoints = create_source._get_source_points()
+        np.testing.assert_allclose(
+            sourcePoints,
+            [[1.6666666667E00, 1.2500000000E00, -7.2168783649E-01],
+             [5.0000000000E00, 1.2500000000E00, -7.2168783649E-01],
+             [8.3333333333E00, 1.2500000000E00, -7.2168783649E-01],
+             [1.6666666667E00, 1.7676253979E-16, 1.4433756730E00],
+             [5.0000000000E00, 1.7676253979E-16, 1.4433756730E00],
+             [8.3333333333E00, 1.7676253979E-16, 1.4433756730E00],
+             [1.6666666667E00, -1.2500000000E00, -7.2168783649E-01],
+             [5.0000000000E00, -1.2500000000E00, -7.2168783649E-01],
+             [8.3333333333E00, -1.2500000000E00, -7.2168783649E-01],
+             [1.6666666667E00, 3.0177669530E00, -1.7423085626E00],
+             [5.0000000000E00, 3.0177669530E00, -1.7423085626E00],
+             [8.3333333333E00, 3.0177669530E00, -1.7423085626E00],
+             [1.6666666667E00, 4.2674252087E-16, 3.4846171253E00],
+             [5.0000000000E00, 4.2674252087E-16, 3.4846171253E00],
+             [8.3333333333E00, 4.2674252087E-16, 3.4846171253E00],
+             [1.6666666667E00, -3.0177669530E00, -1.7423085626E00],
+             [5.0000000000E00, -3.0177669530E00, -1.7423085626E00],
+             [8.3333333333E00, -3.0177669530E00, -1.7423085626E00],
+             [1.6666666667E00, 3.9328304624E00, -2.2706207262E00],
+             [5.0000000000E00, 3.9328304624E00, -2.2706207262E00],
+             [8.3333333333E00, 3.9328304624E00, -2.2706207262E00],
+             [1.6666666667E00, 5.5614168087E-16, 4.5412414523E00],
+             [5.0000000000E00, 5.5614168087E-16, 4.5412414523E00],
+             [8.3333333333E00, 5.5614168087E-16, 4.5412414523E00],
+             [1.6666666667E00, -3.9328304624E00, -2.2706207262E00],
+             [5.0000000000E00, -3.9328304624E00, -2.2706207262E00],
+             [8.3333333333E00, -3.9328304624E00, -2.2706207262E00]])
+
+    def test_getSourcePointWeights(self, create_source):
+        number_of_points = create_source.points_per_dimension
+        the_list = [1.0 / np.product(number_of_points)] * \
+            np.sum(number_of_points)
+        assert create_source._get_source_point_weights() == the_list
 
 # =============================================================
 
 
 class TestYAlignedCylinderSource():
 
-    def test_getSourcePoints(self):
-        pass
+    # setup routine for subsequent tests
+    @pytest.fixture(scope="function")
+    def create_source(self):
+        my_source = source.YAlignedCylinderSource(
+            cylinder_center=[0, 0, 0],
+            cylinder_length=10, cylinder_radius=5, material_name='iron')
+        my_source.points_per_dimension = [3, 3, 3]
+        return my_source
+
+    def test_init(self, create_source):
+        # test attribute of shield class
+        assert create_source.radius == 5
+        assert create_source.length == 10
+        assert all(create_source.origin == [0, -5, 0])
+        assert all(create_source.end == [0, 5, 0])
+        assert all(create_source.dir == [0, 1, 0])
+        assert create_source.material.name == "iron"
+        # test attribute of source class
+        assert create_source._include_key_progeny is False
+        assert create_source.points_per_dimension == [3, 3, 3]
+
+    # test source point locations and set/retrieve of photon source energies
+    # reference: cylinder_unit_test.m (matlab script)
+    # reference: isotope library
+    def test_getSourcePoints(self, create_source):
+        sourcePoints = create_source._get_source_points()
+        np.testing.assert_allclose(
+            sourcePoints,
+            [[7.2168783649E-01, 1.6666666667E00, -1.2500000000E00],
+             [7.2168783649E-01, 5.0000000000E00, -1.2500000000E00],
+             [7.2168783649E-01, 8.3333333333E00, -1.2500000000E00],
+             [-1.4433756730E00, 1.6666666667E00, -1.7676253979E-16],
+             [-1.4433756730E00, 5.0000000000E00, -1.7676253979E-16],
+             [-1.4433756730E00, 8.3333333333E00, -1.7676253979E-16],
+             [7.2168783649E-01, 1.6666666667E00, 1.2500000000E00],
+             [7.2168783649E-01, 5.0000000000E00, 1.2500000000E00],
+             [7.2168783649E-01, 8.3333333333E00, 1.2500000000E00],
+             [1.7423085626E00, 1.6666666667E00, -3.0177669530E00],
+             [1.7423085626E00, 5.0000000000E00, -3.0177669530E00],
+             [1.7423085626E00, 8.3333333333E00, -3.0177669530E00],
+             [-3.4846171253E00, 1.6666666667E00, -4.2674252087E-16],
+             [-3.4846171253E00, 5.0000000000E00, -4.2674252087E-16],
+             [-3.4846171253E00, 8.3333333333E00, -4.2674252087E-16],
+             [1.7423085626E00, 1.6666666667E00, 3.0177669530E00],
+             [1.7423085626E00, 5.0000000000E00, 3.0177669530E00],
+             [1.7423085626E00, 8.3333333333E00, 3.0177669530E00],
+             [2.2706207262E00, 1.6666666667E00, -3.9328304624E00],
+             [2.2706207262E00, 5.0000000000E00, -3.9328304624E00],
+             [2.2706207262E00, 8.3333333333E00, -3.9328304624E00],
+             [-4.5412414523E00, 1.6666666667E00, -5.5614168087E-16],
+             [-4.5412414523E00, 5.0000000000E00, -5.5614168087E-16],
+             [-4.5412414523E00, 8.3333333333E00, -5.5614168087E-16],
+             [2.2706207262E00, 1.6666666667E00, 3.9328304624E00],
+             [2.2706207262E00, 5.0000000000E00, 3.9328304624E00],
+             [2.2706207262E00, 8.3333333333E00, 3.9328304624E00]])
+
+    def test_getSourcePointWeights(self, create_source):
+        number_of_points = create_source.points_per_dimension
+        the_list = [1.0 / np.product(number_of_points)] * \
+            np.sum(number_of_points)
+        assert create_source._get_source_point_weights() == the_list
 
 # =============================================================
 
@@ -312,6 +430,18 @@ class TestZAlignedCylinderSource():
             cylinder_length=10, cylinder_radius=5, material_name='iron')
         my_source.points_per_dimension = [3, 3, 3]
         return my_source
+
+    def test_init(self, create_source):
+        # test attribute of shield class
+        assert create_source.radius == 5
+        assert create_source.length == 10
+        assert all(create_source.origin == [0, 0, -5])
+        assert all(create_source.end == [0, 0, 5])
+        assert all(create_source.dir == [0, 0, 1])
+        assert create_source.material.name == "iron"
+        # test attribute of source class
+        assert create_source._include_key_progeny is False
+        assert create_source.points_per_dimension == [3, 3, 3]
 
     # test source point locations and set/retrieve of photon source energies
     # reference: cylinder_unit_test.m (matlab script)
@@ -348,16 +478,8 @@ class TestZAlignedCylinderSource():
              [2.2706207262e+00, -3.9328304624e+00, 5],
              [2.2706207262e+00, -3.9328304624e+00, 8.3333333333e+00]])
 
-        create_source.add_isotope_curies('Ar-41', 3.14)
-        create_source.add_isotope_bq('Br-80m', 1E6)
-        create_source.add_photon(0.9876, 3.14E2)
-        a = create_source.get_photon_source_list()
-        # the following intensities are adjusted for 3 intervals
-        # intervals in each dimension
-        np.testing.assert_allclose(
-            a,
-            [(0.037052, (3.90540e-01)*1e6),
-             (0.04885, (3.26673e-03)*1e6),
-             (0.9876, 3.14E2),
-             (1.29364, 9.91600e-01 * 3.7e10 * 3.14),
-             (1.677, 5.15632e-04 * 3.7e10 * 3.14)])
+    def test_getSourcePointWeights(self, create_source):
+        number_of_points = create_source.points_per_dimension
+        the_list = [1.0 / np.product(number_of_points)] * \
+            np.sum(number_of_points)
+        assert create_source._get_source_point_weights() == the_list
