@@ -1046,10 +1046,12 @@ class XAlignedCylinder(CappedCylinder):
 
     def __init__(self, material_name, cylinder_center, cylinder_length,
                  cylinder_radius, density=None):
-        cylinder_start = [cylinder_center[0]-cylinder_length /
-                          2, cylinder_center[1], cylinder_center[2]]
-        cylinder_end = [cylinder_center[0]+cylinder_length /
-                        2, cylinder_center[1], cylinder_center[2]]
+        cylinder_start = [cylinder_center[0]-cylinder_length / 2,
+                          cylinder_center[1], 
+                          cylinder_center[2]]
+        cylinder_end = [cylinder_center[0]+cylinder_length / 2,
+                        cylinder_center[1], 
+                        cylinder_center[2]]
         super().__init__(material_name=material_name, density=density,
                          cylinder_start=cylinder_start,
                          cylinder_end=cylinder_end,
@@ -1092,9 +1094,11 @@ class ZAlignedCylinder(CappedCylinder):
 
     def __init__(self, material_name, cylinder_center, cylinder_length,
                  cylinder_radius, density=None):
-        cylinder_start = [cylinder_center[0], cylinder_center[1],
+        cylinder_start = [cylinder_center[0],
+                          cylinder_center[1],
                           cylinder_center[2]-cylinder_length/2]
-        cylinder_end = [cylinder_center[0], cylinder_center[1],
+        cylinder_end = [cylinder_center[0],
+                        cylinder_center[1],
                         cylinder_center[2]+cylinder_length/2]
         super().__init__(material_name=material_name, density=density,
                          cylinder_start=cylinder_start,
