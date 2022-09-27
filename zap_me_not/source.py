@@ -704,7 +704,7 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
                     y = length_location
                     # convert cylindrical to rectangular coordinates
                     x = r * math.cos(theta)
-                    z = r * math.sin(theta)
+                    z = -(r * math.sin(theta))
                     source_points.append([x, y, z])
         return source_points
 
@@ -772,7 +772,7 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
                 for length_location in length_locations:
                     x = length_location
                     # convert cylindrical to rectangular coordinates
-                    y = r * math.cos(theta)
-                    z = r * math.sin(theta)
+                    z = -(r * math.cos(theta))
+                    y = r * math.sin(theta)
                     source_points.append([x, y, z])
         return source_points
