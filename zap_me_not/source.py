@@ -285,7 +285,7 @@ class LineSource(Source, shield.Shield):
         super().__init__(**kwargs)
         # initialize points_per_dimension after super() to force a
         # single dimension
-        self.points_per_dimension = [10, 1, 1]
+        self.points_per_dimension = [10]
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
@@ -400,7 +400,7 @@ class PointSource(Source, shield.Shield):
         kwargs['material_name'] = 'air'
         kwargs['density'] = 0
         super().__init__(**kwargs)
-        self.points_per_dimension = [1, 1, 1]
+        self.points_per_dimension = [1]
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise

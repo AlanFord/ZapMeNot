@@ -163,7 +163,7 @@ class TestPointSource():
         assert create_source._x == 1
         assert create_source._y == 2
         assert create_source._z == 3
-        assert create_source.points_per_dimension == [1, 1, 1]
+        assert create_source.points_per_dimension == [1]
         # test attribute of shield class
         assert create_source.material.name == "air"
         # test attribute of source class
@@ -198,7 +198,7 @@ class TestLineSource():
         assert create_source._length == pytest.approx(10 * np.sqrt(3))
         single = np.sqrt(1./3.)
         assert all(create_source._dir == [single, single, single])
-        assert create_source.points_per_dimension == [10, 1, 1]
+        assert create_source.points_per_dimension == [10]
         # test attribute of shield class
         assert create_source.material.name == "air"
         # test attribute of source class
