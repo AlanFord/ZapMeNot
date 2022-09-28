@@ -51,7 +51,7 @@
     <span class="n">DISCRETE</span> <span class="o">=</span> <span class="s2">&quot;discrete&quot;</span></div>
 
 
-<div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Abtract class to model a radiation source.</span>
 
 <span class="sd">    Maintains a list of isotopes and can return a list of point source</span>
@@ -318,10 +318,16 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># initialize points_per_dimension after super() to force a</span>
         <span class="c1"># single dimension</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LineSource.is_infinite"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.LineSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -331,9 +337,9 @@
 <span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
 <span class="sd">            A list of vector locations within the Source body</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">spacings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">,</span>
-                               <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
-        <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span>
+        <span class="n">spacings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">spacings</span> <span class="o">=</span> <span class="n">spacings</span><span class="o">*</span><span class="n">mesh_width</span>
         <span class="n">spacings</span> <span class="o">=</span> <span class="n">spacings</span><span class="o">-</span><span class="p">(</span><span class="n">mesh_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
@@ -427,10 +433,16 @@
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;material_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;air&#39;</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<div class="viewcode-block" id="PointSource.is_infinite"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.PointSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">1.0</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -568,7 +580,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -609,7 +622,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -652,7 +666,7 @@
                 <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
                 <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
                     <span class="n">z</span> <span class="o">=</span> <span class="n">length_location</span>
-                    <span class="c1"># convert cylintrical to rectangular coordinates</span>
+                    <span class="c1"># convert cylindrical to rectangular coordinates</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
                     <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
                     <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
@@ -677,7 +691,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -720,16 +735,16 @@
                 <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
                 <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
                     <span class="n">y</span> <span class="o">=</span> <span class="n">length_location</span>
-                    <span class="c1"># convert cylintrical to rectangular coordinates</span>
+                    <span class="c1"># convert cylindrical to rectangular coordinates</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-                    <span class="n">z</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
                     <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
 
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="XAlignedCylinderSource"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.XAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">XAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">YAlignedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="XAlignedCylinderSource"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.source.XAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">XAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">XAlignedCylinder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the X axis.</span>
 
 <span class="sd">    Parameters</span>
@@ -745,7 +760,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -788,9 +804,9 @@
                 <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
                 <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">length_location</span>
-                    <span class="c1"># convert cylintrical to rectangular coordinates</span>
-                    <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-                    <span class="n">z</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                    <span class="c1"># convert cylindrical to rectangular coordinates</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
                     <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
 </pre></div>

@@ -33,10 +33,11 @@
   <h1>Source code for zap_me_not.shield</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">abc</span>
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numbers</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">material</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">material</span><span class="p">,</span> <span class="n">ray</span>
 
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
@@ -47,7 +48,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="Shield"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.shield.Shield">[docs]</a><span class="k">class</span> <span class="nc">Shield</span><span class="p">:</span>
+<div class="viewcode-block" id="Shield"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.shield.Shield">[docs]</a><span class="k">class</span> <span class="nc">Shield</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Abtract class to model a photon shield.</span>
 
 <span class="sd">    Parameters</span>
@@ -67,8 +68,11 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># the material name is validated by the Material class</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="n">material_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">density</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid density: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">density</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -78,28 +82,34 @@
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ray</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the linear intersection length of a ray and the shield</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ray : :class:`ray.FiniteLengthRay`</span>
+<span class="sd">        a_ray : :class:`ray.FiniteLengthRay`</span>
 <span class="sd">            The finite length ray that is checked for intersections</span>
 <span class="sd">            with the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a_ray</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid ray object&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Shield.get_crossing_mfp"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.shield.Shield.get_crossing_mfp">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ray : :class:`ray.FiniteLengthRay`</span>
+<span class="sd">        a_ray : :class:`ray.FiniteLengthRay`</span>
 <span class="sd">            The finite length ray that is checked for intersections</span>
 <span class="sd">            with the shield.</span>
 <span class="sd">        photon_energy : float</span>
 <span class="sd">            The photon energy in MeV</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a_ray</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid ray object&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid photon energy&quot;</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_line_plane_collision</span><span class="p">(</span><span class="n">plane_normal</span><span class="p">,</span> <span class="n">plane_point</span><span class="p">,</span> <span class="n">ray_origin</span><span class="p">,</span>
@@ -178,6 +188,7 @@
 <span class="sd">            The finite length ray that is checked for intersections with</span>
 <span class="sd">            the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>  <span class="c1"># validate the arguments</span>
         <span class="n">ray_origin</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">origin</span>
         <span class="n">ray_unit_vector</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">dir</span>
         <span class="n">plane_normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
@@ -227,6 +238,8 @@
 <span class="sd">        photon_energy : float</span>
 <span class="sd">            The photon energy in MeV</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># validate the arguments</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
 
@@ -254,12 +267,14 @@
 
 <span class="c1">#     def get_crossing_mfp(self, ray, photon_energy):</span>
 <span class="c1">#         &#39;&#39;&#39;returns the crossing mfp&#39;&#39;&#39;</span>
+<span class="c1">#         super().get_crossing_mfp(ray, photon_energy)    # validate the arguments</span>
 <span class="c1">#         distance = self._get_crossing_length(ray)</span>
 <span class="c1">#         return self.material.get_mfp(photon_energy, distance)</span>
 
 <span class="c1">#     def _get_crossing_length(self, ray):</span>
 <span class="c1">#         # based on</span>
 <span class="c1">#         # http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/</span>
+<span class="c1">#         super()._get_crossing_length(ray)  # validate the arguments</span>
 <span class="c1">#         a = np.dot(ray.dir, ray.dir)</span>
 <span class="c1">#         b = 2 * np.dot(ray.dir, ray.origin - self.center)</span>
 <span class="c1">#         c = np.dot(ray.origin-self.center, ray.origin -</span>
@@ -347,6 +362,8 @@
 <span class="sd">        photon_energy : float</span>
 <span class="sd">            The photon energy in MeV</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># validate the arguments</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
 
@@ -359,6 +376,7 @@
 <span class="sd">            The finite length ray that is checked for intersections with</span>
 <span class="sd">            the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>  <span class="c1"># validate the arguments</span>
         <span class="n">crossings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intersect_axis_aligned_box</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="c1"># two crossings indicates a full-shield crossing</span>
         <span class="c1"># one crossing indicates that either (common) the source is</span>
@@ -535,6 +553,8 @@
 <span class="sd">        photon_energy : float</span>
 <span class="sd">            The photon energy in MeV</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># validate the arguments</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
 
@@ -547,6 +567,7 @@
 <span class="sd">            The finite length ray that is checked for intersections</span>
 <span class="sd">            with the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>  <span class="c1"># validate the arguments</span>
         <span class="c1"># get a list of crossing points</span>
         <span class="n">crossings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intersect</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="c1"># zero crossings can indicate that either both source and</span>
@@ -655,9 +676,6 @@
                                 <span class="n">inner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_radius</span><span class="p">,</span>
                                 <span class="n">outer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">outer_radius</span><span class="p">,</span> <span class="n">c_res</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
             <span class="n">cyl1</span> <span class="o">=</span> <span class="n">disc</span><span class="o">.</span><span class="n">extrude</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="o">*</span><span class="mi">4000</span><span class="p">,</span> <span class="n">capping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="c1"># innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)</span>
-            <span class="c1"># outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)</span>
-            <span class="c1"># result = outerCylinder.boolean_difference(innerCylinder)</span>
             <span class="k">return</span> <span class="n">cyl1</span></div></div>
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -843,6 +861,8 @@
 <span class="sd">        photon_energy : float</span>
 <span class="sd">            The photon energy in MeV</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># validate the arguments</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
 
@@ -855,6 +875,7 @@
 <span class="sd">            The finite length ray that is checked for intersections</span>
 <span class="sd">            with the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>  <span class="c1"># validate the arguments</span>
         <span class="c1"># get a list of crossing points</span>
         <span class="n">crossings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intersect</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="c1"># two crossings indicates a full-shield crossing</span>
@@ -1059,10 +1080,12 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">,</span> <span class="n">cylinder_length</span><span class="p">,</span>
                  <span class="n">cylinder_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">cylinder_start</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">cylinder_length</span> <span class="o">/</span>
-                          <span class="mi">2</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
-        <span class="n">cylinder_end</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">cylinder_length</span> <span class="o">/</span>
-                        <span class="mi">2</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="n">cylinder_start</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">cylinder_length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                          <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                          <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="n">cylinder_end</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">cylinder_length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                        <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span>
                          <span class="n">cylinder_start</span><span class="o">=</span><span class="n">cylinder_start</span><span class="p">,</span>
                          <span class="n">cylinder_end</span><span class="o">=</span><span class="n">cylinder_end</span><span class="p">,</span>
@@ -1105,9 +1128,11 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">,</span> <span class="n">cylinder_length</span><span class="p">,</span>
                  <span class="n">cylinder_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">cylinder_start</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">cylinder_start</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                           <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">cylinder_length</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
-        <span class="n">cylinder_end</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">cylinder_end</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                         <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">cylinder_length</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span>
                          <span class="n">cylinder_start</span><span class="o">=</span><span class="n">cylinder_start</span><span class="p">,</span>

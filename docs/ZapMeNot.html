@@ -169,10 +169,21 @@ and the exposure buildup factor of the requested material.</p>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><a class="reference internal" href="#zap_me_not.material.Material.name" title="zap_me_not.material.Material.name"><strong>name</strong></a> – </p></li>
-<li><p><strong>density</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Density of the material in g/cm<sup>3</sup></p></li>
+<li><p><a class="reference internal" href="#zap_me_not.material.Material.density" title="zap_me_not.material.Material.density"><strong>density</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Density of the material in g/cm<sup>3</sup></p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="zap_me_not.material.Material.density">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">density</span></code><a class="headerlink" href="#zap_me_not.material.Material.density" title="Permalink to this definition">¶</a></dt>
+<dd><p>The density of the material</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="zap_me_not.material.Material.get_buildup_factor">
 <code class="sig-name descname"><span class="pre">get_buildup_factor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mfps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GP'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/material.html#Material.get_buildup_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.material.Material.get_buildup_factor" title="Permalink to this definition">¶</a></dt>
@@ -391,7 +402,7 @@ uncollided energy flux, uncollided exposure, and total exposure</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filler_material</strong> (<a class="reference internal" href="#zap_me_not.material.Material" title="zap_me_not.material.Material"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.material.Material</span></code></a>) – The material to be used.</p></li>
+<li><p><strong>filler_material</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The material to be used.</p></li>
 <li><p><strong>density</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – The density of the material in g/cm<sup>3</sup>.</p></li>
 </ul>
 </dd>
@@ -707,7 +718,7 @@ the shield.</p></li>
 <dl class="py class">
 <dt id="zap_me_not.shield.Shield">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">zap_me_not.shield.</span></code><code class="sig-name descname"><span class="pre">Shield</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#Shield"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.Shield" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>Abtract class to model a photon shield.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -723,12 +734,12 @@ the shield.</p></li>
 </dl>
 <dl class="py method">
 <dt id="zap_me_not.shield.Shield.get_crossing_mfp">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_crossing_mfp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#Shield.get_crossing_mfp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.Shield.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get_crossing_mfp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a_ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/shield.html#Shield.get_crossing_mfp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.shield.Shield.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+<li><p><strong>a_ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
 with the shield.</p></li>
 <li><p><strong>photon_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The photon energy in MeV</p></li>
 </ul>
@@ -1445,7 +1456,7 @@ option.</p>
 
 <dl class="py method">
 <dt id="zap_me_not.source.LineSource.is_infinite">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.LineSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#LineSource.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.LineSource.is_infinite" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
@@ -1629,7 +1640,7 @@ option.</p>
 
 <dl class="py method">
 <dt id="zap_me_not.source.PointSource.is_infinite">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.PointSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_infinite</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#PointSource.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.PointSource.is_infinite" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
@@ -1685,7 +1696,7 @@ Isotope object and an activity in Bq.</p>
 <dl class="py class">
 <dt id="zap_me_not.source.Source">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">zap_me_not.source.</span></code><code class="sig-name descname"><span class="pre">Source</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#Source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.Source" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>Abtract class to model a radiation source.</p>
 <p>Maintains a list of isotopes and can return a list of point source
 locations within the body of the Source.</p>
@@ -1822,7 +1833,7 @@ Isotope object and an activity in Bq.</p>
 <dl class="py class">
 <dt id="zap_me_not.source.XAlignedCylinderSource">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">zap_me_not.source.</span></code><code class="sig-name descname"><span class="pre">XAlignedCylinderSource</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#XAlignedCylinderSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zap_me_not.source.Source" title="zap_me_not.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.source.Source</span></code></a>, <a class="reference internal" href="#zap_me_not.shield.YAlignedCylinder" title="zap_me_not.shield.YAlignedCylinder"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.shield.YAlignedCylinder</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#zap_me_not.source.Source" title="zap_me_not.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.source.Source</span></code></a>, <a class="reference internal" href="#zap_me_not.shield.XAlignedCylinder" title="zap_me_not.shield.XAlignedCylinder"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.shield.XAlignedCylinder</span></code></a></p>
 <p>Models a cylindrical source axis-aligned with the X axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

@@ -33,7 +33,8 @@
   <h1>Source code for zap_me_not.model</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ray</span><span class="p">,</span> <span class="n">material</span>
+<span class="kn">import</span> <span class="nn">numbers</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ray</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">shield</span><span class="p">,</span> <span class="n">detector</span>
 
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
@@ -89,13 +90,17 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        filler_material : :class:`zap_me_not.material.Material`</span>
+<span class="sd">        filler_material : str</span>
 <span class="sd">            The material to be used.</span>
 <span class="sd">        density : float, optional</span>
 <span class="sd">            The density of the material in g/cm\ :sup:`3`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filler_material</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid filler material&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="n">filler_material</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">density</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid density: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">density</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span></div>
 
 <div class="viewcode-block" id="Model.add_source"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.add_source">[docs]</a>    <span class="k">def</span> <span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">):</span>
@@ -106,6 +111,9 @@
 <span class="sd">        new_source : :class:`zap_me_not.source.Source`</span>
 <span class="sd">            The source to be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_source</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid source&quot;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">new_source</span>
         <span class="c1"># don&#39;t forget that sources are shields too!</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_source</span><span class="p">)</span></div>
@@ -118,6 +126,8 @@
 <span class="sd">        new_shield : :class:`zap_me_not.shield.Shield`</span>
 <span class="sd">            The shield to be added.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_shield</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid shield&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_shield</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Model.add_detector"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.add_detector">[docs]</a>    <span class="k">def</span> <span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">):</span>
@@ -128,6 +138,8 @@
 <span class="sd">        new_detector : :class:`zap_me_not.detector.Detector`</span>
 <span class="sd">            The detector to be used in the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_detector</span><span class="p">,</span> <span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid detector&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="n">new_detector</span></div>
 
 <div class="viewcode-block" id="Model.set_buildup_factor_material"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.set_buildup_factor_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_buildup_factor_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_material</span><span class="p">):</span>
@@ -138,6 +150,8 @@
 <span class="sd">        new_material : :class:`zap_me_not.material.Material`</span>
 <span class="sd">            The material to be used in buildup factor calculations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_material</span><span class="p">,</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid buildup factor material&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span> <span class="o">=</span> <span class="n">new_material</span></div>
 
 <div class="viewcode-block" id="Model.calculate_exposure"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.calculate_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -154,15 +168,15 @@
 <span class="sd">            The exposure in units of mR/hr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">results_by_photon_energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_summary</span><span class="p">()</span>
-        <span class="c1"># print(len(results_by_photon_energy))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results_by_photon_energy</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">results_by_photon_energy</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> \
-                <span class="mi">1000</span><span class="o">*</span><span class="mi">3600</span>  <span class="c1"># convert from R/sec to mR/hr</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results_by_photon_energy</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># may occur if source has no photons</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">results_by_photon_energy</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">results_by_photon_energy</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># mR/hr</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># sum exposure over all photons</span>
             <span class="n">an_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results_by_photon_energy</span><span class="p">)</span>
             <span class="n">integral_results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">an_array</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span>
-            <span class="k">return</span> <span class="n">integral_results</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="mi">3600</span>  <span class="c1"># convert from R/sec to mR/hr</span></div>
+            <span class="k">return</span> <span class="n">integral_results</span>  <span class="c1"># mR/hr</span></div>
 
 <div class="viewcode-block" id="Model.generate_summary"><a class="viewcode-back" href="../../ZapMeNot.html#zap_me_not.model.Model.generate_summary">[docs]</a>    <span class="k">def</span> <span class="nf">generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the energy flux and exposure at the detector location.</span>
@@ -184,6 +198,10 @@
         <span class="c1"># The total transit distance in the &quot;filler&quot; material (if any)</span>
         <span class="c1"># is determined by subtracting the sum of the shield crossing</span>
         <span class="c1"># lengths from the total ray length.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Model is missing a source&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Model is missing a detector&quot;</span><span class="p">)</span>
         <span class="n">source_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">()</span>
         <span class="n">source_point_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_point_weights</span><span class="p">()</span>
         <span class="n">crossing_distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">source_points</span><span class="p">),</span>
@@ -192,9 +210,9 @@
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">nextPoint</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">source_points</span><span class="p">):</span>
             <span class="n">vector</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">(</span><span class="n">nextPoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
             <span class="n">total_distance</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="o">.</span><span class="n">length</span>
-            <span class="k">for</span> <span class="n">index2</span><span class="p">,</span> <span class="n">shield</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">index2</span><span class="p">,</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">):</span>
                 <span class="n">crossing_distances</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">index2</span><span class="p">]</span> <span class="o">=</span> \
-                    <span class="n">shield</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+                    <span class="n">thisShield</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
         <span class="n">gaps</span> <span class="o">=</span> <span class="n">total_distance</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">crossing_distances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">results_by_photon_energy</span> <span class="o">=</span> <span class="p">[]</span>
@@ -213,9 +231,9 @@
 
             <span class="c1"># determine the xsecs</span>
             <span class="n">xsecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">)))</span>
-            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">shield</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">):</span>
-                <span class="n">xsecs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">shield</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> \
-                    <span class="n">shield</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mass_atten_coeff</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">):</span>
+                <span class="n">xsecs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> \
+                    <span class="n">thisShield</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mass_atten_coeff</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">)</span>
             <span class="c1"># determine an array of mean free paths, one per source point</span>
             <span class="n">total_mfp</span> <span class="o">=</span> <span class="n">crossing_distances</span> <span class="o">*</span> <span class="n">xsecs</span>
             <span class="n">total_mfp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">total_mfp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -231,14 +249,14 @@
                         <span class="n">photon_energy</span><span class="p">,</span> <span class="n">total_mfp</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">buildup_factor</span> <span class="o">=</span> <span class="mf">1.0</span>
-
-            <span class="n">uncollided_point_energy_flux</span> <span class="o">=</span> <span class="n">photon_yield</span> <span class="o">*</span> <span class="n">source_point_weights</span>\
+            <span class="n">uncollided_point_energy_flux</span> <span class="o">=</span> <span class="n">photon_yield</span> <span class="o">*</span> \
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">source_point_weights</span><span class="p">)</span> \
                 <span class="o">*</span> <span class="n">uncollided_flux_factor</span> <span class="o">*</span> <span class="n">photon_energy</span> <span class="o">*</span> \
                 <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">total_distance</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
             <span class="n">total_uncollided_energy_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uncollided_point_energy_flux</span><span class="p">)</span>
 
             <span class="n">uncollided_point_exposure</span> <span class="o">=</span> <span class="n">uncollided_point_energy_flux</span> <span class="o">*</span> \
-                <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">*</span> <span class="n">dose_coeff</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">*</span> <span class="n">dose_coeff</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">3600</span>  <span class="c1"># mR/hr</span>
             <span class="n">total_uncollided_exposure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uncollided_point_exposure</span><span class="p">)</span>
 
             <span class="n">collided_point_exposure</span> <span class="o">=</span> <span class="n">uncollided_point_exposure</span> <span class="o">*</span> \
@@ -262,18 +280,18 @@
             <span class="n">shieldColor</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
             <span class="c1"># find the bounding box for all finite bodies</span>
             <span class="n">blocks</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">MultiBlock</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">shield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">shield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
-                    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shield</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
+                    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
             <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
             <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
             <span class="n">pl</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Plotter</span><span class="p">()</span>
             <span class="c1"># increase the display bounds by a smidge to avoid</span>
             <span class="c1">#   inadvertent clipping</span>
             <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="mf">1.01</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">blocks</span><span class="o">.</span><span class="n">bounds</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">shield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">shield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
-                    <span class="n">clip1</span> <span class="o">=</span> <span class="n">shield</span><span class="o">.</span><span class="n">vtk</span><span class="p">()</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
+            <span class="k">for</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
+                    <span class="n">clip1</span> <span class="o">=</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">()</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
                         <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-z&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]])</span>
                     <span class="n">clip2</span> <span class="o">=</span> <span class="n">clip1</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
                         <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
@@ -287,7 +305,7 @@
                         <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
                     <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clip6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">shield</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
+                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">sourceColor</span><span class="p">,</span>
                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">)</span>
