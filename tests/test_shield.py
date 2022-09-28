@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from zap_me_not import shield, ray, material
+from zap_me_not import shield, ray
 
 pytestmark = pytest.mark.basic
 
@@ -367,9 +367,10 @@ class TestYAlignedInfiniteAnnulus():
 
     @pytest.fixture(scope="class")
     def create_shield(self):
-        myShield = shield.YAlignedInfiniteAnnulus("iron", cylinder_center=[0, 0, -50],
-                                          cylinder_inner_radius=2,
-                                          cylinder_outer_radius=4, density=2)
+        myShield = shield.YAlignedInfiniteAnnulus(
+            "iron", cylinder_center=[0, 0, -50],
+            cylinder_inner_radius=2,
+            cylinder_outer_radius=4, density=2)
         return myShield
 
     def test_init(self, create_shield):
@@ -384,9 +385,10 @@ class TestXAlignedInfiniteAnnulus():
 
     @pytest.fixture(scope="class")
     def create_shield(self):
-        myShield = shield.XAlignedInfiniteAnnulus("iron", cylinder_center=[0, 0, -50],
-                                          cylinder_inner_radius=2,
-                                          cylinder_outer_radius=4, density=2)
+        myShield = shield.XAlignedInfiniteAnnulus(
+            "iron", cylinder_center=[0, 0, -50],
+            cylinder_inner_radius=2,
+            cylinder_outer_radius=4, density=2)
         return myShield
 
     def test_init(self, create_shield):
@@ -401,9 +403,10 @@ class TestZAlignedInfiniteAnnulus():
 
     @pytest.fixture(scope="class")
     def create_shield(self):
-        myShield = shield.ZAlignedInfiniteAnnulus("iron", cylinder_center=[0, 0, -50],
-                                          cylinder_inner_radius=2,
-                                          cylinder_outer_radius=4, density=2)
+        myShield = shield.ZAlignedInfiniteAnnulus(
+            "iron", cylinder_center=[0, 0, -50],
+            cylinder_inner_radius=2,
+            cylinder_outer_radius=4, density=2)
         return myShield
 
     def test_init(self, create_shield):

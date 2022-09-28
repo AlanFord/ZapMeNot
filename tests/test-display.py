@@ -1,21 +1,22 @@
 import pytest
-import pyvista
 
-from zap_me_not import model,source,shield,detector,material
+from zap_me_not import model, source, shield, detector
 
 pytestmark = pytest.mark.graphics
 
-#=============================================================
+# =============================================================
 """
 class TestVTK():
     def test_Case0(self):
             # basic test of pyvista - plot a cylinder
-            cylinder = pyvista.Cylinder(center=[1, 2, 3], direction=[1, 1, 1], radius=1, height=2)
+            cylinder = pyvista.Cylinder(
+                center=[1, 2, 3], direction=[1, 1, 1], radius=1, height=2)
             cylinder.plot(show_edges=False, line_width=5, cpos='xy')
 
     def test_Case1(self):
         # basic test of pyvista plotter
-        cylinder = pyvista.Cylinder(center=[0, 0, 0], direction=[0, 0, 1], radius=1, height=2)
+        cylinder = pyvista.Cylinder(
+            center=[0, 0, 0], direction=[0, 0, 1], radius=1, height=2)
         pl = pyvista.Plotter()
         pl.add_axes(color='black', xlabel='X', labels_off=False)
         pl.add_mesh(cylinder,line_width=5)
@@ -34,28 +35,31 @@ class TestVTK():
         pl.add_mesh(result,line_width=5,color='tan',style='wireframe')
         pl.show()
 """
+
+
 class TestModel():
 
     def test_PointSource(self):
         # simple test of model display and a point source
         myModel = model.Model()
-        mySource = source.PointSource(0,0,10)
-        photonEnergy = 1.0 # MeV
-        photonIntensity = 3E10 # photons/sec
-        mySource.add_photon(photonEnergy,photonIntensity)
+        mySource = source.PointSource(0, 0, 10)
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
         myModel.add_source(mySource)
-        myModel.add_detector(detector.Detector(100,0,0))
-        myModel.add_shield(shield.Box("iron", box_center=[15,0,0],box_dimensions=[10,30,30]))
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.Box(
+            "iron", box_center=[15, 0, 0], box_dimensions=[10, 30, 30]))
         myModel.display()
 
     def test_Cylinder(self):
         myModel = model.Model()
-        mySource = source.PointSource(0,0,0)
-        photonEnergy = 1.0 # MeV
-        photonIntensity = 3E10 # photons/sec
-        mySource.add_photon(photonEnergy,photonIntensity)
+        mySource = source.PointSource(0, 0, 0)
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
         myModel.add_source(mySource)
-        myModel.add_detector(detector.Detector(100,0,0))
-        myModel.add_shield(shield.Box("iron", box_center=[15,0,0],box_dimensions=[10,10,10]))
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.Box(
+            "iron", box_center=[15, 0, 0], box_dimensions=[10, 10, 10]))
         myModel.display()
-

@@ -220,7 +220,6 @@ class TestLineSource():
                                     [10.5, 11.5, 12.5]])
 
     def test_getSourcePointWeights(self, create_source):
-        number_of_points = create_source.points_per_dimension
         assert create_source._get_source_point_weights() == [1.0 / 10] * 10
 
     def test_infinite(self, create_source):
@@ -276,7 +275,6 @@ class TestBoxSource():
                                     (1.677, 5.15632e-04 * 3.7e10 * 3.14)])
 
     def test_getSourcePointWeights(self, create_source):
-        number_of_points = create_source.points_per_dimension
         the_list = [1.0 / 1000] * 1000
         assert create_source._get_source_point_weights() == the_list
 
@@ -342,7 +340,6 @@ class TestXAlignedCylinderSource():
              [8.3333333333E00, -3.9328304624E00, -2.2706207262E00]])
 
     def test_getSourcePointWeights(self, create_source):
-        number_of_points = create_source.points_per_dimension
         the_list = [1.0 / 27] * 27
         assert create_source._get_source_point_weights() == the_list
 
@@ -408,7 +405,6 @@ class TestYAlignedCylinderSource():
              [2.2706207262E00, 8.3333333333E00, 3.9328304624E00]])
 
     def test_getSourcePointWeights(self, create_source):
-        number_of_points = create_source.points_per_dimension
         the_list = [1.0 / 27] * 27
         assert create_source._get_source_point_weights() == the_list
 
@@ -474,6 +470,5 @@ class TestZAlignedCylinderSource():
              [2.2706207262e+00, -3.9328304624e+00, 8.3333333333e+00]])
 
     def test_getSourcePointWeights(self, create_source):
-        number_of_points = create_source.points_per_dimension
         the_list = [1.0 / 27] * 27
         assert create_source._get_source_point_weights() == the_list

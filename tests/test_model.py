@@ -27,10 +27,12 @@ class TestPointSource():
         responseFunction = 1.835E-8*1.0*2.787E-02
         analyticalDose = photonFlux*responseFunction  # R/sec
         # the "other code" gives 440.1 mR/hr at an air density of 1e-12g/cc
-        assert result == pytest.approx(analyticalDose*1000*3600)  # convert from R/sec to mR/hr
+        # convert from R/sec to mR/hr
+        assert result == pytest.approx(analyticalDose*1000*3600)
 
     # a point source with infinite yz shields
-    # Reference: tests/reference_calculations/test_model/test_Case1.m (matlab script)
+    # Reference:
+    # tests/reference_calculations/test_model/test_Case1.m (matlab script)
     def test_Case1(self):
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 0)
@@ -43,10 +45,12 @@ class TestPointSource():
         myModel.add_detector(detector.Detector(100, 0, 0))
         myModel.set_buildup_factor_material(material.Material('iron'))
         result = myModel.calculate_exposure()
-        assert result == pytest.approx(2.218926692201381e-06*1000*3600)  # convert from R/sec to mR/hr
+        assert result == pytest.approx(
+            2.218926692201381e-06*1000*3600)  # convert from R/sec to mR/hr
 
     # a point source (single photon) with a single infinite yz shield
-    # Reference: tests/reference_calculations/test_model/test_Case2.m (matlab script)
+    # Reference:
+    # tests/reference_calculations/test_model/test_Case2.m (matlab script)
     def test_Case2(self):
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 0)
@@ -57,10 +61,13 @@ class TestPointSource():
         myModel.add_detector(detector.Detector(100, 0, 0))
         myModel.set_buildup_factor_material(material.Material('iron'))
         result = myModel.calculate_exposure()
-        assert result == pytest.approx(7.057332942044014e-06*1000*3600)  # convert from R/sec to mR/hr
+        assert result == pytest.approx(
+            7.057332942044014e-06*1000*3600)  # convert from R/sec to mR/hr
 
-    # a point source (multiple photons) with two separate infinite yz shields, on-axis source/detector
-    # Reference: tests/reference_calculations/test_model/test_Case3.m (matlab script)
+    # a point source (multiple photons) with two separate infinite yz shields,
+    #   on-axis source/detector
+    # Reference:
+    # tests/reference_calculations/test_model/test_Case3.m (matlab script)
     def test_Case3(self):
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 0)
@@ -73,10 +80,13 @@ class TestPointSource():
         myModel.add_detector(detector.Detector(100, 0, 0))
         myModel.set_buildup_factor_material(material.Material('iron'))
         result = myModel.calculate_exposure()
-        assert result == pytest.approx(4.397872839310016e-06*1000*3600)  # convert from R/sec to mR/hr
+        assert result == pytest.approx(
+            4.397872839310016e-06*1000*3600)  # convert from R/sec to mR/hr
 
-    # a point source (multiple photons) with two separate infinite yz shields, off-axis source/detector
-    # Reference: tests/reference_calculations/test_model/test_Case4.m (matlab script)
+    # a point source (multiple photons) with two separate infinite yz shields,
+    #   off-axis source/detector
+    # Reference:
+    # tests/reference_calculations/test_model/test_Case4.m (matlab script)
     def test_Case4(self):
         myModel = model.Model()
         mySource = source.PointSource(1, 2, 3)
@@ -89,9 +99,11 @@ class TestPointSource():
         myModel.add_detector(detector.Detector(80, 90, 100))
         myModel.set_buildup_factor_material(material.Material('iron'))
         result = myModel.calculate_exposure()
-        assert result == pytest.approx(1.691532556992041e-07*1000*3600)  # convert from R/sec to mR/hr
+        assert result == pytest.approx(
+            1.691532556992041e-07*1000*3600)  # convert from R/sec to mR/hr
 
-    # a point source (no photons) with two separate infinite yz shields, off-axis source/detector
+    # a point source (no photons) with two separate infinite yz shields,
+    #   off-axis source/detector
     def test_Case5(self):
         myModel = model.Model()
         mySource = source.PointSource(1, 2, 3)
@@ -111,7 +123,8 @@ class TestPointSource():
 class TestLineSource():
 
     # line source with no shielding
-    # reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
+    # reference dose calculated from Principles of Radiation Shielding,
+    #   A. B. Chilton, J. K. Shultis, R. E. Faw
     # from the reference, pages 132, 157, and 159, th dose rate is 64.66 mR/hr
     # Microshield gives 64.74 mR/hr at an air density of 1e-12g/cc
     def test_Case0(self):
@@ -125,17 +138,20 @@ class TestLineSource():
         myModel.add_detector(detector.Detector(100, 0, 0))
         result = myModel.calculate_exposure()
         linearPhotonSource = photonIntensity/1000
-        photonFlux = linearPhotonSource/100*math.atan(1000/100)  # photons/sec/cm2
+        photonFlux = linearPhotonSource / \
+            100*math.atan(1000/100)  # photons/sec/cm2
         responseFunction = 1.835E-8*1.0*2.787E-02/4/math.pi
         analyticalDose = photonFlux*responseFunction  # R/sec
-        assert result == pytest.approx(analyticalDose*1000*3600)  # convert from R/sec to mR/hr
+        assert result == pytest.approx(
+            analyticalDose*1000*3600)  # convert from R/sec to mR/hr
 
 
 # =============================================================
 class TestZAlignedCylinderSource():
 
     # line source with no shielding
-    # reference dose calculated from Principles of Radiation Shielding, A. B. Chilton, J. K. Shultis, R. E. Faw
+    # reference dose calculated from Principles of Radiation Shielding,
+    #   A. B. Chilton, J. K. Shultis, R. E. Faw
     # from the reference, pages 132, 157, and 159, the dose rate is 271.8 mR/hr
     # Microshield gives 271.8 mR/hr at an air density of 1e-12g/cc
     def test_Case0(self):
@@ -220,8 +236,10 @@ def test_bad_model2():
         myModel.calculate_exposure()  # missing detector
 
 
-# a point source (multiple photons) with two separate infinite yz shields, on-axis source/detector
-# Reference: tests/reference_calculations/test_model/test_Case3.m (matlab script)
+# a point source (multiple photons) with two separate infinite yz shields,
+#   on-axis source/detector
+# Reference:
+# tests/reference_calculations/test_model/test_Case3.m (matlab script)
 def test_generate_summary():
     myModel = model.Model()
     mySource = source.PointSource(0, 0, 0)
@@ -234,7 +252,8 @@ def test_generate_summary():
     myModel.add_detector(detector.Detector(100, 0, 0))
     myModel.set_buildup_factor_material(material.Material('iron'))
     result = myModel.calculate_exposure()
-    assert result == pytest.approx(4.397872839310016e-06*1000*3600)  # convert from R/sec to mR/hr
+    assert result == pytest.approx(
+        4.397872839310016e-06*1000*3600)  # convert from R/sec to mR/hr
     expected_summary = [[1.29364, 29748000000, 1371.11990617,
                          6.61910474907e-07*1000*3600,
                          4.39362181896e-06*1000*3600],
@@ -246,7 +265,8 @@ def test_generate_summary():
 
 
 # a point source with infinite yz shields
-# Reference: tests/reference_calculations/test_model/test_Case1.m (matlab script)
+# Reference:
+# tests/reference_calculations/test_model/test_Case1.m (matlab script)
 def test_generate_summary_single_photon():
     myModel = model.Model()
     mySource = source.PointSource(0, 0, 0)
@@ -259,10 +279,12 @@ def test_generate_summary_single_photon():
     myModel.add_detector(detector.Detector(100, 0, 0))
     myModel.set_buildup_factor_material(material.Material('iron'))
     result = myModel.calculate_exposure()
-    assert result == pytest.approx(2.218926692201380e-06*1000*3600)  # convert from R/sec to mR/hr
+    assert result == pytest.approx(
+        2.218926692201380e-06*1000*3600)  # convert from R/sec to mR/hr
     # the summary should generate a list containing one list of the following:
     # energy (MeV), photon emmission rate (photons/sec),
-    # uncollided energy flux (MeV/sec), uncollided exposure (mR/hr), and total exposure (mR/hr)
+    # uncollided energy flux (MeV/sec), uncollided exposure (mR/hr),
+    #   and total exposure (mR/hr)
     expected_summary = [[1.0, 3.0E10, 5.066988280960838e+02,
                          2.591331278213446e-07*1000*3600,
                          2.218926692201381e-06*1000*3600]]

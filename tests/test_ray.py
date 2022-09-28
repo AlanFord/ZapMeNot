@@ -7,6 +7,7 @@ from zap_me_not import ray
 
 pytestmark = pytest.mark.basic
 
+
 # test calculation of ray length
 # reference: hand calculation
 def test_ray_length():
@@ -15,6 +16,7 @@ def test_ray_length():
     aaa = ray.FiniteLengthRay(start, end)
     assert all(aaa.origin == np.array(start))
     assert aaa.length == pytest.approx(math.sqrt(3.))
+
 
 # test calculaton of ray properties dir, invdir, sign
 # reference: hand calculation
@@ -30,33 +32,35 @@ def test_ray_unit_vector():
     assert all(aaa.dir == np.array([part, part, part]))
     assert all(aaa.invdir == np.array([1/part, 1/part, 1/part]))
     assert all(aaa.sign == np.array([False, False, False]))
-    
+
+
 # test invalid initializations
 def test_ray_error_trapping():
     start = [1, 1, 1, 1]
     end = [2, 2, 2]
     with pytest.raises(ValueError):
-        aaa = ray.FiniteLengthRay(start, end) # start vector too long
+        aaa = ray.FiniteLengthRay(start, end)  # start vector too long
     start = [1, 1, 1]
     end = [2, 2, 2, 2]
     with pytest.raises(ValueError):
-        aaa = ray.FiniteLengthRay(start, end) # end vector too long
+        aaa = ray.FiniteLengthRay(start, end)  # end vector too long
     start = "start"
     end = [2, 2, 2]
     with pytest.raises(ValueError):
-        aaa = ray.FiniteLengthRay(start, end) # non-numeric start
+        aaa = ray.FiniteLengthRay(start, end)  # non-numeric start
     start = [1, 1, "start"]
     end = [2, 2, 2]
     with pytest.raises(ValueError):
-        aaa = ray.FiniteLengthRay(start, end) # non-numeric start
+        aaa = ray.FiniteLengthRay(start, end)  # non-numeric start
     start = [1, 1, 1]
     end = "end"
     with pytest.raises(ValueError):
-        aaa = ray.FiniteLengthRay(start, end) # non-numeric end
+        aaa = ray.FiniteLengthRay(start, end)  # non-numeric end
     start = [1, 1, 1]
     end = [2, 2, "end"]
     with pytest.raises(ValueError):
-        aaa = ray.FiniteLengthRay(start, end) # non-numeric end
+        aaa = ray.FiniteLengthRay(start, end)  # non-numeric end
+
 
 def test_ray_properties():
     start = [1, 1, 1]
@@ -74,4 +78,3 @@ def test_ray_properties():
         aaa.end = "waldo"
     with pytest.raises(ValueError):
         aaa.end = [4, 4, "waldo"]
-
