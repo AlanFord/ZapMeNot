@@ -205,7 +205,8 @@ class SemiInfiniteXSlab(Shield):
         photon_energy : float
             The photon energy in MeV
         """
-        super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
+        # validate the arguments
+        super().get_crossing_mfp(ray, photon_energy)
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
@@ -328,7 +329,8 @@ class Box(Shield):
         photon_energy : float
             The photon energy in MeV
         """
-        super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
+        # validate the arguments
+        super().get_crossing_mfp(ray, photon_energy)
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
@@ -518,7 +520,8 @@ class InfiniteAnnulus(Shield):
         photon_energy : float
             The photon energy in MeV
         """
-        super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
+        # validate the arguments
+        super().get_crossing_mfp(ray, photon_energy)
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
@@ -640,9 +643,6 @@ class InfiniteAnnulus(Shield):
                                 inner=self.inner_radius,
                                 outer=self.outer_radius, c_res=50)
             cyl1 = disc.extrude(self.dir*4000, capping=True)
-            # innerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.inner_radius)
-            # outerCylinder = pyvista.Cylinder(center=(self.origin[0],self.origin[1],self.origin[2]),direction=self.dir,height=2000,radius=self.outer_radius)
-            # result = outerCylinder.boolean_difference(innerCylinder)
             return cyl1
 
 # -----------------------------------------------------------
@@ -828,7 +828,8 @@ class CappedCylinder(Shield):
         photon_energy : float
             The photon energy in MeV
         """
-        super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
+        # validate the arguments
+        super().get_crossing_mfp(ray, photon_energy)
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
@@ -1047,10 +1048,10 @@ class XAlignedCylinder(CappedCylinder):
     def __init__(self, material_name, cylinder_center, cylinder_length,
                  cylinder_radius, density=None):
         cylinder_start = [cylinder_center[0]-cylinder_length / 2,
-                          cylinder_center[1], 
+                          cylinder_center[1],
                           cylinder_center[2]]
         cylinder_end = [cylinder_center[0]+cylinder_length / 2,
-                        cylinder_center[1], 
+                        cylinder_center[1],
                         cylinder_center[2]]
         super().__init__(material_name=material_name, density=density,
                          cylinder_start=cylinder_start,

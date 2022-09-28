@@ -2,6 +2,7 @@ import numpy as np
 import numbers
 from collections.abc import Iterable
 
+
 class FiniteLengthRay:
     """Represents a ray in three-space.
 
@@ -78,7 +79,7 @@ class FiniteLengthRay:
         self.sign[0] = int((self.invdir[0] < 0))
         self.sign[1] = int((self.invdir[1] < 0))
         self.sign[2] = int((self.invdir[2] < 0))
-        
+
     @staticmethod
     def _is_validate_vector(vector):
         # vector should be a list
@@ -91,5 +92,3 @@ class FiniteLengthRay:
         if not all([isinstance(item, numbers.Number) for item in vector]):
             return False
         return True
-        
-    

@@ -1,7 +1,7 @@
 from scipy.interpolate import Akima1DInterpolator
 import numpy as np
 import numbers
-from collections.abc import Iterable
+# from collections.abc import Iterable
 import yaml
 import pkg_resources
 
@@ -201,10 +201,10 @@ class Material:
             raise ValueError("Only GP Buildup Factors are currently supported")
         if not isinstance(energy, numbers.Number):
             raise ValueError("Invalid energy: " + str(energy))
-            
+
         try:
             mfp = np.array(mfps, dtype=float)
-        except:
+        except Exception:
             raise ValueError("mfps have invalid array structure")
         # mfps must be non-negative
         if np.amin(mfp) < 0:
