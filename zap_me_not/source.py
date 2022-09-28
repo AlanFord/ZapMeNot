@@ -285,7 +285,7 @@ class LineSource(Source, shield.Shield):
         super().__init__(**kwargs)
         # initialize points_per_dimension after super() to force a
         # single dimension
-        self.points_per_dimension = [10]
+        self.points_per_dimension = [10, 1, 1]
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
@@ -294,7 +294,7 @@ class LineSource(Source, shield.Shield):
 
     def _get_source_point_weights(self):
         return [1.0 / np.product(self.points_per_dimension)] * \
-            np.sum(self.points_per_dimension)
+            np.product(self.points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -306,7 +306,7 @@ class LineSource(Source, shield.Shield):
         """
         spacings = np.linspace(1, self.points_per_dimension[0],
                                self.points_per_dimension[0])
-        mesh_width = self._length/self.points_per_dimension
+        mesh_width = self._length/self.points_per_dimension[0]
         spacings = spacings*mesh_width
         spacings = spacings-(mesh_width/2)
         source_points = []
@@ -400,7 +400,7 @@ class PointSource(Source, shield.Shield):
         kwargs['material_name'] = 'air'
         kwargs['density'] = 0
         super().__init__(**kwargs)
-        self.points_per_dimension = [1]
+        self.points_per_dimension = [1, 1, 1]
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
@@ -409,7 +409,7 @@ class PointSource(Source, shield.Shield):
 
     def _get_source_point_weights(self):
         return [1.0 / np.product(self.points_per_dimension)] * \
-            np.sum(self.points_per_dimension)
+            np.product(self.points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -548,7 +548,7 @@ class BoxSource(Source, shield.Box):
 
     def _get_source_point_weights(self):
         return [1.0 / np.product(self.points_per_dimension)] * \
-            np.sum(self.points_per_dimension)
+            np.product(self.points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -590,7 +590,7 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 
     def _get_source_point_weights(self):
         return [1.0 / np.product(self.points_per_dimension)] * \
-            np.sum(self.points_per_dimension)
+            np.product(self.points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -659,7 +659,7 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
 
     def _get_source_point_weights(self):
         return [1.0 / np.product(self.points_per_dimension)] * \
-            np.sum(self.points_per_dimension)
+            np.product(self.points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -728,7 +728,7 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
 
     def _get_source_point_weights(self):
         return [1.0 / np.product(self.points_per_dimension)] * \
-            np.sum(self.points_per_dimension)
+            np.product(self.points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.

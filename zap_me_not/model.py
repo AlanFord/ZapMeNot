@@ -216,8 +216,7 @@ class Model:
                         photon_energy, total_mfp)
             else:
                 buildup_factor = 1.0
-
-            uncollided_point_energy_flux = photon_yield * source_point_weights\
+            uncollided_point_energy_flux = photon_yield * np.asarray(source_point_weights) \
                 * uncollided_flux_factor * photon_energy * \
                 (1/(4*math.pi*np.power(total_distance, 2)))
             total_uncollided_energy_flux = np.sum(uncollided_point_energy_flux)

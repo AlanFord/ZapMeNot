@@ -117,7 +117,7 @@ class TestLineSource():
     def test_Case0(self):
         myModel = model.Model()
         mySource = source.LineSource([0, 0, 0], [0, 0, 1000])
-        mySource.points_per_dimension = 100
+        mySource.points_per_dimension = [100, 1, 1]
         photonEnergy = 1.0  # MeV
         photonIntensity = 3E10  # photons/sec
         mySource.add_photon(photonEnergy, photonIntensity)
