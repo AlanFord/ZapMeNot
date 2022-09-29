@@ -129,45 +129,63 @@ latex_documents = [(
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-#html_theme = 'wolph'
-html_theme = 'alabaster'
+# html_theme = 'wolph'
+# html_theme = 'alabaster'
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#html_theme_options = {}
+# html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = ['_theme']
+# html_theme_path = ['_theme']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = None
+# html_title = None
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = 'ZapMeNot docs'
+# html_short_title = 'ZapMeNot docs'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-#html_favicon = 'favicon.ico'
+# html_favicon = 'favicon.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+html_last_updated_fmt = '%b %d, %Y'
+
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'zapmenotdoc'
+# htmlhelp_basename = 'zapmenotdoc'
 
 # support for numpy and google style docstrings
 napoleon_use_ivar = True
 
+# Custom sidebar templates, must be a dictionary that maps document names
+# to template names.
+#
+# This is required for the alabaster theme
+# refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'relations.html',  # needs 'show_related': True theme option to display
+        'searchbox.html',
+        'donate.html',
+    ]
+}
+
 # Example configuration for intersphinx: refer to the Python standard library.
 #  Intersphinx permits links to other projects' documentation
-intersphinx_mapping = {
-    'python': ('https://docs.python.org/3/', None),
-    'pythonutils': ('https://python-utils.readthedocs.io/en/latest/', None),
-    'numpy': ('https://numpy.org/doc/stable/', None),
-    'scipy': ('https://docs.scipy.org/doc/scipy/reference/', None)
-}
+# intersphinx_mapping = {
+#     'python': ('https://docs.python.org/3/', None),
+#     'pythonutils': ('https://python-utils.readthedocs.io/en/latest/', None),
+#     'numpy': ('https://numpy.org/doc/stable/', None),
+#     'scipy': ('https://docs.scipy.org/doc/scipy/reference/', None)
+# }
