@@ -14,6 +14,7 @@ import os
 import sys
 import datetime
 import numpy
+import sphinx_rtd_theme
 sys.path.insert(0, os.path.abspath('../..'))
 from zap_me_not import __about__ as metadata
 # sys.path.insert(0, os.path.join(os.path.abspath('../..'),'zap_me_not'))
@@ -49,7 +50,8 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode'
+    'sphinx.ext.viewcode',
+    'sphinx_rtd_theme',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
