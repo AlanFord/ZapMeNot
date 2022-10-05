@@ -7,9 +7,7 @@ Zapmenot Documentation
    :maxdepth: 2
 
    license
-   authorship
-   installation
-   introduction
+   gettingStarted
    materials
    isotopes
    modeling
