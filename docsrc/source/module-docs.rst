@@ -10,6 +10,7 @@ ZapMeNot Isotope
 .. automodule:: zap_me_not.isotope
    :members:
    :show-inheritance:
+   :no-undoc-members:
 
 ZapMeNot Material
 -----------------

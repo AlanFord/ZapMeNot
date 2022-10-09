@@ -1,5 +1,0 @@
-==========
-Authorship
-==========
-
-To Be Completed

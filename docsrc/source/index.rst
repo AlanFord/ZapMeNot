@@ -7,14 +7,15 @@ Zapmenot Documentation
    :maxdepth: 2
 
    license
-   gettingStarted
+   getting-started
    materials
    isotopes
    modeling
    results
-   module_docs
+   theory-and-methods
+   module-docs
    developer
-   version_history
+   version-history
    
 
 Indices and tables

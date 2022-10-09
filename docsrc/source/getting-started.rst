@@ -6,12 +6,20 @@ Introduction
 ------------
 
 
-`ZapMeNot` is a Python library of functions used to perform point-kernel photon shielding analyses.
+`ZapMeNot` is a Python library of functions used to perform photon (x-ray and gamma) 
+shielding analyses using the point-kernel method.  For a quick refresher on the point-kernel method or for more details
+about this implementation, see the :doc:`theory-and-methods` section.  For a more in-depth discussion of the point-kernel and other methods
+of photon shielding, see `Radiation Shielding by J. K. Shultis and R. E. Faw`_.
 
-Photon sources may be created by specifying an radioisotopic composition or by including specific photon energies and 
-intensities.  Photon energies may range from 15 keV to 15 MeV.  Source geometries may be point sources, 
-line sources, or a range of volumetric sources.  The selection of isotopes that may be included in the source is vast,
-covering all of the isotopes included in ICRP Publication 107.
+.. _Radiation Shielding by J. K. Shultis and R. E. Faw: https://www.ans.org/store/item-350021/
+
+Photon sources in ZapMeNot macany be created by creating a specific composition of radioisotopes or 
+by including specific photon energies and intensities.  Photon energies may range from 15 keV to 15 MeV.  
+Source geometries may be point sources, line sources, or a range of volumetric sources.  
+The selection of isotopes that may be included in the source is vast,
+covering all of the isotopes included in `ICRP Publication 107`_.
+
+.. _ICRP Publication 107: https://www.icrp.org/publication.asp?id=ICRP%20Publication%20107
 
 Installation
 ------------
