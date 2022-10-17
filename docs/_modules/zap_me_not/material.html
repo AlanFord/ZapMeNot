@@ -87,15 +87,16 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">Licence &amp; Disclaimer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authorship.html">Authorship</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../materials.html">Material Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../isotopes.html">Isotope Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modeling.html">Modeling in ZapMeNot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../results.html">Generating Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../theory-and-methods.html">Theory and Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module-docs.html">Module Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs.html">Module Contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developer.html">Developer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../version-history.html">Version History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version_history.html">Version History</a></li>
 </ul>
 
             
@@ -167,7 +168,7 @@
 <span class="kn">import</span> <span class="nn">pkg_resources</span>
 
 
-<div class="viewcode-block" id="Material"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.material.Material">[docs]</a><span class="k">class</span> <span class="nc">Material</span><span class="p">:</span>
+<div class="viewcode-block" id="Material"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.material.Material">[docs]</a><span class="k">class</span> <span class="nc">Material</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Encaplsulates the data in the MaterialLibrary.yml file.</span>
 
 <span class="sd">    Makes available the mean free path, mass</span>
@@ -249,7 +250,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid density&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">=</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="Material.get_mfp"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.material.Material.get_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
+<div class="viewcode-block" id="Material.get_mfp"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.material.Material.get_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the mean free path for a given distance and photon energy</span>
 
 <span class="sd">        Parameters</span>
@@ -272,7 +273,7 @@
 
         <span class="k">return</span> <span class="n">distance</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mass_atten_coeff</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Material.get_mass_atten_coeff"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.material.Material.get_mass_atten_coeff">[docs]</a>    <span class="k">def</span> <span class="nf">get_mass_atten_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+<div class="viewcode-block" id="Material.get_mass_atten_coeff"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.material.Material.get_mass_atten_coeff">[docs]</a>    <span class="k">def</span> <span class="nf">get_mass_atten_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculates the mass attenuation coefficient at the given energy</span>
 
 <span class="sd">        Parameters</span>
@@ -301,7 +302,7 @@
                                         <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_atten_energy_bins</span><span class="p">),</span>
                                         <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mass_atten_coff</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="Material.get_mass_energy_abs_coeff"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.material.Material.get_mass_energy_abs_coeff">[docs]</a>    <span class="k">def</span> <span class="nf">get_mass_energy_abs_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+<div class="viewcode-block" id="Material.get_mass_energy_abs_coeff"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.material.Material.get_mass_energy_abs_coeff">[docs]</a>    <span class="k">def</span> <span class="nf">get_mass_energy_abs_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculates the mass energy absorption coefficient at the given energy</span>
 
 <span class="sd">        Parameters</span>
@@ -330,7 +331,7 @@
                                         <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_en_abs_energy_bins</span><span class="p">),</span>
                                         <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mass_en_abs_coff</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="Material.get_buildup_factor"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.material.Material.get_buildup_factor">[docs]</a>    <span class="k">def</span> <span class="nf">get_buildup_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">mfps</span><span class="p">,</span> <span class="n">formula</span><span class="o">=</span><span class="s2">&quot;GP&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Material.get_buildup_factor"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.material.Material.get_buildup_factor">[docs]</a>    <span class="k">def</span> <span class="nf">get_buildup_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">mfps</span><span class="p">,</span> <span class="n">formula</span><span class="o">=</span><span class="s2">&quot;GP&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the photon buildup factor at the given energy and mfp</span>
 
 <span class="sd">        Parameters</span>
@@ -457,7 +458,7 @@
     <p>
         &copy; Copyright 2022,  Alan Ford
       <span class="lastupdated">
-        Last updated on Oct 07, 2022.
+        Last updated on Oct 04, 2022.
       </span>
 
     </p>

@@ -165,7 +165,37 @@
             
   <section id="modeling-in-zapmenot">
 <h1>Modeling in ZapMeNot<a class="headerlink" href="#modeling-in-zapmenot" title="Permalink to this heading">¶</a></h1>
-<p>To Be Completed</p>
+<p>A model in ZapMeNot requires, at a minimum, a source and a detector (a.k.a. a dose point).
+The source can be a simple point source, a line source, or a volumetric source (a box, cylinder, etc.).
+A point source is defined by an XYZ location and a radioative source composition.  The source composition
+can be specified in curies (Ci) of an isotope, becquerels (bq) of an isotope, or by photon energy and intensity.
+A complex source can be a combination of all three specification types.
+An example of specifying a point source is</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create the source</span>
+<span class="n">a_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">PointSource</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Co-60&#39;</span><span class="p">,</span><span class="mf">2.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here is the same point source with a more complicated set of isotopes, including a specific 0.98 MeV
+photon with an intensity of 3.14E2 photons/sec:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create the source</span>
+<span class="n">a_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">PointSource</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Co-60&#39;</span><span class="p">,</span><span class="mf">2.1</span><span class="p">)</span>
+<span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_bq</span><span class="p">(</span><span class="s1">&#39;Cs-137&#39;</span><span class="p">,</span> <span class="mf">1E6</span><span class="p">)</span>
+<span class="n">a_source</span><span class="o">.</span><span class="n">add_photon</span><span class="p">(</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">3.14E2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A line source specification is similar.  A volumentric source specification is a little more complicated, requiring
+physical dimensions, a body material, a material density, and the radioative source composition.
+An example of a box source using a default material density is</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create the source</span>
+<span class="n">a_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">BoxSource</span><span class="p">(</span><span class="n">box_center</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+                            <span class="n">box_dimensions</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+                            <span class="n">material_name</span><span class="o">=</span><span class="s1">&#39;iron&#39;</span><span class="p">)</span>
+<span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Co-60&#39;</span><span class="p">,</span><span class="mf">2.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The detector is defined simply by specifying an XYZ location.</p>
 </section>
 
 
@@ -190,7 +220,7 @@
     <p>
         &copy; Copyright 2022,  Alan Ford
       <span class="lastupdated">
-        Last updated on Oct 07, 2022.
+        Last updated on Oct 17, 2022.
       </span>
 
     </p>
