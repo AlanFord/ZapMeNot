@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Theory and Methods &mdash; Zap_me_not 0.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module Contents" href="module-docs.html" />
+    <link rel="prev" title="Generating Results" href="results.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Zap_me_not
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="license.html">Licence &amp; Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="materials.html">Material Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="isotopes.html">Isotope Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modeling.html">Modeling in ZapMeNot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Generating Results</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Theory and Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#point-kernel-method">Point-Kernel Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uncollided-photon-exposure-rate">Uncollided Photon Exposure Rate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#buildup-factor">Buildup Factor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quadrature">Quadrature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multiple-photon-energies">Multiple Photon Energies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module-docs.html">Module Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version-history.html">Version History</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Zap_me_not</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Theory and Methods</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/theory-and-methods.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="theory-and-methods">
+<h1>Theory and Methods<a class="headerlink" href="#theory-and-methods" title="Permalink to this heading">¶</a></h1>
+<section id="point-kernel-method">
+<h2>Point-Kernel Method<a class="headerlink" href="#point-kernel-method" title="Permalink to this heading">¶</a></h2>
+<p>ZapMeNot calculates the uncollided photon flux using the point-kernel equation:</p>
+<p><span class="math notranslate nohighlight">\(\phi(r) = \frac{S}{4\pi r^{2}}e^{-\mu r}\)</span></p>
+<p>where</p>
+<p><span class="math notranslate nohighlight">\(\phi(r)\)</span> = space dependent uncollided photon flux</p>
+<p><span class="math notranslate nohighlight">\(S\)</span> = point isotropic source of mono-energetic photons</p>
+<p><span class="math notranslate nohighlight">\(r\)</span> = distance from source location to flux location</p>
+<p><span class="math notranslate nohighlight">\(\mu\)</span> = total attenuation coefficient for medium</p>
+<p>When multiple materials exist in the model, sum <span class="math notranslate nohighlight">\(\mu_{i} r_{i}\)</span> over all of
+the material regions between the source and the flux location.</p>
+</section>
+<section id="uncollided-photon-exposure-rate">
+<h2>Uncollided Photon Exposure Rate<a class="headerlink" href="#uncollided-photon-exposure-rate" title="Permalink to this heading">¶</a></h2>
+<p>The exposure rate from uncollided photons can be calculated as:</p>
+<p><span class="math notranslate nohighlight">\(D_{u}(r) = \phi(r) \Re\)</span></p>
+<p>and</p>
+<p><span class="math notranslate nohighlight">\(\Re = 1.835\cdot 10^{-8} E\left ( \frac{\mu _{en}\left ( E \right )}{\rho } \right )_{air}\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(\Re\)</span> has units of R cm<sup>2</sup>,</p>
+<p><span class="math notranslate nohighlight">\(E\)</span> is the photon energy in MeV, and</p>
+<p><span class="math notranslate nohighlight">\(\mu _{en}/\rho\)</span> is the mass energy deposition coefficient of air in cm<sup>2</sup>/g.</p>
+</section>
+<section id="buildup-factor">
+<h2>Buildup Factor<a class="headerlink" href="#buildup-factor" title="Permalink to this heading">¶</a></h2>
+<p>The buildup factor <span class="math notranslate nohighlight">\(B(r)\)</span> is defined as the ratio of the dose from all photons (collided and uncollided) to
+the dose from uncollided photons.  The buildup factor will vary with distance from the source location and the material
+traversed.  As such the total exposure from all photons can be calculated as:</p>
+<p><span class="math notranslate nohighlight">\(D_{T}(r) = D_{u}(r) B(\mu r)\)</span></p>
+<p>where</p>
+<p><span class="math notranslate nohighlight">\(D_{T}(r)\)</span> = the space dependent dose from collided and uncollided photons</p>
+<p><span class="math notranslate nohighlight">\(B(\mu r)\)</span> = the space dependent buildup factor</p>
+<p>Buildup factors are generally derived from experimental data and are approximated by mathematical functions.  The
+form of approximation used in ZapMeNot is the <em>geometric progression</em> (GP) form.  The GP coefficients for calculating
+the buildup factor as provided in ANSI/ANS-6.4.3-1991 “Gamma-Ray Attenuation coefficients
+and Buildup Factors for Engineering Materials.”</p>
+</section>
+<section id="quadrature">
+<h2>Quadrature<a class="headerlink" href="#quadrature" title="Permalink to this heading">¶</a></h2>
+<p>The point kernel method can be applied directly for point sources.  However, distributed
+sources required an additional level of modeling.  The point kernel method is extended
+to distributed sources using the method of numerical quadrature.  Put simply, the
+source volume or area is subdivided into a spatial quadrature and the source within
+a spatial mesh is represented as a point source.  Summing the dose responses
+resulting from the point sources returns the dose response resulting
+from the distributed source. The spatial mesh is not required to be uniform.  The quadrature
+weights are normally computed as follows:</p>
+<p><span class="math notranslate nohighlight">\(W_{k}=\frac{V_{k}}{\sum_{k=1}^{N}V_{k}}\)</span></p>
+<p>where</p>
+<p><span class="math notranslate nohighlight">\(W_{k}\)</span> = the source mesh weight</p>
+<p><span class="math notranslate nohighlight">\(V_{k}\)</span> = the volume or area of the k<sup>th</sup> mesh</p>
+</section>
+<section id="multiple-photon-energies">
+<h2>Multiple Photon Energies<a class="headerlink" href="#multiple-photon-energies" title="Permalink to this heading">¶</a></h2>
+<p>A typical photon source will emit photons with a number of discrete photon energies,
+each with a unique intensity.  These photon sources are modeled by performing a numerical quadrature
+analysis for each photon energy with an associated energy-dependent buildup factor.  Photon energies
+are limited to a range of 15 keV to 15 MeV to ensure applicability of the attenuation coefficients
+and buildup factors presented in ANSI/ANS-6.4.3-1991 “Gamma-Ray Attenuation coefficients
+and Buildup Factors for Engineering Materials.”</p>
+<p>Frequently the number of discrete photon energies can be in the 100’s.  However, many of these photons energies
+are low enough that the photon contribution to dose is small.  Many of the photon energies may also have a very low
+intensity due to a small decay branching fraction.  The evaluation is therefore simplified by limiting the number
+of discrete photon energies to 40.  A 40 photon energy-group structure is used in the event that a source has more than
+40 discrete photon energies.  The energy-group structure is linearly distributed between the highest and lowest photon energies
+in the source.</p>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="module-docs.html" class="btn btn-neutral float-right" title="Module Contents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="results.html" class="btn btn-neutral float-left" title="Generating Results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2022,  Alan Ford
+      <span class="lastupdated">
+        Last updated on Oct 17, 2022.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

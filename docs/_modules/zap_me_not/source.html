@@ -87,16 +87,15 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">Licence &amp; Disclaimer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../authorship.html">Authorship</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../materials.html">Material Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../isotopes.html">Isotope Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modeling.html">Modeling in ZapMeNot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../results.html">Generating Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs.html">Module Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory-and-methods.html">Theory and Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module-docs.html">Module Contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developer.html">Developer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../version_history.html">Version History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version-history.html">Version History</a></li>
 </ul>
 
             
@@ -174,13 +173,13 @@
     <span class="kn">import</span> <span class="nn">pyvista</span>
 
 
-<div class="viewcode-block" id="GroupOption"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.GroupOption">[docs]</a><span class="k">class</span> <span class="nc">GroupOption</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="GroupOption"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.GroupOption">[docs]</a><span class="k">class</span> <span class="nc">GroupOption</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">GROUP</span> <span class="o">=</span> <span class="s2">&quot;group&quot;</span>
     <span class="n">HYBRID</span> <span class="o">=</span> <span class="s2">&quot;hybrid&quot;</span>
     <span class="n">DISCRETE</span> <span class="o">=</span> <span class="s2">&quot;discrete&quot;</span></div>
 
 
-<div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Abtract class to model a radiation source.</span>
 
 <span class="sd">    Maintains a list of isotopes and can return a list of point source</span>
@@ -241,7 +240,7 @@
         <span class="sd">&quot;&quot;&quot;bool : State defining if key progeny should be included.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span> <span class="o">=</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="Source.add_isotope_curies"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.Source.add_isotope_curies">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_curies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="p">):</span>
+<div class="viewcode-block" id="Source.add_isotope_curies"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.Source.add_isotope_curies">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_curies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds an isotope and activity in curies to the isotope list</span>
 
 <span class="sd">        Parameters</span>
@@ -253,7 +252,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="o">*</span><span class="mf">3.7E10</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Source.add_isotope_bq"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.Source.add_isotope_bq">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_bq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">becquerels</span><span class="p">):</span>
+<div class="viewcode-block" id="Source.add_isotope_bq"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.Source.add_isotope_bq">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_bq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">becquerels</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds an isotope and activity in becquerels to the isotope list</span>
 
 <span class="sd">        Parameters</span>
@@ -265,7 +264,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_isotope</span><span class="p">,</span> <span class="n">becquerels</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Source.add_photon"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.Source.add_photon">[docs]</a>    <span class="k">def</span> <span class="nf">add_photon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span><span class="p">):</span>
+<div class="viewcode-block" id="Source.add_photon"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.Source.add_photon">[docs]</a>    <span class="k">def</span> <span class="nf">add_photon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds a photon and intensity to the photon list</span>
 
 <span class="sd">        Parameters</span>
@@ -277,7 +276,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Source.list_isotopes"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.Source.list_isotopes">[docs]</a>    <span class="k">def</span> <span class="nf">list_isotopes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Source.list_isotopes"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.Source.list_isotopes">[docs]</a>    <span class="k">def</span> <span class="nf">list_isotopes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a list of isotopes in the source</span>
 
 <span class="sd">        Returns</span>
@@ -288,7 +287,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span></div>
 
-<div class="viewcode-block" id="Source.list_discrete_photons"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.Source.list_discrete_photons">[docs]</a>    <span class="k">def</span> <span class="nf">list_discrete_photons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Source.list_discrete_photons"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.Source.list_discrete_photons">[docs]</a>    <span class="k">def</span> <span class="nf">list_discrete_photons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a list of individual photons in the source.</span>
 
 <span class="sd">        The list includes only those photons that have been added</span>
@@ -319,7 +318,7 @@
     <span class="c1">#     list = self.get_photon_source_list()</span>
     <span class="c1">#     scaling_factor = np.prod(self.points_per_dimension)</span>
 
-<div class="viewcode-block" id="Source.get_photon_source_list"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.Source.get_photon_source_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_photon_source_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Source.get_photon_source_list"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.Source.get_photon_source_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_photon_source_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a list of photons in the source</span>
 
 <span class="sd">        This list of photons combines the Isotopes and the</span>
@@ -411,7 +410,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="LineSource"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.LineSource">[docs]</a><span class="k">class</span> <span class="nc">LineSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="LineSource"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.LineSource">[docs]</a><span class="k">class</span> <span class="nc">LineSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Models a line radiation source</span>
 
 <span class="sd">    Parameters</span>
@@ -449,7 +448,7 @@
         <span class="c1"># single dimension</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
 
-<div class="viewcode-block" id="LineSource.is_infinite"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.LineSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LineSource.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.LineSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
@@ -493,7 +492,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span>
 
-<div class="viewcode-block" id="LineSource.get_crossing_mfp"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.LineSource.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<div class="viewcode-block" id="LineSource.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.LineSource.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -511,7 +510,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="LineSource.vtk"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.LineSource.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LineSource.vtk"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.LineSource.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -525,7 +524,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="PointSource"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.PointSource">[docs]</a><span class="k">class</span> <span class="nc">PointSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="PointSource"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.PointSource">[docs]</a><span class="k">class</span> <span class="nc">PointSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Models a point radiation source</span>
 
 <span class="sd">    Parameters</span>
@@ -564,7 +563,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-<div class="viewcode-block" id="PointSource.is_infinite"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.PointSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PointSource.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.PointSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
@@ -600,7 +599,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span>
 
-<div class="viewcode-block" id="PointSource.get_crossing_mfp"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.PointSource.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<div class="viewcode-block" id="PointSource.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.PointSource.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -619,7 +618,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="PointSource.vtk"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.PointSource.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PointSource.vtk"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.PointSource.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -685,7 +684,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="BoxSource"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.BoxSource">[docs]</a><span class="k">class</span> <span class="nc">BoxSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Box</span><span class="p">):</span>
+<div class="viewcode-block" id="BoxSource"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.BoxSource">[docs]</a><span class="k">class</span> <span class="nc">BoxSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Box</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Models a Axis-Aligned rectangular box source</span>
 
 <span class="sd">    Parameters</span>
@@ -735,7 +734,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="ZAlignedCylinderSource"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.ZAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">ZAlignedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="ZAlignedCylinderSource"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.ZAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">ZAlignedCylinder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the Z axis.</span>
 
 <span class="sd">    Parameters</span>
@@ -804,7 +803,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="YAlignedCylinderSource"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.YAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">YAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">YAlignedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="YAlignedCylinderSource"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.YAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">YAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">YAlignedCylinder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the Y axis.</span>
 
 <span class="sd">    Parameters</span>
@@ -873,7 +872,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="XAlignedCylinderSource"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.source.XAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">XAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">XAlignedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="XAlignedCylinderSource"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.XAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">XAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">XAlignedCylinder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the X axis.</span>
 
 <span class="sd">    Parameters</span>
@@ -952,7 +951,7 @@
     <p>
         &copy; Copyright 2022,  Alan Ford
       <span class="lastupdated">
-        Last updated on Oct 02, 2022.
+        Last updated on Oct 07, 2022.
       </span>
 
     </p>

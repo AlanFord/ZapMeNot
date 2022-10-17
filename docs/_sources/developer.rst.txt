@@ -4,6 +4,8 @@ Developer
 Unit tests
 ----------
 
+:math:`\underline{x}=[  x_{1}, ...,  x_{n}]^{T}`
+
 .. code-block :: console 
 
    cd ZapMeNot/test

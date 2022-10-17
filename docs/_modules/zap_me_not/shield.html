@@ -87,16 +87,15 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">Licence &amp; Disclaimer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../authorship.html">Authorship</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../materials.html">Material Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../isotopes.html">Isotope Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modeling.html">Modeling in ZapMeNot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../results.html">Generating Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs.html">Module Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory-and-methods.html">Theory and Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module-docs.html">Module Contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developer.html">Developer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../version_history.html">Version History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version-history.html">Version History</a></li>
 </ul>
 
             
@@ -177,7 +176,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="Shield"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.Shield">[docs]</a><span class="k">class</span> <span class="nc">Shield</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="Shield"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.Shield">[docs]</a><span class="k">class</span> <span class="nc">Shield</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Abtract class to model a photon shield.</span>
 
 <span class="sd">    Parameters</span>
@@ -205,7 +204,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Shield.is_infinite"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.Shield.is_infinite">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<div class="viewcode-block" id="Shield.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.Shield.is_infinite">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>
@@ -223,7 +222,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a_ray</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid ray object&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Shield.get_crossing_mfp"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.Shield.get_crossing_mfp">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<div class="viewcode-block" id="Shield.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.Shield.get_crossing_mfp">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
@@ -273,7 +272,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="SemiInfiniteXSlab"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.SemiInfiniteXSlab">[docs]</a><span class="k">class</span> <span class="nc">SemiInfiniteXSlab</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="SemiInfiniteXSlab"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.SemiInfiniteXSlab">[docs]</a><span class="k">class</span> <span class="nc">SemiInfiniteXSlab</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A semi-infinite slab shield perpendicular to the X axis.</span>
 
 <span class="sd">    Parameters</span>
@@ -303,7 +302,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">x_start</span> <span class="o">=</span> <span class="n">x_start</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_end</span> <span class="o">=</span> <span class="n">x_end</span>
 
-<div class="viewcode-block" id="SemiInfiniteXSlab.is_infinite"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.SemiInfiniteXSlab.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SemiInfiniteXSlab.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.SemiInfiniteXSlab.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">True</span></div>
@@ -356,7 +355,7 @@
         <span class="c1"># we are left with a full crossing</span>
         <span class="k">return</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
 
-<div class="viewcode-block" id="SemiInfiniteXSlab.get_crossing_mfp"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.SemiInfiniteXSlab.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<div class="viewcode-block" id="SemiInfiniteXSlab.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.SemiInfiniteXSlab.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -372,7 +371,7 @@
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SemiInfiniteXSlab.vtk"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.SemiInfiniteXSlab.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SemiInfiniteXSlab.vtk"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.SemiInfiniteXSlab.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -442,7 +441,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="Box"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.Box">[docs]</a><span class="k">class</span> <span class="nc">Box</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="Box"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.Box">[docs]</a><span class="k">class</span> <span class="nc">Box</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A rectangular polyhedron shield.</span>
 
 <span class="sd">    All sides of the box shield must be axis-aligned.</span>
@@ -475,12 +474,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">box_center</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">box_dimensions</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Box.is_infinite"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.Box.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Box.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.Box.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="Box.get_crossing_mfp"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.Box.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<div class="viewcode-block" id="Box.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.Box.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -606,7 +605,7 @@
 
         <span class="k">return</span> <span class="n">results</span>
 
-<div class="viewcode-block" id="Box.vtk"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.Box.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Box.vtk"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.Box.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -626,7 +625,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="InfiniteAnnulus"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.InfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">InfiniteAnnulus</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="InfiniteAnnulus"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.InfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">InfiniteAnnulus</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An annular shield of infinite length</span>
 
 <span class="sd">    Parameters</span>
@@ -666,12 +665,12 @@
         <span class="n">axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cylinder_axis</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="n">axis</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
 
-<div class="viewcode-block" id="InfiniteAnnulus.is_infinite"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.InfiniteAnnulus.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InfiniteAnnulus.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.InfiniteAnnulus.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="InfiniteAnnulus.get_crossing_mfp"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.InfiniteAnnulus.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<div class="viewcode-block" id="InfiniteAnnulus.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.InfiniteAnnulus.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -789,7 +788,7 @@
                         <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span>
 
-<div class="viewcode-block" id="InfiniteAnnulus.vtk"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.InfiniteAnnulus.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InfiniteAnnulus.vtk"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.InfiniteAnnulus.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -810,7 +809,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="YAlignedInfiniteAnnulus"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.YAlignedInfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">YAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
+<div class="viewcode-block" id="YAlignedInfiniteAnnulus"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.YAlignedInfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">YAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An annular shield of infinite length aligned with the Y axis</span>
 
 <span class="sd">    Parameters</span>
@@ -851,7 +850,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="XAlignedInfiniteAnnulus"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.XAlignedInfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">XAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
+<div class="viewcode-block" id="XAlignedInfiniteAnnulus"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.XAlignedInfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">XAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An annular shield of infinite length aligned with the X axis</span>
 
 <span class="sd">    Parameters</span>
@@ -892,7 +891,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="ZAlignedInfiniteAnnulus"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.ZAlignedInfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
+<div class="viewcode-block" id="ZAlignedInfiniteAnnulus"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.ZAlignedInfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An annular shield of infinite length aligned with the Z axis</span>
 
 <span class="sd">    Parameters</span>
@@ -933,7 +932,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="CappedCylinder"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.CappedCylinder">[docs]</a><span class="k">class</span> <span class="nc">CappedCylinder</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="CappedCylinder"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.CappedCylinder">[docs]</a><span class="k">class</span> <span class="nc">CappedCylinder</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length</span>
 
 <span class="sd">    Parameters</span>
@@ -974,12 +973,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span>
 
-<div class="viewcode-block" id="CappedCylinder.is_infinite"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.CappedCylinder.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CappedCylinder.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.CappedCylinder.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="CappedCylinder.get_crossing_mfp"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.CappedCylinder.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<div class="viewcode-block" id="CappedCylinder.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.CappedCylinder.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -1111,7 +1110,7 @@
                     <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span>
 
-<div class="viewcode-block" id="CappedCylinder.vtk"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.CappedCylinder.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CappedCylinder.vtk"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.CappedCylinder.vtk">[docs]</a>    <span class="k">def</span> <span class="nf">vtk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -1128,7 +1127,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="YAlignedCylinder"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.YAlignedCylinder">[docs]</a><span class="k">class</span> <span class="nc">YAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="YAlignedCylinder"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.YAlignedCylinder">[docs]</a><span class="k">class</span> <span class="nc">YAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length aligned with the Y axis</span>
 
 <span class="sd">    Parameters</span>
@@ -1175,7 +1174,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="XAlignedCylinder"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.XAlignedCylinder">[docs]</a><span class="k">class</span> <span class="nc">XAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="XAlignedCylinder"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.XAlignedCylinder">[docs]</a><span class="k">class</span> <span class="nc">XAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length aligned with the X axis</span>
 
 <span class="sd">    Parameters</span>
@@ -1223,7 +1222,7 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="ZAlignedCylinder"><a class="viewcode-back" href="../../module_docs.html#zap_me_not.shield.ZAlignedCylinder">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="ZAlignedCylinder"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.shield.ZAlignedCylinder">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length aligned with the Z axis</span>
 
 <span class="sd">    Parameters</span>
@@ -1281,7 +1280,7 @@
     <p>
         &copy; Copyright 2022,  Alan Ford
       <span class="lastupdated">
-        Last updated on Oct 02, 2022.
+        Last updated on Oct 07, 2022.
       </span>
 
     </p>
