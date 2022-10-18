@@ -22,15 +22,12 @@ from zap_me_not import __about__ as metadata
 
 # -- Project information -----------------------------------------------------
 # Handled by metadata import
-#project = 'ZapMeNot'
-#copyright = '2020, Alan Ford'
+project = metadata.__package_name__.replace('-', '').capitalize()
+copyright = metadata.__copyright__
 author = metadata.__author__
 
-# The full version, including alpha/beta/rc tags
-#release = '0.0.1'
-# The short X.Y version.
-version = metadata.__version__
 # The full version, including alpha/beta/rc tags.
+version = metadata.__version__
 release = metadata.__version__
 
 
@@ -62,13 +59,6 @@ source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
-
-# General information about the project.
-project = metadata.__package_name__.replace('-', '').capitalize()
-copyright = u'%s,  %s' % (
-    datetime.date.today().year,
-    metadata.__author__,
-)
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
