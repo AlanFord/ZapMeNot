@@ -4,11 +4,9 @@ Developer
 Unit tests
 ----------
 
-:math:`\underline{x}=[  x_{1}, ...,  x_{n}]^{T}`
-
 .. code-block :: console 
 
-   cd ZapMeNot/test
+   cd ZapMeNot
    pytest -m basic
 
 Benchmark tests
@@ -16,7 +14,7 @@ Benchmark tests
 
 .. code-block :: console 
 
-   cd ZapMeNot/test
+   cd ZapMeNot
    pytest -s -m benchmark
 
 Graphics tests
@@ -24,7 +22,7 @@ Graphics tests
 
 .. code-block :: console 
 
-   cd ZapMeNot/test
+   cd ZapMeNot
    pytest -m graphics
 
 Coverage
@@ -51,8 +49,6 @@ Updating Copyright
 
 Update the year in the following files:
 
-* `LICENCE.txt`
-* `README.md`
-* `docs/source/conf.py`
-* `docs/source/licence.rst`
+* `docsrc/source/license.rst`
+* `zap_me_not/__about__.py`
 
