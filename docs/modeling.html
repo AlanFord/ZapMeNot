@@ -178,7 +178,7 @@ An example of specifying a point source is</p>
 </div>
 <p>Here is the same point source with a more complicated set of isotopes, including a specific 0.98 MeV
 photon with an intensity of 3.14E2 photons/sec:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create the source</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a point source</span>
 <span class="n">a_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">PointSource</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Co-60&#39;</span><span class="p">,</span><span class="mf">2.1</span><span class="p">)</span>
 <span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_bq</span><span class="p">(</span><span class="s1">&#39;Cs-137&#39;</span><span class="p">,</span> <span class="mf">1E6</span><span class="p">)</span>
@@ -188,7 +188,7 @@ photon with an intensity of 3.14E2 photons/sec:</p>
 <p>A line source specification is similar.  A volumentric source specification is a little more complicated, requiring
 physical dimensions, a body material, a material density, and the radioative source composition.
 An example of a box source using a default material density is</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create the source</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a box source</span>
 <span class="n">a_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">BoxSource</span><span class="p">(</span><span class="n">box_center</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
                             <span class="n">box_dimensions</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
                             <span class="n">material_name</span><span class="o">=</span><span class="s1">&#39;iron&#39;</span><span class="p">)</span>
@@ -196,6 +196,73 @@ An example of a box source using a default material density is</p>
 </pre></div>
 </div>
 <p>The detector is defined simply by specifying an XYZ location.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a detector</span>
+<span class="n">a_detector</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The final step in creating the most basic of models is to, well, create a “model” and add the source
+and detector:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a model, adding a source and detector</span>
+<span class="n">myModel</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">add_source</span><span class="p">(</span><span class="n">a_source</span><span class="p">)</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">add_detector</span><span class="p">(</span><span class="n">a_detector</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>One or more radiation shields can be optionally added to the model.  A shield is by definition a three-dimensional
+body.  Standard shield types include, among others, a box (rectangular para, a cylinder, an infinite annulus,
+and an infinitely-long slab.  Each shield requires a material type and, optionally, a density.  Shields will alter
+the calculated doses only when the shields completely or partially interrupt the line-of-sight between the source and
+the detector.  The following
+code block demonstrates creating two shields and adding them to a model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a model, adding a source and detector</span>
+<span class="n">myModel</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">add_source</span><span class="p">(</span><span class="n">a_source</span><span class="p">)</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">add_detector</span><span class="p">(</span><span class="n">a_detector</span><span class="p">)</span>
+<span class="c1"># add two shields</span>
+<span class="n">shield_1</span> <span class="o">=</span> <span class="n">shield</span><span class="o">.</span><span class="n">SemiInfiniteXSlab</span><span class="p">(</span><span class="s2">&quot;iron&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">shield_2</span> <span class="o">=</span> <span class="n">shield</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="s2">&quot;concrete&quot;</span><span class="p">,</span> <span class="n">box_center</span><span class="o">=</span><span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                      <span class="n">box_dimensions</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">add_shield</span><span class="p">(</span><span class="n">shield_1</span><span class="p">)</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">add_shield</span><span class="p">(</span><span class="n">shield_2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Any model with radiation shields (or a volumetric source other than a void) should also specify a buildup factor
+material.  This is usually the material that comprises the thickest shield in the model.  When a model has more than
+one shield, chose the shield closest to the detector that is thick enough to affect the results.  In cases where the
+source is much larger than the shield, the self-shielding of the source material may cause the source material to be the
+controlling shield.</p>
+<p>Once the buildup factor material has been identified, add it to the model in the following manner:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a model</span>
+<span class="n">myModel</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">add_source</span><span class="p">(</span><span class="n">a_source</span><span class="p">)</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">add_detector</span><span class="p">(</span><span class="n">a_detector</span><span class="p">)</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">add_shield</span><span class="p">(</span><span class="n">shield_1</span><span class="p">)</span>
+<span class="c1"># define the buildup factor material</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">set_buildup_factor_material</span><span class="p">(</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="s1">&#39;iron&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>There are two optional features that can make building a model easier.  First, in some cases there may be a significant
+amount of air between the source, the shield, and the detector.  The model can be instructed to “fill in the gaps” with air
+using the following command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># fill in the model with air</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">set_filler_material</span><span class="p">(</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="s1">&#39;air&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>An astute reader will note that the filler material is not restricted to only air.  If one is modeling a source and detector
+immersed in water, the filler material could be specified as ‘water’.  There may be unusual cases where one of the solid
+materials might be used as the filler material.</p>
+<p>The other optional feature is associated with the source definition.  Some common radionuclides found in sources may
+emit few or no photons, but significant photons may be emitted by their decay products (a.k.a. their “progeny”).  In those
+instances where the parent isotope and the progeny may be in secular equilibrium, an option has been included such that
+specifying the parent isotope is sufficient to also include the progeny.  Common isotopes where this is useful include
+Ba-140, Cs-137, Cd-144, Ru-103, Ru-106, Sr-90, and Sn-113.  The following example shows how to include the progeny:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a point source</span>
+<span class="n">a_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">PointSource</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">a_source</span><span class="o">.</span><span class="n">add_isotope_curies</span><span class="p">(</span><span class="s1">&#39;Cs-137&#39;</span><span class="p">,</span><span class="mf">2.1</span><span class="p">)</span>
+<span class="n">a_source</span><span class="o">.</span><span class="n">include_key_progeny</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>Invoking the “include_key_progeny” method for isotopes other than those listed above will have no effect on the source.</p>
 </section>
 
 
@@ -218,9 +285,9 @@ An example of a box source using a default material density is</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022,  Alan Ford
+        &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Oct 17, 2022.
+        Last updated on Oct 20, 2022.
       </span>
 
     </p>

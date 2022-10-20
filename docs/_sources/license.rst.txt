@@ -2,7 +2,7 @@
 Licence & Disclaimer
 ====================
 
-ZapMeNot Copyright (C) Alan Ford, 2019 - 2022.
+ZapMeNot Copyright (C) 2019 - 2022, Alan Ford.
 
 This file is part of ZapMeNot.
 

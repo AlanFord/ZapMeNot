@@ -27,7 +27,6 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -176,22 +175,21 @@
 <h1>Developer<a class="headerlink" href="#developer" title="Permalink to this heading">¶</a></h1>
 <section id="unit-tests">
 <h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this heading">¶</a></h2>
-<p><span class="math notranslate nohighlight">\(\underline{x}=[  x_{1}, ...,  x_{n}]^{T}\)</span></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot/test</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
 <span class="go">pytest -m basic</span>
 </pre></div>
 </div>
 </section>
 <section id="benchmark-tests">
 <h2>Benchmark tests<a class="headerlink" href="#benchmark-tests" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot/test</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
 <span class="go">pytest -s -m benchmark</span>
 </pre></div>
 </div>
 </section>
 <section id="graphics-tests">
 <h2>Graphics tests<a class="headerlink" href="#graphics-tests" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot/test</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
 <span class="go">pytest -m graphics</span>
 </pre></div>
 </div>
@@ -217,10 +215,8 @@
 <h2>Updating Copyright<a class="headerlink" href="#updating-copyright" title="Permalink to this heading">¶</a></h2>
 <p>Update the year in the following files:</p>
 <ul class="simple">
-<li><p><cite>LICENCE.txt</cite></p></li>
-<li><p><cite>README.md</cite></p></li>
-<li><p><cite>docs/source/conf.py</cite></p></li>
-<li><p><cite>docs/source/licence.rst</cite></p></li>
+<li><p><cite>docsrc/source/license.rst</cite></p></li>
+<li><p><cite>zap_me_not/__about__.py</cite></p></li>
 </ul>
 </section>
 </section>
@@ -245,9 +241,9 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2022,  Alan Ford
+        &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Oct 17, 2022.
+        Last updated on Oct 20, 2022.
       </span>
 
     </p>
