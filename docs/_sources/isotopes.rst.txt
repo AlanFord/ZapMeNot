@@ -24,5 +24,5 @@ lists the isotopes included in the library file
 
 .. csv-table:: ZapMeNot Isotopes
    :file: isotopes.csv
-   :widths: 12, 60
+   :widths: 10, 20
    :header-rows: 1
