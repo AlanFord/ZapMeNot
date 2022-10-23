@@ -59,6 +59,10 @@ form of approximation used in ZapMeNot is the *geometric progression* (GP) form.
 the buildup factor as provided in ANSI/ANS-6.4.3-1991 "Gamma-Ray Attenuation coefficients
 and Buildup Factors for Engineering Materials."
 
+Note that the buildup factors in GP form are only valid for distances up to 40 mean free paths.  This is generally
+not a limitation, as the uncollided flux at some energy E traversing 40 mean free paths has been reduced by a factor of at least :math:`10^{-13}`.  
+Hence the total flux at this energy would either not be controlling or would result in a trivial dose.
+
 Quadrature
 ----------
 

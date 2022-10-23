@@ -2,4 +2,8 @@
 Version History
 ===============
 
-To Be Completed
+Pre-History
+===========
+
+* v0.0.2 - 2022 / 07 / 22
+* v0.0.1 - 2019 / 08 / 29

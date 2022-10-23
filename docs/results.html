@@ -165,7 +165,29 @@
             
   <section id="generating-results">
 <h1>Generating Results<a class="headerlink" href="#generating-results" title="Permalink to this heading">¶</a></h1>
-<p>To Be Completed</p>
+<p>Two approaches are available for calculating dose rates once a ZapMeNot
+model has been constructed.</p>
+<p>The basic approach is demonstrated in the following code block.  It is
+assumed that a model <code class="code docutils literal notranslate"><span class="pre">myModel</span></code> has already been constructed with an appropriate
+source and detector.  The method <code class="code docutils literal notranslate"><span class="pre">calculate_exposure</span></code> returns the exposure in mR/hr.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># run an existing model</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">myModel</span><span class="o">.</span><span class="n">calculate_exposure</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A more detailed exposure report can be generated with the <code class="code docutils literal notranslate"><span class="pre">generate_summary</span></code> method.
+<code class="code docutils literal notranslate"><span class="pre">generate_summary</span></code> returns a “list of lists” (think of a group of lists).  The lists
+include, in order of appearance, the photon energy groups, the photon appearance in each group
+(photons/sec), the total uncollided energy flux by group (MeV/cm<sup>2</sup>/sec), total
+uncollided exposure by energy group (mR/hr), and total exposure by energy group (mR/hr).  These lists
+can be easily accessed in the following manner:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate a summary from an existing model</span>
+<span class="p">(</span><span class="n">energy_groups</span><span class="p">,</span> <span class="n">intensities</span><span class="p">,</span> <span class="n">energy_flux</span><span class="p">,</span>
+    <span class="n">uncollided_exposure</span><span class="p">,</span> <span class="n">exposure</span><span class="p">)</span> <span class="o">=</span> <span class="n">myModel</span><span class="o">.</span><span class="n">generate_summary</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This provides access to the data for further processing.  Alternatively,
+Python packages such as <a class="reference external" href="https://pandas.pydata.org">Pandas</a> can provide powerful data analysis tools
+that can be used with the results of the <code class="code docutils literal notranslate"><span class="pre">generate_summary</span></code> method.</p>
 </section>
 
 
@@ -190,7 +212,7 @@
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Oct 20, 2022.
+        Last updated on Oct 23, 2022.
       </span>
 
     </p>

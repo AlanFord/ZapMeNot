@@ -208,6 +208,9 @@ traversed.  As such the total exposure from all photons can be calculated as:</p
 form of approximation used in ZapMeNot is the <em>geometric progression</em> (GP) form.  The GP coefficients for calculating
 the buildup factor as provided in ANSI/ANS-6.4.3-1991 “Gamma-Ray Attenuation coefficients
 and Buildup Factors for Engineering Materials.”</p>
+<p>Note that the buildup factors in GP form are only valid for distances up to 40 mean free paths.  This is generally
+not a limitation, as the uncollided flux at some energy E traversing 40 mean free paths has been reduced by a factor of at least <span class="math notranslate nohighlight">\(10^{-13}\)</span>.
+Hence the total flux at this energy would either not be controlling or would result in a trivial dose.</p>
 </section>
 <section id="quadrature">
 <h2>Quadrature<a class="headerlink" href="#quadrature" title="Permalink to this heading">¶</a></h2>
@@ -264,7 +267,7 @@ of photons within the group is preserved.</p>
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Oct 20, 2022.
+        Last updated on Oct 21, 2022.
       </span>
 
     </p>
