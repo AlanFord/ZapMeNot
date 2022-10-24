@@ -282,7 +282,7 @@ def test_generate_summary_single_photon():
     assert result == pytest.approx(
         2.218926692201380e-06*1000*3600)  # convert from R/sec to mR/hr
     # the summary should generate a list containing one list of the following:
-    # energy (MeV), photon emmission rate (photons/sec),
+    # energy (MeV), photon emission rate (photons/sec),
     # uncollided energy flux (MeV/sec), uncollided exposure (mR/hr),
     #   and total exposure (mR/hr)
     expected_summary = [[1.0, 3.0E10, 5.066988280960838e+02,

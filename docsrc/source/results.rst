@@ -17,7 +17,7 @@ source and detector.  The method :code:`calculate_exposure` returns the exposure
 A more detailed exposure report can be generated with the :code:`generate_summary` method.
 :code:`generate_summary` returns a "list of lists" (think of a group of lists).  The lists
 include, in order of appearance, the photon energy groups, the photon appearance in each group
-(photons/sec), the total uncollided energy flux by group (MeV/cm\ :sup:`2`/sec), total
+(photons/sec), the total energy flux by group (MeV/sec), total
 uncollided exposure by energy group (mR/hr), and total exposure by energy group (mR/hr).  These lists
 can be easily accessed in the following manner:
 
