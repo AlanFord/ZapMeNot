@@ -1,0 +1,56 @@
+Benchmark #2 - ANSI/ANS 6.6.1 Reference Problem II.1
+c volume of source cylinder is pi*6^2 * 35 * (12*2.54)^3 = 1.12089E8 cm3
+c *************** BLOCK 1: CELL CARDS ************
+  1 2  -1.0     -2 +3 -4    imp:p=1  $ water-filled source cylinder
+  2 1  -0.00122 (+2:-3:+4) -1 imp:p=1  $ air
+  3 0           +1    imp:p=0  $ vacuum outside problem boundary
+
+c *************** BLOCK 2: SURFACE CARDS *********
+  1  so  300000    $ outer surface of the problem
+  2  cz  182.88
+  3  pz  0
+  4  pz  1066.8
+c 2  rcc 0 0 0 0 0 1066.8 182.88 $ cylinder, 35' high and 6' radius
+  
+c *************** BLOCK 3: DATA CARDS ************
+m1     6000   -0.000124  $  air - taken from PNNL-15870 Rev. 1
+       7000   -0.755268
+       8000   -0.231781
+      18000  -0.012827
+m2     1001   -0.111894  $  water - taken from PNNL-15870 Rev. 1
+       8000   -0.888106
+c  SDEF erg=0.8 x=0 y=0 z=1 par=2   $ 0.8 MeV photon source in cylindrical tank
+c   0.8 MeV poton source in cylindrical tank
+SDEF erg=0.8 POS=0 0 0.01 AXS=0 0 1 EXT=1066.79 RAD=d1 par=2
+si1  0 182.87
+sp1  -21 1
+mode p
+nps  1e5
+print
+c ************** multiplier discusstion ************
+c multiply by the source strength (in in this case 37.5 photon/sec/cm3)
+c by the tank volume to get 4.2033E9 photons/sec.
+c the de0/df0 function will convert scoring to rad/history.
+c multiply by the source strength to get the exposure rate in rad/sec.  
+c Multiply by 1/0.876 to convert to R/sec.
+c Multiply by 1000*3600 to get mR/hr.
+c Final multipler is 4.2033E9*1000*3600 = 1.5132E16
+c Final multipler is 4.2033E9/0.876*1000*3600 = 4.1096E6
+f5:p    609.6 91.44 0 100 $ point detector
+fm5     1.5132E16         $ dose(air) to Roentgen conversion
+f15:p   1524  91.44 0 100 $ point detector
+fm15    1.5132E16         $ dose(air) to Roentgen conversion
+f25:p   6096  91.44 0 100 $ point detector
+fm25    1.5132E16         $ dose(air) to Roentgen conversion
+f35:p   15240 91.44 0 100 $ point detector
+fm35    1.5132E16         $ dose(air) to Roentgen conversion
+c
+c ICRP 51, Table 11: Fluence to Air Dose Conversion
+c Function, radcm^2
+de0    0.01 0.015 0.02 0.03 0.04 0.05 0.06 0.08 0.1 0.15 0.2
+       0.3 0.4 0.5 0.6 0.8 1 1.5 2 3 4 5 6 8 10
+df0    7.43e-10 3.12e-10 1.68e-10 0.721e-10 0.429e-10
+       0.323e-10 0.289e-10 0.307e-10 0.371e-10 0.599e-10
+       0.856e-10 1.38e-10 1.89e-10 2.38e-10 2.84e-10
+       3.69e-10 4.47e-10 6.12e-10 7.5e-10 9.87e-10
+       12e-10 13.9e-10 15.8e-10 19.5e-10 23.1e-10
