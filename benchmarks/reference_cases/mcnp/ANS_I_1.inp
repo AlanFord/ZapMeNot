@@ -1,0 +1,18 @@
+ANSI/ANS 6.6.1 Reference Problem I.1
+c   ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+c   simplified model
+c   6.2 MeV photon source
+c   dose point 57 ft below and 200 ft distant
+c   air medium
+1      1 -0.00122  -1 imp:p=1   $ air surrounding source
+2      0            1 imp:p=0   $ zero-importance outside world
+
+1      sph 0 0 0 6401
+
+m1    8000 1.07e19 7000 4.02e19 $ air
+c
+sdef  erg 6.2 pos 0 0 0
+c
+nps 5000
+mode p
+
