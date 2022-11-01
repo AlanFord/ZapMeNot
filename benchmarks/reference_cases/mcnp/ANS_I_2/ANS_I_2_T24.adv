@@ -1,0 +1,19 @@
+# ADVANTG input for ANSI/ANS 6.6.1 Reference Problem I.2
+method       cadis
+
+mcnp_input   ANS_I_2.inp
+mcnp_tallies 24
+mcnp_material_names  1 Air
+                     2 Concrete
+
+anisn_library      27n19g
+denovo_pn_order         3
+denovo_quad_num_polar   4
+denovo_quad_num_azi     4
+
+mesh_x  -200000 -1524 -1402.08 -92 92 1402.08 1524 6004 6188 30388 30572 91348 91532 152308 152492 200000
+mesh_x_ints        20       16   1  1       1   16     1   1     2     1     6     1      6      1      4
+mesh_y  -200000 -2286 -2164.08 -92 92 2164.08 2286 200000
+mesh_y_ints        20       16   1  1       1   16     20
+mesh_z  -200000     0  184 1767.84 1889.76  200000
+mesh_z_ints        20    1       1       1      20
