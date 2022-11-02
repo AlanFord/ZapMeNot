@@ -1,0 +1,509 @@
+MicroShield 7.02
+Licensed To: Dominion Energy
+With Serial: 07-MSD-7.02-1318
+Case 1
+The execution time was: 00:00:00
+This case was run on Wednesday, November 2, 2022 at 12:36:44 PM
+ANSI/ANS 6.6.1 Reference Problem I.1
+ 1 
+ 1  GEOMETRY
+6096 X
+1737.36 Y
+0 Z
+30480 X
+1737.36 Y
+0 Z
+91440 X
+1737.36 Y
+0 Z
+152400 X
+1737.36 Y
+0 Z
+0 Length
+0 Radius
+0 Width
+0 Height
+0 Angle
+SHIELD ARRAY:
+0 Shield No:  1 thickness
+0 Shield No:  2 thickness
+0 Shield No:  3 thickness
+0 Shield No:  4 thickness
+0 Shield No:  5 thickness
+0 Shield No:  6 thickness
+0 Shield No:  7 thickness
+0 Shield No:  8 thickness
+0 Shield No:  9 thickness
+0 Shield No:  10 thickness
+6096 Air gap thickness
+0 Wall Cladding thickness
+0 Top Cladding thickness
+0 Transition Shield #
+Sensitivity variable index (or 0):
+0 SenseVar
+1 # saved results or 1
+# sensitivity cycles or 1 if none:
+0 CURIESCONSTANT
+1 NCycles
+12 Number of Materials
+15 shields for material #1:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0.00122
+0
+0
+0
+15 shields for material #2:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #3:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #4:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #5:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #6:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #7:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #8:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #9:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #10:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #11:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #12:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+BUILDUP MATERIAL INFORMATION
+12, Case Buildup Material
+6, GROUPING METHOD
+1, DEFAULT GROUPS
+0.015, LOWER MEV CUTOFF
+1, PHOTONS BELOW
+0, NUMBER OF ISOTOPES
+25 energies:
+6.2
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+25 activities:
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+End of source inputs.
+0 Numerical Quadrature Order - Level  1
+0 Numerical Quadrature Order - Level  2
+0 Numerical Quadrature Order - Level  3
+1, 1 = RESULTS EXIST  0 = NO
+25 Results - reference (or single) case:
+1.63511254123162E-09
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1.78972427235298E-09
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+25 Results - reference (or single) case:
+3.39200904806512E-11
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+4.99445888888934E-11
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+25 Results - reference (or single) case:
+5.98976578920318E-13
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1.36354224605789E-12
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+25 Results - reference (or single) case:
+3.41514967166674E-14
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1.04580777742335E-13
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+End of MicroShield 7 Case File: Y:\alan025\bin\ZapMeNot\benchmarks\reference_cases\microshield\ANS_I_1.ms7
