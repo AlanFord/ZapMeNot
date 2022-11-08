@@ -13,6 +13,7 @@ Zapmenot Documentation
    modeling
    results
    theory-and-methods
+   benchmarks
    module-docs
    developer
    version-history

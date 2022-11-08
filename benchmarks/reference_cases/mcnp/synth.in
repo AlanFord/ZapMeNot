@@ -1,0 +1,42 @@
+ZapMeNot Benchmark - point source with shielding
+c ----------------------------------------------
+c source composition:
+c co-58:   22.5 uCi
+c co-60:   32.4 uCi
+c cs-137:  150 uCi
+c mn-54:   12.5 uCi
+c sb-125:  11.3 uCi
+c Shields include a cylindrical steel shield with and
+c inner radius of 3 ft and a thickness of 3 inches as
+c well as a concrete shield with an inner radius of 
+c 4 ft and a thickness of 18 inches.  The dose point is
+c 14 ft from the source location.
+1      1 -0.00122  -1    imp:p=1   $ air surrounding source
+2      2 -7.874    +1 -2 imp:p=1   $ iron shield
+3      1 -0.00122  +2 -3 imp:p=1   $ air surrounding iron shield
+4      3 -2.34     +3 -4 imp:p=1   $ concrete shield
+5      1 -0.00122  +4 -5 imp:p=1   $ air surrounding concrete shield
+6      1 -0.00122  +5    imp:p=0   $ outside of the problem geometry
+
+1  rcc 0 0 -91.4 0 0 91.4 91.44 $ cylinder, 6' high and 3' radius
+2  rcc 0 0 -91.4 0 0 91.4 99.06 $ cylinder, 6' high and 3'3" radius
+3  rcc 0 0 -91.4 0 0 91.4 121.92 $ cylinder, 6' high and 4' radius
+4  rcc 0 0 -91.4 0 0 91.4 167.64 $ cylinder, 6' high and 4'18" radius
+5  rcc 0 0 -91.4 0 0 91.4 1e4    $ large diameter cylinder
+
+m1     6000   -0.000124  $  air - taken from PNNL-15870 Rev. 2
+       7000   -0.755268
+       8000   -0.231781
+      18000   -0.012827
+m2    26000   $ iron
+m3    $ concrete,ordinary (NBS 04) - taken from PNNL-15870 Rev. 2
+       1000 0.007803
+       8000 0.044057
+      11000 0.001053
+      12000 0.000149
+      13000 0.002399
+      14000 0.015878
+      16000 0.000057
+      19000 0.000696
+      20000 0.002929
+      26000 0.000314

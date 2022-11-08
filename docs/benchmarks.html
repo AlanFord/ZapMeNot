@@ -1,0 +1,599 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Benchmarking &mdash; Zap_me_not 0.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module Contents" href="module-docs.html" />
+    <link rel="prev" title="Theory and Methods" href="theory-and-methods.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Zap_me_not
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="license.html">Licence &amp; Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="materials.html">Material Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="isotopes.html">Isotope Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modeling.html">Modeling in ZapMeNot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Generating Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory-and-methods.html">Theory and Methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Benchmarking</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ansi-ans-6-6-1-benchmark-i-1">ANSI/ANS 6.6.1 Benchmark I.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ansi-ans-6-6-1-benchmark-ii-1">ANSI/ANS 6.6.1 Benchmark II.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#esis-benchmark-problem-1">ESIS Benchmark Problem 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#esis-benchmark-problem-2">ESIS Benchmark Problem 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module-docs.html">Module Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version-history.html">Version History</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Zap_me_not</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Benchmarking</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/benchmarks.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="benchmarking">
+<h1>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this heading">¶</a></h1>
+<section id="ansi-ans-6-6-1-benchmark-i-1">
+<h2>ANSI/ANS 6.6.1 Benchmark I.1<a class="headerlink" href="#ansi-ans-6-6-1-benchmark-i-1" title="Permalink to this heading">¶</a></h2>
+<p>This benchmark is described in ANSI/ANS 6.6.1-1979, “American National Standard
+for Calculation and Measurement of Direct and Scattered Gamma Radiation from LWR
+Nuclear Power Plants”.</p>
+<p>The benchmark models a 1 photon/sec point source of 6.2 MeV photons immersed in an air
+environment.  Doses are calculated at locations 57 feet below the point source and at
+horizontal distances ranging from 200 ft to 5,000 ft.
+Air is modeled with a density of 0.00122 g/cm<sup>3</sup>.
+Results are provided in the following table.</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">ANSI/ANS 6.6.1-1979 Benchmark I.1 Results</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><ul class="simple">
+<li><p>Distance</p></li>
+<li><p>(feet)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ANS 6.6.1</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>Microshield</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ZapMeNot</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>MCNP5</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>200</p></td>
+<td><ul class="simple">
+<li><p>1.04E-11 to</p></li>
+<li><p>1.56E-11</p></li>
+</ul>
+</td>
+<td><p>1.194E-11</p></td>
+<td><p>1.20E-11</p></td>
+<td><ul class="simple">
+<li><p>1.2067E-11</p></li>
+<li><p>+/- 0.02%</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1,000</p></td>
+<td><ul class="simple">
+<li><p>2.6E-13 to</p></li>
+<li><p>3.91E-13</p></li>
+</ul>
+</td>
+<td><p>3.332E-13</p></td>
+<td><p>3.30E-13</p></td>
+<td><ul class="simple">
+<li><p>3.3980E-13</p></li>
+<li><p>+/- 0.06%</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>3,000</p></td>
+<td><ul class="simple">
+<li><p>5.86E-15 to</p></li>
+<li><p>9.77E-15</p></li>
+</ul>
+</td>
+<td><p>9.096E-15</p></td>
+<td><p>9.15E-15</p></td>
+<td><ul class="simple">
+<li><p>9.4131E-15</p></li>
+<li><p>+/- 0.2%</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5,000</p></td>
+<td><ul class="simple">
+<li><p>4.56E-16 to</p></li>
+<li><p>7.55E-16</p></li>
+</ul>
+</td>
+<td><p>6.997E-16</p></td>
+<td><p>7.00E-16</p></td>
+<td><ul class="simple">
+<li><p>7.2265E-16</p></li>
+<li><p>+/- 0.44%</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ansi-ans-6-6-1-benchmark-ii-1">
+<h2>ANSI/ANS 6.6.1 Benchmark II.1<a class="headerlink" href="#ansi-ans-6-6-1-benchmark-ii-1" title="Permalink to this heading">¶</a></h2>
+<p>This benchmark is also described in ANSI/ANS 6.6.1-1979.  The source is a
+cylinder of water containing a uniformly distributed source of 0.8 MeV
+photons with a source strength of 30 MeV/sec/cm<sup>3</sup>.  The cylinder
+is 12 feet in diameter and 35 feed high.  Water density is 1 g/cm<sup>3</sup>
+and the air density is 0.00122 g/cm<sup>3</sup>.  Dose rates are
+determined at points with a height of 3 feet above the bottom of
+the cylinder and and radial distances from the cylinder centerline
+ranging from 20 feet to 500 feet.  Results are provided in the following table.</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">ANSI/ANS 6.6.1-1979 Benchmark II.1 Results</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><ul class="simple">
+<li><p>Distance</p></li>
+<li><p>(feet)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ANS 6.6.1</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>Microshield</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ZapMeNot</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>MCNP5</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>20</p></td>
+<td><ul class="simple">
+<li><p>7.81E-02 to</p></li>
+<li><p>1.56E-01</p></li>
+</ul>
+</td>
+<td><p>9.213E-02</p></td>
+<td><p>9.13E-02</p></td>
+<td><ul class="simple">
+<li><p>7.9002E-02</p></li>
+<li><p>+/- 0.2%</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>50</p></td>
+<td><ul class="simple">
+<li><p>1.56E-02 to</p></li>
+<li><p>2.86E-02</p></li>
+</ul>
+</td>
+<td><p>2.051E-02</p></td>
+<td><p>2.06E-02</p></td>
+<td><ul class="simple">
+<li><p>1.8210E-02</p></li>
+<li><p>+/- 1.15%</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>200</p></td>
+<td><ul class="simple">
+<li><p>9.77E-04 to</p></li>
+<li><p>1.95E-03</p></li>
+</ul>
+</td>
+<td><p>1.178E-03</p></td>
+<td><p>1.19E-03</p></td>
+<td><ul class="simple">
+<li><p>1.1819E-03</p></li>
+<li><p>+/- 1.92%</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>500</p></td>
+<td><ul class="simple">
+<li><p>7.03E-05 to</p></li>
+<li><p>1.56E-04</p></li>
+</ul>
+</td>
+<td><p>1.259E-04</p></td>
+<td><p>1.26E-04</p></td>
+<td><ul class="simple">
+<li><p>1.3537E-04</p></li>
+<li><p>+/- 2.73%</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="esis-benchmark-problem-1">
+<h2>ESIS Benchmark Problem 1<a class="headerlink" href="#esis-benchmark-problem-1" title="Permalink to this heading">¶</a></h2>
+<p>The ESIS benchmarks were originally documented in
+“Specification for gamma ray
+shielding benchmark applicable to a nuclear
+radwaste facility.” Newsletter #37,
+European Shielding Information Service.
+The benchmarks have been use in evaluations of both Microshield and VISIPLAN.</p>
+<p>Problem 1 is a cylindrical water-filled steel tank
+surrounded by a concrete wall.  It will be modeled in ZapMeNot
+as a cylindrical water source, an annular steel shield, and
+an slab concrete shield.  The material densities are
+0.00122 g/cm3, 1.0 g/cm3, 7.8 g/cm3, and 2.4 g/cm3 for air,
+water, steel, and concrete, respectively.</p>
+<p>The source cylinder is 108.3 cm tall with a diameter of 308 cm.
+The steel shield has a radial thickness of 2.54 cm.  The concrete
+slab shield is 220 from the centerline of the source cylinder
+and has a thickness of 91 cm. The dose rates are calculated on
+the inside of the concrete wall at a height of 50.15 cm and
+on the outside of the concrete wall at a height of 54.15 cm.</p>
+<p>The source is defined in the following table.</p>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text">ESIS Source Strength</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><ul class="simple">
+<li><p>Energy</p></li>
+<li><p>(MeV)</p></li>
+</ul>
+</th>
+<th class="head" colspan="2"><ul class="simple">
+<li><p>Source</p></li>
+<li><p>(photons/sec/cm3)</p></li>
+</ul>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.4</p></td>
+<td colspan="2"><p>4.0E+6</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.8</p></td>
+<td colspan="2"><p>7.0E+6</p></td>
+</tr>
+<tr class="row-even"><td><p>1.3</p></td>
+<td colspan="2"><p>2.8E+6</p></td>
+</tr>
+<tr class="row-odd"><td><p>1.7</p></td>
+<td colspan="2"><p>8.2E+6</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td colspan="2"><p>4.0E+4</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td colspan="2"><p>3.0E+4</p></td>
+</tr>
+<tr class="row-even"><td><p>3.5</p></td>
+<td colspan="2"><p>1.2E+1</p></td>
+</tr>
+</tbody>
+</table>
+<p>Results are provided in the following table.</p>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-text">ESIS Benchmark Problem 1 Results</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><ul class="simple">
+<li><p>Radial</p></li>
+<li><p>Location</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ESIS Reslts</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>Microshield</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ZapMeNot</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Inside Wall</p></td>
+<td><ul class="simple">
+<li><p>4.54E+04 to</p></li>
+<li><p>8.01E+04</p></li>
+</ul>
+</td>
+<td><p>6.29E+04</p></td>
+<td><p>6.22E+04</p></td>
+</tr>
+<tr class="row-odd"><td><p>Outside Wall</p></td>
+<td><ul class="simple">
+<li><p>4.9E-01 to</p></li>
+<li><p>2.46E+00</p></li>
+</ul>
+</td>
+<td><p>1.89E+00</p></td>
+<td><p>1.88E+00</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="esis-benchmark-problem-2">
+<h2>ESIS Benchmark Problem 2<a class="headerlink" href="#esis-benchmark-problem-2" title="Permalink to this heading">¶</a></h2>
+<p>Problem 2 is similar to EIS Benchmark Problem 1.
+However, the source is a square tank 273 cm wide by 479.9 cm high.
+The tank wall remains at 2.54 cm thick and is surrounded by a concrete wall.
+The inside surface of the wall is 228.6 cm from the tank centerline.
+The thickness of the wall is 91.4.
+It will be modeled in ZapMeNot
+as a box water source, a slab steel shield, and
+an slab concrete shield.  The material densities continue to be
+0.00122 g/cm3, 1.0 g/cm3, 7.8 g/cm3, and 2.4 g/cm3 for air,
+water, steel, and concrete, respectively.</p>
+<p>The dose rates are calculated on
+the inside and outside of the concrete wall at a height of 240.0 cm.
+Results are provided in the following table.</p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">ESIS Benchmark Problem 2 Results</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><ul class="simple">
+<li><p>Radial</p></li>
+<li><p>Location</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ESIS Reslts</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>Microshield</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ZapMeNot</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Inside Wall</p></td>
+<td><ul class="simple">
+<li><p>4.54E+04 to</p></li>
+<li><p>8.01E+04</p></li>
+</ul>
+</td>
+<td><p>6.29E+04</p></td>
+<td><p>6.22E+04</p></td>
+</tr>
+<tr class="row-odd"><td><p>Outside Wall</p></td>
+<td><ul class="simple">
+<li><p>4.9E-01 to</p></li>
+<li><p>2.46E+00</p></li>
+</ul>
+</td>
+<td><p>1.89E+00</p></td>
+<td><p>1.88E+00</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="module-docs.html" class="btn btn-neutral float-right" title="Module Contents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="theory-and-methods.html" class="btn btn-neutral float-left" title="Theory and Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 - 2022, Alan Ford.
+      <span class="lastupdated">
+        Last updated on Nov 08, 2022.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
