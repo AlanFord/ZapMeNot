@@ -1,0 +1,63 @@
+Benchmark #0 - ANSI/ANS 6.6.1 Reference Problem I.1
+c   ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+c   simplified model
+c   6.2 MeV photon source
+c   dose points 57 ft below source and at varying X distances
+c   air medium
+c   ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+1      1 -0.00122  -1   imp:p=1   $ air surrounding source
+2      1 -0.00122  -2 1 imp:p=1   $ air surrounding dose surface
+3      1 -0.00122  -3 2 imp:p=1   $ air surrounding dose surface
+4      1 -0.00122  -4 3 imp:p=1   $ air surrounding dose surface
+5      1 -0.00122  -5 4 imp:p=1   $ air surrounding dose surface
+6      0              5 imp:p=0   $ zero-importance outside world
+
+1      so 6339    $ dose surface @ 200 ft
+2      so 30529   $ dose surface @ 1,000 ft
+3      so 91457   $ dose surface @ 3,000 ft
+4      so 152410  $ dose surface @ 5,000 ft
+5      sph 0 0 0 200000
+
+m1     6000   -0.000124  $  air - taken from PNNL-15870 Rev. 2
+       7000   -0.755268
+       8000   -0.231781
+      18000   -0.012827
+c
+sdef  erg 6.2 pos 0 0 0
+c
+nps 5000000
+mode p
+print
+c ************** multiplier discusstion ************
+c The specified source strength is 1 photon/sec.
+c the de0/df0 function will convert scoring to rad/history.
+c multiply by the source strength to get the exposure rate in rad(air)/sec.  
+c Multiply by 1/0.876 to convert to R/sec.
+c Multiply by 1000*3600 to get mR/hr.
+c Final multipler is 1/0.876*1000*3600 = 4.109589E6
+fc12 mR/hr @ 200 ft
+f12:p   1 $ surface detector @ 200 ft
+fm12    4.109589E6         $ dose(air) to Roentgen conversion
+c
+fc22 mR/hr @ 1000 ft
+f22:p   2 $ surface detector 
+fm22    4.109589E6         $ dose(air) to Roentgen conversion
+c
+fc32 mR/hr @ 3000 ft
+f32:p   3 $ surface detector
+fm32    4.109589E6         $ dose(air) to Roentgen conversion
+c
+fc42 mR/hr @ 5000 ft
+f42:p   4 $ surface detector
+fm42    4.109589E6         $ dose(air) to Roentgen conversion
+c
+c ICRP 51, Table 11: Fluence to Air Dose Conversion
+c Function, radcm^2
+de0    0.01 0.015 0.02 0.03 0.04 0.05 0.06 0.08 0.1 0.15 0.2
+       0.3 0.4 0.5 0.6 0.8 1 1.5 2 3 4 5 6 8 10
+df0    7.43e-10 3.12e-10 1.68e-10 0.721e-10 0.429e-10
+       0.323e-10 0.289e-10 0.307e-10 0.371e-10 0.599e-10
+       0.856e-10 1.38e-10 1.89e-10 2.38e-10 2.84e-10
+       3.69e-10 4.47e-10 6.12e-10 7.5e-10 9.87e-10
+       12e-10 13.9e-10 15.8e-10 19.5e-10 23.1e-10
+
