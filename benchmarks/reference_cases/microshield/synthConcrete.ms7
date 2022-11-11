@@ -1,0 +1,354 @@
+MicroShield 7.02
+Licensed To: Dominion
+With Serial: 07-MSD-7.02-1318
+synthetic benchmark
+The execution time was: 00:00:00
+This case was run on Friday, November 11, 2022 at 1:36:30 PM
+Case 1
+ 1 
+ 1  GEOMETRY
+426.72 X
+0 Y
+0 Z
+0 Length
+0 Radius
+0 Width
+0 Height
+0 Angle
+SHIELD ARRAY:
+91.44 Shield No:  1 thickness
+7.62 Shield No:  2 thickness
+22.86 Shield No:  3 thickness
+45.72 Shield No:  4 thickness
+0 Shield No:  5 thickness
+0 Shield No:  6 thickness
+0 Shield No:  7 thickness
+0 Shield No:  8 thickness
+0 Shield No:  9 thickness
+0 Shield No:  10 thickness
+259.08 Air gap thickness
+0 Wall Cladding thickness
+0 Top Cladding thickness
+0 Transition Shield #
+Sensitivity variable index (or 0):
+0 SenseVar
+1 # saved results or 1
+# sensitivity cycles or 1 if none:
+0 CURIESCONSTANT
+0 NCycles
+12 Number of Materials
+15 shields for material #1:
+0
+0.00122
+0
+0.00122
+0
+0
+0
+0
+0
+0
+0
+0.00122
+0
+0
+0
+15 shields for material #2:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #3:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #4:
+0
+0
+0
+0
+2.34
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #5:
+0
+0
+7.874
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #6:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #7:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #8:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #9:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #10:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #11:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #12:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+BUILDUP MATERIAL INFORMATION
+5, Case Buildup Material
+1, GROUPING METHOD
+25, DEFAULT GROUPS
+0.015, LOWER MEV CUTOFF
+1, PHOTONS BELOW
+6, NUMBER OF ISOTOPES
+Source input in curies: (or concentration) for infinite geometries.
+40 0.0001419 ofBa-137m
+104 0.0000225 ofCo-58
+106 0.0000324 ofCo-60
+119 0.00015 ofCs-137
+219 0.0000125 ofMn-54
+362 0.0000113 ofSb-125
+25 energies:
+0.015
+0.02
+0.03
+0.04
+0.05
+0.06
+0.08
+0.1
+0.15
+0.2
+0.3
+0.4
+0.5
+0.6
+0.8
+1
+1.5
+2
+3
+4
+5
+6
+8
+10
+15
+25 activities:
+0
+0
+497101.271499998
+90392.6168999998
+0
+0
+0
+1091.40824
+1049.34738
+31732.8701799999
+1743.76967
+130906.064749999
+291870.392999999
+4874634.21915599
+1296269.1185
+1198800
+1203269.859
+0
+0
+0
+0
+0
+0
+0
+0
+End of source inputs.
+16 Numerical Quadrature Order - Level  1
+16 Numerical Quadrature Order - Level  2
+16 Numerical Quadrature Order - Level  3
+1, 1 = RESULTS EXIST  0 = NO
+25 Results - reference (or single) case:
+0
+0
+3.75968009803081E-261
+3.2934892704797E-119
+0
+0
+0
+6.54512372996403E-21
+2.38829421271963E-15
+5.13799284003808E-12
+1.28117831803216E-11
+7.83231479165397E-09
+7.50101884326993E-08
+3.79958907797394E-06
+5.20064737648189E-06
+1.5692073006699E-05
+1.080664445866E-04
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+3.67361889233384E-27
+1.32858703766638E-27
+0
+0
+0
+1.3290423866364E-18
+6.20855471111787E-13
+1.2384282356303E-09
+1.9924969750626E-09
+7.8768887817493E-07
+5.22062446091419E-06
+1.94116941566334E-04
+1.63670161395019E-04
+3.44097638381542E-04
+1.29843122580915E-03
+0
+0
+0
+0
+0
+0
+0
+0
+End of MicroShield 7 Case File: D:\ZapMeNot_Benchmarking\synthConcrete.ms7

@@ -1,0 +1,347 @@
+MicroShield 7.02
+Licensed To: Dominion
+With Serial: 07-MSD-7.02-1318
+ESIS Benchmark 1
+The execution time was: 00:00:00
+This case was run on Friday, November 11, 2022 at 9:38:11 AM
+Water Tank with no shield
+ 1 
+ 7  GEOMETRY
+220 X
+50.15 Y
+0 Z
+0 Length
+154 Radius
+0 Width
+108.3 Height
+0 Angle
+SHIELD ARRAY:
+0 Shield No:  1 thickness
+0 Shield No:  2 thickness
+0 Shield No:  3 thickness
+0 Shield No:  4 thickness
+0 Shield No:  5 thickness
+0 Shield No:  6 thickness
+0 Shield No:  7 thickness
+0 Shield No:  8 thickness
+0 Shield No:  9 thickness
+0 Shield No:  10 thickness
+63.46 Air gap thickness
+2.54 Wall Cladding thickness
+0 Top Cladding thickness
+1 Transition Shield #
+Sensitivity variable index (or 0):
+0 SenseVar
+1 # saved results or 1
+# sensitivity cycles or 1 if none:
+0 CURIESCONSTANT
+0 NCycles
+12 Number of Materials
+15 shields for material #1:
+0
+0.00122
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0.00122
+0
+0
+0
+15 shields for material #2:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #3:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #4:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #5:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+7.8
+0
+0
+15 shields for material #6:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #7:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #8:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #9:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #10:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #11:
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #12:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+BUILDUP MATERIAL INFORMATION
+13, Case Buildup Material
+6, GROUPING METHOD
+7, DEFAULT GROUPS
+0.015, LOWER MEV CUTOFF
+0, PHOTONS BELOW
+0, NUMBER OF ISOTOPES
+25 energies:
+0.4
+0.8
+1.3
+1.7
+2.2
+2.5
+3.5
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+25 activities:
+32276004603390.2
+56483008055932.9
+22593203222373.2
+66165809436950
+322760046033.902
+242070034525.427
+96828013.8101707
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+End of source inputs.
+16 Numerical Quadrature Order - Level  1
+16 Numerical Quadrature Order - Level  2
+16 Numerical Quadrature Order - Level  3
+1, 1 = RESULTS EXIST  0 = NO
+25 Results - reference (or single) case:
+460963.280859686
+1985983.91777694
+1406986.29394544
+5492449.35087556
+34382.4745696846
+28898.2162361433
+15.1128173624598
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+2170230.76110651
+7389292.7719844
+4163748.32650625
+14508146.2797503
+82607.0688914214
+66335.8485228642
+30.9397940799048
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+End of MicroShield 7 Case File: D:\ZapMeNot_Benchmarking\ESIS_1_1.ms7

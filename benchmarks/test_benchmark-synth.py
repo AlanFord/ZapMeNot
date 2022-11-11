@@ -48,7 +48,7 @@ def test_benchmark_synth():
                         density=2.34))
     my_model.set_filler_material('air', density=0.00122)
     my_model.set_buildup_factor_material(material.Material('concrete'))
-    my_model.add_detector(detector.Detector(0, 0, 167.64))
+    my_model.add_detector(detector.Detector(426.72, 0, 0))
     result = my_model.calculate_exposure()
     print("")
     print('test_benchmark_SYNTH')
