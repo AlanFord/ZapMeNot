@@ -101,6 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#ansi-ans-6-6-1-benchmark-ii-1">ANSI/ANS 6.6.1 Benchmark II.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#esis-benchmark-problem-1">ESIS Benchmark Problem 1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#esis-benchmark-problem-2">ESIS Benchmark Problem 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#synthetic-benchmark-problem">Synthetic Benchmark Problem</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="module-docs.html">Module Contents</a></li>
@@ -442,7 +443,7 @@ on the outside of the concrete wall at a height of 54.15 cm.</p>
 </ul>
 </th>
 <th class="head"><ul class="simple">
-<li><p>ESIS Reslts</p></li>
+<li><p>ESIS Results</p></li>
 <li><p>(mR/hr)</p></li>
 </ul>
 </th>
@@ -504,7 +505,7 @@ Results are provided in the following table.</p>
 </ul>
 </th>
 <th class="head"><ul class="simple">
-<li><p>ESIS Reslts</p></li>
+<li><p>ESIS Results</p></li>
 <li><p>(mR/hr)</p></li>
 </ul>
 </th>
@@ -542,6 +543,180 @@ Results are provided in the following table.</p>
 </tbody>
 </table>
 </section>
+<section id="synthetic-benchmark-problem">
+<h2>Synthetic Benchmark Problem<a class="headerlink" href="#synthetic-benchmark-problem" title="Permalink to this heading">¶</a></h2>
+<p>This is an analytic benchmark designed to evaluate a number of features:</p>
+<ul class="simple">
+<li><p>the use of multiple shields</p></li>
+<li><p>older vs modern cross sections</p></li>
+<li><p>photon energy group structure</p></li>
+</ul>
+<p>This benchmark includes a point source composed of the following
+radioactive materials in the following table.  Additionally, Ba-137m
+is assumed to be in secular equilibrium with Cs-137.</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text">Synthetic Benchmark Point Source Composition</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Isotope</p></th>
+<th class="head"><p>uCi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Co-58</p></td>
+<td><p>22.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>Co-60</p></td>
+<td><p>32.4</p></td>
+</tr>
+<tr class="row-even"><td><p>Cs-137</p></td>
+<td><p>150</p></td>
+</tr>
+<tr class="row-odd"><td><p>Mn-54</p></td>
+<td><p>12.5</p></td>
+</tr>
+<tr class="row-even"><td><p>Sb-125</p></td>
+<td><p>11.3</p></td>
+</tr>
+</tbody>
+</table>
+<p>The point source is centered in an annular iron shield with an inner
+radius of 3 feet and a thickness of 3 inches.  A concentric annular
+concrete shield has an inner radius of 4 feet and a thickness of
+18 inches.  The material densities are
+0.00122 g/cm3, 7.874 g/cm3, and 2.34 g/cm3 for air,
+steel, and concrete, respectively.</p>
+<p>The following tables contain the resulting dose rates calculated
+using ZapMeNot, Microshield7, and MCNP5.  Note that the Microshield
+results were generated using the “linear” energy group option.  The default
+energy group option resulted in an additional 10% to 15% bias.</p>
+<p>The first table contains dose rates determined at the outer surface
+of the concrete shield at varying axial distances above the
+point source.</p>
+<p>The second table contains dose rates determined at the outer surface
+of the iron shield at varying axial distances above the point source.</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-text">Concrete Shield Results</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><ul class="simple">
+<li><p>Z</p></li>
+<li><ol class="lowerroman simple" start="900">
+<li></li>
+</ol>
+</li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>MCNP</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ZapMeNot</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>MS7</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>1.87E-05</p></td>
+<td><p>2.64E-05</p></td>
+<td><p>2.64E-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>1.84E-05</p></td>
+<td><p>2.62E-05</p></td>
+<td><p>2.62E-05</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>1.73E-05</p></td>
+<td><p>2.45E-05</p></td>
+<td><p>2.45E-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>40</p></td>
+<td><p>1.42E-05</p></td>
+<td><p>1.97E-05</p></td>
+<td><p>1.97E-05</p></td>
+</tr>
+<tr class="row-even"><td><p>60</p></td>
+<td><p>1.01E-05</p></td>
+<td><p>1.39E-05</p></td>
+<td><p>1.39E-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>80.7</p></td>
+<td><p>6.24E-06</p></td>
+<td><p>8.54E-06</p></td>
+<td><p>8.53E-06</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-text">Iron Shield Results</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><ul class="simple">
+<li><p>Z</p></li>
+<li><ol class="lowerroman simple" start="900">
+<li></li>
+</ol>
+</li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>MCNP</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>ZapMeNot</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+<th class="head"><ul class="simple">
+<li><p>MS7</p></li>
+<li><p>(mR/hr)</p></li>
+</ul>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>1.08E-02</p></td>
+<td><p>1.60E-02</p></td>
+<td><p>1.30E-02</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>1.07E-02</p></td>
+<td><p>1.59E-02</p></td>
+<td><p>1.29E-02</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>9.89E-03</p></td>
+<td><p>1.46E-02</p></td>
+<td><p>1.18E-02</p></td>
+</tr>
+<tr class="row-odd"><td><p>40</p></td>
+<td><p>7.61E-03</p></td>
+<td><p>1.12E-02</p></td>
+<td><p>9.05E-03</p></td>
+</tr>
+<tr class="row-even"><td><p>60</p></td>
+<td><p>5.14E-03</p></td>
+<td><p>7.47E-03</p></td>
+<td><p>6.01E-03</p></td>
+</tr>
+<tr class="row-odd"><td><p>80.7</p></td>
+<td><p>3.11E-03</p></td>
+<td><p>4.42E-03</p></td>
+<td><p>3.54E-03</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 
 
@@ -566,7 +741,7 @@ Results are provided in the following table.</p>
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Nov 08, 2022.
+        Last updated on Nov 15, 2022.
       </span>
 
     </p>

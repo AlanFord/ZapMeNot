@@ -71,7 +71,7 @@ ranging from 20 feet to 500 feet.  Results are provided in the following table.
 
 
 ESIS Benchmark Problem 1
------------------------------
+------------------------
 
 The ESIS benchmarks were originally documented in
 “Specification for gamma ray
@@ -123,19 +123,19 @@ Results are provided in the following table.
 .. table:: ESIS Benchmark Problem 1 Results
    :widths: auto
 
-   +--------------+---------------+---------------+-----------+
-   | - Radial     | - ESIS Reslts | - Microshield | - ZapMeNot|
-   | - Location   | - (mR/hr)     | - (mR/hr)     | - (mR/hr) |
-   +==============+===============+===============+===========+
-   | Inside Wall  | - 4.54E+04 to | 6.29E+04      | 6.22E+04  |
-   |              | - 8.01E+04    |               |           |
-   +--------------+---------------+---------------+-----------+
-   | Outside Wall | - 4.9E-01 to  | 1.89E+00      | 1.88E+00  |
-   |              | - 2.46E+00    |               |           |
-   +--------------+---------------+---------------+-----------+
+   +--------------+----------------+---------------+-----------+
+   | - Radial     | - ESIS Results | - Microshield | - ZapMeNot|
+   | - Location   | - (mR/hr)      | - (mR/hr)     | - (mR/hr) |
+   +==============+================+===============+===========+
+   | Inside Wall  | - 4.54E+04 to  | 6.29E+04      | 6.22E+04  |
+   |              | - 8.01E+04     |               |           |
+   +--------------+----------------+---------------+-----------+
+   | Outside Wall | - 4.9E-01 to   | 1.89E+00      | 1.88E+00  |
+   |              | - 2.46E+00     |               |           |
+   +--------------+----------------+---------------+-----------+
 
 ESIS Benchmark Problem 2
------------------------------
+------------------------
 
 Problem 2 is similar to EIS Benchmark Problem 1.
 However, the source is a square tank 273 cm wide by 479.9 cm high.
@@ -155,13 +155,104 @@ Results are provided in the following table.
 .. table:: ESIS Benchmark Problem 2 Results
    :widths: auto
 
-   +--------------+---------------+---------------+-----------+
-   | - Radial     | - ESIS Reslts | - Microshield | - ZapMeNot|
-   | - Location   | - (mR/hr)     | - (mR/hr)     | - (mR/hr) |
-   +==============+===============+===============+===========+
-   | Inside Wall  | - 4.54E+04 to | 6.29E+04      | 6.22E+04  |
-   |              | - 8.01E+04    |               |           |
-   +--------------+---------------+---------------+-----------+
-   | Outside Wall | - 4.9E-01 to  | 1.89E+00      | 1.88E+00  |
-   |              | - 2.46E+00    |               |           |
-   +--------------+---------------+---------------+-----------+
+   +--------------+----------------+---------------+-----------+
+   | - Radial     | - ESIS Results | - Microshield | - ZapMeNot|
+   | - Location   | - (mR/hr)      | - (mR/hr)     | - (mR/hr) |
+   +==============+================+===============+===========+
+   | Inside Wall  | - 4.54E+04 to  | 6.29E+04      | 6.22E+04  |
+   |              | - 8.01E+04     |               |           |
+   +--------------+----------------+---------------+-----------+
+   | Outside Wall | - 4.9E-01 to   | 1.89E+00      | 1.88E+00  |
+   |              | - 2.46E+00     |               |           |
+   +--------------+----------------+---------------+-----------+
+
+Synthetic Benchmark Problem
+---------------------------
+
+This is an analytic benchmark designed to evaluate a number of features:
+
+- the use of multiple shields
+- older vs modern cross sections
+- photon energy group structure
+
+This benchmark includes a point source composed of the following
+radioactive materials in the following table.  Additionally, Ba-137m
+is assumed to be in secular equilibrium with Cs-137.
+
+.. table:: Synthetic Benchmark Point Source Composition
+   :widths: auto
+
+   +---------+------------------+
+   | Isotope | uCi              |
+   +=========+==================+
+   | Co-58   | 22.5             |
+   +---------+------------------+
+   | Co-60   | 32.4             |
+   +---------+------------------+
+   | Cs-137  | 150              |
+   +---------+------------------+
+   | Mn-54   | 12.5             |
+   +---------+------------------+
+   | Sb-125  | 11.3             |
+   +---------+------------------+
+
+The point source is centered in an annular iron shield with an inner
+radius of 3 feet and a thickness of 3 inches.  A concentric annular 
+concrete shield has an inner radius of 4 feet and a thickness of
+18 inches.  The material densities are
+0.00122 g/cm3, 7.874 g/cm3, and 2.34 g/cm3 for air, 
+steel, and concrete, respectively. 
+
+The following tables contain the resulting dose rates calculated
+using ZapMeNot, Microshield7, and MCNP5.  Note that the Microshield
+results were generated using the "linear" energy group option.  The default
+energy group option resulted in an additional 10% to 15% bias.
+
+The first table contains dose rates determined at the outer surface
+of the concrete shield at varying axial distances above the
+point source.
+
+The second table contains dose rates determined at the outer surface
+of the iron shield at varying axial distances above the point source.
+
+.. table:: Concrete Shield Results
+   :widths: auto
+
+   +--------+-----------+------------+-----------+
+   | - Z    | - MCNP    | - ZapMeNot | - MS7     |
+   | - (cm) | - (mR/hr) | - (mR/hr)  | - (mR/hr) |
+   +========+===========+============+===========+
+   | 0      | 1.87E-05  | 2.64E-05   | 2.64E-05  |
+   +--------+-----------+------------+-----------+
+   | 6      | 1.84E-05  | 2.62E-05   | 2.62E-05  |
+   +--------+-----------+------------+-----------+
+   | 20     | 1.73E-05  | 2.45E-05   | 2.45E-05  |
+   +--------+-----------+------------+-----------+
+   | 40     | 1.42E-05  | 1.97E-05   | 1.97E-05  |
+   +--------+-----------+------------+-----------+
+   | 60     | 1.01E-05  | 1.39E-05   | 1.39E-05  |
+   +--------+-----------+------------+-----------+
+   | 80.7   | 6.24E-06  | 8.54E-06   | 8.53E-06  |
+   +--------+-----------+------------+-----------+
+
+
+.. table:: Iron Shield Results
+   :widths: auto
+
+   +--------+-----------+------------+-----------+
+   | - Z    | - MCNP    | - ZapMeNot | - MS7     |
+   | - (cm) | - (mR/hr) | - (mR/hr)  | - (mR/hr) |
+   +========+===========+============+===========+
+   | 0      | 1.08E-02  | 1.60E-02   | 1.30E-02  |
+   +--------+-----------+------------+-----------+
+   | 6      | 1.07E-02  | 1.59E-02   | 1.29E-02  |
+   +--------+-----------+------------+-----------+
+   | 20     | 9.89E-03  | 1.46E-02   | 1.18E-02  |
+   +--------+-----------+------------+-----------+
+   | 40     | 7.61E-03  | 1.12E-02   | 9.05E-03  |
+   +--------+-----------+------------+-----------+
+   | 60     | 5.14E-03  | 7.47E-03   | 6.01E-03  |
+   +--------+-----------+------------+-----------+
+   | 80.7   | 3.11E-03  | 4.42E-03   | 3.54E-03  |
+   +--------+-----------+------------+-----------+
+
