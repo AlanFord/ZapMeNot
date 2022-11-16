@@ -52,9 +52,9 @@ class TestSemiInfiniteXSlab():
     # test getting a crossing length after reversing the directio of the ray
     # reference: test_shield/slabCrossingLength.m (matlab script)
     def test_crossing_length2(self, create_shield, create_ray):
-        a = create_ray.start
-        create_ray.start = create_ray.end
-        create_ray.end = a
+        a = create_ray._start
+        create_ray._start = create_ray._end
+        create_ray._end = a
         length = create_shield._get_crossing_length(create_ray)
         assert length == pytest.approx(17.320508)
 

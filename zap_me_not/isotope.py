@@ -3,7 +3,7 @@ import pkg_resources
 
 
 class Isotope:
-    """Encaplsulates isotope data from the IsotopeLibrary.yml file.
+    """Encapsulates isotope data from the IsotopeLibrary.yml file.
 
     The object is intended to make available the half life and photon
     intensities of the requested isotope.
@@ -12,14 +12,18 @@ class Isotope:
     ----------
     name : :class:`str`
         The isotope to be extracted from the isotope library.
+    """
 
+    '''
     Attributes
     ----------
-    name
-    half_life
-    photons
-    key_progeny
-    """
+    _name
+    _half_life
+    _photons
+    _key_progeny
+    _library
+    '''
+
     _library = None
 
     def __init__(self, name):
@@ -54,8 +58,8 @@ class Isotope:
 
     @property
     def photons(self):
-        """:class:`list` of :class:`list` : A list of photon energies and
-        intensities."""
+        """:class:`list` of :class:`list` : A list of photon energies (in MeV) and
+        intensities per decay."""
         return self._photons
 
     @property

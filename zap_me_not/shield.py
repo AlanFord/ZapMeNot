@@ -156,8 +156,8 @@ class SemiInfiniteXSlab(Shield):
             the shield.
         """
         super()._get_crossing_length(ray)  # validate the arguments
-        ray_origin = ray.origin
-        ray_unit_vector = ray.dir
+        ray_origin = ray._origin
+        ray_unit_vector = ray._dir
         plane_normal = np.array([1, 0, 0])
         # get length to one crossing point
         plane_point = np.array([self.x_start, 0, 0])
@@ -176,21 +176,21 @@ class SemiInfiniteXSlab(Shield):
         if (first_length < 0 and second_length < 0):
             # ray starts and ends entirely on one side of the shield
             return 0
-        if (first_length > ray.length and second_length > ray.length):
+        if (first_length > ray._length and second_length > ray._length):
             # ray starts and ends entirely on one side of the shield
             return 0
         # remainder of cases have some sort of partial or full crossing
         t0 = min(first_length, second_length)
         t1 = max(first_length, second_length)
-        if ((t0 < 0) and (t1 > ray.length)):
+        if ((t0 < 0) and (t1 > ray._length)):
             # ray is intirely within the slab
-            return ray.length
-        if ((t0 < 0) and (t1 < ray.length)):
+            return ray._length
+        if ((t0 < 0) and (t1 < ray._length)):
             # ray start in slab and crosses out
             return t1
-        if ((t0 > 0) and (t1 > ray.length)):
+        if ((t0 > 0) and (t1 > ray._length)):
             # ray starts outside slab and ends inside slab
-            return ray.length - t0
+            return ray._length - t0
         # we are left with a full crossing
         return t1 - t0
 
@@ -242,9 +242,9 @@ class SemiInfiniteXSlab(Shield):
 #         # based on
 #         # http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
 #         super()._get_crossing_length(ray)  # validate the arguments
-#         a = np.dot(ray.dir, ray.dir)
-#         b = 2 * np.dot(ray.dir, ray.origin - self.center)
-#         c = np.dot(ray.origin-self.center, ray.origin -
+#         a = np.dot(ray._dir, ray._dir)
+#         b = 2 * np.dot(ray._dir, ray._origin - self.center)
+#         c = np.dot(ray._origin-self.center, ray._origin -
 #                    self.center) - self.radius**2
 #         discriminant = b**2 - 4*a*c
 #         if discriminant <= 0:
@@ -255,14 +255,14 @@ class SemiInfiniteXSlab(Shield):
 #         t1 = (-b + root)/(2*a)
 #         big_list = []
 #         for a_length in [t0, t1]:
-#             if (a_length >= 0) and (a_length <= ray.length):
+#             if (a_length >= 0) and (a_length <= ray._length):
 #                 big_list.append(a_length)
 #         if len(big_list) != 2:
 #             # if not 2 intersections, look for ray endpoints inside the sphere
-#             if self.contains(ray.origin):
+#             if self.contains(ray._origin):
 #                 big_list.append(0)
-#             if self.contains(ray.end):
-#                 big_list.append(ray.length)
+#             if self.contains(ray._end):
+#                 big_list.append(ray._length)
 #         if len(big_list) == 0:
 #             # ray misses the sphere
 #             return 0
@@ -354,10 +354,10 @@ class Box(Shield):
         #    missed entirely
         if len(crossings) != 2:
             # check for start/end of ray within the box
-            if self._contains(ray.origin):
-                crossings.insert(0, ray.origin)
-            if self._contains(np.array(ray.end)):
-                crossings.append(np.array(ray.end))
+            if self._contains(ray._origin):
+                crossings.insert(0, ray._origin)
+            if self._contains(np.array(ray._end)):
+                crossings.append(np.array(ray._end))
         if len(crossings) == 0:
             # likely it's a complete miss
             return 0
@@ -412,10 +412,10 @@ class Box(Shield):
         results = []
         bounds = [self.box_center - (self.box_dimensions/2),
                   self.box_center + (self.box_dimensions/2)]
-        tmin = (bounds[ray.sign[0]][0] - ray.origin[0]) * ray.invdir[0]
-        tmax = (bounds[1-ray.sign[0]][0] - ray.origin[0]) * ray.invdir[0]
-        tymin = (bounds[ray.sign[1]][1] - ray.origin[1]) * ray.invdir[1]
-        tymax = (bounds[1-ray.sign[1]][1] - ray.origin[1]) * ray.invdir[1]
+        tmin = (bounds[ray._sign[0]][0] - ray._origin[0]) * ray._invdir[0]
+        tmax = (bounds[1-ray._sign[0]][0] - ray._origin[0]) * ray._invdir[0]
+        tymin = (bounds[ray._sign[1]][1] - ray._origin[1]) * ray._invdir[1]
+        tymax = (bounds[1-ray._sign[1]][1] - ray._origin[1]) * ray._invdir[1]
 
         if (tmin > tymax) or (tymin > tmax):
             return results
@@ -425,8 +425,8 @@ class Box(Shield):
         if tymax < tmax:
             tmax = tymax
 
-        tzmin = (bounds[ray.sign[2]][2] - ray.origin[2]) * ray.invdir[2]
-        tzmax = (bounds[1-ray.sign[2]][2] - ray.origin[2]) * ray.invdir[2]
+        tzmin = (bounds[ray._sign[2]][2] - ray._origin[2]) * ray._invdir[2]
+        tzmax = (bounds[1-ray._sign[2]][2] - ray._origin[2]) * ray._invdir[2]
 
         if ((tmin > tzmax) or (tzmin > tmax)):
             return results
@@ -437,10 +437,10 @@ class Box(Shield):
         if tzmax < tmax:
             tmax = tzmax
 
-        if (tmin >= 0) and (tmin <= ray.length):
-            results.append(ray.origin + ray.dir*tmin)
-        if (tmax >= 0) and (tmax <= ray.length):
-            results.append(ray.origin + ray.dir*tmax)
+        if (tmin >= 0) and (tmin <= ray._length):
+            results.append(ray._origin + ray._dir*tmin)
+        if (tmax >= 0) and (tmax <= ray._length):
+            results.append(ray._origin + ray._dir*tmax)
 
         return results
 
@@ -546,10 +546,10 @@ class InfiniteAnnulus(Shield):
         # two crossings indicates a single in/out or out/in crossing
         # four crossings indicate a full-shield crossing
         if len(crossings) not in [2, 4]:
-            if self._contains(ray.origin):
+            if self._contains(ray._origin):
                 crossings.append(0)
-            if self._contains(np.array(ray.end)):
-                crossings.append(ray.length)
+            if self._contains(np.array(ray._end)):
+                crossings.append(ray._length)
         if len(crossings) == 0:
             return 0
         if len(crossings) not in [2, 4]:
@@ -605,8 +605,8 @@ class InfiniteAnnulus(Shield):
         """
         results = []
         for radius in [self.inner_radius, self.outer_radius]:
-            deltap = ray.origin - self.origin
-            part1 = ray.dir - (np.dot(ray.dir, self.dir)*self.dir)
+            deltap = ray._origin - self.origin
+            part1 = ray._dir - (np.dot(ray._dir, self.dir)*self.dir)
             part2 = deltap - (np.dot(deltap, self.dir)*self.dir)
             a = np.dot(part1, part1)
             b = 2*np.dot(part1, part2)
@@ -623,7 +623,7 @@ class InfiniteAnnulus(Shield):
                 for t in [t1, t2]:
                     # discard line/cylinder intersections outside of the
                     # length of the ray
-                    if t >= 0 and t <= ray.length:
+                    if t >= 0 and t <= ray._length:
                         results.append(t)
         return results
 
@@ -854,10 +854,10 @@ class CappedCylinder(Shield):
         #    missed entirely
         if len(crossings) != 2:
             # check for start/end of ray within the cylinder
-            if self._contains(ray.origin):
-                crossings.insert(0, ray.origin)
-            if self._contains(np.array(ray.end)):
-                crossings.append(np.array(ray.end))
+            if self._contains(ray._origin):
+                crossings.insert(0, ray._origin)
+            if self._contains(np.array(ray._end)):
+                crossings.append(np.array(ray._end))
         if len(crossings) == 0:
             # likely it's a complete miss
             return 0
@@ -913,8 +913,8 @@ class CappedCylinder(Shield):
         """
         results = []
         # test for
-        deltap = ray.origin - self.origin
-        part1 = ray.dir - (np.dot(ray.dir, self.dir)*self.dir)
+        deltap = ray._origin - self.origin
+        part1 = ray._dir - (np.dot(ray._dir, self.dir)*self.dir)
         part2 = deltap - (np.dot(deltap, self.dir)*self.dir)
         a = np.dot(part1, part1)
         b = 2*np.dot(part1, part2)
@@ -931,8 +931,8 @@ class CappedCylinder(Shield):
             for t in [t1, t2]:
                 # discard line/cylinder intersections outside of the
                 # length of the ray
-                if t >= 0 and t <= ray.length:
-                    intersection = ray.origin + ray.dir*t
+                if t >= 0 and t <= ray._length:
+                    intersection = ray._origin + ray._dir*t
                     loc = np.dot(intersection-self.origin, self.dir)
                     # keep only intersections within the finite length
                     # of the cylinder
@@ -941,9 +941,9 @@ class CappedCylinder(Shield):
         # check to see if there are intersections on the caps
         for disk_center in [self.origin, self.end]:
             t = self._line_plane_collision(
-                self.dir, disk_center, ray.origin, ray.dir)
-            if t is not None and t >= 0 and t <= ray.length:
-                point = ray.origin + ray.dir*t
+                self.dir, disk_center, ray._origin, ray._dir)
+            if t is not None and t >= 0 and t <= ray._length:
+                point = ray._origin + ray._dir*t
                 radial = point - disk_center
                 if radial.dot(radial) < self.radius**2:
                     results.append(point)

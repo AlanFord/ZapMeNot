@@ -176,7 +176,7 @@ class Model:
         total_distance = np.zeros((len(source_points)))
         for index, nextPoint in enumerate(source_points):
             vector = ray.FiniteLengthRay(nextPoint, self.detector.location)
-            total_distance[index] = vector.length
+            total_distance[index] = vector._length
             for index2, thisShield in enumerate(self.shield_list):
                 crossing_distances[index, index2] = \
                     thisShield._get_crossing_length(vector)

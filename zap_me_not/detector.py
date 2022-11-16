@@ -17,11 +17,14 @@ class Detector:
         Y coordinate of detector location in cartesian coordinates
     z : float
         Z coordinate of detector location in cartesian coordinates
+    """
 
+    '''
     Attributes
     ----------
-    location
-    """
+    _location
+    '''
+
     def __init__(self, x, y, z):
         if isinstance(x, numbers.Number) and \
             isinstance(y, numbers.Number) and \

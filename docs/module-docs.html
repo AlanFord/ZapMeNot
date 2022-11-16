@@ -183,20 +183,12 @@ may be incomplete.</p>
 <dt class="sig sig-object py" id="zap_me_not.isotope.Isotope">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zap_me_not.isotope.</span></span><span class="sig-name descname"><span class="pre">Isotope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/isotope.html#Isotope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.isotope.Isotope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Encaplsulates isotope data from the IsotopeLibrary.yml file.</p>
+<p>Encapsulates isotope data from the IsotopeLibrary.yml file.</p>
 <p>The object is intended to make available the half life and photon
 intensities of the requested isotope.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The isotope to be extracted from the isotope library.</p>
-</dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>name</strong> – </p></li>
-<li><p><strong>half_life</strong> – </p></li>
-<li><p><strong>photons</strong> – </p></li>
-<li><p><strong>key_progeny</strong> – </p></li>
-</ul>
 </dd>
 </dl>
 <dl class="py property">
@@ -236,8 +228,8 @@ transient equilibrium.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="zap_me_not.isotope.Isotope.photons">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">photons</span></span><a class="headerlink" href="#zap_me_not.isotope.Isotope.photons" title="Permalink to this definition">¶</a></dt>
-<dd><p>A list of photon energies and
-intensities.</p>
+<dd><p>A list of photon energies (in MeV) and
+intensities per decay.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
@@ -254,7 +246,7 @@ intensities.</p>
 <dt class="sig sig-object py" id="zap_me_not.material.Material">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zap_me_not.material.</span></span><span class="sig-name descname"><span class="pre">Material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/material.html#Material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.material.Material" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Encaplsulates the data in the MaterialLibrary.yml file.</p>
+<p>Encapsulates the data in the MaterialLibrary.yml file.</p>
 <p>Makes available the mean free path, mass
 energy absorption coefficient, the mass attenuation coefficient,
 and the exposure buildup factor of the requested material.</p>
@@ -262,17 +254,11 @@ and the exposure buildup factor of the requested material.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The material to be extracted from the material library</p>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>name</strong> – </p></li>
-<li><p><strong>density</strong> (<em>float</em>) – Density of the material in g/cm<sup>3</sup></p></li>
-</ul>
-</dd>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="zap_me_not.material.Material.density">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">density</span></span><a class="headerlink" href="#zap_me_not.material.Material.density" title="Permalink to this definition">¶</a></dt>
-<dd><p>The density of the material</p>
+<dd><p>The density of the material in g/cm<sup>3</sup></p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
@@ -288,8 +274,8 @@ and the exposure buildup factor of the requested material.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
-<li><p><strong>mfps</strong> (float, <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>, or <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) – One or more mean free paths through the material</p></li>
-<li><p><strong>formula</strong> (<em>string</em>) – The format of the buildup factor</p></li>
+<li><p><strong>mfps</strong> (float, <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>, or <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) – One or more mean free path values through the material</p></li>
+<li><p><strong>formula</strong> (<em>string</em>) – The format of the buildup factor (only ‘GP’ is currently supported)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -299,7 +285,7 @@ and the exposure buildup factor of the requested material.</p>
 </ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A vector of photon exposure buildup factors in air at
+<dd class="field-odd"><p>A vector of photon exposure buildup factors in air, one for
 each specified mfp</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -398,16 +384,6 @@ and a resulting direction.</p>
 <li><p><strong>end</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>) – Defines the ending point of the ray in cartesian coordinates.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>start</strong> – </p></li>
-<li><p><strong>end</strong> – </p></li>
-<li><p><strong>origin</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) – A vector implemenation of the starting point.</p></li>
-<li><p><strong>length</strong> (<em>float</em>) – The length of the ray.</p></li>
-<li><p><strong>dir</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) – A numpy vector holding the vector normal of the ray.</p></li>
-<li><p><strong>sign</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) – Indicates the signs of the components of <code class="xref py py-obj docutils literal notranslate"><span class="pre">dir</span></code>.</p></li>
-</ul>
-</dd>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="zap_me_not.ray.FiniteLengthRay.end">
@@ -450,9 +426,6 @@ cartesian coordinates.</p>
 <li><p><strong>y</strong> (<em>float</em>) – Y coordinate of detector location in cartesian coordinates</p></li>
 <li><p><strong>z</strong> (<em>float</em>) – Z coordinate of detector location in cartesian coordinates</p></li>
 </ul>
-</dd>
-<dt class="field-even">Variables<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>location</strong> – </p>
 </dd>
 </dl>
 <dl class="py property">
@@ -1422,7 +1395,7 @@ uncollided energy flux, uncollided exposure, and total exposure</p>
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Nov 03, 2022.
+        Last updated on Nov 16, 2022.
       </span>
 
     </p>

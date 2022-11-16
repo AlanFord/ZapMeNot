@@ -165,7 +165,7 @@
 
 
 <div class="viewcode-block" id="Isotope"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.isotope.Isotope">[docs]</a><span class="k">class</span> <span class="nc">Isotope</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Encaplsulates isotope data from the IsotopeLibrary.yml file.</span>
+    <span class="sd">&quot;&quot;&quot;Encapsulates isotope data from the IsotopeLibrary.yml file.</span>
 
 <span class="sd">    The object is intended to make available the half life and photon</span>
 <span class="sd">    intensities of the requested isotope.</span>
@@ -174,14 +174,18 @@
 <span class="sd">    ----------</span>
 <span class="sd">    name : :class:`str`</span>
 <span class="sd">        The isotope to be extracted from the isotope library.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    name</span>
-<span class="sd">    half_life</span>
-<span class="sd">    photons</span>
-<span class="sd">    key_progeny</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    _name</span>
+<span class="sd">    _half_life</span>
+<span class="sd">    _photons</span>
+<span class="sd">    _key_progeny</span>
+<span class="sd">    _library</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="n">_library</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
@@ -216,8 +220,8 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">photons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;:class:`list` of :class:`list` : A list of photon energies and</span>
-<span class="sd">        intensities.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;:class:`list` of :class:`list` : A list of photon energies (in MeV) and</span>
+<span class="sd">        intensities per decay.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_photons</span>
 
     <span class="nd">@property</span>
@@ -292,7 +296,7 @@
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Nov 03, 2022.
+        Last updated on Nov 16, 2022.
       </span>
 
     </p>

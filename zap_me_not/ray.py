@@ -15,20 +15,25 @@ class FiniteLengthRay:
         Defines the starting point of the ray in cartesian coordinates.
     end : :class:`list` or :class:`tuple`
         Defines the ending point of the ray in cartesian coordinates.
+    """
 
+    '''
     Attributes
     ----------
-    start
-    end
-    origin : :class:`numpy.ndarray`
+    _start
+    _end
+    _origin : :class:`numpy.ndarray`
         A vector implemenation of the starting point.
-    length : float
+    _length : float
         The length of the ray.
-    dir : :class:`numpy.ndarray`
+    _dir : :class:`numpy.ndarray`
         A numpy vector holding the vector normal of the ray.
-    sign : :class:`numpy.ndarray`
+    _invdir : :class:`numpy.ndarray`
+        A numpy vector holding the inverse of the vector _dir.
+    _sign : :class:`numpy.ndarray`
         Indicates the signs of the components of :py:obj:`dir`.
-    """
+    '''
+
     def __init__(self, start, end):
         if not FiniteLengthRay._is_validate_vector(start):
             raise ValueError("Invalid ray start")
@@ -65,20 +70,30 @@ class FiniteLengthRay:
         self._regularize()
 
     def _regularize(self):
-        self.origin = np.array(self._start)
-        v = np.array(self._end) - self.origin
-        self.length = np.linalg.norm(v)
+        """Calculates the mean free path for a given distance and photon energy
+
+        Parameters
+        ----------
+        energy : float
+            The photon energy in MeV
+        distance : float
+            The distance through the material in cm
+        """
+
+        self._origin = np.array(self._start)
+        v = np.array(self._end) - self._origin
+        self._length = np.linalg.norm(v)
         # direction doesn't matter if the length is zero
-        if self.length == 0:
-            self.dir = np.zeros(3)
+        if self._length == 0:
+            self._dir = np.zeros(3)
         else:
-            self.dir = v / self.length
+            self._dir = v / self._length
         with np.errstate(divide='ignore'):
-            self.invdir = 1/self.dir  # vector is opposite of vector dir
-        self.sign = [0, 0, 0]
-        self.sign[0] = int((self.invdir[0] < 0))
-        self.sign[1] = int((self.invdir[1] < 0))
-        self.sign[2] = int((self.invdir[2] < 0))
+            self._invdir = 1/self._dir  # vector is opposite of vector dir
+        self._sign = [0, 0, 0]
+        self._sign[0] = int((self._invdir[0] < 0))
+        self._sign[1] = int((self._invdir[1] < 0))
+        self._sign[2] = int((self._invdir[2] < 0))
 
     @staticmethod
     def _is_validate_vector(vector):

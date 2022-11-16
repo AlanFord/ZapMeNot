@@ -7,7 +7,7 @@ import pkg_resources
 
 
 class Material:
-    r"""Encaplsulates the data in the MaterialLibrary.yml file.
+    r"""Encapsulates the data in the MaterialLibrary.yml file.
 
     Makes available the mean free path, mass
     energy absorption coefficient, the mass attenuation coefficient,
@@ -17,13 +17,17 @@ class Material:
     ----------
     name : str
         The material to be extracted from the material library
+    """
 
+    '''
     Attributes
     ----------
-    name
-    density : float
+    _library
+    _name
+    _density : float
         Density of the material in g/cm\ :sup:`3`
-    """
+    '''
+
     _library = None
 
     def __init__(self, name):
@@ -77,7 +81,7 @@ class Material:
 
     @property
     def density(self):
-        """float : The density of the material"""
+        """float : The density of the material in g/cm\ :sup:`3` """
         return self._density
 
     @density.setter
@@ -177,9 +181,9 @@ class Material:
         energy : float
             The photon energy in MeV
         mfps : float, :class:`list`, or :class:`numpy.ndarray`
-            One or more mean free paths through the material
+            One or more mean free path values through the material
         formula : string
-            The format of the buildup factor
+            The format of the buildup factor (only 'GP' is currently supported)
 
         Raises
         ------
@@ -191,7 +195,7 @@ class Material:
         Returns
         -------
         float or :class:`numpy.ndarray`
-            A vector of photon exposure buildup factors in air at
+            A vector of photon exposure buildup factors in air, one for
             each specified mfp
         """
         if not isinstance(formula, str):
