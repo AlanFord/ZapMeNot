@@ -188,14 +188,14 @@
 <span class="sd">        Material density in g/cm3</span>
 <span class="sd">    **kwargs</span>
 <span class="sd">        Arbitrary keyword arguments.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
 <span class="sd">        Material properties of the shield</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
-
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># the material name is validated by the Material class</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="n">material_name</span><span class="p">)</span>
@@ -286,7 +286,8 @@
 <span class="sd">        X axis location of the outer edge of the shield.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -295,9 +296,8 @@
 <span class="sd">        X axis location of the inner edge of the shield.</span>
 <span class="sd">    x_end : float</span>
 <span class="sd">        X axis location of the outer edge of the shield.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
-
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">x_end</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_start</span> <span class="o">=</span> <span class="n">x_start</span>
@@ -457,7 +457,8 @@
 <span class="sd">        X, Y, and Z dimensions of the box.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class:material.Material</span>
@@ -466,9 +467,8 @@
 <span class="sd">        Vector location of the center of the box in cartesian coordiantes.</span>
 <span class="sd">    box_dimensions :  :class:numpy.ndarray</span>
 <span class="sd">        Vector holding the dimensions of the box.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
-
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">box_center</span><span class="p">,</span> <span class="n">box_dimensions</span><span class="p">,</span>
                  <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
@@ -643,7 +643,8 @@
 <span class="sd">        Radius of the annulus outer surface.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -656,7 +657,8 @@
 <span class="sd">        Vector location of a point on the annulus centerline.</span>
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the annulus centerline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_origin</span><span class="p">,</span> <span class="n">cylinder_axis</span><span class="p">,</span>
                  <span class="n">cylinder_inner_radius</span><span class="p">,</span> <span class="n">cylinder_outer_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
@@ -825,7 +827,8 @@
 <span class="sd">        Radius of the annulus outer surface.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -838,7 +841,7 @@
 <span class="sd">        Vector location of a point on the annulus centerline.</span>
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the annulus centerline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">,</span> <span class="n">cylinder_inner_radius</span><span class="p">,</span>
                  <span class="n">cylinder_outer_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -866,7 +869,8 @@
 <span class="sd">        Radius of the annulus outer surface.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -879,8 +883,7 @@
 <span class="sd">        Vector location of a point on the annulus centerline.</span>
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the annulus centerline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">,</span> <span class="n">cylinder_inner_radius</span><span class="p">,</span>
                  <span class="n">cylinder_outer_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span>
@@ -907,7 +910,8 @@
 <span class="sd">        Radius of the annulus outer surface.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -920,7 +924,7 @@
 <span class="sd">        Vector location of a point on the annulus centerline.</span>
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the annulus centerline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">,</span> <span class="n">cylinder_inner_radius</span><span class="p">,</span>
                  <span class="n">cylinder_outer_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -948,7 +952,8 @@
 <span class="sd">        Radius of the cylinder.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -963,7 +968,7 @@
 <span class="sd">        Length of the cylinder.</span>
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the cylinder centerline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_start</span><span class="p">,</span> <span class="n">cylinder_end</span><span class="p">,</span>
                  <span class="n">cylinder_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1143,7 +1148,8 @@
 <span class="sd">        Radius of the cylinder.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -1158,7 +1164,7 @@
 <span class="sd">        Length of the cylinder.</span>
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the cylinder centerline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">,</span> <span class="n">cylinder_length</span><span class="p">,</span>
                  <span class="n">cylinder_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1190,7 +1196,8 @@
 <span class="sd">        Radius of the cylinder.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -1205,7 +1212,7 @@
 <span class="sd">        Length of the cylinder.</span>
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the cylinder centerline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">,</span> <span class="n">cylinder_length</span><span class="p">,</span>
                  <span class="n">cylinder_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1238,7 +1245,8 @@
 <span class="sd">        Radius of the cylinder.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -1253,7 +1261,7 @@
 <span class="sd">        Length of the cylinder.</span>
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the cylinder centerline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">,</span> <span class="n">cylinder_length</span><span class="p">,</span>
                  <span class="n">cylinder_radius</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

@@ -173,11 +173,18 @@
 <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pyvista</span>
 
+<span class="c1"># -----------------------------------------------------------</span>
+
 
 <div class="viewcode-block" id="GroupOption"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.GroupOption">[docs]</a><span class="k">class</span> <span class="nc">GroupOption</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set of possible energy group options.  The options</span>
+<span class="sd">    include &#39;group&#39;, &#39;discrete&#39;, and &#39;hybrid&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">GROUP</span> <span class="o">=</span> <span class="s2">&quot;group&quot;</span>
     <span class="n">HYBRID</span> <span class="o">=</span> <span class="s2">&quot;hybrid&quot;</span>
     <span class="n">DISCRETE</span> <span class="o">=</span> <span class="s2">&quot;discrete&quot;</span></div>
+
+<span class="c1"># -----------------------------------------------------------</span>
 
 
 <div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
@@ -190,7 +197,8 @@
 <span class="sd">    ----------</span>
 <span class="sd">    **kwargs</span>
 <span class="sd">        Arbitrary keyword arguments.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    points_per_dimension : :class:`list` of integers</span>
@@ -199,8 +207,7 @@
 <span class="sd">        Typically a list of three integers for three-dimensional sources, one</span>
 <span class="sd">        integer for one diensional sources, and not significant for point</span>
 <span class="sd">        sources.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Initialize the Source with empty strings for the isotope list</span>
 <span class="sd">        and photon list&#39;&#39;&#39;</span>
@@ -422,9 +429,8 @@
 <span class="sd">    end : :class:`list`</span>
 <span class="sd">        Cartiesian X, Y, and Z coordinates of the ending point of the</span>
 <span class="sd">        line source.</span>
-<span class="sd">    **kwargs</span>
-<span class="sd">        Arbitrary keyword arguments.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
@@ -433,8 +439,7 @@
 <span class="sd">        Vector location of one end of the line source.</span>
 <span class="sd">    end : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector location of one end of the line source.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="s2">&quot;Initialize&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
@@ -536,9 +541,8 @@
 <span class="sd">        Cartiesian Y coordinate of the point source.</span>
 <span class="sd">    z : float</span>
 <span class="sd">        Cartiesian Z coordinate of the point source.</span>
-<span class="sd">    **kwargs</span>
-<span class="sd">        Arbitrary keyword arguments.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `zap_me_not.material.Material`</span>
@@ -551,8 +555,7 @@
 <span class="sd">        Vector location of a point on the annulus centerline.</span>
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the annulus centerline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Initialize with an x,y,z location in space&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
@@ -698,13 +701,13 @@
 <span class="sd">        X, Y, and Z dimensions of the box.</span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        Material density in g/cm3.</span>
-
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    material : :class: `material.Material`</span>
 <span class="sd">        Material properties of the shield</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -740,8 +743,16 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    **kwargs</span>
-<span class="sd">        Arbitrary keyword arguments.</span>
+<span class="sd">    material_name : :obj:`material.Material`</span>
+<span class="sd">        Shield material type</span>
+<span class="sd">    cylinder_center : :obj:`list`</span>
+<span class="sd">        X, Y, and Z coordinates of the center of the cylinder.</span>
+<span class="sd">    cylinder_length : float</span>
+<span class="sd">        The length of the cylinder.</span>
+<span class="sd">    cylinder_radius : float</span>
+<span class="sd">        Radius of the cylinder.</span>
+<span class="sd">    density : float, optional</span>
+<span class="sd">        Material density in g/cm3.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
@@ -809,8 +820,16 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    **kwargs</span>
-<span class="sd">        Arbitrary keyword arguments.</span>
+<span class="sd">    material_name : :obj:`material.Material`</span>
+<span class="sd">        Shield material type</span>
+<span class="sd">    cylinder_center : :obj:`list`</span>
+<span class="sd">        X, Y, and Z coordinates of the center of the cylinder.</span>
+<span class="sd">    cylinder_length : float</span>
+<span class="sd">        The length of the cylinder.</span>
+<span class="sd">    cylinder_radius : float</span>
+<span class="sd">        Radius of the cylinder.</span>
+<span class="sd">    density : float, optional</span>
+<span class="sd">        Material density in g/cm3.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
@@ -878,8 +897,16 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    **kwargs</span>
-<span class="sd">        Arbitrary keyword arguments.</span>
+<span class="sd">    material_name : :obj:`material.Material`</span>
+<span class="sd">        Shield material type</span>
+<span class="sd">    cylinder_center : :obj:`list`</span>
+<span class="sd">        X, Y, and Z coordinates of the center of the cylinder.</span>
+<span class="sd">    cylinder_length : float</span>
+<span class="sd">        The length of the cylinder.</span>
+<span class="sd">    cylinder_radius : float</span>
+<span class="sd">        Radius of the cylinder.</span>
+<span class="sd">    density : float, optional</span>
+<span class="sd">        Material density in g/cm3.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
@@ -952,7 +979,7 @@
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Nov 03, 2022.
+        Last updated on Nov 16, 2022.
       </span>
 
     </p>

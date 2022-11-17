@@ -11,11 +11,18 @@ pyvista_found = pyvista_spec is not None
 if pyvista_found:
     import pyvista
 
+# -----------------------------------------------------------
+
 
 class GroupOption(Enum):
+    """Set of possible energy group options.  The options
+    include 'group', 'discrete', and 'hybrid'.
+    """
     GROUP = "group"
     HYBRID = "hybrid"
     DISCRETE = "discrete"
+
+# -----------------------------------------------------------
 
 
 class Source(abc.ABC):
@@ -28,7 +35,8 @@ class Source(abc.ABC):
     ----------
     **kwargs
         Arbitrary keyword arguments.
-
+    """
+    '''
     Attributes
     ----------
     points_per_dimension : :class:`list` of integers
@@ -37,8 +45,7 @@ class Source(abc.ABC):
         Typically a list of three integers for three-dimensional sources, one
         integer for one diensional sources, and not significant for point
         sources.
-    """
-
+    '''
     def __init__(self, **kwargs):
         '''Initialize the Source with empty strings for the isotope list
         and photon list'''
@@ -260,9 +267,8 @@ class LineSource(Source, shield.Shield):
     end : :class:`list`
         Cartiesian X, Y, and Z coordinates of the ending point of the
         line source.
-    **kwargs
-        Arbitrary keyword arguments.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -271,8 +277,7 @@ class LineSource(Source, shield.Shield):
         Vector location of one end of the line source.
     end : :class:`numpy.ndarray`
         Vector location of one end of the line source.
-    """
-
+    '''
     def __init__(self, start, end, **kwargs):
         "Initialize"
         self.origin = np.array(start)
@@ -374,9 +379,8 @@ class PointSource(Source, shield.Shield):
         Cartiesian Y coordinate of the point source.
     z : float
         Cartiesian Z coordinate of the point source.
-    **kwargs
-        Arbitrary keyword arguments.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `zap_me_not.material.Material`
@@ -389,8 +393,7 @@ class PointSource(Source, shield.Shield):
         Vector location of a point on the annulus centerline.
     dir : :class:`numpy.ndarray`
         Vector normal of the annulus centerline.
-    """
-
+    '''
     def __init__(self, x, y, z, **kwargs):
         '''Initialize with an x,y,z location in space'''
         self._x = x
@@ -536,13 +539,13 @@ class BoxSource(Source, shield.Box):
         X, Y, and Z dimensions of the box.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
         Material properties of the shield
-    """
-
+    '''
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -578,8 +581,16 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 
     Parameters
     ----------
-    **kwargs
-        Arbitrary keyword arguments.
+    material_name : :obj:`material.Material`
+        Shield material type
+    cylinder_center : :obj:`list`
+        X, Y, and Z coordinates of the center of the cylinder.
+    cylinder_length : float
+        The length of the cylinder.
+    cylinder_radius : float
+        Radius of the cylinder.
+    density : float, optional
+        Material density in g/cm3.
 
     """
     # initialize with cylinderCenter, cylinderLength, cylinderRadius,
@@ -647,8 +658,16 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
 
     Parameters
     ----------
-    **kwargs
-        Arbitrary keyword arguments.
+    material_name : :obj:`material.Material`
+        Shield material type
+    cylinder_center : :obj:`list`
+        X, Y, and Z coordinates of the center of the cylinder.
+    cylinder_length : float
+        The length of the cylinder.
+    cylinder_radius : float
+        Radius of the cylinder.
+    density : float, optional
+        Material density in g/cm3.
 
     """
     # initialize with cylinderCenter, cylinderLength, cylinderRadius,
@@ -716,8 +735,16 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
 
     Parameters
     ----------
-    **kwargs
-        Arbitrary keyword arguments.
+    material_name : :obj:`material.Material`
+        Shield material type
+    cylinder_center : :obj:`list`
+        X, Y, and Z coordinates of the center of the cylinder.
+    cylinder_length : float
+        The length of the cylinder.
+    cylinder_radius : float
+        Radius of the cylinder.
+    density : float, optional
+        Material density in g/cm3.
 
     """
     # initialize with cylinderCenter, cylinderLength, cylinderRadius,

@@ -26,14 +26,14 @@ class Shield(abc.ABC):
         Material density in g/cm3
     **kwargs
         Arbitrary keyword arguments.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
         Material properties of the shield
+    '''
 
-
-    """
     def __init__(self, material_name=None, density=None, **kwargs):
         # the material name is validated by the Material class
         self.material = material.Material(material_name)
@@ -124,7 +124,8 @@ class SemiInfiniteXSlab(Shield):
         X axis location of the outer edge of the shield.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -133,9 +134,8 @@ class SemiInfiniteXSlab(Shield):
         X axis location of the inner edge of the shield.
     x_end : float
         X axis location of the outer edge of the shield.
+    '''
 
-
-    """
     def __init__(self, material_name, x_start, x_end, density=None):
         super().__init__(material_name=material_name, density=density)
         self.x_start = x_start
@@ -295,7 +295,8 @@ class Box(Shield):
         X, Y, and Z dimensions of the box.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class:material.Material
@@ -304,9 +305,8 @@ class Box(Shield):
         Vector location of the center of the box in cartesian coordiantes.
     box_dimensions :  :class:numpy.ndarray
         Vector holding the dimensions of the box.
+    '''
 
-
-    """
     def __init__(self, material_name, box_center, box_dimensions,
                  density=None):
         super().__init__(material_name=material_name, density=density)
@@ -481,7 +481,8 @@ class InfiniteAnnulus(Shield):
         Radius of the annulus outer surface.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -494,7 +495,8 @@ class InfiniteAnnulus(Shield):
         Vector location of a point on the annulus centerline.
     dir : :class:`numpy.ndarray`
         Vector normal of the annulus centerline.
-    """
+    '''
+
     def __init__(self, material_name, cylinder_origin, cylinder_axis,
                  cylinder_inner_radius, cylinder_outer_radius, density=None):
         super().__init__(material_name=material_name, density=density)
@@ -663,7 +665,8 @@ class YAlignedInfiniteAnnulus(InfiniteAnnulus):
         Radius of the annulus outer surface.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -676,7 +679,7 @@ class YAlignedInfiniteAnnulus(InfiniteAnnulus):
         Vector location of a point on the annulus centerline.
     dir : :class:`numpy.ndarray`
         Vector normal of the annulus centerline.
-    """
+    '''
 
     def __init__(self, material_name, cylinder_center, cylinder_inner_radius,
                  cylinder_outer_radius, density=None):
@@ -704,7 +707,8 @@ class XAlignedInfiniteAnnulus(InfiniteAnnulus):
         Radius of the annulus outer surface.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -717,8 +721,7 @@ class XAlignedInfiniteAnnulus(InfiniteAnnulus):
         Vector location of a point on the annulus centerline.
     dir : :class:`numpy.ndarray`
         Vector normal of the annulus centerline.
-    """
-
+    '''
     def __init__(self, material_name, cylinder_center, cylinder_inner_radius,
                  cylinder_outer_radius, density=None):
         super().__init__(material_name=material_name, density=density,
@@ -745,7 +748,8 @@ class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
         Radius of the annulus outer surface.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -758,7 +762,7 @@ class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
         Vector location of a point on the annulus centerline.
     dir : :class:`numpy.ndarray`
         Vector normal of the annulus centerline.
-    """
+    '''
 
     def __init__(self, material_name, cylinder_center, cylinder_inner_radius,
                  cylinder_outer_radius, density=None):
@@ -786,7 +790,8 @@ class CappedCylinder(Shield):
         Radius of the cylinder.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -801,7 +806,7 @@ class CappedCylinder(Shield):
         Length of the cylinder.
     dir : :class:`numpy.ndarray`
         Vector normal of the cylinder centerline.
-    """
+    '''
 
     def __init__(self, material_name, cylinder_start, cylinder_end,
                  cylinder_radius, density=None):
@@ -981,7 +986,8 @@ class YAlignedCylinder(CappedCylinder):
         Radius of the cylinder.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -996,7 +1002,7 @@ class YAlignedCylinder(CappedCylinder):
         Length of the cylinder.
     dir : :class:`numpy.ndarray`
         Vector normal of the cylinder centerline.
-    """
+    '''
 
     def __init__(self, material_name, cylinder_center, cylinder_length,
                  cylinder_radius, density=None):
@@ -1028,7 +1034,8 @@ class XAlignedCylinder(CappedCylinder):
         Radius of the cylinder.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -1043,7 +1050,7 @@ class XAlignedCylinder(CappedCylinder):
         Length of the cylinder.
     dir : :class:`numpy.ndarray`
         Vector normal of the cylinder centerline.
-    """
+    '''
 
     def __init__(self, material_name, cylinder_center, cylinder_length,
                  cylinder_radius, density=None):
@@ -1076,7 +1083,8 @@ class ZAlignedCylinder(CappedCylinder):
         Radius of the cylinder.
     density : float, optional
         Material density in g/cm3.
-
+    """
+    '''
     Attributes
     ----------
     material : :class: `material.Material`
@@ -1091,7 +1099,7 @@ class ZAlignedCylinder(CappedCylinder):
         Length of the cylinder.
     dir : :class:`numpy.ndarray`
         Vector normal of the cylinder centerline.
-    """
+    '''
 
     def __init__(self, material_name, cylinder_center, cylinder_length,
                  cylinder_radius, density=None):
