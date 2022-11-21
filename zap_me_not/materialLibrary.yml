@@ -306,6 +306,7 @@ lead:
     - 6.202E-02
     - 7.019E-02    
   gp-coff-energy:
+    -  0.015
     -  0.030
     -  0.040
     -  0.050
@@ -338,7 +339,12 @@ lead:
     -  10.000
     -  15.000
   # GP Coefficients b, c, a, X, d
+  # Note: the coefficients at 15 keV are
+  # duplicated from 30 keV as the ANSI/ANS
+  # standard does not include 15 keV coefficients
+  # for lead.
   gp-coeff:
+    - [1.007, 0.322, 0.246, 13.67, -0.1030]
     - [1.007, 0.322, 0.246, 13.67, -0.1030]
     - [1.014, 0.317, 0.245, 14.95, -0.0867]
     - [1.023, 0.312, 0.252, 14.17, -0.1005]
