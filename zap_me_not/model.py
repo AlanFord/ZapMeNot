@@ -16,7 +16,8 @@ class Model:
     The Model class combines various shielding elements to perform
     the point-kernel photon shielding analysis.  These elements include
     sources, shields, and detectors.
-
+    """
+    '''
     Attributes
     ----------
     source : :class:`zap_me_not.source.Source`
@@ -33,9 +34,8 @@ class Model:
 
     buildup_factor_material : :class:`zap_me_not.material.Material`
         The material used to calculate the exposure buildup factor.
+    '''
 
-
-    """
     def __init__(self):
         self.source = None
         self.shield_list = []

@@ -1164,17 +1164,6 @@ Isotope object and an activity in Bq.</p>
 <p>The Model class combines various shielding elements to perform
 the point-kernel photon shielding analysis.  These elements include
 sources, shields, and detectors.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Variables<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>source</strong> (<a class="reference internal" href="#zap_me_not.source.Source" title="zap_me_not.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.source.Source</span></code></a>) – The source distribution (point, line, or volume) included in the model.</p></li>
-<li><p><strong>shield_list</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <a class="reference internal" href="#zap_me_not.shield.Shield" title="zap_me_not.shield.Shield"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.shield.Shield</span></code></a>) – A list of shields (including the source volume) contained in the model.</p></li>
-<li><p><strong>detector</strong> (<a class="reference internal" href="#zap_me_not.detector.Detector" title="zap_me_not.detector.Detector"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.detector.Detector</span></code></a>) – The single detector in the model used to determine the exposure.</p></li>
-<li><p><strong>filler_material</strong> (<a class="reference internal" href="#zap_me_not.material.Material" title="zap_me_not.material.Material"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.material.Material</span></code></a>) – The (optional) material used as fill around the formal shields.</p></li>
-<li><p><strong>buildup_factor_material</strong> (<a class="reference internal" href="#zap_me_not.material.Material" title="zap_me_not.material.Material"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.material.Material</span></code></a>) – The material used to calculate the exposure buildup factor.</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="zap_me_not.model.Model.add_detector">
 <span class="sig-name descname"><span class="pre">add_detector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_detector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/model.html#Model.add_detector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.model.Model.add_detector" title="Permalink to this definition">¶</a></dt>
@@ -1303,7 +1292,7 @@ uncollided energy flux, uncollided exposure, and total exposure</p>
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Nov 16, 2022.
+        Last updated on Nov 20, 2022.
       </span>
 
     </p>
