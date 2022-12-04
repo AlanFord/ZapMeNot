@@ -73,6 +73,7 @@ def test_benchmark_synth():
     print("At z= 80.7 cm, dose = ", result, " mR/hr, ")
     #
     print("Just outside the iron shield")
+    my_model.set_buildup_factor_material(material.Material('iron'))
     my_model.add_detector(detector.Detector(99.06, 0, 0))
     result = my_model.calculate_exposure()
     print("At z= 0 cm, dose = ", result, " mR/hr, ")
