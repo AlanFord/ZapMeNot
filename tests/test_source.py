@@ -190,6 +190,7 @@ class TestLineSource():
     @pytest.fixture(scope="class")
     def create_source(self):
         my_source = source.LineSource([1, 2, 3], [11, 12, 13])
+        my_source.points_per_dimension = [5]
         return my_source
 
     def test_init(self, create_source):
@@ -198,7 +199,7 @@ class TestLineSource():
         assert create_source._length == pytest.approx(10 * np.sqrt(3))
         single = np.sqrt(1./3.)
         assert all(create_source._dir == [single, single, single])
-        assert create_source.points_per_dimension == [10]
+        assert create_source.points_per_dimension == [5]
         # test attribute of shield class
         assert create_source.material.name == "air"
         # test attribute of source class
@@ -208,19 +209,14 @@ class TestLineSource():
     # reference: manual calculation
     def test_getSourcePoints(self, create_source):
         np.testing.assert_allclose(create_source._get_source_points(),
-                                   [[1.5, 2.5, 3.5],
-                                    [2.5, 3.5, 4.5],
-                                    [3.5, 4.5, 5.5],
-                                    [4.5, 5.5, 6.5],
-                                    [5.5, 6.5, 7.5],
-                                    [6.5, 7.5, 8.5],
-                                    [7.5, 8.5, 9.5],
-                                    [8.5, 9.5, 10.5],
-                                    [9.5, 10.5, 11.5],
-                                    [10.5, 11.5, 12.5]])
+                                   [[2, 3, 4],
+                                    [4, 5, 6],
+                                    [6, 7, 8],
+                                    [8, 9, 10],
+                                    [10, 11, 12]])
 
     def test_getSourcePointWeights(self, create_source):
-        assert create_source._get_source_point_weights() == [1.0 / 10] * 10
+        assert create_source._get_source_point_weights() == [1.0 / 5] * 5
 
     def test_infinite(self, create_source):
         assert create_source.is_infinite() is False
