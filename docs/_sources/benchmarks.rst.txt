@@ -159,11 +159,9 @@ Results are provided in the following table.
    | - Radial     | - ESIS Results | - Microshield | - ZapMeNot|
    | - Location   | - (mR/hr)      | - (mR/hr)     | - (mR/hr) |
    +==============+================+===============+===========+
-   | Inside Wall  | - 4.54E+04 to  | 6.29E+04      | 6.22E+04  |
-   |              | - 8.01E+04     |               |           |
+   | Inside Wall  |   1.49E+05     | 1.33E+05      | 1.27E+05  |
    +--------------+----------------+---------------+-----------+
-   | Outside Wall | - 4.9E-01 to   | 1.89E+00      | 1.88E+00  |
-   |              | - 2.46E+00     |               |           |
+   | Outside Wall |   3.15E+00     | 3.01E+00      | 2.91E+00  |
    +--------------+----------------+---------------+-----------+
 
 Synthetic Benchmark Problem
