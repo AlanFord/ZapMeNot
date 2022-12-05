@@ -11,8 +11,8 @@ def test_lead_buildup_factor():
     sample_sink = model.Model()
 
     a_source = source.PointSource(x=0, y=0, z=0)
-    a_source.add_isotope_curies('Tc-99',2.1)
-    # a_source.add_isotope_curies('Cs-137',0.3)
+    a_source.add_isotope_curies('Tc-99', 2.1)
+    # a_source.add_isotope_curies('Cs-137', 0.3)
     print(a_source.get_photon_source_list())
 
     sample_sink.add_source(a_source)

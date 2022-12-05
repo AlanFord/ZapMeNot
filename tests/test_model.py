@@ -81,7 +81,7 @@ class TestPointSource():
         myModel.set_buildup_factor_material(material.Material('iron'))
         result = myModel.calculate_exposure()
         assert result == pytest.approx(
-            4.397872839310016e-06*1000*3600)  # convert from R/sec to mR/hr
+            4.417449715326903e-06*1000*3600)  # convert from R/sec to mR/hr
 
     # a point source (multiple photons) with two separate infinite yz shields,
     #   off-axis source/detector
@@ -100,7 +100,7 @@ class TestPointSource():
         myModel.set_buildup_factor_material(material.Material('iron'))
         result = myModel.calculate_exposure()
         assert result == pytest.approx(
-            1.691532556992041e-07*1000*3600)  # convert from R/sec to mR/hr
+            1.699537209509012e-07*1000*3600)  # convert from R/sec to mR/hr
 
     # a point source (no photons) with two separate infinite yz shields,
     #   off-axis source/detector
@@ -253,13 +253,13 @@ def test_generate_summary():
     myModel.set_buildup_factor_material(material.Material('iron'))
     result = myModel.calculate_exposure()
     assert result == pytest.approx(
-        4.397872839310016e-06*1000*3600)  # convert from R/sec to mR/hr
+        4.417449715326903e-06*1000*3600)  # convert from R/sec to mR/hr
     expected_summary = [[1.29364, 29748000000, 1371.11990617,
                          6.61910474907e-07*1000*3600,
-                         4.39362181896e-06*1000*3600],
+                         4.41321334734e-06*1000*3600],
                         [1.677, 15468960, 1.76805726932,
                          7.99508312077e-10*1000*3600,
-                         4.25102034665e-09*1000*3600]]
+                         4.2363679878e-09*1000*3600]]
     summary = myModel.generate_summary()
     np.testing.assert_allclose(expected_summary, summary)
 

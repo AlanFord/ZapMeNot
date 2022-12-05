@@ -68,11 +68,12 @@ class Material:
         # For more information on the use of Akima method on G-P coefficients,
         # see https://www.nrc.gov/docs/ML1905/ML19059A414.pdf
         # "QAD-CGGP2 and G33-GP2: Revised Version of QAD-CGGP and G33-GP"
-        self._bi = Akima1DInterpolator(self._gp_energy_bins, self._gp_b)
-        self._ci = Akima1DInterpolator(self._gp_energy_bins, self._gp_c)
-        self._ai = Akima1DInterpolator(self._gp_energy_bins, self._gp_a)
-        self._Xi = Akima1DInterpolator(self._gp_energy_bins, self._gp_X)
-        self._di = Akima1DInterpolator(self._gp_energy_bins, self._gp_d)
+        logE = np.log(self._gp_energy_bins)
+        self._bi = Akima1DInterpolator(logE, self._gp_b)
+        self._ci = Akima1DInterpolator(logE, self._gp_c)
+        self._ai = Akima1DInterpolator(logE, self._gp_a)
+        self._Xi = Akima1DInterpolator(logE, self._gp_X)
+        self._di = Akima1DInterpolator(logE, self._gp_d)
 
     @property
     def name(self):
@@ -218,11 +219,12 @@ class Material:
         if (energy < self._gp_energy_bins[0]) or \
                 (energy > self._gp_energy_bins[-1]):
             raise ValueError("Photon energy is out of range")
-        b = self._bi(energy)
-        c = self._ci(energy)
-        a = self._ai(energy)
-        X = self._Xi(energy)
-        d = self._di(energy)
+        logE = np.log(energy)
+        b = self._bi(logE)
+        c = self._ci(logE)
+        a = self._ai(logE)
+        X = self._Xi(logE)
+        d = self._di(logE)
 
         bf = Material._GP(a, b, c, d, X, mfp)
         return bf

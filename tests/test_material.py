@@ -112,11 +112,11 @@ def test_getBuildupFactor():
     b = a.get_buildup_factor(0.66, 0, "GP")   # zero fmp
     assert b == 1
     b = a.get_buildup_factor(0.66, 10, "GP")  # upper case
-    assert b == pytest.approx(43.237787)
+    assert b == pytest.approx(43.082281)
     b = a.get_buildup_factor(0.66, 10, "gp")  # lower case
-    assert b == pytest.approx(43.237787)
+    assert b == pytest.approx(43.082281)
     b = a.get_buildup_factor(0.66, 10, "Gp")  # mixed case
-    assert b == pytest.approx(43.237787)
+    assert b == pytest.approx(43.082281)
     with pytest.raises(ValueError):
         b = a.get_buildup_factor(-0.66, 10, "GP")  # negative energy
     with pytest.raises(ValueError):
@@ -137,7 +137,7 @@ def test_getBuildupFactor():
     assert b == c
     # using list of mfps
     d = a.get_buildup_factor(0.66, [10, 10], "GP")
-    assert d == pytest.approx([43.237787, 43.237787])
+    assert d == pytest.approx([43.082281, 43.082281])
 
 
 # test calculation of a list of buildup factors from a list of mfp
@@ -147,7 +147,7 @@ def test_getBuildupFactor2():
     mfp_list = [0, 10]
     b = a.get_buildup_factor(0.66, mfp_list, "GP")
     assert b[0] == 1
-    assert b[1] == pytest.approx(43.237787)
+    assert b[1] == pytest.approx(43.082281)
     assert len(b) == 2
 
 
@@ -159,5 +159,5 @@ def test_getBuildupFactor3():
     b = a.get_buildup_factor
     b = a.get_buildup_factor(0.66, mfp_array, "GP")
     assert b[0] == 1
-    assert b[1] == pytest.approx(43.237787)
+    assert b[1] == pytest.approx(43.082281)
     assert len(b) == 2

@@ -65,11 +65,11 @@ function GP = buildupFactor(energy, mfp, material)
                   1.334, 0.901, 0.035, 12.56, -0.0267; ...
                   1.260, 0.823, 0.065, 14.28, -0.0581];    
     end      
-    b = akima(gpEnergy, gpCoeff(:,1), energy);
-    c = akima(gpEnergy, gpCoeff(:,2), energy);
-    a = akima(gpEnergy, gpCoeff(:,3), energy);
-    X = akima(gpEnergy, gpCoeff(:,4), energy);
-    d = akima(gpEnergy, gpCoeff(:,5), energy);
+    b = akima(log(gpEnergy), gpCoeff(:,1), log(energy));
+    c = akima(log(gpEnergy), gpCoeff(:,2), log(energy));
+    a = akima(log(gpEnergy), gpCoeff(:,3), log(energy));
+    X = akima(log(gpEnergy), gpCoeff(:,4), log(energy));
+    d = akima(log(gpEnergy), gpCoeff(:,5), log(energy));
 
     K = (c * (mfp^a)) + (d * (tanh(mfp/X -2) - tanh(-2))) / (1 - tanh(-2));
 
