@@ -13,7 +13,7 @@ of photon shielding, see `Radiation Shielding by J. K. Shultis and R. E. Faw`_.
 
 .. _Radiation Shielding by J. K. Shultis and R. E. Faw: https://www.ans.org/store/item-350021/
 
-Photon sources in ZapMeNot macany be created by creating a specific composition of radioisotopes or 
+Photon sources in ZapMeNot can be created by specifying a composition of radioisotopes or 
 by including specific photon energies and intensities.  Photon energies may range from 15 keV to 15 MeV.  
 Source geometries may be point sources, line sources, or a range of volumetric sources.  
 The selection of isotopes that may be included in the source is vast,

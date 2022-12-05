@@ -19,4 +19,9 @@ materials and nominal densities include:
  - UO2, 10.412 g/cm\ :sup:`3` (95% of theoretical density)
  - Resin, 2.01 g/cm\ :sup:`3` (a mixture of resin in concrete)
 
+The user may add additional materials to the library by
+appending data to the file `materialLibrary.yml`.  The data
+fields are labeled and the file format is `YAML Version 1.1`_.
+
+.. _YAML Version 1.1: https://pyyaml.org
  
