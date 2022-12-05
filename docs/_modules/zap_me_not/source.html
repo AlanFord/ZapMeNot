@@ -201,11 +201,11 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    points_per_dimension : :class:`list` of integers</span>
+<span class="sd">    _points_per_dimension : :class:`list` of integers</span>
 <span class="sd">        The number of source points to be used in each dimension when modeling</span>
 <span class="sd">        the uniform source distribution throughout the body of the source.</span>
 <span class="sd">        Typically a list of three integers for three-dimensional sources, one</span>
-<span class="sd">        integer for one diensional sources, and not significant for point</span>
+<span class="sd">        integer for one dimensional sources, and not significant for point</span>
 <span class="sd">        sources.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -213,7 +213,7 @@
 <span class="sd">        and photon list&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># LIST of isotopes and activities (Bq)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># LIST of unique photons and activities (Bq)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span> <span class="o">=</span> <span class="mi">30</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">=</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">HYBRID</span>
@@ -324,7 +324,7 @@
     <span class="c1">#         photon energy in MeV and an activity in **Bq//source point**.</span>
     <span class="c1">#     &quot;&quot;&quot;</span>
     <span class="c1">#     list = self.get_photon_source_list()</span>
-    <span class="c1">#     scaling_factor = np.prod(self.points_per_dimension)</span>
+    <span class="c1">#     scaling_factor = np.prod(self._points_per_dimension)</span>
 
 <div class="viewcode-block" id="Source.get_photon_source_list"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.Source.get_photon_source_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_photon_source_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a list of photons in the source</span>
@@ -359,7 +359,7 @@
             <span class="k">if</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">photons</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="n">isotope_detail</span><span class="o">.</span><span class="n">photons</span><span class="p">:</span>
                     <span class="c1"># test to see if photon energy is already on the list</span>
-                    <span class="c1"># and then add photon emmision rate (intensity*Bq).</span>
+                    <span class="c1"># and then add photon emission rate (intensity*Bq).</span>
                     <span class="k">if</span> <span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
                         <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> \
                             <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -367,13 +367,13 @@
                         <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">next_isotope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">photon</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span><span class="p">:</span>
             <span class="c1"># test to see if photon energy is already on the list</span>
-            <span class="c1"># and then add photon emmision rate.</span>
+            <span class="c1"># and then add photon emission rate.</span>
             <span class="k">if</span> <span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
                 <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">photon_dict</span><span class="p">[</span><span class="n">photon</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">photon_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c1"># scaling_factor = np.prod(self.points_per_dimension)</span>
+        <span class="c1"># scaling_factor = np.prod(self._points_per_dimension)</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">photon_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">photon_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
         <span class="n">photon_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">photon_list</span><span class="p">)</span>
@@ -413,7 +413,30 @@
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span></div>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">points_per_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;list of integers : Number of source points per dimension.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span>
+
+    <span class="nd">@points_per_dimension</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">points_per_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;list of integers : Number of source points per dimension.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">iter</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="c1"># not iterable; make it so</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+        <span class="c1"># verify the list includes only integers</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Number of Source Points per Dimension is/are non-integer&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">item</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Source Points per Dimension must be positive integers&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="n">value</span></div>
+
 
 <span class="c1"># -----------------------------------------------------------</span>
 
@@ -452,7 +475,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># initialize points_per_dimension after super() to force a</span>
         <span class="c1"># single dimension</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
 
 <div class="viewcode-block" id="LineSource.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.LineSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
@@ -460,8 +483,8 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -471,9 +494,19 @@
 <span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
 <span class="sd">            A list of vector locations within the Source body</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">spacings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                               <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1">#</span>
+        <span class="c1"># Note: the Line source is unique in that it only has one dimension</span>
+        <span class="c1"># (i.e. not three).  Hence it is possible that the user will set the</span>
+        <span class="c1"># &quot;points_er_dimension&quot; to be a non-iterable numerical value.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="c1"># not iterable; make it so</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">]</span>
+
+        <span class="n">spacings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">spacings</span> <span class="o">=</span> <span class="n">spacings</span><span class="o">*</span><span class="n">mesh_width</span>
         <span class="n">spacings</span> <span class="o">=</span> <span class="n">spacings</span><span class="o">-</span><span class="p">(</span><span class="n">mesh_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
@@ -536,11 +569,11 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    x : float</span>
-<span class="sd">        Cartiesian X coordinate of the point source.</span>
+<span class="sd">        Cartesian X coordinate of the point source.</span>
 <span class="sd">    y : float</span>
-<span class="sd">        Cartiesian Y coordinate of the point source.</span>
+<span class="sd">        Cartesian Y coordinate of the point source.</span>
 <span class="sd">    z : float</span>
-<span class="sd">        Cartiesian Z coordinate of the point source.</span>
+<span class="sd">        Cartesian Z coordinate of the point source.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
@@ -565,7 +598,7 @@
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;material_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;air&#39;</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
 <div class="viewcode-block" id="PointSource.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.source.PointSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
@@ -573,8 +606,8 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -654,21 +687,21 @@
 <span class="c1">#         totalVolume = 4/3*math.pi*self.radius**3</span>
 <span class="c1">#         old_radius = 0</span>
 <span class="c1">#         annular_locations = []</span>
-<span class="c1">#         for i in range(self.points_per_dimension[0]):</span>
+<span class="c1">#         for i in range(self._points_per_dimension[0]):</span>
 <span class="c1">#             new_radius = math.sqrt((running_area+annular_area)/math.pi)</span>
 <span class="c1">#             annular_locations.append((new_radius+old_radius)/2)</span>
 <span class="c1">#             old_radius = new_radius</span>
 
-<span class="c1">#         angle_increment = 2*math.pi/self.points_per_dimension[1]</span>
+<span class="c1">#         angle_increment = 2*math.pi/self._points_per_dimension[1]</span>
 <span class="c1">#         start_angle = angle_increment/2</span>
 <span class="c1">#         angle_locations = []</span>
-<span class="c1">#         for i in range(self.points_per_dimension[1]):</span>
+<span class="c1">#         for i in range(self._points_per_dimension[1]):</span>
 <span class="c1">#             angle_locations.append(start_angle + (i*angle_increment))</span>
 
-<span class="c1">#         length_increment = self.length/self.points_per_dimension[2]</span>
+<span class="c1">#         length_increment = self.length/self._points_per_dimension[2]</span>
 <span class="c1">#         start_length = length_increment/2</span>
 <span class="c1">#         length_locations = []</span>
-<span class="c1">#         for i in range(self.points_per_dimension[2]):</span>
+<span class="c1">#         for i in range(self._points_per_dimension[2]):</span>
 <span class="c1">#             length_locations.append(start_length + (i*length_increment))</span>
 
 <span class="c1">#         # iterate through each dimension, building a list of source points</span>
@@ -679,7 +712,7 @@
 <span class="c1">#                 theta = angle_location</span>
 <span class="c1">#                 for length_location in length_locations:</span>
 <span class="c1">#                     z = length_location</span>
-<span class="c1">#                     # convert cylintrical to rectangular coordinates</span>
+<span class="c1">#                     # convert cylindrical to rectangular coordinates</span>
 <span class="c1">#                     x = r * math.cos(theta)</span>
 <span class="c1">#                     y = r * math.sin(theta)</span>
 <span class="c1">#                     source_points.append([x, y, z])</span>
@@ -712,8 +745,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -724,13 +757,13 @@
 <span class="sd">            A list of vector locations within the Source body.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span>
+        <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span>
         <span class="n">start_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">mesh_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">start_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">i</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
                 <span class="n">y</span> <span class="o">=</span> <span class="n">start_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">j</span>
-                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
                     <span class="n">z</span> <span class="o">=</span> <span class="n">start_point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">k</span>
                     <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
@@ -762,8 +795,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -776,26 +809,26 @@
 
         <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
         <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
             <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
             <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
 
-        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
         <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
 
-        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">start_length</span> <span class="o">=</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
         <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
             <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
 
         <span class="c1"># iterate through each dimension, building a list of source points</span>
@@ -839,8 +872,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -853,26 +886,26 @@
 
         <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
         <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
             <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
             <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
 
-        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
         <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
 
-        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">start_length</span> <span class="o">=</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
         <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
             <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
 
         <span class="c1"># iterate through each dimension, building a list of source points</span>
@@ -916,8 +949,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -930,26 +963,26 @@
 
         <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
         <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
             <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
             <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
 
-        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
         <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
 
-        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">start_length</span> <span class="o">=</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
         <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
             <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
 
         <span class="c1"># iterate through each dimension, building a list of source points</span>
@@ -979,7 +1012,7 @@
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Dec 04, 2022.
+        Last updated on Dec 05, 2022.
       </span>
 
     </p>

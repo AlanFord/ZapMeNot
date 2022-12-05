@@ -190,7 +190,7 @@ class TestLineSource():
     @pytest.fixture(scope="class")
     def create_source(self):
         my_source = source.LineSource([1, 2, 3], [11, 12, 13])
-        my_source.points_per_dimension = [5]
+        my_source.points_per_dimension = 5
         return my_source
 
     def test_init(self, create_source):
@@ -220,6 +220,16 @@ class TestLineSource():
 
     def test_infinite(self, create_source):
         assert create_source.is_infinite() is False
+
+    def test_points_per_dimension(self, create_source):
+        with pytest.raises(ValueError):
+            create_source.points_per_dimension = "sunny day"
+        with pytest.raises(ValueError):
+            create_source.points_per_dimension = 0
+        with pytest.raises(ValueError):
+            create_source.points_per_dimension = -1
+        with pytest.raises(ValueError):
+            create_source.points_per_dimension = [4, 3, 1.1]
 
 # =============================================================
 

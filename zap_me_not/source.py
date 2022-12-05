@@ -39,11 +39,11 @@ class Source(abc.ABC):
     '''
     Attributes
     ----------
-    points_per_dimension : :class:`list` of integers
+    _points_per_dimension : :class:`list` of integers
         The number of source points to be used in each dimension when modeling
         the uniform source distribution throughout the body of the source.
         Typically a list of three integers for three-dimensional sources, one
-        integer for one diensional sources, and not significant for point
+        integer for one dimensional sources, and not significant for point
         sources.
     '''
     def __init__(self, **kwargs):
@@ -51,7 +51,7 @@ class Source(abc.ABC):
         and photon list'''
         self._isotope_list = []   # LIST of isotopes and activities (Bq)
         self._unique_photons = []  # LIST of unique photons and activities (Bq)
-        self.points_per_dimension = [10, 10, 10]
+        self._points_per_dimension = [10, 10, 10]
         self._include_key_progeny = False
         self._max_photon_energies = 30
         self._grouping_option = GroupOption.HYBRID
@@ -162,7 +162,7 @@ class Source(abc.ABC):
     #         photon energy in MeV and an activity in **Bq//source point**.
     #     """
     #     list = self.get_photon_source_list()
-    #     scaling_factor = np.prod(self.points_per_dimension)
+    #     scaling_factor = np.prod(self._points_per_dimension)
 
     def get_photon_source_list(self):
         """Returns a list of photons in the source
@@ -197,7 +197,7 @@ class Source(abc.ABC):
             if isotope_detail.photons is not None:
                 for photon in isotope_detail.photons:
                     # test to see if photon energy is already on the list
-                    # and then add photon emmision rate (intensity*Bq).
+                    # and then add photon emission rate (intensity*Bq).
                     if photon[0] in keys:
                         photon_dict[photon[0]] = photon_dict[photon[0]] + \
                             photon[1]*next_isotope[1]
@@ -205,13 +205,13 @@ class Source(abc.ABC):
                         photon_dict[photon[0]] = photon[1]*next_isotope[1]
         for photon in self._unique_photons:
             # test to see if photon energy is already on the list
-            # and then add photon emmision rate.
+            # and then add photon emission rate.
             if photon[0] in keys:
                 photon_dict[photon[0]] = photon_dict[photon[0]] + photon[1]
             else:
                 photon_dict[photon[0]] = photon[1]
         photon_list = []
-        # scaling_factor = np.prod(self.points_per_dimension)
+        # scaling_factor = np.prod(self._points_per_dimension)
         for key, value in photon_dict.items():
             photon_list.append((key, value))
         photon_list = sorted(photon_list)
@@ -253,6 +253,29 @@ class Source(abc.ABC):
     def _get_source_point_weights(self):
         pass
 
+    @property
+    def points_per_dimension(self):
+        """list of integers : Number of source points per dimension."""
+        return self._points_per_dimension
+
+    @points_per_dimension.setter
+    def points_per_dimension(self, value):
+        """list of integers : Number of source points per dimension."""
+        try:
+            iter(value)
+        except TypeError:
+            # not iterable; make it so
+            value = [value]
+        # verify the list includes only integers
+        if not all(isinstance(item, int) for item in value):
+            raise ValueError(
+                "Number of Source Points per Dimension is/are non-integer")
+        if not all(item > 0 for item in value):
+            raise ValueError(
+                "Source Points per Dimension must be positive integers")
+        self._points_per_dimension = value
+
+
 # -----------------------------------------------------------
 
 
@@ -290,7 +313,7 @@ class LineSource(Source, shield.Shield):
         super().__init__(**kwargs)
         # initialize points_per_dimension after super() to force a
         # single dimension
-        self.points_per_dimension = [10]
+        self._points_per_dimension = [10]
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
@@ -298,8 +321,8 @@ class LineSource(Source, shield.Shield):
         return False
 
     def _get_source_point_weights(self):
-        return [1.0 / np.product(self.points_per_dimension)] * \
-            np.product(self.points_per_dimension)
+        return [1.0 / np.product(self._points_per_dimension)] * \
+            np.product(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -309,9 +332,19 @@ class LineSource(Source, shield.Shield):
         :class:`list` of :class:`numpy.adarray`
             A list of vector locations within the Source body
         """
-        spacings = np.linspace(1, self.points_per_dimension[0],
-                               self.points_per_dimension[0])
-        mesh_width = self._length/self.points_per_dimension[0]
+        #
+        # Note: the Line source is unique in that it only has one dimension
+        # (i.e. not three).  Hence it is possible that the user will set the
+        # "points_er_dimension" to be a non-iterable numerical value.
+        try:
+            iter(self._points_per_dimension)
+        except TypeError:
+            # not iterable; make it so
+            self._points_per_dimension = [self._points_per_dimension]
+
+        spacings = np.linspace(1, self._points_per_dimension[0],
+                               self._points_per_dimension[0])
+        mesh_width = self._length/self._points_per_dimension[0]
         spacings = spacings*mesh_width
         spacings = spacings-(mesh_width/2)
         source_points = []
@@ -374,11 +407,11 @@ class PointSource(Source, shield.Shield):
     Parameters
     ----------
     x : float
-        Cartiesian X coordinate of the point source.
+        Cartesian X coordinate of the point source.
     y : float
-        Cartiesian Y coordinate of the point source.
+        Cartesian Y coordinate of the point source.
     z : float
-        Cartiesian Z coordinate of the point source.
+        Cartesian Z coordinate of the point source.
     """
     '''
     Attributes
@@ -403,7 +436,7 @@ class PointSource(Source, shield.Shield):
         kwargs['material_name'] = 'air'
         kwargs['density'] = 0
         super().__init__(**kwargs)
-        self.points_per_dimension = [1]
+        self._points_per_dimension = [1]
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
@@ -411,8 +444,8 @@ class PointSource(Source, shield.Shield):
         return False
 
     def _get_source_point_weights(self):
-        return [1.0 / np.product(self.points_per_dimension)] * \
-            np.product(self.points_per_dimension)
+        return [1.0 / np.product(self._points_per_dimension)] * \
+            np.product(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -492,21 +525,21 @@ class PointSource(Source, shield.Shield):
 #         totalVolume = 4/3*math.pi*self.radius**3
 #         old_radius = 0
 #         annular_locations = []
-#         for i in range(self.points_per_dimension[0]):
+#         for i in range(self._points_per_dimension[0]):
 #             new_radius = math.sqrt((running_area+annular_area)/math.pi)
 #             annular_locations.append((new_radius+old_radius)/2)
 #             old_radius = new_radius
 
-#         angle_increment = 2*math.pi/self.points_per_dimension[1]
+#         angle_increment = 2*math.pi/self._points_per_dimension[1]
 #         start_angle = angle_increment/2
 #         angle_locations = []
-#         for i in range(self.points_per_dimension[1]):
+#         for i in range(self._points_per_dimension[1]):
 #             angle_locations.append(start_angle + (i*angle_increment))
 
-#         length_increment = self.length/self.points_per_dimension[2]
+#         length_increment = self.length/self._points_per_dimension[2]
 #         start_length = length_increment/2
 #         length_locations = []
-#         for i in range(self.points_per_dimension[2]):
+#         for i in range(self._points_per_dimension[2]):
 #             length_locations.append(start_length + (i*length_increment))
 
 #         # iterate through each dimension, building a list of source points
@@ -517,7 +550,7 @@ class PointSource(Source, shield.Shield):
 #                 theta = angle_location
 #                 for length_location in length_locations:
 #                     z = length_location
-#                     # convert cylintrical to rectangular coordinates
+#                     # convert cylindrical to rectangular coordinates
 #                     x = r * math.cos(theta)
 #                     y = r * math.sin(theta)
 #                     source_points.append([x, y, z])
@@ -550,8 +583,8 @@ class BoxSource(Source, shield.Box):
         super().__init__(**kwargs)
 
     def _get_source_point_weights(self):
-        return [1.0 / np.product(self.points_per_dimension)] * \
-            np.product(self.points_per_dimension)
+        return [1.0 / np.product(self._points_per_dimension)] * \
+            np.product(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -562,13 +595,13 @@ class BoxSource(Source, shield.Box):
             A list of vector locations within the Source body.
         """
         source_points = []
-        mesh_width = self.box_dimensions/self.points_per_dimension
+        mesh_width = self.box_dimensions/self._points_per_dimension
         start_point = self.box_center-(self.box_dimensions)/2+(mesh_width/2)
-        for i in range(self.points_per_dimension[0]):
+        for i in range(self._points_per_dimension[0]):
             x = start_point[0]+mesh_width[0]*i
-            for j in range(self.points_per_dimension[1]):
+            for j in range(self._points_per_dimension[1]):
                 y = start_point[1]+mesh_width[1]*j
-                for k in range(self.points_per_dimension[2]):
+                for k in range(self._points_per_dimension[2]):
                     z = start_point[2]+mesh_width[2]*k
                     source_points.append([x, y, z])
         return source_points
@@ -600,8 +633,8 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         super().__init__(**kwargs)
 
     def _get_source_point_weights(self):
-        return [1.0 / np.product(self.points_per_dimension)] * \
-            np.product(self.points_per_dimension)
+        return [1.0 / np.product(self._points_per_dimension)] * \
+            np.product(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -614,26 +647,26 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 
         # calculate the radius of each "equal area" annular region
         total_area = math.pi*self.radius**2
-        annular_area = total_area/self.points_per_dimension[0]
+        annular_area = total_area/self._points_per_dimension[0]
         old_radius = 0
         running_area = 0
         annular_locations = []
-        for i in range(self.points_per_dimension[0]):
+        for i in range(self._points_per_dimension[0]):
             new_radius = math.sqrt((running_area+annular_area)/math.pi)
             annular_locations.append((new_radius+old_radius)/2)
             old_radius = new_radius
             running_area = running_area+annular_area
 
-        angle_increment = 2*math.pi/self.points_per_dimension[1]
+        angle_increment = 2*math.pi/self._points_per_dimension[1]
         start_angle = angle_increment/2
         angle_locations = []
-        for i in range(self.points_per_dimension[1]):
+        for i in range(self._points_per_dimension[1]):
             angle_locations.append(start_angle + (i*angle_increment))
 
-        length_increment = self.length/self.points_per_dimension[2]
+        length_increment = self.length/self._points_per_dimension[2]
         start_length = length_increment/2
         length_locations = []
-        for i in range(self.points_per_dimension[2]):
+        for i in range(self._points_per_dimension[2]):
             length_locations.append(start_length + (i*length_increment))
 
         # iterate through each dimension, building a list of source points
@@ -677,8 +710,8 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         super().__init__(**kwargs)
 
     def _get_source_point_weights(self):
-        return [1.0 / np.product(self.points_per_dimension)] * \
-            np.product(self.points_per_dimension)
+        return [1.0 / np.product(self._points_per_dimension)] * \
+            np.product(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -691,26 +724,26 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
 
         # calculate the radius of each "equal area" annular region
         total_area = math.pi*self.radius**2
-        annular_area = total_area/self.points_per_dimension[0]
+        annular_area = total_area/self._points_per_dimension[0]
         old_radius = 0
         running_area = 0
         annular_locations = []
-        for i in range(self.points_per_dimension[0]):
+        for i in range(self._points_per_dimension[0]):
             new_radius = math.sqrt((running_area+annular_area)/math.pi)
             annular_locations.append((new_radius+old_radius)/2)
             old_radius = new_radius
             running_area = running_area+annular_area
 
-        angle_increment = 2*math.pi/self.points_per_dimension[1]
+        angle_increment = 2*math.pi/self._points_per_dimension[1]
         start_angle = angle_increment/2
         angle_locations = []
-        for i in range(self.points_per_dimension[1]):
+        for i in range(self._points_per_dimension[1]):
             angle_locations.append(start_angle + (i*angle_increment))
 
-        length_increment = self.length/self.points_per_dimension[2]
+        length_increment = self.length/self._points_per_dimension[2]
         start_length = length_increment/2
         length_locations = []
-        for i in range(self.points_per_dimension[2]):
+        for i in range(self._points_per_dimension[2]):
             length_locations.append(start_length + (i*length_increment))
 
         # iterate through each dimension, building a list of source points
@@ -754,8 +787,8 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         super().__init__(**kwargs)
 
     def _get_source_point_weights(self):
-        return [1.0 / np.product(self.points_per_dimension)] * \
-            np.product(self.points_per_dimension)
+        return [1.0 / np.product(self._points_per_dimension)] * \
+            np.product(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -768,26 +801,26 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
 
         # calculate the radius of each "equal area" annular region
         total_area = math.pi*self.radius**2
-        annular_area = total_area/self.points_per_dimension[0]
+        annular_area = total_area/self._points_per_dimension[0]
         old_radius = 0
         running_area = 0
         annular_locations = []
-        for i in range(self.points_per_dimension[0]):
+        for i in range(self._points_per_dimension[0]):
             new_radius = math.sqrt((running_area+annular_area)/math.pi)
             annular_locations.append((new_radius+old_radius)/2)
             old_radius = new_radius
             running_area = running_area+annular_area
 
-        angle_increment = 2*math.pi/self.points_per_dimension[1]
+        angle_increment = 2*math.pi/self._points_per_dimension[1]
         start_angle = angle_increment/2
         angle_locations = []
-        for i in range(self.points_per_dimension[1]):
+        for i in range(self._points_per_dimension[1]):
             angle_locations.append(start_angle + (i*angle_increment))
 
-        length_increment = self.length/self.points_per_dimension[2]
+        length_increment = self.length/self._points_per_dimension[2]
         start_length = length_increment/2
         length_locations = []
-        for i in range(self.points_per_dimension[2]):
+        for i in range(self._points_per_dimension[2]):
             length_locations.append(start_length + (i*length_increment))
 
         # iterate through each dimension, building a list of source points
