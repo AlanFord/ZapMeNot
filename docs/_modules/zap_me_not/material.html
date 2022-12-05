@@ -230,11 +230,12 @@
         <span class="c1"># For more information on the use of Akima method on G-P coefficients,</span>
         <span class="c1"># see https://www.nrc.gov/docs/ML1905/ML19059A414.pdf</span>
         <span class="c1"># &quot;QAD-CGGP2 and G33-GP2: Revised Version of QAD-CGGP and G33-GP&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bi</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_b</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ci</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_c</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ai</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_a</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_X</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_di</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span><span class="p">)</span>
+        <span class="n">logE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bi</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ci</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_c</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ai</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_a</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_X</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_di</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -380,11 +381,12 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">energy</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> \
                 <span class="p">(</span><span class="n">energy</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Photon energy is out of range&quot;</span><span class="p">)</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bi</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
-        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ci</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ai</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_di</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+        <span class="n">logE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bi</span><span class="p">(</span><span class="n">logE</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ci</span><span class="p">(</span><span class="n">logE</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ai</span><span class="p">(</span><span class="n">logE</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span><span class="p">(</span><span class="n">logE</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_di</span><span class="p">(</span><span class="n">logE</span><span class="p">)</span>
 
         <span class="n">bf</span> <span class="o">=</span> <span class="n">Material</span><span class="o">.</span><span class="n">_GP</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">mfp</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">bf</span></div>
@@ -462,7 +464,7 @@
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Dec 04, 2022.
+        Last updated on Dec 05, 2022.
       </span>
 
     </p>
