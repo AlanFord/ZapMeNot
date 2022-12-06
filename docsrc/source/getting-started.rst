@@ -50,6 +50,9 @@ This may be simplified in the future as my knowledge of installation packages im
 
 Quickstart
 ----------
+This is a "quick" introduction to ZapMeNot.  A more detailed description of
+building an input file can be found in the :doc:`modeling` section.  A more in-depth
+look at output options can be found in the :doc:`results` section.
 
 .. code-block:: python
 

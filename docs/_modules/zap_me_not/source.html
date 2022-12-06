@@ -757,6 +757,10 @@
 <span class="sd">            A list of vector locations within the Source body.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># verify there are three values in the list</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Source Points per Dimension needs three entries&quot;</span><span class="p">)</span>
         <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span>
         <span class="n">start_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">mesh_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
@@ -806,7 +810,10 @@
 <span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
 <span class="sd">            A list of vector locations within the Source body.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
+        <span class="c1"># verify there are three values in the list</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Source Points per Dimension needs three entries&quot;</span><span class="p">)</span>
         <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
         <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
         <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -883,7 +890,10 @@
 <span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
 <span class="sd">            A list of vector locations within the Source body.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
+        <span class="c1"># verify there are three values in the list</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Source Points per Dimension needs three entries&quot;</span><span class="p">)</span>
         <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
         <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
         <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -960,7 +970,10 @@
 <span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
 <span class="sd">            A list of vector locations within the Source body.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
+        <span class="c1"># verify there are three values in the list</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Source Points per Dimension needs three entries&quot;</span><span class="p">)</span>
         <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
         <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
         <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1012,7 +1025,7 @@
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Dec 05, 2022.
+        Last updated on Dec 06, 2022.
       </span>
 
     </p>

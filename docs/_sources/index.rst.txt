@@ -12,6 +12,7 @@ Zapmenot Documentation
    isotopes
    modeling
    results
+   graphics
    theory-and-methods
    benchmarks
    module-docs

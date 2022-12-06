@@ -94,7 +94,11 @@
 <li class="toctree-l1"><a class="reference internal" href="materials.html">Material Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="isotopes.html">Isotope Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modeling.html">Modeling in ZapMeNot</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Generating Results</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Generating Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-method">Basic Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-details">Getting Details</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="theory-and-methods.html">Theory and Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmarks.html">Benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module-docs.html">Module Contents</a></li>
@@ -168,6 +172,8 @@
 <h1>Generating Results<a class="headerlink" href="#generating-results" title="Permalink to this heading">¶</a></h1>
 <p>Two approaches are available for calculating dose rates once a ZapMeNot
 model has been constructed.</p>
+<section id="basic-method">
+<h2>Basic Method<a class="headerlink" href="#basic-method" title="Permalink to this heading">¶</a></h2>
 <p>The basic approach is demonstrated in the following code block.  It is
 assumed that a model <code class="code docutils literal notranslate"><span class="pre">myModel</span></code> has already been constructed with an appropriate
 source and detector.  The method <code class="code docutils literal notranslate"><span class="pre">calculate_exposure</span></code> returns the exposure in mR/hr.</p>
@@ -175,6 +181,9 @@ source and detector.  The method <code class="code docutils literal notranslate"
 <span class="n">result</span> <span class="o">=</span> <span class="n">myModel</span><span class="o">.</span><span class="n">calculate_exposure</span><span class="p">()</span>
 </pre></div>
 </div>
+</section>
+<section id="getting-details">
+<h2>Getting Details<a class="headerlink" href="#getting-details" title="Permalink to this heading">¶</a></h2>
 <p>A more detailed exposure report can be generated with the <code class="code docutils literal notranslate"><span class="pre">generate_summary</span></code> method.
 <code class="code docutils literal notranslate"><span class="pre">generate_summary</span></code> returns a “list of lists” (think of a group of lists).  The lists
 include, in order of appearance, the photon energy groups, the photon appearance in each group
@@ -189,6 +198,28 @@ can be easily accessed in the following manner:</p>
 <p>This provides access to the data for further processing.  Alternatively,
 Python packages such as <a class="reference external" href="https://pandas.pydata.org">Pandas</a> can provide powerful data analysis tools
 that can be used with the results of the <code class="code docutils literal notranslate"><span class="pre">generate_summary</span></code> method.</p>
+<p>For example, adding the following line will import the Pandas package:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<p>The following code would generate a formatted table from the output summary:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate a formatted summary from an existing model</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">myModel</span><span class="o">.</span><span class="n">generate_summary</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">summary</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;MeV&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;photons/sec&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;Uncollided MeV/cm2/sec&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;Uncollided mR/hr&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;Collided mR/hr&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A model containing an Ar-41 source with two photons might result in the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>       <span class="n">MeV</span>   <span class="n">photons</span><span class="o">/</span><span class="n">sec</span>  <span class="n">Uncollided</span> <span class="n">MeV</span><span class="o">/</span><span class="n">cm2</span><span class="o">/</span><span class="n">sec</span>  <span class="n">Uncollided</span> <span class="n">mR</span><span class="o">/</span><span class="n">hr</span>  <span class="n">Collided</span> <span class="n">mR</span><span class="o">/</span><span class="n">hr</span>
+<span class="mi">0</span>  <span class="mf">1.29364</span>  <span class="mf">2.974800e+10</span>             <span class="mf">1371.119906</span>          <span class="mf">2.382878</span>       <span class="mf">15.887568</span>
+<span class="mi">1</span>  <span class="mf">1.67700</span>  <span class="mf">1.546896e+07</span>                <span class="mf">1.768057</span>          <span class="mf">0.002878</span>        <span class="mf">0.015251</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -213,7 +244,7 @@ that can be used with the results of the <code class="code docutils literal notr
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Dec 05, 2022.
+        Last updated on Dec 06, 2022.
       </span>
 
     </p>
