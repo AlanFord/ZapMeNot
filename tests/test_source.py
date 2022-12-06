@@ -284,6 +284,12 @@ class TestBoxSource():
         the_list = [1.0 / 1000] * 1000
         assert create_source._get_source_point_weights() == the_list
 
+    # test invalid number of entries in source points per dimension
+    def test_getSourcePoints2(self, create_source):
+        create_source.points_per_dimension = [1, 1]
+        with pytest.raises(ValueError):
+            create_source._get_source_points()
+
 # =============================================================
 
 
@@ -348,6 +354,12 @@ class TestXAlignedCylinderSource():
     def test_getSourcePointWeights(self, create_source):
         the_list = [1.0 / 27] * 27
         assert create_source._get_source_point_weights() == the_list
+
+    # test invalid number of entries in source points per dimension
+    def test_getSourcePoints2(self, create_source):
+        create_source.points_per_dimension = [1, 1]
+        with pytest.raises(ValueError):
+            create_source._get_source_points()
 
 # =============================================================
 
@@ -414,6 +426,12 @@ class TestYAlignedCylinderSource():
         the_list = [1.0 / 27] * 27
         assert create_source._get_source_point_weights() == the_list
 
+    # test invalid number of entries in source points per dimension
+    def test_getSourcePoints2(self, create_source):
+        create_source.points_per_dimension = [1, 1]
+        with pytest.raises(ValueError):
+            create_source._get_source_points()
+
 # =============================================================
 
 
@@ -478,3 +496,9 @@ class TestZAlignedCylinderSource():
     def test_getSourcePointWeights(self, create_source):
         the_list = [1.0 / 27] * 27
         assert create_source._get_source_point_weights() == the_list
+
+    # test invalid number of entries in source points per dimension
+    def test_getSourcePoints2(self, create_source):
+        create_source.points_per_dimension = [1, 1]
+        with pytest.raises(ValueError):
+            create_source._get_source_points()

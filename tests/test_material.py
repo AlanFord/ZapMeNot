@@ -102,7 +102,7 @@ def test_getMassEnergyAbsCoff():
 def test_a_bad_buildupFactorType():
     a = material.Material("air")
     with pytest.raises(ValueError):
-        b = a.get_buildup_factor(0.66, 10, "Taylor")
+        a.get_buildup_factor(0.66, 10, "Taylor")
 
 
 # test calculation of a buildup factor

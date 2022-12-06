@@ -595,6 +595,10 @@ class BoxSource(Source, shield.Box):
             A list of vector locations within the Source body.
         """
         source_points = []
+        # verify there are three values in the list
+        if len(self._points_per_dimension) != 3:
+            raise ValueError(
+                "Source Points per Dimension needs three entries")
         mesh_width = self.box_dimensions/self._points_per_dimension
         start_point = self.box_center-(self.box_dimensions)/2+(mesh_width/2)
         for i in range(self._points_per_dimension[0]):
@@ -644,7 +648,10 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         :class:`list` of :class:`numpy.adarray`
             A list of vector locations within the Source body.
         """
-
+        # verify there are three values in the list
+        if len(self._points_per_dimension) != 3:
+            raise ValueError(
+                "Source Points per Dimension needs three entries")
         # calculate the radius of each "equal area" annular region
         total_area = math.pi*self.radius**2
         annular_area = total_area/self._points_per_dimension[0]
@@ -721,7 +728,10 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         :class:`list` of :class:`numpy.adarray`
             A list of vector locations within the Source body.
         """
-
+        # verify there are three values in the list
+        if len(self._points_per_dimension) != 3:
+            raise ValueError(
+                "Source Points per Dimension needs three entries")
         # calculate the radius of each "equal area" annular region
         total_area = math.pi*self.radius**2
         annular_area = total_area/self._points_per_dimension[0]
@@ -798,7 +808,10 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         :class:`list` of :class:`numpy.adarray`
             A list of vector locations within the Source body.
         """
-
+        # verify there are three values in the list
+        if len(self._points_per_dimension) != 3:
+            raise ValueError(
+                "Source Points per Dimension needs three entries")
         # calculate the radius of each "equal area" annular region
         total_area = math.pi*self.radius**2
         annular_area = total_area/self._points_per_dimension[0]
