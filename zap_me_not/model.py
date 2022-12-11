@@ -315,12 +315,31 @@ class Model:
         return bounds
 
     def _addPoints(self, pl, bounds):
+        # the goal here is to add 'points' to the display, but they
+        # must be represented as spheres to have some physical
+        # volume to display.  Points will be displayed with a radius
+        # of 5% of the smallest dimension of the bounding box.
+
+        # A problem can occur if the bounding box has a width of 0 in one
+        # or more of three dimensions.  An exception is thrown if bounds
+        # in all three directions are of zero width.  Otherwise the zero
+        # is ignored and the next largest dimension is used to size the
+        # point representation.
+
+        point_ratio = 0.05
         sourceColor = 'red'
         detectorColor = 'yellow'
+        widths = [abs(bounds[1] - bounds[0]),
+                  abs(bounds[3] - bounds[2]),
+                  abs(bounds[5] - bounds[4])]
+        good_widths = []
+        for width in widths:
+            if width > 0:
+                good_widths.append(width)
+        if len(good_widths) == 0:
+            raise ValueError("detector and source are coincident")
         # determine a good radius for the points
-        point_radius = abs(min(bounds[1] - bounds[0],
-                               bounds[3] - bounds[2],
-                               bounds[5] - bounds[4])) * 0.05
+        point_radius = min(good_widths) * point_ratio
         # check if the source is a point source
         if len(self.source._get_source_points()) == 1:
             body = pyvista.Sphere(center=(self.source._x,
