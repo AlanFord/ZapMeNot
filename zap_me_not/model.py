@@ -177,10 +177,15 @@ class Model:
         for index, nextPoint in enumerate(source_points):
             vector = ray.FiniteLengthRay(nextPoint, self.detector.location)
             total_distance[index] = vector._length
+            # check to see if source point and detector are coincident
+            if total_distance[index] == 0.0:
+                raise ValueError("detector and source are coincident")
             for index2, thisShield in enumerate(self.shield_list):
                 crossing_distances[index, index2] = \
                     thisShield._get_crossing_length(vector)
         gaps = total_distance - np.sum(crossing_distances, axis=1)
+        if np.amin(gaps) < 0:
+                raise ValueError("Looks like shields and/or sources overlap")
 
         results_by_photon_energy = []
         # get a list of photons (energy & intensity) from the source
