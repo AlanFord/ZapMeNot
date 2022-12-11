@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../isotopes.html">Isotope Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modeling.html">Modeling in ZapMeNot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../results.html">Generating Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../graphics.html">We Want Pictures!</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../theory-and-methods.html">Theory and Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../benchmarks.html">Benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module-docs.html">Module Contents</a></li>
@@ -243,7 +244,8 @@
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_line_plane_collision</span><span class="p">(</span><span class="n">plane_normal</span><span class="p">,</span> <span class="n">plane_point</span><span class="p">,</span> <span class="n">ray_origin</span><span class="p">,</span>
                               <span class="n">ray_normal</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculates the distance from the ray origin to the intersection with a plane</span>
+        <span class="sd">&quot;&quot;&quot;Calculates the distance from the ray origin to the intersection</span>
+<span class="sd">           with a plane</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -382,8 +384,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_end</span><span class="p">,</span> <span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span>
-                                       <span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span></div></div>
+                                       <span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span></div>
 
+    <span class="k">def</span> <span class="nf">_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="c1"># project a point onto the surface of the infinite shield</span>
+        <span class="c1"># this is a semi-infinite slab, with a finite X width,</span>
+        <span class="c1"># so return two x values at the specified y and z</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_start</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_end</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)]</span></div>
 <span class="c1"># -----------------------------------------------------------</span>
 
 
@@ -557,7 +564,8 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_intersect_axis_aligned_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculates a list of point where a ray intersects the axis-aligned box</span>
+        <span class="sd">&quot;&quot;&quot;Calculates a list of point where a ray intersects the</span>
+<span class="sd">           axis-aligned box</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -807,7 +815,37 @@
                                 <span class="n">inner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inner_radius</span><span class="p">,</span>
                                 <span class="n">outer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">outer_radius</span><span class="p">,</span> <span class="n">c_res</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
             <span class="n">cyl1</span> <span class="o">=</span> <span class="n">disc</span><span class="o">.</span><span class="n">extrude</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="o">*</span><span class="mi">4000</span><span class="p">,</span> <span class="n">capping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">cyl1</span></div></div>
+            <span class="k">return</span> <span class="n">cyl1</span></div>
+
+    <span class="k">def</span> <span class="nf">_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="c1"># TODO: generalize this by using a degenerate cylinder</span>
+        <span class="c1">#</span>
+        <span class="c1"># project a point onto the surface of the infinite shield</span>
+        <span class="c1"># this is a unconstrained annulus.</span>
+        <span class="c1"># Given the range of possible geometries, this</span>
+        <span class="c1"># routine will return a single x,y,z tuple representing</span>
+        <span class="c1"># the interesection of the annulus axis with the plane of</span>
+        <span class="c1"># the point.  Three possible intersections with the x, y,</span>
+        <span class="c1"># and z planes of the point.  The closest point will</span>
+        <span class="c1"># be returned.  This should permit the annulus to be displayed</span>
+        <span class="c1"># without overly extending the region displayed.</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">plane_point</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_line_plane_collision</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">plane_point</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">)</span>
+        <span class="n">point1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="o">*</span><span class="n">t</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_line_plane_collision</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">plane_point</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">)</span>
+        <span class="n">point2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="o">*</span><span class="n">t</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_line_plane_collision</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">plane_point</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">)</span>
+        <span class="n">point3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="o">*</span><span class="n">t</span>
+        <span class="n">dist1</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">point1</span> <span class="o">-</span> <span class="n">plane_point</span><span class="p">)</span>
+        <span class="n">dist2</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">point2</span> <span class="o">-</span> <span class="n">plane_point</span><span class="p">)</span>
+        <span class="n">dist3</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">point3</span> <span class="o">-</span> <span class="n">plane_point</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">dist1</span><span class="p">,</span> <span class="n">dist2</span><span class="p">,</span> <span class="n">dist3</span><span class="p">)</span></div>
 
 <span class="c1"># -----------------------------------------------------------</span>
 
@@ -849,7 +887,23 @@
                          <span class="n">cylinder_origin</span><span class="o">=</span><span class="n">cylinder_center</span><span class="p">,</span>
                          <span class="n">cylinder_inner_radius</span><span class="o">=</span><span class="n">cylinder_inner_radius</span><span class="p">,</span>
                          <span class="n">cylinder_outer_radius</span><span class="o">=</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
-                         <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+                         <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="c1"># project a point onto the surface of the infinite shield</span>
+        <span class="c1"># this is a y-aligned annulus</span>
+        <span class="c1"># so return four x,z values at the specified y</span>
+        <span class="n">centerX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">centerZ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">point1</span> <span class="o">=</span> <span class="p">(</span><span class="n">centerX</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
+                  <span class="n">y</span><span class="p">,</span> <span class="n">centerZ</span><span class="p">)</span>
+        <span class="n">point2</span> <span class="o">=</span> <span class="p">(</span><span class="n">centerX</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radiusx</span><span class="p">,</span>
+                  <span class="n">y</span><span class="p">,</span> <span class="n">centerZ</span><span class="p">)</span>
+        <span class="n">point3</span> <span class="o">=</span> <span class="p">(</span><span class="n">centerX</span><span class="p">,</span>
+                  <span class="n">y</span><span class="p">,</span> <span class="n">centerZ</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">)</span>
+        <span class="n">point4</span> <span class="o">=</span> <span class="p">(</span><span class="n">centerX</span><span class="p">,</span>
+                  <span class="n">y</span><span class="p">,</span> <span class="n">centerZ</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[[</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">point3</span><span class="p">,</span> <span class="n">point4</span><span class="p">]]</span></div>
 
 <span class="c1"># -----------------------------------------------------------</span>
 
@@ -890,7 +944,23 @@
                          <span class="n">cylinder_origin</span><span class="o">=</span><span class="n">cylinder_center</span><span class="p">,</span>
                          <span class="n">cylinder_inner_radius</span><span class="o">=</span><span class="n">cylinder_inner_radius</span><span class="p">,</span>
                          <span class="n">cylinder_outer_radius</span><span class="o">=</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
-                         <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+                         <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="c1"># project a point onto the surface of the infinite shield</span>
+        <span class="c1"># this is a x-aligned annulus</span>
+        <span class="c1"># so return four y,z values at the specified x</span>
+        <span class="n">centerY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">centerZ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">point1</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span>
+                  <span class="n">centerY</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">,</span> <span class="n">centerZ</span><span class="p">)</span>
+        <span class="n">point2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span>
+                  <span class="n">centerY</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">,</span> <span class="n">centerZ</span><span class="p">)</span>
+        <span class="n">point3</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span>
+                  <span class="n">centerY</span><span class="p">,</span> <span class="n">centerZ</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">)</span>
+        <span class="n">point4</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span>
+                  <span class="n">centerY</span><span class="p">,</span> <span class="n">centerZ</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[[</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">point3</span><span class="p">,</span> <span class="n">point4</span><span class="p">]]</span></div>
 
 <span class="c1"># -----------------------------------------------------------</span>
 
@@ -932,7 +1002,23 @@
                          <span class="n">cylinder_origin</span><span class="o">=</span><span class="n">cylinder_center</span><span class="p">,</span>
                          <span class="n">cylinder_inner_radius</span><span class="o">=</span><span class="n">cylinder_inner_radius</span><span class="p">,</span>
                          <span class="n">cylinder_outer_radius</span><span class="o">=</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
-                         <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
+                         <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="c1"># project a point onto the surface of the infinite shield</span>
+        <span class="c1"># this is a z-aligned annulus</span>
+        <span class="c1"># so return four x,y values at the specified z</span>
+        <span class="n">centerX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">centerY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">point1</span> <span class="o">=</span> <span class="p">(</span><span class="n">centerX</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
+                  <span class="n">centerY</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+        <span class="n">point2</span> <span class="o">=</span> <span class="p">(</span><span class="n">centerX</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
+                  <span class="n">centerY</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+        <span class="n">point3</span> <span class="o">=</span> <span class="p">(</span><span class="n">centerX</span><span class="p">,</span>
+                  <span class="n">centerY</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+        <span class="n">point4</span> <span class="o">=</span> <span class="p">(</span><span class="n">centerX</span><span class="p">,</span>
+                  <span class="n">centerY</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cylinder_outer_radius</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[[</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">point3</span><span class="p">,</span> <span class="n">point4</span><span class="p">]]</span></div>
 
 <span class="c1"># -----------------------------------------------------------</span>
 
@@ -1289,7 +1375,7 @@
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Dec 04, 2022.
+        Last updated on Dec 11, 2022.
       </span>
 
     </p>

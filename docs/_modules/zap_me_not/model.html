@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../isotopes.html">Isotope Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modeling.html">Modeling in ZapMeNot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../results.html">Generating Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../graphics.html">We Want Pictures!</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../theory-and-methods.html">Theory and Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../benchmarks.html">Benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module-docs.html">Module Contents</a></li>
@@ -396,55 +397,105 @@
                 <span class="p">[</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">photon_yield</span><span class="p">,</span> <span class="n">total_uncollided_energy_flux</span><span class="p">,</span>
                  <span class="n">total_uncollided_exposure</span><span class="p">,</span> <span class="n">total_collided_exposure</span><span class="p">])</span>
 
-        <span class="c1"># print(results_by_photon_energy)</span>
         <span class="k">return</span> <span class="n">results_by_photon_energy</span></div>
 
 <div class="viewcode-block" id="Model.display"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Produces a graphic display of the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
-            <span class="c1"># basic test of pyvista plotter</span>
-            <span class="n">sourceColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
-            <span class="n">detectorColor</span> <span class="o">=</span> <span class="s1">&#39;yellow&#39;</span>
-            <span class="n">shieldColor</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
-            <span class="c1"># find the bounding box for all finite bodies</span>
-            <span class="n">blocks</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">MultiBlock</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
-                    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
-            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
-            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
+            <span class="c1"># find the bounding box for all objects</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_findBounds</span><span class="p">()</span>
             <span class="n">pl</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Plotter</span><span class="p">()</span>
-            <span class="c1"># increase the display bounds by a smidge to avoid</span>
-            <span class="c1">#   inadvertent clipping</span>
-            <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="mf">1.01</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">blocks</span><span class="o">.</span><span class="n">bounds</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
-                    <span class="n">clip1</span> <span class="o">=</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">()</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
-                        <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-z&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]])</span>
-                    <span class="n">clip2</span> <span class="o">=</span> <span class="n">clip1</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
-                        <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
-                    <span class="n">clip3</span> <span class="o">=</span> <span class="n">clip2</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
-                        <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-y&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
-                    <span class="n">clip4</span> <span class="o">=</span> <span class="n">clip3</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
-                        <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
-                    <span class="n">clip5</span> <span class="o">=</span> <span class="n">clip4</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
-                        <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-x&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-                    <span class="n">clip6</span> <span class="o">=</span> <span class="n">clip5</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
-                        <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clip6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">sourceColor</span><span class="p">,</span>
-                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">)</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">detectorColor</span><span class="p">,</span>
-                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;detector&#39;</span><span class="p">)</span>
-            <span class="c1"># pl.set_background(color=&#39;white&#39;)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_trimBlocks</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_addPoints</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">show_bounds</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="s1">&#39;front&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span> <span class="n">all_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">add_legend</span><span class="p">(</span><span class="n">face</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
+            <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_trimBlocks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
+        <span class="n">shieldColor</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+        <span class="k">for</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
+                <span class="n">clip1</span> <span class="o">=</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">()</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
+                    <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-z&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]])</span>
+                <span class="n">clip2</span> <span class="o">=</span> <span class="n">clip1</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
+                    <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
+                <span class="n">clip3</span> <span class="o">=</span> <span class="n">clip2</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
+                    <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-y&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
+                <span class="n">clip4</span> <span class="o">=</span> <span class="n">clip3</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
+                    <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
+                <span class="n">clip5</span> <span class="o">=</span> <span class="n">clip4</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
+                    <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-x&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+                <span class="n">clip6</span> <span class="o">=</span> <span class="n">clip5</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
+                    <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+                <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clip6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_findBounds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">blocks</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">MultiBlock</span><span class="p">()</span>
+        <span class="c1"># add finite shields to the</span>
+        <span class="k">for</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
+                <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># TODO: ensure bounds encompasses infinite shields</span>
+                <span class="c1"># project the detector location onto the infinite surface</span>
+                <span class="c1"># to get points to add to the geometry</span>
+                <span class="n">points</span> <span class="o">=</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">_projection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
+                    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyvista</span><span class="o">.</span><span class="n">Line</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">point</span><span class="p">))</span>
+        <span class="c1"># &gt;&gt;&gt;aren&#39;t all sources also shields?  Then the next line is redundant</span>
+        <span class="c1"># TODO: figure out if the next line is necessary</span>
+        <span class="c1"># blocks.append(self.source.vtk())</span>
+        <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
+        <span class="c1"># check for a zero width in any direction</span>
+        <span class="n">bounds</span> <span class="o">=</span> <span class="n">blocks</span><span class="o">.</span><span class="n">bounds</span>
+        <span class="n">x_width</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">y_width</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">z_width</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+        <span class="n">max_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_width</span><span class="p">,</span> <span class="n">y_width</span><span class="p">,</span> <span class="n">z_width</span><span class="p">)</span>
+        <span class="n">min_width</span> <span class="o">=</span> <span class="n">max_width</span> <span class="o">*</span> <span class="mf">0.25</span>
+        <span class="k">if</span> <span class="n">x_width</span> <span class="o">&lt;</span> <span class="n">min_width</span><span class="p">:</span>
+            <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">min_width</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">min_width</span><span class="o">/</span><span class="mi">2</span>
+        <span class="k">if</span> <span class="n">y_width</span> <span class="o">&lt;</span> <span class="n">min_width</span><span class="p">:</span>
+            <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">min_width</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">min_width</span><span class="o">/</span><span class="mi">2</span>
+        <span class="k">if</span> <span class="n">z_width</span> <span class="o">&lt;</span> <span class="n">min_width</span><span class="p">:</span>
+            <span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">min_width</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">min_width</span><span class="o">/</span><span class="mi">2</span>
+        <span class="c1"># increase the display bounds by a smidge to avoid</span>
+        <span class="c1">#   inadvertent clipping</span>
+        <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="mf">1.01</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bounds</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">bounds</span>
+
+    <span class="k">def</span> <span class="nf">_addPoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
+        <span class="n">sourceColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+        <span class="n">detectorColor</span> <span class="o">=</span> <span class="s1">&#39;yellow&#39;</span>
+        <span class="c1"># determine a good radius for the points</span>
+        <span class="n">point_radius</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                               <span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                               <span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">]))</span> <span class="o">*</span> <span class="mf">0.05</span>
+        <span class="c1"># check if the source is a point source</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_z</span><span class="p">),</span>
+                                  <span class="n">radius</span><span class="o">=</span><span class="n">point_radius</span><span class="p">)</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
+                <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">sourceColor</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">)</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">z</span><span class="p">),</span>
+                              <span class="n">radius</span><span class="o">=</span><span class="n">point_radius</span><span class="p">)</span>
+        <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
+            <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">detectorColor</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;detector&#39;</span><span class="p">)</span></div>
+        <span class="c1"># pl.set_background(color=&#39;white&#39;)</span>
 </pre></div>
 
            </div>
@@ -459,7 +510,7 @@
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Dec 04, 2022.
+        Last updated on Dec 11, 2022.
       </span>
 
     </p>

@@ -263,9 +263,12 @@ def test_generate_summary():
                          4.2363679878e-09*1000*3600]]
     summary = myModel.generate_summary()
     np.testing.assert_allclose(expected_summary, summary)
-    df = pd.DataFrame(summary, columns = ['MeV', 'photons/sec','Uncollided MeV/cm2/sec', 'Uncollided mR/hr', 'Collided mR/hr'])
+    df = pd.DataFrame(summary, columns=[
+        'MeV', 'photons/sec', 'Uncollided MeV/cm2/sec',
+        'Uncollided mR/hr', 'Collided mR/hr'])
     print("")
     print(df)
+
 
 # a point source with infinite yz shields
 # Reference:

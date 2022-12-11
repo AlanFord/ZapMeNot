@@ -234,52 +234,102 @@ class Model:
                 [photon_energy, photon_yield, total_uncollided_energy_flux,
                  total_uncollided_exposure, total_collided_exposure])
 
-        # print(results_by_photon_energy)
         return results_by_photon_energy
 
     def display(self):
         """Produces a graphic display of the model.
         """
         if pyvista_found:
-            # basic test of pyvista plotter
-            sourceColor = 'red'
-            detectorColor = 'yellow'
-            shieldColor = 'blue'
-            # find the bounding box for all finite bodies
-            blocks = pyvista.MultiBlock()
-            for thisShield in self.shield_list:
-                if not thisShield.is_infinite():
-                    blocks.append(thisShield.vtk())
-            blocks.append(self.source.vtk())
-            blocks.append(self.detector.vtk())
+            # find the bounding box for all objects
+            bounds = self._findBounds()
             pl = pyvista.Plotter()
-            # increase the display bounds by a smidge to avoid
-            #   inadvertent clipping
-            bounds = [x * 1.01 for x in blocks.bounds]
-            for thisShield in self.shield_list:
-                if thisShield.is_infinite():
-                    clip1 = thisShield.vtk().clip_closed_surface(
-                        normal='-z', origin=[0, 0, bounds[5]])
-                    clip2 = clip1.clip_closed_surface(
-                        normal='z', origin=[0, 0, bounds[4]])
-                    clip3 = clip2.clip_closed_surface(
-                        normal='-y', origin=[0, bounds[3], 0])
-                    clip4 = clip3.clip_closed_surface(
-                        normal='y', origin=[0, bounds[2], 0])
-                    clip5 = clip4.clip_closed_surface(
-                        normal='-x', origin=[bounds[1], 0, 0])
-                    clip6 = clip5.clip_closed_surface(
-                        normal='x', origin=[bounds[0], 0, 0])
-                    pl.add_mesh(clip6, color=shieldColor)
-                else:
-                    pl.add_mesh(thisShield.vtk(), color=shieldColor)
-            pl.add_mesh(
-                self.source.vtk(), line_width=5, color=sourceColor,
-                label='source')
-            pl.add_mesh(
-                self.detector.vtk(), line_width=5, color=detectorColor,
-                label='detector')
-            # pl.set_background(color='white')
+            self._trimBlocks(pl, bounds)
+            self._addPoints(pl, bounds)
             pl.show_bounds(grid='front', location='outer', all_edges=True)
             pl.add_legend(face=None, size=(0.1, 0.1))
             pl.show()
+
+    def _trimBlocks(self, pl, bounds):
+        shieldColor = 'blue'
+        for thisShield in self.shield_list:
+            if thisShield.is_infinite():
+                clip1 = thisShield.vtk().clip_closed_surface(
+                    normal='-z', origin=[0, 0, bounds[5]])
+                clip2 = clip1.clip_closed_surface(
+                    normal='z', origin=[0, 0, bounds[4]])
+                clip3 = clip2.clip_closed_surface(
+                    normal='-y', origin=[0, bounds[3], 0])
+                clip4 = clip3.clip_closed_surface(
+                    normal='y', origin=[0, bounds[2], 0])
+                clip5 = clip4.clip_closed_surface(
+                    normal='-x', origin=[bounds[1], 0, 0])
+                clip6 = clip5.clip_closed_surface(
+                    normal='x', origin=[bounds[0], 0, 0])
+                pl.add_mesh(clip6, color=shieldColor)
+            else:
+                pl.add_mesh(thisShield.vtk(), color=shieldColor)
+
+    def _findBounds(self):
+        blocks = pyvista.MultiBlock()
+        # add finite shields to the
+        for thisShield in self.shield_list:
+            if not thisShield.is_infinite():
+                blocks.append(thisShield.vtk())
+            else:
+                # TODO: ensure bounds encompasses infinite shields
+                # project the detector location onto the infinite surface
+                # to get points to add to the geometry
+                points = thisShield._projection(self.detector.x,
+                                                self.detector.y,
+                                                self.detector.z)
+                for point in points:
+                    blocks.append(pyvista.Line(point, point))
+        # >>>aren't all sources also shields?  Then the next line is redundant
+        # TODO: figure out if the next line is necessary
+        # blocks.append(self.source.vtk())
+        blocks.append(self.detector.vtk())
+        # check for a zero width in any direction
+        bounds = blocks.bounds
+        x_width = abs(bounds[1] - bounds[0])
+        y_width = abs(bounds[3] - bounds[2])
+        z_width = abs(bounds[5] - bounds[4])
+        max_width = max(x_width, y_width, z_width)
+        min_width = max_width * 0.25
+        if x_width < min_width:
+            bounds[0] = bounds[0] - min_width/2
+            bounds[1] = bounds[1] + min_width/2
+        if y_width < min_width:
+            bounds[2] = bounds[2] - min_width/2
+            bounds[3] = bounds[3] + min_width/2
+        if z_width < min_width:
+            bounds[4] = bounds[4] - min_width/2
+            bounds[5] = bounds[5] + min_width/2
+        # increase the display bounds by a smidge to avoid
+        #   inadvertent clipping
+        bounds = [x * 1.01 for x in bounds]
+        return bounds
+
+    def _addPoints(self, pl, bounds):
+        sourceColor = 'red'
+        detectorColor = 'yellow'
+        # determine a good radius for the points
+        point_radius = abs(min(bounds[1] - bounds[0],
+                               bounds[3] - bounds[2],
+                               bounds[5] - bounds[4])) * 0.05
+        # check if the source is a point source
+        if len(self.source._get_source_points()) == 1:
+            body = pyvista.Sphere(center=(self.source._x,
+                                          self.source._y,
+                                          self.source._z),
+                                  radius=point_radius)
+            pl.add_mesh(
+                body, line_width=5, color=sourceColor,
+                label='source')
+        body = pyvista.Sphere(center=(self.detector.x,
+                                      self.detector.y,
+                                      self.detector.z),
+                              radius=point_radius)
+        pl.add_mesh(
+            body, line_width=5, color=detectorColor,
+            label='detector')
+        # pl.set_background(color='white')

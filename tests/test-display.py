@@ -39,8 +39,8 @@ class TestVTK():
 
 class TestModel():
 
-    def test_PointSource(self):
-        # simple test of model display and a point source
+    def test_PointSourceFiniteShield(self):
+        # test of model display and a point source and finite shield
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 10)
         photonEnergy = 1.0  # MeV
@@ -52,7 +52,49 @@ class TestModel():
             "iron", box_center=[15, 0, 0], box_dimensions=[10, 30, 30]))
         myModel.display()
 
-    def test_Cylinder(self):
+    def test_PointSourceInfiniteShield(self):
+        # test of model display and a point source and infinite shield
+        myModel = model.Model()
+        mySource = source.PointSource(0, 0, 10)
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.SemiInfiniteXSlab(
+            "iron", x_start=5, x_end=20,))
+        myModel.display()
+
+    def test_PointSourceMixedShield(self):
+        # test of model display and a point source and multiple shields
+        myModel = model.Model()
+        mySource = source.PointSource(0, 0, 10)
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.Box(
+            "iron", box_center=[15, 0, 0], box_dimensions=[10, 30, 30]))
+        myModel.add_shield(shield.CappedCylinder(
+            "concrete", cylinder_start=[40, 0, -20], cylinder_end=[50, 0, 20],
+            cylinder_radius=15))
+        myModel.display()
+
+    def test_PointSourceNoShield(self):
+        # test of model display and a point source and no shield
+        myModel = model.Model()
+        mySource = source.PointSource(0, 0, 10)
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.display()
+
+
+"""
+    def test_CylinderSourceNoShield(self):
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 0)
         photonEnergy = 1.0  # MeV
@@ -63,3 +105,16 @@ class TestModel():
         myModel.add_shield(shield.Box(
             "iron", box_center=[15, 0, 0], box_dimensions=[10, 10, 10]))
         myModel.display()
+
+    def test_CylinderSourceAnnularShield(self):
+        myModel = model.Model()
+        mySource = source.PointSource(0, 0, 0)
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.Box(
+            "iron", box_center=[15, 0, 0], box_dimensions=[10, 10, 10]))
+        myModel.display()
+"""

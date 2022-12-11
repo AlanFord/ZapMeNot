@@ -81,7 +81,8 @@ class Shield(abc.ABC):
     @staticmethod
     def _line_plane_collision(plane_normal, plane_point, ray_origin,
                               ray_normal, epsilon=1e-6):
-        """Calculates the distance from the ray origin to the intersection with a plane
+        """Calculates the distance from the ray origin to the intersection
+           with a plane
 
         Parameters
         ----------
@@ -222,6 +223,11 @@ class SemiInfiniteXSlab(Shield):
             return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000,
                                        -1000, 1000))
 
+    def _projection(self, x, y, z):
+        # project a point onto the surface of the infinite shield
+        # this is a semi-infinite slab, with a finite X width,
+        # so return two x values at the specified y and z
+        return [(self.x_start, y, z), (self.x_end, y, z)]
 # -----------------------------------------------------------
 
 
@@ -395,7 +401,8 @@ class Box(Shield):
         return False
 
     def _intersect_axis_aligned_box(self, ray):
-        """Calculates a list of point where a ray intersects the axis-aligned box
+        """Calculates a list of point where a ray intersects the
+           axis-aligned box
 
         Parameters
         ----------
@@ -647,6 +654,36 @@ class InfiniteAnnulus(Shield):
             cyl1 = disc.extrude(self.dir*4000, capping=True)
             return cyl1
 
+    def _projection(self, x, y, z):
+        # TODO: generalize this by using a degenerate cylinder
+        #
+        # project a point onto the surface of the infinite shield
+        # this is a unconstrained annulus.
+        # Given the range of possible geometries, this
+        # routine will return a single x,y,z tuple representing
+        # the interesection of the annulus axis with the plane of
+        # the point.  Three possible intersections with the x, y,
+        # and z planes of the point.  The closest point will
+        # be returned.  This should permit the annulus to be displayed
+        # without overly extending the region displayed.
+        normal = [1, 0, 0]
+        plane_point = [x, y, z]
+        t = self._line_plane_collision(normal, plane_point, self.origin,
+                                       self.dir)
+        point1 = self.origin + self.dir*t
+        normal = [0, 1, 0]
+        t = self._line_plane_collision(normal, plane_point, self.origin,
+                                       self.dir)
+        point2 = self.origin + self.dir*t
+        normal = [0, 0, 1]
+        t = self._line_plane_collision(normal, plane_point, self.origin,
+                                       self.dir)
+        point3 = self.origin + self.dir*t
+        dist1 = abs(point1 - plane_point)
+        dist2 = abs(point2 - plane_point)
+        dist3 = abs(point3 - plane_point)
+        return min(dist1, dist2, dist3)
+
 # -----------------------------------------------------------
 
 
@@ -689,6 +726,22 @@ class YAlignedInfiniteAnnulus(InfiniteAnnulus):
                          cylinder_outer_radius=cylinder_outer_radius,
                          cylinder_axis=[0, 1, 0])
 
+    def _projection(self, x, y, z):
+        # project a point onto the surface of the infinite shield
+        # this is a y-aligned annulus
+        # so return four x,z values at the specified y
+        centerX = self.cylinder_center[0]
+        centerZ = self.cylinder_center[2]
+        point1 = (centerX+self.cylinder_outer_radius,
+                  y, centerZ)
+        point2 = (centerX-self.cylinder_outer_radiusx,
+                  y, centerZ)
+        point3 = (centerX,
+                  y, centerZ+self.cylinder_outer_radius)
+        point4 = (centerX,
+                  y, centerZ-self.cylinder_outer_radius)
+        return [[point1, point2, point3, point4]]
+
 # -----------------------------------------------------------
 
 
@@ -729,6 +782,22 @@ class XAlignedInfiniteAnnulus(InfiniteAnnulus):
                          cylinder_inner_radius=cylinder_inner_radius,
                          cylinder_outer_radius=cylinder_outer_radius,
                          cylinder_axis=[1, 0, 0])
+
+    def _projection(self, x, y, z):
+        # project a point onto the surface of the infinite shield
+        # this is a x-aligned annulus
+        # so return four y,z values at the specified x
+        centerY = self.cylinder_center[1]
+        centerZ = self.cylinder_center[2]
+        point1 = (x,
+                  centerY+self.cylinder_outer_radius, centerZ)
+        point2 = (x,
+                  centerY-self.cylinder_outer_radius, centerZ)
+        point3 = (x,
+                  centerY, centerZ+self.cylinder_outer_radius)
+        point4 = (x,
+                  centerY, centerZ-self.cylinder_outer_radius)
+        return [[point1, point2, point3, point4]]
 
 # -----------------------------------------------------------
 
@@ -771,6 +840,22 @@ class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
                          cylinder_inner_radius=cylinder_inner_radius,
                          cylinder_outer_radius=cylinder_outer_radius,
                          cylinder_axis=[0, 0, 1])
+
+    def _projection(self, x, y, z):
+        # project a point onto the surface of the infinite shield
+        # this is a z-aligned annulus
+        # so return four x,y values at the specified z
+        centerX = self.cylinder_center[0]
+        centerY = self.cylinder_center[1]
+        point1 = (centerX+self.cylinder_outer_radius,
+                  centerY, z)
+        point2 = (centerX-self.cylinder_outer_radius,
+                  centerY, z)
+        point3 = (centerX,
+                  centerY+self.cylinder_outer_radius, z)
+        point4 = (centerX,
+                  centerY-self.cylinder_outer_radius, z)
+        return [[point1, point2, point3, point4]]
 
 # -----------------------------------------------------------
 

@@ -456,7 +456,7 @@ class PointSource(Source, shield.Shield):
             A list of vector locations within the Source body.  In this class
             the list is only a single entry.
         """
-        return[(self._x, self._y, self._z)]
+        return [(self._x, self._y, self._z)]
 
     def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
@@ -499,10 +499,12 @@ class PointSource(Source, shield.Shield):
         Returns
         -------
         :class:`pyvista.PolyData`
-            A small sphere object representing the point source.
+            A degenerate line object representing the point source.
         """
         if pyvista_found:
-            return pyvista.Sphere(center=(self._x, self._y, self._z), radius=1)
+            # this returns a degenerate line, equivalent to a point
+            return pyvista.Line((self._x, self._y, self._z),
+                                (self._x, self._y, self._z))
 
 
 # -----------------------------------------------------------

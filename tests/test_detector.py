@@ -17,12 +17,8 @@ def test_detector_set_retrieve():
 
 def test_detector_invalid_args():
     with pytest.raises(ValueError):
-        a = detector.Detector('a', 2, 3)
+        detector.Detector('a', 2, 3)
     with pytest.raises(ValueError):
-        b = detector.Detector(1, 'b', 3)
+        detector.Detector(1, 'b', 3)
     with pytest.raises(ValueError):
-        c = detector.Detector(1, 2, 'c')
-
-
-def test_detector_display():
-    assert 1 == 2  # fail until implemented
+        detector.Detector(1, 2, 'c')

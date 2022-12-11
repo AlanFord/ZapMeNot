@@ -48,7 +48,9 @@ class Detector:
         Returns
         -------
         :class:`pyvista.PolyData`
-            A small sphere object representing the detector.
+            A degenerate line object representing the detector.
         """
         if pyvista_found:
-            return pyvista.Sphere(center=(self.x, self.y, self.z), radius=10)
+            # this returns a degenerate line, equivalent to a point
+            return pyvista.Line((self.x, self.y, self.z),
+                                (self.x, self.y, self.z))
