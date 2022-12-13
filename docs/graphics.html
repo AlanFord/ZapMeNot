@@ -169,8 +169,23 @@
 <h1>We Want Pictures!<a class="headerlink" href="#we-want-pictures" title="Permalink to this heading">¶</a></h1>
 <p>Checking a model geometry can be challenging.  To make the process a little easier
 the ZapMeNot library includes the ability to display an interactive view of
-the geometry, include source, shields, and detector.</p>
-<p>More to Come!</p>
+the geometry, include source, shields, and detector.  The <a class="reference external" href="https://docs.pyvista.org">Pyvista</a> package is
+required to support graphics.</p>
+<p>Once you have a model built and populated with a source, detector, and (optionally)
+shields, the following command can be used to display the model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># display a model</span>
+<span class="n">myModel</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Provided you are using a an operating system with graphics capability (i.e. not just a console)
+ZapMeNot will display something similar to the following graphic.  In this example the source
+is a point source shown in red, the detector is shown in yellow, and two shields are shown
+in blue.</p>
+<img alt="_images/display.png" src="_images/display.png" />
+<p>The display can be rotated, moved, zoomed, and more by using a mouse or <a class="reference external" href="https://docs.pyvista.org/api/plotting/plotting.html">keyboard shortcuts</a>.</p>
+<p>It is possible to display the model on a headless linux server (one with no graphics card)
+by building your ZapMeNot model in a <a class="reference external" href="https://jupyter.org">JupyterLab notebook</a>.  Pyvista documentation includes
+guidance on selecting a <a class="reference external" href="https://docs.pyvista.org/user-guide/jupyter/index.html">graphics backend</a> for various server configurations.</p>
 </section>
 
 
@@ -195,7 +210,7 @@ the geometry, include source, shields, and detector.</p>
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Dec 11, 2022.
+        Last updated on Dec 12, 2022.
       </span>
 
     </p>

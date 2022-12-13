@@ -340,10 +340,15 @@
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">nextPoint</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">source_points</span><span class="p">):</span>
             <span class="n">vector</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">(</span><span class="n">nextPoint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
             <span class="n">total_distance</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span><span class="o">.</span><span class="n">_length</span>
+            <span class="c1"># check to see if source point and detector are coincident</span>
+            <span class="k">if</span> <span class="n">total_distance</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;detector and source are coincident&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">index2</span><span class="p">,</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">):</span>
                 <span class="n">crossing_distances</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">index2</span><span class="p">]</span> <span class="o">=</span> \
                     <span class="n">thisShield</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
         <span class="n">gaps</span> <span class="o">=</span> <span class="n">total_distance</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">crossing_distances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">gaps</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Looks like shields and/or sources overlap&quot;</span><span class="p">)</span>
 
         <span class="n">results_by_photon_energy</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># get a list of photons (energy &amp; intensity) from the source</span>
@@ -439,7 +444,6 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
                 <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">vtk</span><span class="p">())</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># TODO: ensure bounds encompasses infinite shields</span>
                 <span class="c1"># project the detector location onto the infinite surface</span>
                 <span class="c1"># to get points to add to the geometry</span>
                 <span class="n">points</span> <span class="o">=</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">_projection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
@@ -473,12 +477,31 @@
         <span class="k">return</span> <span class="n">bounds</span>
 
     <span class="k">def</span> <span class="nf">_addPoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
+        <span class="c1"># the goal here is to add &#39;points&#39; to the display, but they</span>
+        <span class="c1"># must be represented as spheres to have some physical</span>
+        <span class="c1"># volume to display.  Points will be displayed with a radius</span>
+        <span class="c1"># of 5% of the smallest dimension of the bounding box.</span>
+
+        <span class="c1"># A problem can occur if the bounding box has a width of 0 in one</span>
+        <span class="c1"># or more of three dimensions.  An exception is thrown if bounds</span>
+        <span class="c1"># in all three directions are of zero width.  Otherwise the zero</span>
+        <span class="c1"># is ignored and the next largest dimension is used to size the</span>
+        <span class="c1"># point representation.</span>
+
+        <span class="n">point_ratio</span> <span class="o">=</span> <span class="mf">0.05</span>
         <span class="n">sourceColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
         <span class="n">detectorColor</span> <span class="o">=</span> <span class="s1">&#39;yellow&#39;</span>
+        <span class="n">widths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                  <span class="nb">abs</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+                  <span class="nb">abs</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">])]</span>
+        <span class="n">good_widths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">width</span> <span class="ow">in</span> <span class="n">widths</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">good_widths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">good_widths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;detector and source are coincident&quot;</span><span class="p">)</span>
         <span class="c1"># determine a good radius for the points</span>
-        <span class="n">point_radius</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                               <span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                               <span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">]))</span> <span class="o">*</span> <span class="mf">0.05</span>
+        <span class="n">point_radius</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">good_widths</span><span class="p">)</span> <span class="o">*</span> <span class="n">point_ratio</span>
         <span class="c1"># check if the source is a point source</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span>
@@ -510,7 +533,7 @@
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Dec 11, 2022.
+        Last updated on Dec 12, 2022.
       </span>
 
     </p>

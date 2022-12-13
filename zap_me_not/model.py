@@ -281,7 +281,6 @@ class Model:
             if not thisShield.is_infinite():
                 blocks.append(thisShield.vtk())
             else:
-                # TODO: ensure bounds encompasses infinite shields
                 # project the detector location onto the infinite surface
                 # to get points to add to the geometry
                 points = thisShield._projection(self.detector.x,
