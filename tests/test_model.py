@@ -119,6 +119,16 @@ class TestPointSource():
         result = myModel.calculate_exposure()
         assert result == 0
 
+    # a point source coincident with a detector
+    def test_Case6(self):
+        myModel = model.Model()
+        mySource = source.PointSource(1, 2, 3)
+        mySource.add_isotope_curies('Co-60', 3)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(1, 2, 3))
+        with pytest.raises(ValueError):
+            myModel.calculate_exposure()
+
 
 # =============================================================
 class TestLineSource():

@@ -185,7 +185,7 @@ class Model:
                     thisShield._get_crossing_length(vector)
         gaps = total_distance - np.sum(crossing_distances, axis=1)
         if np.amin(gaps) < 0:
-                raise ValueError("Looks like shields and/or sources overlap")
+            raise ValueError("Looks like shields and/or sources overlap")
 
         results_by_photon_energy = []
         # get a list of photons (energy & intensity) from the source
@@ -242,20 +242,26 @@ class Model:
         return results_by_photon_energy
 
     def display(self):
-        """Produces a graphic display of the model.
+        """
+        Produces a graphic display of the model.
         """
         if pyvista_found:
             # find the bounding box for all objects
-            bounds = self._findBounds()
+            bounds = self._findBoundingBox()
             pl = pyvista.Plotter()
             self._trimBlocks(pl, bounds)
-            self._addPoints(pl, bounds)
+            self._addPoints(pl)
             pl.show_bounds(grid='front', location='outer', all_edges=True)
             pl.add_legend(face=None, size=(0.1, 0.1))
             pl.show()
 
     def _trimBlocks(self, pl, bounds):
+        """
+        Adds shields to a Plotter instance after trimming any
+        infinite shields to a predefined bounding box.
+        """
         shieldColor = 'blue'
+        sourceColor = 'red'
         for thisShield in self.shield_list:
             if thisShield.is_infinite():
                 clip1 = thisShield.vtk().clip_closed_surface(
@@ -272,33 +278,54 @@ class Model:
                     normal='x', origin=[bounds[0], 0, 0])
                 pl.add_mesh(clip6, color=shieldColor)
             else:
-                pl.add_mesh(thisShield.vtk(), color=shieldColor)
+                if isinstance(thisShield, source.Source):
+                    # point sources are handled later
+                    if len(self.source._get_source_points()) != 1:
+                        pl.add_mesh(thisShield.vtk(), 
+                                    sourceColor, label='source')
+                else:
+                    pl.add_mesh(thisShield.vtk(), shieldColor)
+        # now add the "bounds" as a transparent block to for a display size
+        mesh = pyvista.Box(bounds)
+        pl.add_mesh(mesh, opacity=0)
 
-    def _findBounds(self):
+    def _findBoundingBox(self):
+        """Calculates a bounding box is X, Y, Z geometry that
+        includes the volumes of all shields, the source, and the detector
+        """
         blocks = pyvista.MultiBlock()
-        # add finite shields to the
         for thisShield in self.shield_list:
             if not thisShield.is_infinite():
+                # add finite shields to the MultiBlock composite
                 blocks.append(thisShield.vtk())
             else:
+                # for infinete shield bodies,
                 # project the detector location onto the infinite surface
                 # to get points to add to the geometry
                 points = thisShield._projection(self.detector.x,
                                                 self.detector.y,
                                                 self.detector.z)
                 for point in points:
+                    # we are appending a degenerate line as a representation
+                    # of a point
                     blocks.append(pyvista.Line(point, point))
+
         # >>>aren't all sources also shields?  Then the next line is redundant
         # TODO: figure out if the next line is necessary
         # blocks.append(self.source.vtk())
+
+        # include the detector geometry in the MultiBlock composite
         blocks.append(self.detector.vtk())
-        # check for a zero width in any direction
+
+        # check for a zero width bounding box in any direction
         bounds = blocks.bounds
         x_width = abs(bounds[1] - bounds[0])
         y_width = abs(bounds[3] - bounds[2])
         z_width = abs(bounds[5] - bounds[4])
         max_width = max(x_width, y_width, z_width)
-        min_width = max_width * 0.25
+        # define a minimum dimension as 20% of the maximum dimension
+        min_width = max_width * 0.20
+        # check for dimensions smaller than the defined minimum
         if x_width < min_width:
             bounds[0] = bounds[0] - min_width/2
             bounds[1] = bounds[1] + min_width/2
@@ -310,27 +337,28 @@ class Model:
             bounds[5] = bounds[5] + min_width/2
         # increase the display bounds by a smidge to avoid
         #   inadvertent clipping
-        bounds = [x * 1.01 for x in bounds]
-        return bounds
+        boundingBox = [x * 1.01 for x in bounds]
+        return boundingBox
 
-    def _addPoints(self, pl, bounds):
-        # the goal here is to add 'points' to the display, but they
-        # must be represented as spheres to have some physical
-        # volume to display.  Points will be displayed with a radius
-        # of 5% of the smallest dimension of the bounding box.
+    def _addPoints(self, pl):
+        """
+        the goal here is to add 'points' to the display, but they
+        must be represented as spheres to have some physical
+        volume to display.  Points will be displayed with a radius
+        of 5% of the smallest dimension of the bounding box.
 
-        # A problem can occur if the bounding box has a width of 0 in one
-        # or more of three dimensions.  An exception is thrown if bounds
-        # in all three directions are of zero width.  Otherwise the zero
-        # is ignored and the next largest dimension is used to size the
-        # point representation.
-
+        A problem can occur if the bounding box has a width of 0 in one
+        or more of three dimensions.  An exception is thrown if bounds
+        in all three directions are of zero width.  Otherwise the zero
+        is ignored and the next largest dimension is used to size the
+        point representation.
+        """
         point_ratio = 0.05
         sourceColor = 'red'
         detectorColor = 'yellow'
-        widths = [abs(bounds[1] - bounds[0]),
-                  abs(bounds[3] - bounds[2]),
-                  abs(bounds[5] - bounds[4])]
+        widths = [abs(pl.bounds[1] - pl.bounds[0]),
+                  abs(pl.bounds[3] - pl.bounds[2]),
+                  abs(pl.bounds[5] - pl.bounds[4])]
         good_widths = []
         for width in widths:
             if width > 0:

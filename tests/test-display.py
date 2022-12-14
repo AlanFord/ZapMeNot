@@ -37,7 +37,7 @@ class TestVTK():
 """
 
 
-class TestModel():
+class TestPointSource():
 
     def test_PointSourceFiniteShield(self):
         # test of model display and a point source and finite shield
@@ -92,11 +92,21 @@ class TestModel():
         myModel.add_detector(detector.Detector(100, 0, 0))
         myModel.display()
 
-
-"""
-    def test_CylinderSourceNoShield(self):
+    # a point source coincident with a detector
+    def test_coincident(self):
         myModel = model.Model()
-        mySource = source.PointSource(0, 0, 0)
+        mySource = source.PointSource(1, 2, 3)
+        mySource.add_isotope_curies('Co-60', 3)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(1, 2, 3))
+        with pytest.raises(ValueError):
+            myModel.display()
+
+    def test_CylinderSource(self):
+        myModel = model.Model()
+        mySource = source.XAlignedCylinderSource(
+            cylinder_center=[0, 0, 0],
+            cylinder_length=10, cylinder_radius=5, material_name='iron')
         photonEnergy = 1.0  # MeV
         photonIntensity = 3E10  # photons/sec
         mySource.add_photon(photonEnergy, photonIntensity)
@@ -114,7 +124,9 @@ class TestModel():
         mySource.add_photon(photonEnergy, photonIntensity)
         myModel.add_source(mySource)
         myModel.add_detector(detector.Detector(100, 0, 0))
-        myModel.add_shield(shield.Box(
-            "iron", box_center=[15, 0, 0], box_dimensions=[10, 10, 10]))
+        myModel.add_shield(shield.InfiniteAnnulus(
+            "iron", cylinder_origin=[50, 0, 0],
+            cylinder_axis=[10, 10, 10],
+            cylinder_inner_radius=15,
+            cylinder_outer_radius=25))
         myModel.display()
-"""
