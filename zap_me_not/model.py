@@ -264,19 +264,20 @@ class Model:
         sourceColor = 'red'
         for thisShield in self.shield_list:
             if thisShield.is_infinite():
-                clip1 = thisShield.vtk().clip_closed_surface(
-                    normal='-z', origin=[0, 0, bounds[5]])
-                clip2 = clip1.clip_closed_surface(
-                    normal='z', origin=[0, 0, bounds[4]])
-                clip3 = clip2.clip_closed_surface(
-                    normal='-y', origin=[0, bounds[3], 0])
-                clip4 = clip3.clip_closed_surface(
-                    normal='y', origin=[0, bounds[2], 0])
-                clip5 = clip4.clip_closed_surface(
-                    normal='-x', origin=[bounds[1], 0, 0])
-                clip6 = clip5.clip_closed_surface(
+                clipped = thisShield.vtk()
+                clipped = clipped.clip_closed_surface(
                     normal='x', origin=[bounds[0], 0, 0])
-                pl.add_mesh(clip6, color=shieldColor)
+                clipped = clipped.clip_closed_surface(
+                    normal='y', origin=[0, bounds[2], 0])
+                clipped = clipped.clip_closed_surface(
+                    normal='z', origin=[0, 0, bounds[4]])
+                clipped = clipped.clip_closed_surface(
+                    normal='-x', origin=[bounds[1], 0, 0])
+                clipped = clipped.clip_closed_surface(
+                    normal='-y', origin=[0, bounds[3], 0])
+                clipped = clipped.clip_closed_surface(
+                    normal='-z', origin=[0, 0, bounds[5]])
+                pl.add_mesh(clipped, color=shieldColor)
             else:
                 if isinstance(thisShield, source.Source):
                     # point sources are handled later
