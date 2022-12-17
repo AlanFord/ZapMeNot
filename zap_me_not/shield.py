@@ -649,6 +649,7 @@ class InfiniteAnnulus(Shield):
             # of -2000 from the origin
             bottom = self.dir*(-2000.)
             disc = pyvista.Disc(center=(bottom[0], bottom[1], bottom[2]),
+                                normal=self.dir,
                                 inner=self.inner_radius,
                                 outer=self.outer_radius, c_res=50)
             cyl1 = disc.extrude(self.dir*4000, capping=True)
