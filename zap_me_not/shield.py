@@ -669,42 +669,43 @@ class InfiniteAnnulus(Shield):
         # without overly extending the region displayed.
         normal = [1, 0, 0]
         plane_point = [x, y, z]
+        intersection_list = []
         t = self._line_plane_collision(np.array(normal),
                                        np.array(plane_point),
                                        self.origin,
                                        self.dir)
-        point1 = self.origin + self.dir*t
+        if t is not None:
+            intersection_list.append(self.origin + self.dir*t)
         normal = [0, 1, 0]
         t = self._line_plane_collision(np.array(normal),
                                        np.array(plane_point),
                                        self.origin,
                                        self.dir)
-        point2 = self.origin + self.dir*t
+        if t is not None:
+            intersection_list.append(self.origin + self.dir*t)
         normal = [0, 0, 1]
         t = self._line_plane_collision(np.array(normal),
                                        np.array(plane_point),
                                        self.origin,
                                        self.dir)
-        point3 = self.origin + self.dir*t
-        dist1 = np.linalg.norm(point1 - plane_point)
-        dist2 = np.linalg.norm(point2 - plane_point)
-        dist3 = np.linalg.norm(point3 - plane_point)
-        minDist = min(dist1, dist2, dist3)
-        if minDist == dist1:
-            center = point1
-        elif minDist == dist2:
-            center = point2
-        elif minDist == dist3:
-            center = point3
-        lombo = 2 * self.outer_radius
+        if t is not None:
+            intersection_list.append(self.origin + self.dir*t)
+        min_collision_distance = None
+        for intersection in intersection_list:
+            distance = np.linalg.norm(intersection - plane_point)
+            if min_collision_distance is None or \
+               (distance < min_collision_distance):
+                    min_collision_distance = distance
+                    collision_point = intersection
+        fakeElipsisRadius = 2 * self.outer_radius
         # generate a bounding box centered at "center" and
         # a width of 2*outer_radius
-        return [center - [lombo, 0, 0],
-                center + [lombo, 0, 0],
-                center - [0, lombo, 0],
-                center + [0, lombo, 0],
-                center - [0, 0, lombo],
-                center + [0, 0, lombo]]
+        return [collision_point - [fakeElipsisRadius, 0, 0],
+                collision_point + [fakeElipsisRadius, 0, 0],
+                collision_point - [0, fakeElipsisRadius, 0],
+                collision_point + [0, fakeElipsisRadius, 0],
+                collision_point - [0, 0, fakeElipsisRadius],
+                collision_point + [0, 0, fakeElipsisRadius]]
 
 # -----------------------------------------------------------
 
