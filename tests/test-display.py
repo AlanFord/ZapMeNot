@@ -5,41 +5,10 @@ from zap_me_not import model, source, shield, detector
 pytestmark = pytest.mark.graphics
 
 # =============================================================
-"""
-class TestVTK():
-    def test_Case0(self):
-            # basic test of pyvista - plot a cylinder
-            cylinder = pyvista.Cylinder(
-                center=[1, 2, 3], direction=[1, 1, 1], radius=1, height=2)
-            cylinder.plot(show_edges=False, line_width=5, cpos='xy')
-
-    def test_Case1(self):
-        # basic test of pyvista plotter
-        cylinder = pyvista.Cylinder(
-            center=[0, 0, 0], direction=[0, 0, 1], radius=1, height=2)
-        pl = pyvista.Plotter()
-        pl.add_axes(color='black', xlabel='X', labels_off=False)
-        pl.add_mesh(cylinder,line_width=5)
-        detector = pyvista.Sphere(center=(4.5, 4.5, 4.5), radius=0.1)
-        pl.add_mesh(detector, line_width=5)
-        pl.set_background(color='white')
-        pl.show()
-
-    def test_Case2(self):
-        # test of boolean capabilities (will be used for annular bodies)
-        cube = pyvista.Cube().triangulate().subdivide(3)
-        sphere = pyvista.Sphere(radius=0.6)
-        result = cube.boolean_difference(sphere)
-        #result.plot(color='tan')
-        pl = pyvista.Plotter()
-        pl.add_mesh(result,line_width=5,color='tan',style='wireframe')
-        pl.show()
-"""
 
 
-class TestPointSource():
-
-    def test_PointSourceFiniteShield(self):
+class TestDisplay():
+    def test_PointSource_BoxShield(self):
         # test of model display and a point source and finite shield
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 10)
@@ -52,7 +21,7 @@ class TestPointSource():
             "iron", box_center=[15, 0, 0], box_dimensions=[10, 30, 30]))
         myModel.display()
 
-    def test_PointSourceInfiniteShield(self):
+    def test_PointSource_SemiInfiniteXSlabShield(self):
         # test of model display and a point source and infinite shield
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 10)
@@ -65,7 +34,7 @@ class TestPointSource():
             "iron", x_start=5, x_end=20,))
         myModel.display()
 
-    def test_PointSourceMixedShield(self):
+    def test_PointSource_MixedShield(self):
         # test of model display and a point source and multiple shields
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 10)
@@ -81,7 +50,7 @@ class TestPointSource():
             cylinder_radius=15))
         myModel.display()
 
-    def test_PointSourceNoShield(self):
+    def test_PointSource_NoShield(self):
         # test of model display and a point source and no shield
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 10)
@@ -93,7 +62,7 @@ class TestPointSource():
         myModel.display()
 
     # a point source coincident with a detector
-    def test_coincident(self):
+    def test_coincidentDetector(self):
         myModel = model.Model()
         mySource = source.PointSource(1, 2, 3)
         mySource.add_isotope_curies('Co-60', 3)
@@ -102,7 +71,7 @@ class TestPointSource():
         with pytest.raises(ValueError):
             myModel.display()
 
-    def test_CylinderSource(self):
+    def test_CylinderSource_BoxShield(self):
         myModel = model.Model()
         mySource = source.XAlignedCylinderSource(
             cylinder_center=[0, 0, 0],
@@ -116,7 +85,7 @@ class TestPointSource():
             "iron", box_center=[15, 0, 0], box_dimensions=[10, 10, 10]))
         myModel.display()
 
-    def test_CylinderSourceAnnularShield(self):
+    def test_PointSource_InfiniteAnnulusShield(self):
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 0)
         photonEnergy = 1.0  # MeV
@@ -129,4 +98,81 @@ class TestPointSource():
             cylinder_axis=[10, 10, 10],
             cylinder_inner_radius=15,
             cylinder_outer_radius=25))
+        myModel.display()
+
+    def test_BoxSource_InfiniteAnnulusShield(self):
+        myModel = model.Model()
+        mySource = source.BoxSource(material_name="iron",
+                                    box_center=[100, 0, 0],
+                                    box_dimensions=[30, 30, 30])
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(0, 0, 0))
+        myModel.add_shield(shield.InfiniteAnnulus(
+            "iron", cylinder_origin=[50, 0, 0],
+            cylinder_axis=[10, 10, 10],
+            cylinder_inner_radius=15,
+            cylinder_outer_radius=25))
+        myModel.display()
+
+    def test_XAlignedCylinderSource_CappedCylinderShield(self):
+        myModel = model.Model()
+        mySource = source.XAlignedCylinderSource(
+            cylinder_center=[0, 0, 0],
+            cylinder_length=10, cylinder_radius=5, material_name='iron')
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.CappedCylinder(
+            "iron", cylinder_start=[15, -10, 0], cylinder_end=[15, -15, 23],
+            cylinder_radius=8))
+        myModel.display()
+
+    def test_XAlignedCylinderSource_YAlignedInfiniteAnnulusShield(self):
+        myModel = model.Model()
+        mySource = source.XAlignedCylinderSource(
+            cylinder_center=[0, 0, 0],
+            cylinder_length=10, cylinder_radius=5, material_name='iron')
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.YAlignedInfiniteAnnulus(
+            "iron", cylinder_center=[15, -10, 0], cylinder_inner_radius=15,
+            cylinder_outer_radius=20))
+        myModel.display()
+
+    def test_XAlignedCylinderSource_XAlignedInfiniteAnnulusShield(self):
+        myModel = model.Model()
+        mySource = source.XAlignedCylinderSource(
+            cylinder_center=[0, 0, 0],
+            cylinder_length=10, cylinder_radius=5, material_name='iron')
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.XAlignedInfiniteAnnulus(
+            "iron", cylinder_center=[15, -10, 0], cylinder_inner_radius=15,
+            cylinder_outer_radius=20))
+        myModel.display()
+
+    def test_XAlignedCylinderSource_ZAlignedInfiniteAnnulusShield(self):
+        myModel = model.Model()
+        mySource = source.XAlignedCylinderSource(
+            cylinder_center=[0, 0, 0],
+            cylinder_length=10, cylinder_radius=5, material_name='iron')
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.ZAlignedInfiniteAnnulus(
+            "iron", cylinder_center=[15, -10, 0], cylinder_inner_radius=15,
+            cylinder_outer_radius=20))
         myModel.display()

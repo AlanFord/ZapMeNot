@@ -790,22 +790,6 @@ class XAlignedInfiniteAnnulus(InfiniteAnnulus):
                          cylinder_outer_radius=cylinder_outer_radius,
                          cylinder_axis=[1, 0, 0])
 
-    def _projection(self, x, y, z):
-        # project a point onto the surface of the infinite shield
-        # this is a x-aligned annulus
-        # so return four y,z values at the specified x
-        centerY = self.cylinder_center[1]
-        centerZ = self.cylinder_center[2]
-        point1 = (x,
-                  centerY+self.cylinder_outer_radius, centerZ)
-        point2 = (x,
-                  centerY-self.cylinder_outer_radius, centerZ)
-        point3 = (x,
-                  centerY, centerZ+self.cylinder_outer_radius)
-        point4 = (x,
-                  centerY, centerZ-self.cylinder_outer_radius)
-        return [[point1, point2, point3, point4]]
-
 # -----------------------------------------------------------
 
 
@@ -847,22 +831,6 @@ class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
                          cylinder_inner_radius=cylinder_inner_radius,
                          cylinder_outer_radius=cylinder_outer_radius,
                          cylinder_axis=[0, 0, 1])
-
-    def _projection(self, x, y, z):
-        # project a point onto the surface of the infinite shield
-        # this is a z-aligned annulus
-        # so return four x,y values at the specified z
-        centerX = self.cylinder_center[0]
-        centerY = self.cylinder_center[1]
-        point1 = (centerX+self.cylinder_outer_radius,
-                  centerY, z)
-        point2 = (centerX-self.cylinder_outer_radius,
-                  centerY, z)
-        point3 = (centerX,
-                  centerY+self.cylinder_outer_radius, z)
-        point4 = (centerX,
-                  centerY-self.cylinder_outer_radius, z)
-        return [[point1, point2, point3, point4]]
 
 # -----------------------------------------------------------
 
