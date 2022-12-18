@@ -37,3 +37,8 @@ guidance on selecting a `graphics backend`_ for various server configurations.
 
 .. _graphics backend: https://docs.pyvista.org/user-guide/jupyter/index.html
 
+Here's a screenshot of a JupyterLab notebook.  Your display may look different, depending
+on your workstation configuration.
+
+
+.. image:: jupyterlab.png
