@@ -176,3 +176,12 @@ class TestDisplay():
             "iron", cylinder_center=[15, -10, 0], cylinder_inner_radius=15,
             cylinder_outer_radius=20))
         myModel.display()
+
+    def test_LineSource(self):
+        myModel = model.Model()
+        mySource = source.LineSource([1, 2, 3], [11, 12, 13])
+        mySource.points_per_dimension = 5
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.display()
+

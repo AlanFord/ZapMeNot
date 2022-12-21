@@ -283,7 +283,7 @@ class Model:
                     # point sources are handled later
                     if len(self.source._get_source_points()) != 1:
                         pl.add_mesh(thisShield.vtk(), 
-                                    sourceColor, label='source')
+                                    sourceColor, label='source', line_width=3)
                 else:
                     pl.add_mesh(thisShield.vtk(), shieldColor)
         # now add the "bounds" as a transparent block to for a display size
