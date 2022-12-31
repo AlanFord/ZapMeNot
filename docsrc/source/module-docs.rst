@@ -46,12 +46,14 @@ ZapMeNot Shield
 .. automodule:: zap_me_not.shield
    :members:
    :show-inheritance:
+   :inherited-members:
 
 ZapMeNot Source
 ---------------
 .. automodule:: zap_me_not.source
    :members:
    :show-inheritance:
+   :inherited-members:
 
 ZapMeNot Model
 --------------

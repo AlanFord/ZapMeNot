@@ -734,6 +734,41 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.XAlignedCylinder.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedCylinder.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+with the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.XAlignedCylinder.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedCylinder.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.XAlignedCylinder.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedCylinder.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -752,6 +787,41 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.XAlignedInfiniteAnnulus.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedInfiniteAnnulus.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+with the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.XAlignedInfiniteAnnulus.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedInfiniteAnnulus.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.XAlignedInfiniteAnnulus.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.XAlignedInfiniteAnnulus.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A boolean object representing the annular cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -770,6 +840,41 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.YAlignedCylinder.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedCylinder.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+with the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.YAlignedCylinder.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedCylinder.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.YAlignedCylinder.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedCylinder.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -788,6 +893,41 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.YAlignedInfiniteAnnulus.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedInfiniteAnnulus.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+with the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.YAlignedInfiniteAnnulus.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedInfiniteAnnulus.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.YAlignedInfiniteAnnulus.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.YAlignedInfiniteAnnulus.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A boolean object representing the annular cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -806,6 +946,41 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.ZAlignedCylinder.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedCylinder.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+with the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.ZAlignedCylinder.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedCylinder.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.ZAlignedCylinder.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedCylinder.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -824,6 +999,41 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.ZAlignedInfiniteAnnulus.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedInfiniteAnnulus.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+with the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.ZAlignedInfiniteAnnulus.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedInfiniteAnnulus.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.shield.ZAlignedInfiniteAnnulus.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.shield.ZAlignedInfiniteAnnulus.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A boolean object representing the annular cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -844,6 +1054,168 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.add_isotope_bq">
+<span class="sig-name descname"><span class="pre">add_isotope_bq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">becquerels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.add_isotope_bq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in becquerels to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<em>float</em>) – The activity in becquerels.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.add_isotope_curies">
+<span class="sig-name descname"><span class="pre">add_isotope_curies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curies</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.add_isotope_curies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in curies to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<em>float</em>) – The activity in curies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.add_photon">
+<span class="sig-name descname"><span class="pre">add_photon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.add_photon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a photon and intensity to the photon list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<em>float</em>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<em>float</em>) – The intensity in photons/sec.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections with
+the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.get_photon_source_list">
+<span class="sig-name descname"><span class="pre">get_photon_source_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.grouping">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><a class="headerlink" href="#zap_me_not.source.BoxSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group
+option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.include_key_progeny">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><a class="headerlink" href="#zap_me_not.source.BoxSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining if key progeny should be included.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.list_discrete_photons">
+<span class="sig-name descname"><span class="pre">list_discrete_photons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.list_discrete_photons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of individual photons in the source.</p>
+<p>The list includes only those photons that have been added
+individually to the source.  It does not include the photons
+that result from the isotopes added to the source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.list_isotopes">
+<span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.list_isotopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of isotopes in the source</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.points_per_dimension">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><a class="headerlink" href="#zap_me_not.source.BoxSource.points_per_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of source points per dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of integers</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.BoxSource.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.BoxSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A box object representing the box shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -870,6 +1242,48 @@ line source.</p></li>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.LineSource.add_isotope_bq">
+<span class="sig-name descname"><span class="pre">add_isotope_bq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">becquerels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.LineSource.add_isotope_bq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in becquerels to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<em>float</em>) – The activity in becquerels.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.LineSource.add_isotope_curies">
+<span class="sig-name descname"><span class="pre">add_isotope_curies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curies</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.LineSource.add_isotope_curies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in curies to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<em>float</em>) – The activity in curies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.LineSource.add_photon">
+<span class="sig-name descname"><span class="pre">add_photon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.LineSource.add_photon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a photon and intensity to the photon list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<em>float</em>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<em>float</em>) – The intensity in photons/sec.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zap_me_not.source.LineSource.get_crossing_mfp">
 <span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#LineSource.get_crossing_mfp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.LineSource.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
@@ -891,9 +1305,94 @@ the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.LineSource.get_photon_source_list">
+<span class="sig-name descname"><span class="pre">get_photon_source_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.LineSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.LineSource.grouping">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><a class="headerlink" href="#zap_me_not.source.LineSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group
+option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.LineSource.include_key_progeny">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><a class="headerlink" href="#zap_me_not.source.LineSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining if key progeny should be included.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zap_me_not.source.LineSource.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#LineSource.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.LineSource.is_infinite" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.LineSource.list_discrete_photons">
+<span class="sig-name descname"><span class="pre">list_discrete_photons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.LineSource.list_discrete_photons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of individual photons in the source.</p>
+<p>The list includes only those photons that have been added
+individually to the source.  It does not include the photons
+that result from the isotopes added to the source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.LineSource.list_isotopes">
+<span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.LineSource.list_isotopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of isotopes in the source</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.LineSource.points_per_dimension">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><a class="headerlink" href="#zap_me_not.source.LineSource.points_per_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of source points per dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of integers</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -927,6 +1426,48 @@ the shield.</p></li>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.PointSource.add_isotope_bq">
+<span class="sig-name descname"><span class="pre">add_isotope_bq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">becquerels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.PointSource.add_isotope_bq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in becquerels to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<em>float</em>) – The activity in becquerels.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.PointSource.add_isotope_curies">
+<span class="sig-name descname"><span class="pre">add_isotope_curies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curies</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.PointSource.add_isotope_curies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in curies to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<em>float</em>) – The activity in curies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.PointSource.add_photon">
+<span class="sig-name descname"><span class="pre">add_photon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.PointSource.add_photon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a photon and intensity to the photon list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<em>float</em>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<em>float</em>) – The intensity in photons/sec.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zap_me_not.source.PointSource.get_crossing_mfp">
 <span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#PointSource.get_crossing_mfp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.PointSource.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
@@ -949,9 +1490,94 @@ Always returns 0 for the Point source.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.PointSource.get_photon_source_list">
+<span class="sig-name descname"><span class="pre">get_photon_source_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.PointSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.PointSource.grouping">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><a class="headerlink" href="#zap_me_not.source.PointSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group
+option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.PointSource.include_key_progeny">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><a class="headerlink" href="#zap_me_not.source.PointSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining if key progeny should be included.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zap_me_not.source.PointSource.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zap_me_not/source.html#PointSource.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zap_me_not.source.PointSource.is_infinite" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.PointSource.list_discrete_photons">
+<span class="sig-name descname"><span class="pre">list_discrete_photons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.PointSource.list_discrete_photons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of individual photons in the source.</p>
+<p>The list includes only those photons that have been added
+individually to the source.  It does not include the photons
+that result from the isotopes added to the source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.PointSource.list_isotopes">
+<span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.PointSource.list_isotopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of isotopes in the source</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.PointSource.points_per_dimension">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><a class="headerlink" href="#zap_me_not.source.PointSource.points_per_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of source points per dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of integers</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1127,6 +1753,168 @@ Isotope object and an activity in Bq.</p>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.add_isotope_bq">
+<span class="sig-name descname"><span class="pre">add_isotope_bq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">becquerels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.add_isotope_bq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in becquerels to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<em>float</em>) – The activity in becquerels.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.add_isotope_curies">
+<span class="sig-name descname"><span class="pre">add_isotope_curies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curies</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.add_isotope_curies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in curies to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<em>float</em>) – The activity in curies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.add_photon">
+<span class="sig-name descname"><span class="pre">add_photon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.add_photon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a photon and intensity to the photon list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<em>float</em>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<em>float</em>) – The intensity in photons/sec.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+with the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.get_photon_source_list">
+<span class="sig-name descname"><span class="pre">get_photon_source_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.grouping">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group
+option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.include_key_progeny">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining if key progeny should be included.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.list_discrete_photons">
+<span class="sig-name descname"><span class="pre">list_discrete_photons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.list_discrete_photons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of individual photons in the source.</p>
+<p>The list includes only those photons that have been added
+individually to the source.  It does not include the photons
+that result from the isotopes added to the source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.list_isotopes">
+<span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.list_isotopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of isotopes in the source</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.points_per_dimension">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.points_per_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of source points per dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of integers</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.XAlignedCylinderSource.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.XAlignedCylinderSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1145,6 +1933,168 @@ Isotope object and an activity in Bq.</p>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.add_isotope_bq">
+<span class="sig-name descname"><span class="pre">add_isotope_bq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">becquerels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.add_isotope_bq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in becquerels to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<em>float</em>) – The activity in becquerels.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.add_isotope_curies">
+<span class="sig-name descname"><span class="pre">add_isotope_curies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curies</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.add_isotope_curies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in curies to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<em>float</em>) – The activity in curies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.add_photon">
+<span class="sig-name descname"><span class="pre">add_photon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.add_photon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a photon and intensity to the photon list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<em>float</em>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<em>float</em>) – The intensity in photons/sec.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+with the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.get_photon_source_list">
+<span class="sig-name descname"><span class="pre">get_photon_source_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.grouping">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group
+option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.include_key_progeny">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining if key progeny should be included.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.list_discrete_photons">
+<span class="sig-name descname"><span class="pre">list_discrete_photons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.list_discrete_photons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of individual photons in the source.</p>
+<p>The list includes only those photons that have been added
+individually to the source.  It does not include the photons
+that result from the isotopes added to the source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.list_isotopes">
+<span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.list_isotopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of isotopes in the source</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.points_per_dimension">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.points_per_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of source points per dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of integers</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.YAlignedCylinderSource.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.YAlignedCylinderSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1163,6 +2113,168 @@ Isotope object and an activity in Bq.</p>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.add_isotope_bq">
+<span class="sig-name descname"><span class="pre">add_isotope_bq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">becquerels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.add_isotope_bq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in becquerels to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<em>float</em>) – The activity in becquerels.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.add_isotope_curies">
+<span class="sig-name descname"><span class="pre">add_isotope_curies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_isotope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curies</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.add_isotope_curies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an isotope and activity in curies to the isotope list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zap_me_not.isotope.Isotope" title="zap_me_not.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zap_me_not.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<em>float</em>) – The activity in curies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.add_photon">
+<span class="sig-name descname"><span class="pre">add_photon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.add_photon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a photon and intensity to the photon list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<em>float</em>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<em>float</em>) – The intensity in photons/sec.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.get_crossing_mfp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ray</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ray.FiniteLengthRay</span></code>) – The finite length ray that is checked for intersections
+with the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<em>float</em>) – The photon energy in MeV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.get_photon_source_list">
+<span class="sig-name descname"><span class="pre">get_photon_source_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.get_photon_source_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of photons in the source</p>
+<p>This list of photons combines the Isotopes and the
+unique_photons specified in the Source definition.
+The photon intensities are scaled to <strong>one source point</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.grouping">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining the photon energy group
+option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#zap_me_not.source.GroupOption" title="zap_me_not.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.include_key_progeny">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.include_key_progeny" title="Permalink to this definition">¶</a></dt>
+<dd><p>State defining if key progeny should be included.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.is_infinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.list_discrete_photons">
+<span class="sig-name descname"><span class="pre">list_discrete_photons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.list_discrete_photons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of individual photons in the source.</p>
+<p>The list includes only those photons that have been added
+individually to the source.  It does not include the photons
+that result from the isotopes added to the source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.list_isotopes">
+<span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.list_isotopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of isotopes in the source</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.points_per_dimension">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.points_per_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of source points per dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of integers</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zap_me_not.source.ZAlignedCylinderSource.vtk">
+<span class="sig-name descname"><span class="pre">vtk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zap_me_not.source.ZAlignedCylinderSource.vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A cylinder object representing the capped cylinder shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -1304,7 +2416,7 @@ uncollided energy flux, uncollided exposure, and total exposure</p>
     <p>
         &copy; Copyright 2019 - 2022, Alan Ford.
       <span class="lastupdated">
-        Last updated on Dec 18, 2022.
+        Last updated on Dec 31, 2022.
       </span>
 
     </p>
