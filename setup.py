@@ -21,10 +21,12 @@ if __name__ == '__main__':
         ],
         python_requires='>=3.4',
         intall_requires=[
-            'numpy>=1.18.1',
+            'pyvista',
             'scipy>=0.14',
-            'pyyaml>=5.3',
-            'pyvista'],
-        test_requires=['pytest'],
+            'numpy>=1.18.1',
+            'pyyaml>=5.3'],
+        test_requires=[
+            'pytest',
+            'pandas'],
         setup_requires=['pytest-runner']
     )
