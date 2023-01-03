@@ -1,4 +1,4 @@
-# the following is used by setuptools (see ../setup.py) and
+# the following is used by setuptools (see ../setup.cfg) and
 # the sphinx doc generator (see ../docsrc/source/conf.py)
 
 __package_name__ = 'zap_me_not'
