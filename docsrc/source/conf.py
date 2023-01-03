@@ -180,3 +180,20 @@ html_sidebars = {
 #     'numpy': ('https://numpy.org/doc/stable/', None),
 #     'scipy': ('https://docs.scipy.org/doc/scipy/reference/', None)
 # }
+
+# Intersphinx mapping
+# NOTE: if these are changed, then doc/intersphinx/update.sh
+# must be changed accordingly to keep auto-updated mappings working
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', (None, 'intersphinx/python-objects.inv')),
+    'scipy': (
+        'https://docs.scipy.org/doc/scipy/',
+        (None, 'intersphinx/scipy-objects.inv'),
+    ),
+    'numpy': ('https://numpy.org/doc/stable', (None, 'intersphinx/numpy-objects.inv')),
+    'pyvista': ('https://docs.pyvista.org/doc/', (None, 'intersphinx/pyvista-objects.inv')),
+}
+intersphinx_timeout = 10
+
+linkcheck_retries = 3
+linkcheck_timeout = 500
