@@ -17,7 +17,6 @@ import numpy
 import sphinx_rtd_theme
 sys.path.insert(0, os.path.abspath('../..'))
 from zap_me_not import __about__ as metadata
-# sys.path.insert(0, os.path.join(os.path.abspath('../..'),'zap_me_not'))
 
 
 # -- Project information -----------------------------------------------------
