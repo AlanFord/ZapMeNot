@@ -191,7 +191,7 @@ intersphinx_mapping = {
         (None, 'intersphinx/scipy-objects.inv'),
     ),
     'numpy': ('https://numpy.org/doc/stable', (None, 'intersphinx/numpy-objects.inv')),
-    'pyvista': ('https://docs.pyvista.org/doc/', (None, 'intersphinx/pyvista-objects.inv')),
+    'pyvista': ('https://docs.pyvista.org/', (None, 'intersphinx/pyvista-objects.inv')),
 }
 intersphinx_timeout = 10
 

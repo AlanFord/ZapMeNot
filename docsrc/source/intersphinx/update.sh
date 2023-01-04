@@ -6,7 +6,7 @@ curl -L https://docs.python.org/3/objects.inv > python-objects.inv
 # curl -L https://python-utils.readthedocs.io/en/latest/objects.inv > python-utils-objects.inv
 curl -L https://docs.scipy.org/doc/scipy/objects.inv > scipy-objects.inv
 curl -L https://numpy.org/doc/stable/objects.inv > numpy-objects.inv
-curl -L https://docs.pyvista.org/doc/objects.inv > pyvista-objects.inv
+curl -L https://docs.pyvista.org/objects.inv > pyvista-objects.inv
 # curl -L https://matplotlib.org/stable/objects.inv > matplotlib-objects.inv
 # curl -L https://imageio.readthedocs.io/en/stable/objects.inv > imageio-objects.inv
 # curl -L https://pandas.pydata.org/pandas-docs/stable/objects.inv > pandas-objects.inv

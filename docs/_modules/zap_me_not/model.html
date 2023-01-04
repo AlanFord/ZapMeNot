@@ -1,72 +1,36 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>zap_me_not.model &mdash; Zap_me_not 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> Zap_me_not
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 0.0.2
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +38,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">Licence &amp; Disclaimer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting-started.html">Getting Started</a></li>
@@ -100,66 +54,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../../version-history.html">Version History</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Zap_me_not</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
-        
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-        
-      <li>zap_me_not.model</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">zap_me_not.model</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for zap_me_not.model</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -174,13 +92,13 @@
 
 
 <div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Performs point-kernel shielding analysis.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs point-kernel shielding analysis.</span>
 
 <span class="sd">    The Model class combines various shielding elements to perform</span>
 <span class="sd">    the point-kernel photon shielding analysis.  These elements include</span>
 <span class="sd">    sources, shields, and detectors.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    source : :class:`zap_me_not.source.Source`</span>
@@ -216,7 +134,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
 
 <div class="viewcode-block" id="Model.set_filler_material"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.set_filler_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_filler_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler_material</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Set the filler material used by the model</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Set the filler material used by the model</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -234,7 +152,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span></div>
 
 <div class="viewcode-block" id="Model.add_source"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.add_source">[docs]</a>    <span class="k">def</span> <span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the source used by the model.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the source used by the model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -249,7 +167,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_source</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Model.add_shield"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.add_shield">[docs]</a>    <span class="k">def</span> <span class="nf">add_shield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shield</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Add a shield to the collection of shields used by the model.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a shield to the collection of shields used by the model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -261,7 +179,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_shield</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Model.add_detector"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.add_detector">[docs]</a>    <span class="k">def</span> <span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the detector used by the model.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the detector used by the model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -273,7 +191,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="n">new_detector</span></div>
 
 <div class="viewcode-block" id="Model.set_buildup_factor_material"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.set_buildup_factor_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_buildup_factor_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_material</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the material used to calculation exposure buildup factors.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the material used to calculation exposure buildup factors.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -285,7 +203,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span> <span class="o">=</span> <span class="n">new_material</span></div>
 
 <div class="viewcode-block" id="Model.calculate_exposure"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.calculate_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculates the exposure at the detector location.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the exposure at the detector location.</span>
 
 <span class="sd">        Note:  Significant use of Numpy arrays to speed up evaluating the</span>
 <span class="sd">        dose from each source point.  A &quot;for loop&quot; is used to loop</span>
@@ -309,7 +227,7 @@
             <span class="k">return</span> <span class="n">integral_results</span>  <span class="c1"># mR/hr</span></div>
 
 <div class="viewcode-block" id="Model.generate_summary"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.generate_summary">[docs]</a>    <span class="k">def</span> <span class="nf">generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculates the energy flux and exposure at the detector location.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the energy flux and exposure at the detector location.</span>
 
 <span class="sd">        Note:  Significant use of Numpy arrays to speed up evaluating the</span>
 <span class="sd">        dose from each source point.  A &quot;for loop&quot; is used to loop</span>
@@ -405,7 +323,7 @@
         <span class="k">return</span> <span class="n">results_by_photon_energy</span></div>
 
 <div class="viewcode-block" id="Model.display"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Produces a graphic display of the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
@@ -419,7 +337,7 @@
             <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_trimBlocks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds shields to a Plotter instance after trimming any</span>
 <span class="sd">        infinite shields to a predefined bounding box.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -454,7 +372,7 @@
         <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_findBoundingBox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculates a bounding box is X, Y, Z geometry that</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates a bounding box is X, Y, Z geometry that</span>
 <span class="sd">        includes the volumes of all shields, the source, and the detector</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">blocks</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">MultiBlock</span><span class="p">()</span>
@@ -505,7 +423,7 @@
         <span class="k">return</span> <span class="n">boundingBox</span>
 
     <span class="k">def</span> <span class="nf">_addPoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        the goal here is to add &#39;points&#39; to the display, but they</span>
 <span class="sd">        must be represented as spheres to have some physical</span>
 <span class="sd">        volume to display.  Points will be displayed with a radius</span>
@@ -551,45 +469,32 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2019 - 2022, Alan Ford.
-      <span class="lastupdated">
-        Last updated on Dec 31, 2022.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2019 - 2023, Alan Ford..
+      <span class="lastupdated">Last updated on Jan 04, 2023.
+      </span></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
