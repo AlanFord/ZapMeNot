@@ -211,7 +211,7 @@ class SemiInfiniteXSlab(Shield):
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
-    def vtk(self):
+    def draw(self):
         """Creates a display object
 
         Returns
@@ -451,7 +451,7 @@ class Box(Shield):
 
         return results
 
-    def vtk(self):
+    def draw(self):
         """Creates a display object
 
         Returns
@@ -636,7 +636,7 @@ class InfiniteAnnulus(Shield):
                         results.append(t)
         return results
 
-    def vtk(self):
+    def draw(self):
         """Creates a display object
 
         Returns
@@ -1014,7 +1014,7 @@ class CappedCylinder(Shield):
                     results.append(point)
         return results
 
-    def vtk(self):
+    def draw(self):
         """Creates a display object
 
         Returns

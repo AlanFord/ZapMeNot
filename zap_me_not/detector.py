@@ -42,7 +42,7 @@ class Detector:
         """:class:`tuple` : The detector location in cartesian coordinates"""
         return self._location
 
-    def vtk(self):
+    def draw(self):
         """Creates a display object
 
         Returns
