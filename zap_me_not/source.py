@@ -387,7 +387,7 @@ class LineSource(Source, shield.Shield):
         """
         return 0
 
-    def vtk(self):
+    def draw(self):
         """Creates a display object
 
         Returns
@@ -493,7 +493,7 @@ class PointSource(Source, shield.Shield):
         """
         return 0
 
-    def vtk(self):
+    def draw(self):
         """Creates a display object
 
         Returns
