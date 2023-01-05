@@ -54,9 +54,10 @@
 <li class="toctree-l1"><a class="reference internal" href="benchmarks.html">Benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module-docs.html">Module Contents</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Developer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#benchmark-tests">Benchmark tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#graphics-tests">Graphics tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#benchmark-tests">Benchmark Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graphics-tests">Graphics Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#coverage">Coverage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#updating-a-version">Updating A Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#updating-copyright">Updating Copyright</a></li>
@@ -91,22 +92,41 @@
              
   <section id="developer">
 <h1>Developer<a class="headerlink" href="#developer" title="Permalink to this heading"></a></h1>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading"></a></h2>
+<p>Test cases packaged with ZapMeNot fall into three categories;
+unit tests, graphics tests, and benchmarks.</p>
+</section>
 <section id="unit-tests">
-<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this heading"></a></h2>
+<h2>Unit Tests<a class="headerlink" href="#unit-tests" title="Permalink to this heading"></a></h2>
+<p>These tests are verify that code blocks are functioning as
+intended.  To execute the unit tests, use the following code:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
 <span class="go">pytest -m basic</span>
 </pre></div>
 </div>
 </section>
 <section id="benchmark-tests">
-<h2>Benchmark tests<a class="headerlink" href="#benchmark-tests" title="Permalink to this heading"></a></h2>
+<h2>Benchmark Tests<a class="headerlink" href="#benchmark-tests" title="Permalink to this heading"></a></h2>
+<p>The benchmarks are not designed to identify errors in ZapMeNot, but
+rather to examine the accuracy of the calculations.  The following
+code block can be used to execute the benchmarks.  Note the use of the
+“-s” option, which ensures that normal console output is retained by
+the testing routines.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
 <span class="go">pytest -s -m benchmark</span>
 </pre></div>
 </div>
 </section>
 <section id="graphics-tests">
-<h2>Graphics tests<a class="headerlink" href="#graphics-tests" title="Permalink to this heading"></a></h2>
+<h2>Graphics Tests<a class="headerlink" href="#graphics-tests" title="Permalink to this heading"></a></h2>
+<p>The graphics tests can be used to verify that the ZapMeNot display
+functions are performing as expected.  Some of these test cases will
+generate a display of a ZapMeNot geometry; these can be used to verify
+that geometries are properly displayed.  Other test cases are used
+to trap expected errors.</p>
+<p>Note that the graphics tests cases as currently configured will fail
+when run on a “headless” server, i.e. a server without graphics hardware.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
 <span class="go">pytest -m graphics</span>
 </pre></div>
@@ -121,20 +141,20 @@
 </section>
 <section id="updating-a-version">
 <h2>Updating A Version<a class="headerlink" href="#updating-a-version" title="Permalink to this heading"></a></h2>
-<p>Update the version number in the following files:</p>
+<p>Following successful testing, the following steps are used to generate a new version of ZapMeNot:</p>
 <ul class="simple">
-<li><p><cite>setup.py</cite></p></li>
-<li><p><cite>setup.cfg</cite></p></li>
-<li><p><cite>ZapMeNot/docs/source/conf.py</cite></p></li>
+<li><p>Update the version number in ZapMeNot/zap_me_not/__about__.py</p></li>
+<li><p>Optionally update the interSphinx input by executing <cite>update.sh</cite> from the ZapMeNot/docsrc/interSphinx folder</p></li>
+<li><p>Rebuild the documentation by executing <cite>make html</cite> from the ZapMeNot/docsrc folder</p></li>
+<li><p>Build the distribution packages by executing <cite>python -m build</cite> from the ZapMeNot folder</p></li>
 </ul>
-<p>Make manual and commit to <cite>ZapMeNot/docs/zapmenot.pdf</cite>.</p>
 </section>
 <section id="updating-copyright">
 <h2>Updating Copyright<a class="headerlink" href="#updating-copyright" title="Permalink to this heading"></a></h2>
 <p>Update the year in the following files:</p>
 <ul class="simple">
-<li><p><cite>docsrc/source/license.rst</cite></p></li>
-<li><p><cite>zap_me_not/__about__.py</cite></p></li>
+<li><p><cite>ZapMeNot/docsrc/source/license.rst</cite></p></li>
+<li><p><cite>ZapMeNot/zap_me_not/__about__.py</cite></p></li>
 </ul>
 </section>
 </section>

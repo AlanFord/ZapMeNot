@@ -1,24 +1,48 @@
 Developer
 =========
 
-Unit tests
+Testing
+-------
+
+Test cases packaged with ZapMeNot fall into three categories; 
+unit tests, graphics tests, and benchmarks.
+
+Unit Tests
 ----------
+
+These tests are verify that code blocks are functioning as 
+intended.  To execute the unit tests, use the following code:
 
 .. code-block :: console 
 
    cd ZapMeNot
    pytest -m basic
 
-Benchmark tests
+Benchmark Tests
 ---------------
+
+The benchmarks are not designed to identify errors in ZapMeNot, but
+rather to examine the accuracy of the calculations.  The following
+code block can be used to execute the benchmarks.  Note the use of the
+"-s" option, which ensures that normal console output is retained by
+the testing routines.
 
 .. code-block :: console 
 
    cd ZapMeNot
    pytest -s -m benchmark
 
-Graphics tests
+Graphics Tests
 --------------
+
+The graphics tests can be used to verify that the ZapMeNot display
+functions are performing as expected.  Some of these test cases will
+generate a display of a ZapMeNot geometry; these can be used to verify
+that geometries are properly displayed.  Other test cases are used
+to trap expected errors.
+
+Note that the graphics tests cases as currently configured will fail
+when run on a "headless" server, i.e. a server without graphics hardware.
 
 .. code-block :: console 
 
@@ -36,19 +60,18 @@ Coverage
 Updating A Version
 ------------------
 
-Update the version number in the following files:
+Following successful testing, the following steps are used to generate a new version of ZapMeNot:
 
-* `setup.py`
-* `setup.cfg`
-* `ZapMeNot/docs/source/conf.py`
-
-Make manual and commit to `ZapMeNot/docs/zapmenot.pdf`.
+* Update the version number in ZapMeNot/zap_me_not/__about__.py
+* Optionally update the interSphinx input by executing `update.sh` from the ZapMeNot/docsrc/interSphinx folder
+* Rebuild the documentation by executing `make html` from the ZapMeNot/docsrc folder
+* Build the distribution packages by executing `python -m build` from the ZapMeNot folder
 
 Updating Copyright
 ------------------
 
 Update the year in the following files:
 
-* `docsrc/source/license.rst`
-* `zap_me_not/__about__.py`
+* `ZapMeNot/docsrc/source/license.rst`
+* `ZapMeNot/zap_me_not/__about__.py`
 
