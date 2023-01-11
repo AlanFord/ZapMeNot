@@ -63,9 +63,9 @@ Updating A Version
 Following successful testing, the following steps are used to generate a new version of ZapMeNot:
 
 * Update the version number in ZapMeNot/zap_me_not/__about__.py
-* Optionally update the interSphinx input by executing `update.sh` from the ZapMeNot/docsrc/interSphinx folder
-* Rebuild the documentation by executing `make html` from the ZapMeNot/docsrc folder
-* Build the distribution packages by executing `python -m build` from the ZapMeNot folder
+* Optionally update the interSphinx input by executing :code:`update.sh` from the ZapMeNot/docsrc/interSphinx folder
+* Rebuild the documentation by executing :code:`make html` from the ZapMeNot/docsrc folder
+* Build the distribution packages by executing :code:`python -m build` from the ZapMeNot folder
 
 Updating Copyright
 ------------------
