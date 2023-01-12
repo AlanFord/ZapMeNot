@@ -2,9 +2,11 @@
 # data unified from ANS 6.4.3 and QADS
 import yaml
 
+
 def float_representer(dumper, value):
     text = '{0:.5e}'.format(value)
     return dumper.represent_scalar(u'tag:yaml.org,2002:float', text)
+
 
 def parse_floats(rad_stream, num_count):
     floats = []
@@ -16,6 +18,7 @@ def parse_floats(rad_stream, num_count):
         if len(floats) >= num_count:
             results = [float(i) for i in floats]
             return results
+
 
 def read_the_densities(fileName):
     densityLibrary = {}
@@ -35,9 +38,10 @@ def read_the_densities(fileName):
         elementName = pieces[0].lower()
         density = float(pieces[1])
         # add the current element to the density dictionary
-        densityLibrary.update({elementName : density})
+        densityLibrary.update({elementName: density})
     density_stream.close()
     return densityLibrary
+
 
 def read_the_buildupFactors(fileName):
     bfLibrary = {}
@@ -52,7 +56,6 @@ def read_the_buildupFactors(fileName):
         # search for the string MEDIUM and AIR in AIR RESPONSE
         if ("MEDIUM," in pieces) and ("AIR" in pieces):
             material = pieces[0].lower()
-            print(material)
             bf_stream.readline()
             bf_stream.readline()
             bf_stream.readline()
@@ -76,24 +79,24 @@ def read_the_buildupFactors(fileName):
                 D = float(data[5])
                 coefficientList.append([B, C, A, XK, D])
             currentElement = {}
-            currentElement.update({"gp-coff-energy" : energyList})
-            currentElement.update({"gp-coeff" : coefficientList})
+            currentElement.update({"gp-coff-energy": energyList})
+            currentElement.update({"gp-coeff": coefficientList})
             # add the current material to the library dictionary
-            bfLibrary.update({material : currentElement})
-    print(bfLibrary)
+            bfLibrary.update({material: currentElement})
     bf_stream.close()
     return bfLibrary
-    
+
 
 if __name__ == "__main__":
     yaml.add_representer(float, float_representer)
     finalLibrary = {}
-    
+
     # retrieve the element densities
     densityLibrary = read_the_densities("densities.txt")
-    
-    #retrieve the buildup factors
+
+    # retrieve the buildup factors
     bfLibrary = read_the_buildupFactors("GP.COE")
+    highZbfLibrary = read_the_buildupFactors("HIGHZ.GP")
 
     # process the attenuation coefficients
     rad_stream = open("ATTEN.COE", 'r')
@@ -117,24 +120,33 @@ if __name__ == "__main__":
         xsecs = parse_floats(rad_stream, energyPointsNo)
         # build the dictionary entry for the current element
         currentElement = {}
-        currentElement.update({"density" : densityLibrary[elementName]})
-        currentElement.update({"density-units" : "g/cm3"})
-        currentElement.update({"energy-units" : "MeV"})
-        currentElement.update({"mass-atten-coff-energy" : energies})
-        currentElement.update({"mass-atten-coff-units" : "cm2/g"})
-        currentElement.update({"mass-atten-coff" : xsecs})
-        if elementName in bfLibrary.keys():
-            currentElement.update({"gp-coff-energy" : bfLibrary[elementName]["gp-coff-energy"]})
-            currentElement.update({"gp-coeff" : bfLibrary[elementName]["gp-coeff"]})
+        currentElement.update({"density": densityLibrary[elementName]})
+        currentElement.update({"density-units": "g/cm3"})
+        currentElement.update({"energy-units": "MeV"})
+        currentElement.update({"mass-atten-coff-energy": energies})
+        currentElement.update({"mass-atten-coff-units": "cm2/g"})
+        currentElement.update({"mass-atten-coff": xsecs})
+        if elementName in highZbfLibrary.keys():
+            currentElement.update(
+                {"gp-coff-energy":
+                    highZbfLibrary[elementName]["gp-coff-energy"]})
+            currentElement.update(
+                {"gp-coeff": highZbfLibrary[elementName]["gp-coeff"]})
+        elif elementName in bfLibrary.keys():
+            currentElement.update(
+                {"gp-coff-energy": bfLibrary[elementName]["gp-coff-energy"]})
+            currentElement.update(
+                {"gp-coeff": bfLibrary[elementName]["gp-coeff"]})
         else:
-            currentElement.update({"gp-coff-energy" : None})
-            currentElement.update({"gp-coeff" : None})
+            currentElement.update({"gp-coff-energy": None})
+            currentElement.update({"gp-coeff": None})
         # add the current element to the library dictionary
-        finalLibrary.update({elementName : currentElement})
-        
-    # write out the yaml library		
+        finalLibrary.update({elementName: currentElement})
+
+    # write out the yaml library
     yamlStream = open('moreMats.yml', 'wt')
-    yaml.dump(finalLibrary, yamlStream, default_flow_style=False, explicit_start=True, explicit_end=True)
+    yaml.dump(finalLibrary, yamlStream, default_flow_style=False,
+              explicit_start=True, explicit_end=True)
     print("All Done!")
     rad_stream.close()
     yamlStream.close()
