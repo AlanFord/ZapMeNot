@@ -54,26 +54,36 @@ class Material:
         self._atten_energy_bins = np.array(
             properties.get("mass-atten-coff-energy"))
         self._mass_atten_coff = np.array(properties.get("mass-atten-coff"))
+        # the mass energy absorption coefficient is optional for a material
         self._en_abs_energy_bins = np.array(
             properties.get("mass-en-abs-coff-energy"))
         self._mass_en_abs_coff = np.array(properties.get("mass-en-abs-coff"))
+        # the buildup factor data is optional for a material
         self._gp_energy_bins = np.array(properties.get("gp-coff-energy"))
-        gp_array = np.array(properties.get("gp-coeff"))
-        self._gp_b = gp_array[:, 0]
-        self._gp_c = gp_array[:, 1]
-        self._gp_a = gp_array[:, 2]
-        self._gp_X = gp_array[:, 3]
-        self._gp_d = gp_array[:, 4]
-        # here we are building interpolators based on the Akima method.
-        # For more information on the use of Akima method on G-P coefficients,
-        # see https://www.nrc.gov/docs/ML1905/ML19059A414.pdf
-        # "QAD-CGGP2 and G33-GP2: Revised Version of QAD-CGGP and G33-GP"
-        logE = np.log(self._gp_energy_bins)
-        self._bi = Akima1DInterpolator(logE, self._gp_b)
-        self._ci = Akima1DInterpolator(logE, self._gp_c)
-        self._ai = Akima1DInterpolator(logE, self._gp_a)
-        self._Xi = Akima1DInterpolator(logE, self._gp_X)
-        self._di = Akima1DInterpolator(logE, self._gp_d)
+        gp_data = properties.get("gp-coeff")
+        if gp_data is None:
+            self._gp_b = None
+            self._gp_c = None
+            self._gp_a = None
+            self._gp_X = None
+            self._gp_d = None
+        else:
+            gp_array = np.array(gp_data)
+            self._gp_b = gp_array[:, 0]
+            self._gp_c = gp_array[:, 1]
+            self._gp_a = gp_array[:, 2]
+            self._gp_X = gp_array[:, 3]
+            self._gp_d = gp_array[:, 4]
+            # here we are building interpolators based on the Akima method.
+            # For more information on the use of Akima method on G-P coefficients,
+            # see https://www.nrc.gov/docs/ML1905/ML19059A414.pdf
+            # "QAD-CGGP2 and G33-GP2: Revised Version of QAD-CGGP and G33-GP"
+            logE = np.log(self._gp_energy_bins)
+            self._bi = Akima1DInterpolator(logE, self._gp_b)
+            self._ci = Akima1DInterpolator(logE, self._gp_c)
+            self._ai = Akima1DInterpolator(logE, self._gp_a)
+            self._Xi = Akima1DInterpolator(logE, self._gp_X)
+            self._di = Akima1DInterpolator(logE, self._gp_d)
 
     @property
     def name(self):
