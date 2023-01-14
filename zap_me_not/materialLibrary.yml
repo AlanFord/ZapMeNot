@@ -1,3 +1,15 @@
+# History
+# Rev. 0:  Limited data taken from http://physics.nist.gov
+# Rev. 1:  Data extracted from ANSI/ANS-6.4.3-1991 and PNNL-15870, Rev. 1
+# Rev. 2:  Data extended to cover elements with Z<=100 using data consistent
+#          with SCALE/QADS and RSICC DLC-129 (ANS643).  Nominal element densities
+#          taken from https://physics.nist.gov/PhysRefData/XrayMassCoef/tab1.html.
+#          Densities for astatine and francium, and elements with Z > 92 
+#          were arbitrarily set to 10 g/cc.
+---
+# Material Library for the ZapMeNot Python Package
+# Version 0.2 - 01/13/2023
+#
 hydrogen:
   density: 8.375E-05
   density-units: g/cm3
@@ -4206,6 +4218,8 @@ lead:
     - 6.202E-02
     - 7.019E-02
   gp-coff-energy:
+    - 0.015
+    - 0.020
     - 0.030
     - 0.040
     - 0.050
@@ -4238,7 +4252,13 @@ lead:
     - 10.000
     - 15.000
   # GP Coefficients b, c, a, X, d
+  # Note: the coefficients at 15 and 20 keV are
+  # duplicated from 30 keV as the ANSI/ANS
+  # standard does not include 15 keV coefficients
+  # for lead.
   gp-coeff:
+    - [1.007, 0.322, 0.246, 13.67, -0.1030]
+    - [1.007, 0.322, 0.246, 13.67, -0.1030]
     - [1.007, 0.322, 0.246, 13.67, -0.1030]
     - [1.014, 0.317, 0.245, 14.95, -0.0867]
     - [1.023, 0.312, 0.252, 14.17, -0.1005]
@@ -4639,6 +4659,8 @@ uranium:
     - 6.507E-02
     - 7.387E-02
   gp-coff-energy:
+    - 0.015
+    - 0.020
     - 0.030
     - 0.040
     - 0.050
@@ -4673,7 +4695,13 @@ uranium:
     - 10.000
     - 15.000
   # GP Coefficients b, c, a, X, d
+  # Note: the coefficients at 15 and 20 keV are
+  # duplicated from 30 keV as the ANSI/ANS
+  # standard does not include 15 keV coefficients
+  # for uranium.
   gp-coeff:
+    - [1.005, 0.336, 0.224, 25.06, -0.2039]
+    - [1.005, 0.336, 0.224, 25.06, -0.2039]
     - [1.005, 0.336, 0.224, 25.06, -0.2039]
     - [1.010, 0.296, 0.272, 14.23, -0.1199]
     - [1.016, 0.313, 0.248, 13.81, -0.0893]
@@ -5435,3 +5463,4 @@ resin:
     - 2.075E-02
   gp-coeff: null
   gp-coff-energy: null
+...
