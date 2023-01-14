@@ -209,6 +209,8 @@ class Material:
             A vector of photon exposure buildup factors in air, one for
             each specified mfp
         """
+        if self._gp_b is None:
+            raise ValueError("Material has no buildup factor data available")
         if not isinstance(formula, str):
             raise ValueError("Buildup factor type is not a string: " +
                              str(formula))
