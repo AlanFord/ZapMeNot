@@ -105,6 +105,14 @@ def test_a_bad_buildupFactorType():
         a.get_buildup_factor(0.66, 10, "Taylor")
 
 
+# test response to a request for non-existant buildup factor
+# reference: none required
+def test_a_bad_buildupFactorMaterial():
+    a = material.Material("actinium")
+    with pytest.raises(ValueError):
+        a.get_buildup_factor(0.66, 10)
+
+
 # test calculation of a buildup factor
 # reference: buildupFactor.m (matlab script)
 def test_getBuildupFactor():
