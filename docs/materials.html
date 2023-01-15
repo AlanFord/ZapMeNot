@@ -85,8 +85,11 @@
 <h1>Material Library<a class="headerlink" href="#material-library" title="Permalink to this heading"></a></h1>
 <p id="index-0">A number of materials are available for use as shielding,
 source material, and for buildup factors.  Physical data
-for each material is stored in <cite>materialLibrary.yml</cite>.  The
-materials and nominal densities include:</p>
+for each material is stored in <cite>materialLibrary.yml</cite>.</p>
+<p>Photon cross sections in the form of mass attenuation
+coefficients are available for elements with
+atomic numbers from 1 (Hydrogen) to 100 (Fermium).  Selected additional
+sheilding materials are also provided, including:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>Aluminum, 2.7 g/cm<sup>3</sup></p></li>
@@ -100,6 +103,98 @@ materials and nominal densities include:</p>
 <li><p>Resin, 2.01 g/cm<sup>3</sup> (a mixture of resin in concrete)</p></li>
 </ul>
 </div></blockquote>
+<p>Buildup factors are included in the library for the following
+materials.  Additional buildup factors may be added to the library,
+while using an existing buildup factor with an atomic
+number close to that of the shield is usually sufficient.</p>
+<table class="colwidths-auto docutils align-default" id="id1">
+<caption><span class="caption-text">Materials That include Buildup Factors</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Atomic Number</p></th>
+<th class="head"><p>Material</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Beryllium</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>Boron</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>Carbon</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>Nitrogen</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>Oxygen</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>Sodium</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>Magnesium</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>Aluminum</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>Silicon</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>Phosphorus</p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>Sulfur</p></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>Argon</p></td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>Potassium</p></td>
+</tr>
+<tr class="row-odd"><td><p>20</p></td>
+<td><p>Calcium</p></td>
+</tr>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>Iron</p></td>
+</tr>
+<tr class="row-odd"><td><p>29</p></td>
+<td><p>Copper</p></td>
+</tr>
+<tr class="row-even"><td><p>42</p></td>
+<td><p>Molybdenum</p></td>
+</tr>
+<tr class="row-odd"><td><p>50</p></td>
+<td><p>Tin</p></td>
+</tr>
+<tr class="row-even"><td><p>57</p></td>
+<td><p>Lanthanum</p></td>
+</tr>
+<tr class="row-odd"><td><p>64</p></td>
+<td><p>Gadolinium</p></td>
+</tr>
+<tr class="row-even"><td><p>74</p></td>
+<td><p>Tungsten</p></td>
+</tr>
+<tr class="row-odd"><td><p>82</p></td>
+<td><p>Lead</p></td>
+</tr>
+<tr class="row-even"><td><p>92</p></td>
+<td><p>Uranium</p></td>
+</tr>
+<tr class="row-odd"><td><p>N/A</p></td>
+<td><p>Water</p></td>
+</tr>
+<tr class="row-even"><td><p>N/A</p></td>
+<td><p>Air</p></td>
+</tr>
+<tr class="row-odd"><td><p>N/A</p></td>
+<td><p>Concrete</p></td>
+</tr>
+</tbody>
+</table>
 <p>The user may add additional materials to the library by
 appending data to the file <cite>materialLibrary.yml</cite>.  The data
 fields are labeled and the file format is <a class="reference external" href="https://pyyaml.org">YAML Version 1.1</a>.</p>
@@ -117,7 +212,7 @@ fields are labeled and the file format is <a class="reference external" href="ht
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Jan 05, 2023.
+      <span class="lastupdated">Last updated on Jan 14, 2023.
       </span></p>
   </div>
 
