@@ -24,7 +24,14 @@ covering all of the isotopes included in `ICRP Publication 107`_.
 Installation
 ------------
 
-Installing from a local source tree:
+There are as many ways to install ZapMeNot as there are ways to install and run Python.  First
+up is installing ZapMeNot using pip.
+
+ZapMeNot can be installed directly from Github using pip:
+
+:code:`pip install git+git://github.com/AlanFord/ZapMeNot.git`
+
+ZapMeNot can be installing from a local source tree using pip once the source has been retrieved from Github:
 
 :code:`pip install ./ZapMeNot`
 
@@ -32,21 +39,52 @@ You can also install in Development Mode:
 
 :code:`pip install -e ./ZapMeNot`
 
-You can also install from Github:
+At present most ZapMeNot users are running ZapMeNot using either Anaconda or Miniconda.  Both use conda
+to create specialized python environment tailored to the work at hand.  After installing either
+Anaconda or Miniconda, create a ZapMeNot environment using the following command:
 
-:code:`pip install git+git://github.com/AlanFord/ZapMeNot.git`
+:code:`conda env create -f zapmenot.yml`
 
-Installing in Anaconda is a bit more complicated. You must first manually install the prerequisites in conda::
+where the zapmenot.yml file contains the following:
 
-    conda install pip
-    conda install git
-    conda install numpy
-    conda install scipy
-    conda install pytest
-    conda install pyyaml
+.. code-block:: yaml
+
+    name: zapmenot
+    channels:
+    - defaults
+    - conda-forge
+    dependencies:
+    - python=3.9
+    - scipy>=0.14
+    - numpy>=1.18.1
+    - pyyaml>=5.3
+    - pip
+    - git
+    # optional for graphics capability
+    - pyvista
+    # optional for jupyterlab capability
+    - jupyterlab
+    - matplotlib
+    - panel
+    - pythreejs
+    - pooch>=1.6.0
+    - ipyvtklink
+    # required for testing
+    - pytest
+    - pandas
+    # required for developers
+    - sphinx-rtd-theme
+    - sphinx
+    - flake8
+    - build
+
+Finally, install the ZapMeNot package from Github:
+
+.. code-block:: bash
+
+    conda activate zapmenot
     pip install git+git://github.com/AlanFord/ZapMeNot.git
 
-This may be simplified in the future as my knowledge of installation packages improves!
 
 Quickstart
 ----------
