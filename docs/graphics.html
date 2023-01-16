@@ -49,7 +49,12 @@
 <li class="toctree-l1"><a class="reference internal" href="isotopes.html">Isotope Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modeling.html">Modeling in ZapMeNot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="results.html">Generating Results</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">We Want Pictures!</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">We Want Pictures!</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#graphics-from-a-zapmenot-python-script">Graphics from a ZapMeNot Python Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graphics-in-a-jupyterlab-notebook">Graphics in a JupyterLab Notebook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#going-headless-for-fun-and-profit">Going Headless For Fun and Profit</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="theory-and-methods.html">Theory and Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmarks.html">Benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module-docs.html">Module Contents</a></li>
@@ -87,6 +92,8 @@
 the ZapMeNot library includes the ability to display an interactive view of
 the geometry, include source, shields, and detector.  The <a class="reference external" href="https://docs.pyvista.org">Pyvista</a> package is
 required to support graphics.</p>
+<section id="graphics-from-a-zapmenot-python-script">
+<h2>Graphics from a ZapMeNot Python Script<a class="headerlink" href="#graphics-from-a-zapmenot-python-script" title="Permalink to this heading"></a></h2>
 <p>Once you have a model built and populated with a source, detector, and (optionally)
 shields, the following command can be used to display the model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># display a model</span>
@@ -99,12 +106,31 @@ is a point source shown in red, the detector is shown in yellow, and two shields
 in blue.</p>
 <img alt="_images/display.png" src="_images/display.png" />
 <p>The display can be rotated, moved, zoomed, and more by using a mouse or <a class="reference external" href="https://docs.pyvista.org/api/plotting/plotting.html">keyboard shortcuts</a>.</p>
-<p>It is possible to display the model on a headless linux server (one with no graphics card)
-by building your ZapMeNot model in a <a class="reference external" href="https://jupyter.org">JupyterLab notebook</a>.  Pyvista documentation includes
-guidance on selecting a <a class="reference external" href="https://docs.pyvista.org/user-guide/jupyter/index.html">graphics backend</a> for various server configurations.</p>
+</section>
+<section id="graphics-in-a-jupyterlab-notebook">
+<h2>Graphics in a JupyterLab Notebook<a class="headerlink" href="#graphics-in-a-jupyterlab-notebook" title="Permalink to this heading"></a></h2>
+<p>A convenient way to document a ZapMeNot analysis is to use a <a class="reference external" href="https://jupyter.org">JupyterLab notebook</a>.
+Jupyterlab introduces just one additional wrinkle - optionally selecting a <a class="reference external" href="https://docs.pyvista.org/user-guide/jupyter/index.html">graphics backend</a>
+for displaying graphics.  The <cite>panel</cite> backend tends to be compatible with the
+ZapMeNot feature set.</p>
 <p>Here’s a screenshot of a JupyterLab notebook.  Your display may look different, depending
 on your workstation configuration.</p>
 <img alt="_images/jupyterlab.png" src="_images/jupyterlab.png" />
+</section>
+<section id="going-headless-for-fun-and-profit">
+<h2>Going Headless For Fun and Profit<a class="headerlink" href="#going-headless-for-fun-and-profit" title="Permalink to this heading"></a></h2>
+<p>It is possible to display the model on a headless linux server (one with no graphics card)
+by building your ZapMeNot model in a <a class="reference external" href="https://jupyter.org">JupyterLab notebook</a>.  Beyond selecting a suitable
+backend, it’s also usually necessary to use <a class="reference external" href="https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml">xvfb</a>.  This requires a couple of steps, so follow along!</p>
+<p>First, it’s necessary to ensure that xvfb has been installed.  Here’s the command for Ubuntu (your system may be different):</p>
+<p><code class="code docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">libgl1-mesa-glx</span> <span class="pre">xvfb</span></code></p>
+<p>Next, add the following lines after the other import statements at the beginning of your JupyterLab notebook:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyvista.utilities</span> <span class="kn">import</span> <span class="n">xvfb</span>
+<span class="n">xvfb</span><span class="o">.</span><span class="n">start_xvfb</span><span class="p">()</span>
+<span class="n">pyvista</span><span class="o">.</span><span class="n">set_jupyter_backend</span><span class="p">(</span><span class="s1">&#39;panel&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -119,7 +145,7 @@ on your workstation configuration.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Jan 05, 2023.
+      <span class="lastupdated">Last updated on Jan 16, 2023.
       </span></p>
   </div>
 

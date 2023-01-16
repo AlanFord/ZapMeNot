@@ -102,23 +102,54 @@ covering all of the isotopes included in <a class="reference external" href="htt
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
-<p>Installing from a local source tree:</p>
+<p>There are as many ways to install ZapMeNot as there are ways to install and run Python.  First
+up is installing ZapMeNot using pip.</p>
+<p>ZapMeNot can be installed directly from Github using pip:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+git://github.com/AlanFord/ZapMeNot.git</span></code></p>
+<p>ZapMeNot can be installing from a local source tree using pip once the source has been retrieved from Github:</p>
 <p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">./ZapMeNot</span></code></p>
 <p>You can also install in Development Mode:</p>
 <p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">./ZapMeNot</span></code></p>
-<p>You can also install from Github:</p>
-<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+git://github.com/AlanFord/ZapMeNot.git</span></code></p>
-<p>Installing in Anaconda is a bit more complicated. You must first manually install the prerequisites in conda:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">pip</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">git</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">numpy</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">scipy</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">pytest</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">pyyaml</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AlanFord</span><span class="o">/</span><span class="n">ZapMeNot</span><span class="o">.</span><span class="n">git</span>
+<p>At present most ZapMeNot users are running ZapMeNot using either Anaconda or Miniconda.  Both use conda
+to create specialized python environment tailored to the work at hand.  After installing either
+Anaconda or Miniconda, create a ZapMeNot environment using the following command:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span> <span class="pre">-f</span> <span class="pre">zapmenot.yml</span></code></p>
+<p>where the zapmenot.yml file contains the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zapmenot</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">defaults</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.9</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scipy&gt;=0.14</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">numpy&gt;=1.18.1</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyyaml&gt;=5.3</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git</span>
+<span class="c1"># optional for graphics capability</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyvista</span>
+<span class="c1"># optional for jupyterlab capability</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jupyterlab</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">matplotlib</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">panel</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pythreejs</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pooch&gt;=1.6.0</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipyvtklink</span>
+<span class="c1"># required for testing</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pandas</span>
+<span class="c1"># required for developers</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx-rtd-theme</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flake8</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">build</span>
 </pre></div>
 </div>
-<p>This may be simplified in the future as my knowledge of installation packages improves!</p>
+<p>Finally, install the ZapMeNot package from Github:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>zapmenot
+pip<span class="w"> </span>install<span class="w"> </span>git+git://github.com/AlanFord/ZapMeNot.git
+</pre></div>
+</div>
 </section>
 <section id="quickstart">
 <h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h2>
@@ -174,7 +205,7 @@ look at output options can be found in the <a class="reference internal" href="r
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Jan 05, 2023.
+      <span class="lastupdated">Last updated on Jan 16, 2023.
       </span></p>
   </div>
 
