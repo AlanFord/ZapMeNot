@@ -36,17 +36,17 @@ pytestmark = pytest.mark.benchmark
 # resin cylinder.
 # The buildup material is concrete.
 # Microshield result is 1.718E-01 mR/hr WHEN USING THE LINEAR ENERGY GROUP OPTION
-def test_benchmark_7():
+def test_benchmark_7b():
 	my_model = model.Model()
 	my_source = source.ZAlignedCylinderSource(material_name="resin", cylinder_radius=60.96, \
 		       cylinder_center=[0,0,60.96], cylinder_length=121.92)
-	my_source.add_isotope_curies('Ba-137m',3.8137e+002)
 	my_source.add_isotope_curies('Co-58',5.2772e+001)
 	my_source.add_isotope_curies('Co-60',8.6716e+001)
 	my_source.add_isotope_curies('Cs-137',4.0314e+002)
 	my_source.add_isotope_curies('Mn-54',3.2597e+001)
 	my_source.add_isotope_curies('Sb-125',3.0106e+001)
 	my_source.add_isotope_curies('Te-125m',1.0765e+000)
+	my_source.include_key_progeny = True
 	my_source.points_per_dimension = [16,16,16]
 	my_model.add_source(my_source)
 	my_model.add_shield(shield.ZAlignedInfiniteAnnulus("iron", cylinder_center=[0,0,0], \
