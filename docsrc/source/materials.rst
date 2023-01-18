@@ -21,7 +21,7 @@ sheilding materials are also provided, including:
  - Water, 1.0 g/cm\ :sup:`3`
  - SS304L, 8.0 g/cm\ :sup:`3`
  - UO2, 10.412 g/cm\ :sup:`3` (95% of theoretical density)
- - Resin, 2.01 g/cm\ :sup:`3` (modeled as a mixture of water (6.47 wt%) in concrete (93.53 wt%))
+ - Ion Exchange Resin, 2.01 g/cm\ :sup:`3` (modeled as a mixture of water (6.47 wt%) in concrete (93.53 wt%))
 
 Buildup factors are included in the library for the following
 materials.  Additional buildup factors may be added to the library,
