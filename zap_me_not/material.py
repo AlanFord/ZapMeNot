@@ -15,7 +15,7 @@ class Material:
 
     Parameters
     ----------
-    name : str
+    name : :class: `str`
         The material to be extracted from the material library
     """
 
@@ -87,12 +87,12 @@ class Material:
 
     @property
     def name(self):
-        """str : The name of the material"""
+        """:class:`str` : The name of the material"""
         return self._name
 
     @property
     def density(self):
-        """float : The density of the material in g/cm\ :sup:`3` """
+        """:class:`float` : The density of the material in g/cm\ :sup:`3` """
         return self._density
 
     @density.setter
@@ -108,14 +108,14 @@ class Material:
 
         Parameters
         ----------
-        energy : float
+        energy : :class:`float`
             The photon energy in MeV
-        distance : float
+        distance : :class:`float`
             The distance through the material in cm
 
         Returns
         -------
-        float
+        :class:`float`
             The mean free path in the material
         """
         if not isinstance(energy, numbers.Number):
@@ -131,7 +131,7 @@ class Material:
 
         Parameters
         ----------
-        energy : float
+        energy : :class:`float`
             The photon energy in MeV
 
         Raises
@@ -141,7 +141,7 @@ class Material:
 
         Returns
         -------
-        float
+        :class:`float`
             The mass attenuation coefficient in cm\ :sup:`2`/g
         """
         if not isinstance(energy, numbers.Number):
@@ -160,7 +160,7 @@ class Material:
 
         Parameters
         ----------
-        energy : float
+        energy : :class:`float`
             The photon energy in MeV
 
         Raises
@@ -170,7 +170,7 @@ class Material:
 
         Returns
         -------
-        float
+        :class:`float`
             The mass energy absorption coefficient in cm\ :sup:`2`/g
         """
         if not isinstance(energy, numbers.Number):
@@ -189,11 +189,11 @@ class Material:
 
         Parameters
         ----------
-        energy : float
+        energy : :class:`float`
             The photon energy in MeV
-        mfps : float, :class:`list`, or :class:`numpy.ndarray`
+        mfps : :class:`float`, :class:`list`, or :class:`numpy.ndarray`
             One or more mean free path values through the material
-        formula : string
+        formula : :class:`str`
             The format of the buildup factor (only 'GP' is currently supported)
 
         Raises
@@ -205,7 +205,7 @@ class Material:
 
         Returns
         -------
-        float or :class:`numpy.ndarray`
+        :class:`float` or :class:`numpy.ndarray`
             A vector of photon exposure buildup factors in air, one for
             each specified mfp
         """
