@@ -280,23 +280,46 @@ class Material:
         should be used.
         """
         if np.shape(mfp) == ():
-            if mfp == 0:
+            if mfp <= 0:  # this accomodates a little rounding error
                 return 1
-            if mfp > 40:
-                mfp = 40
-            answer = 1 + (b-1) * mfp
-            K = (c * (mfp**a)) + (d * (np.tanh(mfp/X - 2) - np.tanh(-2))) / \
-                (1 - np.tanh(-2))
-            if K != 1:
+            if mfp > 60:
+                mfp = 60  # limit results to mfp <= 60
+            if mfp <= 40:
+                K = (c * (mfp**a)) + (d * (np.tanh(mfp/X - 2) - np.tanh(-2))) / \
+                    (1 - np.tanh(-2))
+            else:
+                K35 = (c * (35**a)) + (d * (np.tanh(35/X - 2) - np.tanh(-2))) / \
+                    (1 - np.tanh(-2))
+                K40 = (c * (40**a)) + (d * (np.tanh(40/X - 2) - np.tanh(-2))) / \
+                    (1 - np.tanh(-2))
+                part1 = np.log((K40-1)/(K35-1))
+                part2 = (1-(mfp/35)**0.1)/(1-(40/35)**0.1)
+                K = 1 + (K35 - 1) * np.exp(part1*part2)
+            if K == 1:
+                answer = 1 + (b-1) * mfp
+            elif K != 1:
                 answer = 1 + (b-1)*((K**mfp) - 1)/(K - 1)
             return answer
         else:
-            mfp[mfp > 40] = 40
-            answers = 1 + (b-1) * mfp
-            K = np.zeros(mfp.size)
-            K[mfp != 0] = (c * (mfp[mfp != 0]**a)) + \
-                (d * (np.tanh(mfp[mfp != 0]/X - 2) - np.tanh(-2))) / \
+            mfp[mfp > 60] = 60
+            mfp[mfp < 0] = 0
+            K = np.zeros(mfp.size)  # default values for mfp = 0 -> buildup factor = 1
+            # cases that do not need extrapolation
+            K[np.logical_and(mfp > 0, mfp <= 40)] = (c * (mfp[np.logical_and(mfp > 0, mfp <= 40)]**a)) + \
+                (d * (np.tanh(mfp[np.logical_and(mfp > 0, mfp <= 40)]/X - 2) - np.tanh(-2))) / \
                 (1 - np.tanh(-2))
+            # cases that do need extrapolation
+            if np.any(mfp > 40):  # skip this step if no extrapolations needed
+                K35 = (c * (35**a)) + (d * (np.tanh(35/X - 2) - np.tanh(-2))) / \
+                    (1 - np.tanh(-2))
+                K40 = (c * (40**a)) + (d * (np.tanh(40/X - 2) - np.tanh(-2))) / \
+                    (1 - np.tanh(-2))
+                K[mfp > 40] = 1 + (K35 - 1) * \
+                    np.exp(np.log((K40-1)/(K35-1)) *
+                           (1-(mfp[mfp > 40]/35)**0.1)/(1-(40/35)**0.1))
+
+            answers = np.ones(mfp.size)  # set default values to 1
+            answers[K == 1] = 1 + (b-1) * mfp[K == 1]
             answers[K != 1] = 1 + \
                 (b-1)*((np.power(K[K != 1], mfp[K != 1])) - 1)/(K[K != 1] - 1)
             return answers
