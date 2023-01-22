@@ -39,8 +39,8 @@ where :math:`\Re` has units of R cm\ :sup:`2`,
 
 :math:`\mu _{en}/\rho` is the mass energy deposition coefficient of air in cm\ :sup:`2`/g.
 
-Buildup Factor
---------------
+Buildup Factors
+---------------
 
 The buildup factor :math:`B(r)` is defined as the ratio of the dose from all photons (collided and uncollided) to
 the dose from uncollided photons.  The buildup factor will vary with distance from the source location and the material
@@ -54,14 +54,18 @@ where
 
 :math:`B(\mu r)` = the space dependent buildup factor
 
-Buildup factors are generally derived from experimental data and are approximated by mathematical functions.  The 
+Buildup factors are generally derived from analytical results and are approximated by mathematical functions.  The 
 form of approximation used in ZapMeNot is the *geometric progression* (GP) form.  The GP coefficients for calculating
 the buildup factor as provided in ANSI/ANS-6.4.3-1991 "Gamma-Ray Attenuation coefficients
 and Buildup Factors for Engineering Materials."
 
-Note that the buildup factors in GP form are only valid for distances up to 40 mean free paths.  This is generally
-not a limitation, as the uncollided flux at some energy E traversing 40 mean free paths has been reduced by a factor of at least :math:`10^{-13}`.  
-Hence the total flux at this energy would either not be controlling or would result in a trivial dose.
+Note that the buildup factors in GP form as provided in ANSI/ANS-6.4.3 are only valid for distances 
+up to 40 mean free paths.  This is generally not a limitation, as the uncollided flux at some energy E 
+traversing 40 mean free paths has been reduced by a factor of at least :math:`10^{-13}`.  
+However, extrapolation of buildup factors out to 60 mean free paths has been implemented
+in ZapMeNot based on methods described in `"Evaluation of Geometric Progression (GP) Buildup Factors Using MCNPX 2.7.0"`_ by Kim, et al., 2013.
+
+.. _"Evaluation of Geometric Progression (GP) Buildup Factors Using MCNPX 2.7.0": https://www.kns.org/files/pre_paper/1/13F-06A-2A-김경오.pdf
 
 Quadrature
 ----------

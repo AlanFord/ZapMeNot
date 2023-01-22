@@ -140,12 +140,31 @@ def test_getBuildupFactor():
     with pytest.raises(ValueError):
         b = a.get_buildup_factor(0.66, "waldo", "GP")  # non-numeric mfp
     # test large mfp
-    b = a.get_buildup_factor(0.66, 40, "GP")
+    b = a.get_buildup_factor(0.66, 60, "GP")
     c = a.get_buildup_factor(0.66, 100, "GP")
     assert b == c
     # using list of mfps
     d = a.get_buildup_factor(0.66, [10, 10], "GP")
     assert d == pytest.approx([43.082281, 43.082281])
+
+
+# test extrapolation of buildup factor at mfp > 40
+# reference: getExtrapolation.m (matlab script)
+def test_getExtrapolation():
+    a = material.Material("iron")
+    # test extrapolation beyond 40 mfp
+    mfparray = np.array([1, 5, 10, 15, 20, 25, 30, 35, 39.9, 40.1,
+                        45, 50, 55, 60, 61, 70])
+    b = a.get_buildup_factor(2.9, mfparray, "GP")
+    matlab_results = [1.634959486477451, 4.526308321088647,
+                      8.889077334592749, 14.048163698926990,
+                      19.816843914781639, 25.879736425922086,
+                      32.137817567022324, 38.842936560558051,
+                      46.119901481552702, 46.430286941379634,
+                      54.182369147237253, 62.558129048596001,
+                      71.403777053323665, 80.719961338782880,
+                      80.719961338782880, 80.719961338782880]
+    assert b == pytest.approx(matlab_results)
 
 
 # test calculation of a list of buildup factors from a list of mfp
