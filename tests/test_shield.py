@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from zap_me_not import shield, ray
+from zapmenot import shield, ray
 
 pytestmark = pytest.mark.basic
 

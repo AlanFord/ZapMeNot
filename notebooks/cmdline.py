@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(0,'/Users/alan/Desktop/github/ZapMeNot')
-from zap_me_not import model, source, shield, detector, material
+from zapmenot import model, source, shield, detector, material
 
 my_source = source.PointSource(0, 0, 0)
 my_source.add_photon(0.4,3.0E+4)
