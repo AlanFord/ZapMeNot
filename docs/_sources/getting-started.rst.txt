@@ -94,7 +94,7 @@ look at output options can be found in the :doc:`results` section.
 
 .. code-block:: python
 
-    from zap_me_not import model,source,shield,detector,material
+    from zapmenot import model,source,shield,detector,material
 
     sample_sink = model.Model()
 

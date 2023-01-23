@@ -18,46 +18,46 @@ and shield.Box classes.
 
 ZapMeNot Isotope
 ----------------
-.. automodule:: zap_me_not.isotope
+.. automodule:: zapmenot.isotope
    :members:
    :show-inheritance:
    :no-undoc-members:
 
 ZapMeNot Material
 -----------------
-.. automodule:: zap_me_not.material
+.. automodule:: zapmenot.material
    :members:
    :show-inheritance:
 
 ZapMeNot Ray
 ------------
-.. automodule:: zap_me_not.ray
+.. automodule:: zapmenot.ray
    :members:
    :show-inheritance:
 
 ZapMeNot Detector
 -----------------
-.. automodule:: zap_me_not.detector
+.. automodule:: zapmenot.detector
    :members:
    :show-inheritance:
 
 ZapMeNot Shield
 ---------------
-.. automodule:: zap_me_not.shield
+.. automodule:: zapmenot.shield
    :members:
    :show-inheritance:
    :inherited-members:
 
 ZapMeNot Source
 ---------------
-.. automodule:: zap_me_not.source
+.. automodule:: zapmenot.source
    :members:
    :show-inheritance:
    :inherited-members:
 
 ZapMeNot Model
 --------------
-.. automodule:: zap_me_not.model
+.. automodule:: zapmenot.model
    :members:
    :show-inheritance:
 

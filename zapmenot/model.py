@@ -20,19 +20,19 @@ class Model:
     '''
     Attributes
     ----------
-    source : :class:`zap_me_not.source.Source`
+    source : :class:`zapmenot.source.Source`
         The source distribution (point, line, or volume) included in the model.
 
-    shield_list : :class:`list` of :class:`zap_me_not.shield.Shield`
+    shield_list : :class:`list` of :class:`zapmenot.shield.Shield`
         A list of shields (including the source volume) contained in the model.
 
-    detector : :class:`zap_me_not.detector.Detector`
+    detector : :class:`zapmenot.detector.Detector`
         The single detector in the model used to determine the exposure.
 
-    filler_material : :class:`zap_me_not.material.Material`
+    filler_material : :class:`zapmenot.material.Material`
         The (optional) material used as fill around the formal shields.
 
-    buildup_factor_material : :class:`zap_me_not.material.Material`
+    buildup_factor_material : :class:`zapmenot.material.Material`
         The material used to calculate the exposure buildup factor.
     '''
 
@@ -75,7 +75,7 @@ class Model:
 
         Parameters
         ----------
-        new_source : :class:`zap_me_not.source.Source`
+        new_source : :class:`zapmenot.source.Source`
             The source to be used.
         """
         if not isinstance(new_source, source.Source):
@@ -90,7 +90,7 @@ class Model:
 
         Parameters
         ----------
-        new_shield : :class:`zap_me_not.shield.Shield`
+        new_shield : :class:`zapmenot.shield.Shield`
             The shield to be added.
         """
         if not isinstance(new_shield, shield.Shield):
@@ -102,7 +102,7 @@ class Model:
 
         Parameters
         ----------
-        new_detector : :class:`zap_me_not.detector.Detector`
+        new_detector : :class:`zapmenot.detector.Detector`
             The detector to be used in the model.
         """
         if not isinstance(new_detector, detector.Detector):
@@ -114,7 +114,7 @@ class Model:
 
         Parameters
         ----------
-        new_material : :class:`zap_me_not.material.Material`
+        new_material : :class:`zapmenot.material.Material`
             The material to be used in buildup factor calculations.
         """
         if not isinstance(new_material, material.Material):

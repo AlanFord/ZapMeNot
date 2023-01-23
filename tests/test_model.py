@@ -4,7 +4,7 @@ import pytest
 import numpy as np
 import pandas as pd
 
-from zap_me_not import model, source, shield, detector, material
+from zapmenot import model, source, shield, detector, material
 
 pytestmark = pytest.mark.basic
 

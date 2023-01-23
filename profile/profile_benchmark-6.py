@@ -11,7 +11,7 @@ import pytest
 if __name__ == "__main__":
 	import sys
 	sys.path.append(r'/Users/alan/Desktop/github/ZapMeNot')
-from zap_me_not import model,source,shield,detector,material
+from zapmenot import model,source,shield,detector,material
 
 pytestmark = pytest.mark.benchmark
 

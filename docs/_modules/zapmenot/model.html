@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>zap_me_not.model &mdash; Zap_me_not 0.0.2 documentation</title>
+  <title>zapmenot.model &mdash; Zapmenot 0.0.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -26,7 +26,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Zap_me_not
+            <a href="../../index.html" class="icon icon-home"> Zapmenot
           </a>
               <div class="version">
                 0.0.2
@@ -60,7 +60,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Zap_me_not</a>
+          <a href="../../index.html">Zapmenot</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -69,7 +69,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">zap_me_not.model</li>
+      <li class="breadcrumb-item active">zapmenot.model</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -78,7 +78,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for zap_me_not.model</h1><div class="highlight"><pre>
+  <h1>Source code for zapmenot.model</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">numbers</span>
@@ -91,7 +91,7 @@
     <span class="kn">import</span> <span class="nn">pyvista</span>
 
 
-<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs point-kernel shielding analysis.</span>
 
 <span class="sd">    The Model class combines various shielding elements to perform</span>
@@ -101,19 +101,19 @@
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    source : :class:`zap_me_not.source.Source`</span>
+<span class="sd">    source : :class:`zapmenot.source.Source`</span>
 <span class="sd">        The source distribution (point, line, or volume) included in the model.</span>
 
-<span class="sd">    shield_list : :class:`list` of :class:`zap_me_not.shield.Shield`</span>
+<span class="sd">    shield_list : :class:`list` of :class:`zapmenot.shield.Shield`</span>
 <span class="sd">        A list of shields (including the source volume) contained in the model.</span>
 
-<span class="sd">    detector : :class:`zap_me_not.detector.Detector`</span>
+<span class="sd">    detector : :class:`zapmenot.detector.Detector`</span>
 <span class="sd">        The single detector in the model used to determine the exposure.</span>
 
-<span class="sd">    filler_material : :class:`zap_me_not.material.Material`</span>
+<span class="sd">    filler_material : :class:`zapmenot.material.Material`</span>
 <span class="sd">        The (optional) material used as fill around the formal shields.</span>
 
-<span class="sd">    buildup_factor_material : :class:`zap_me_not.material.Material`</span>
+<span class="sd">    buildup_factor_material : :class:`zapmenot.material.Material`</span>
 <span class="sd">        The material used to calculate the exposure buildup factor.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
@@ -133,7 +133,7 @@
         <span class="c1"># per ion in air of 33.85 [ICRU Report 39, 1979].</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
 
-<div class="viewcode-block" id="Model.set_filler_material"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.set_filler_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_filler_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler_material</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.set_filler_material"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_filler_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_filler_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler_material</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Set the filler material used by the model</span>
 
 <span class="sd">        Parameters</span>
@@ -151,12 +151,12 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid density: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">density</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span></div>
 
-<div class="viewcode-block" id="Model.add_source"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.add_source">[docs]</a>    <span class="k">def</span> <span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.add_source"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_source">[docs]</a>    <span class="k">def</span> <span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the source used by the model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_source : :class:`zap_me_not.source.Source`</span>
+<span class="sd">        new_source : :class:`zapmenot.source.Source`</span>
 <span class="sd">            The source to be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_source</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">):</span>
@@ -166,43 +166,43 @@
         <span class="c1"># don&#39;t forget that sources are shields too!</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_source</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Model.add_shield"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.add_shield">[docs]</a>    <span class="k">def</span> <span class="nf">add_shield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shield</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.add_shield"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_shield">[docs]</a>    <span class="k">def</span> <span class="nf">add_shield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shield</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a shield to the collection of shields used by the model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_shield : :class:`zap_me_not.shield.Shield`</span>
+<span class="sd">        new_shield : :class:`zapmenot.shield.Shield`</span>
 <span class="sd">            The shield to be added.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_shield</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid shield&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_shield</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Model.add_detector"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.add_detector">[docs]</a>    <span class="k">def</span> <span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.add_detector"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_detector">[docs]</a>    <span class="k">def</span> <span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the detector used by the model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_detector : :class:`zap_me_not.detector.Detector`</span>
+<span class="sd">        new_detector : :class:`zapmenot.detector.Detector`</span>
 <span class="sd">            The detector to be used in the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_detector</span><span class="p">,</span> <span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid detector&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="n">new_detector</span></div>
 
-<div class="viewcode-block" id="Model.set_buildup_factor_material"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.set_buildup_factor_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_buildup_factor_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_material</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.set_buildup_factor_material"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_buildup_factor_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_buildup_factor_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_material</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the material used to calculation exposure buildup factors.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_material : :class:`zap_me_not.material.Material`</span>
+<span class="sd">        new_material : :class:`zapmenot.material.Material`</span>
 <span class="sd">            The material to be used in buildup factor calculations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_material</span><span class="p">,</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid buildup factor material&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span> <span class="o">=</span> <span class="n">new_material</span></div>
 
-<div class="viewcode-block" id="Model.calculate_exposure"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.calculate_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.calculate_exposure"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.calculate_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the exposure at the detector location.</span>
 
 <span class="sd">        Note:  Significant use of Numpy arrays to speed up evaluating the</span>
@@ -226,7 +226,7 @@
             <span class="n">integral_results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">an_array</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span>
             <span class="k">return</span> <span class="n">integral_results</span>  <span class="c1"># mR/hr</span></div>
 
-<div class="viewcode-block" id="Model.generate_summary"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.generate_summary">[docs]</a>    <span class="k">def</span> <span class="nf">generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.generate_summary"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.generate_summary">[docs]</a>    <span class="k">def</span> <span class="nf">generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the energy flux and exposure at the detector location.</span>
 
 <span class="sd">        Note:  Significant use of Numpy arrays to speed up evaluating the</span>
@@ -322,7 +322,7 @@
 
         <span class="k">return</span> <span class="n">results_by_photon_energy</span></div>
 
-<div class="viewcode-block" id="Model.display"><a class="viewcode-back" href="../../module-docs.html#zap_me_not.model.Model.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.display"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Produces a graphic display of the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -476,7 +476,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Jan 16, 2023.
+      <span class="lastupdated">Last updated on Jan 22, 2023.
       </span></p>
   </div>
 

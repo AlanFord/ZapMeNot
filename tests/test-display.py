@@ -1,6 +1,6 @@
 import pytest
 
-from zap_me_not import model, source, shield, detector
+from zapmenot import model, source, shield, detector
 
 pytestmark = pytest.mark.graphics
 
