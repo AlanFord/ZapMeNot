@@ -1,6 +1,11 @@
 import yaml
 import pkg_resources
 
+try:
+    from yaml import CLoader as MyLoader, CDumper as MyDumper
+except ImportError:
+    from yaml import FullLoader as MyLoader, SafeDumper as MyDumper
+
 
 class Isotope:
     """Encapsulates isotope data from the IsotopeLibrary.yml file.
@@ -32,7 +37,7 @@ class Isotope:
             path = 'isotopeLibrary.yml'
             filepath = pkg_resources.resource_filename(__name__, path)
             stream = open(filepath, 'r')
-            Isotope._library = yaml.load(stream, Loader=yaml.FullLoader)
+            Isotope._library = yaml.load(stream, Loader=MyLoader)
             stream.close()
 
         # check to see if the name is in the library

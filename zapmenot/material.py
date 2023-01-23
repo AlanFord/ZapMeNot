@@ -5,6 +5,11 @@ import numbers
 import yaml
 import pkg_resources
 
+try:
+    from yaml import CLoader as MyLoader, CDumper as MyDumper
+except ImportError:
+    from yaml import FullLoader as MyLoader, SafeDumper as MyDumper
+
 
 class Material:
     r"""Encapsulates the data in the MaterialLibrary.yml file.
@@ -39,7 +44,7 @@ class Material:
             path = 'materialLibrary.yml'
             filepath = pkg_resources.resource_filename(__name__, path)
             stream = open(filepath, 'r')
-            Material._library = yaml.load(stream, Loader=yaml.FullLoader)
+            Material._library = yaml.load(stream, Loader=MyLoader)
             stream.close()
 
         # check to see if the name is in the library
