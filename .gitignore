@@ -123,3 +123,15 @@ dataConversion/updates/gamma.data
 dataConversion/updates/decay.data
 
 *.data
+
+dataConversion/materialLibraryValidation/ABSORB.COE
+
+dataConversion/materialLibraryValidation/ATTEN.COE
+
+dataConversion/materialLibraryValidation/attenuat
+
+dataConversion/materialLibraryValidation/buildup
+
+dataConversion/materialLibraryValidation/GP.COE
+
+dataConversion/materialLibraryValidation/HIGHZ.GP
