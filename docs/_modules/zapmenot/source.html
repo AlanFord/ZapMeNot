@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>zapmenot.source &mdash; Zapmenot 0.0.2 documentation</title>
+  <title>zapmenot.source &mdash; Zapmenot 0.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
             <a href="../../index.html" class="icon icon-home"> Zapmenot
           </a>
               <div class="version">
-                0.0.2
+                0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -735,42 +735,12 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Source Points per Dimension needs three entries&quot;</span><span class="p">)</span>
-        <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
-        <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-            <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
-            <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
-
-        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
-        <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
-
-        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="n">start_length</span> <span class="o">=</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
-        <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
-            <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
-
-        <span class="c1"># iterate through each dimension, building a list of source points</span>
-        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">radial_location</span> <span class="ow">in</span> <span class="n">annular_locations</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="n">radial_location</span>
-            <span class="k">for</span> <span class="n">angle_location</span> <span class="ow">in</span> <span class="n">angle_locations</span><span class="p">:</span>
-                <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
-                <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
-                    <span class="n">z</span> <span class="o">=</span> <span class="n">length_location</span>
-                    <span class="c1"># convert cylindrical to rectangular coordinates</span>
-                    <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-                    <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-                    <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+        <span class="n">source_points</span> <span class="o">=</span> <span class="n">_generic_cylinder_source_points</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+        <span class="c1"># no rotation is needed</span>
+        <span class="c1"># shift the point set to the specified cylinder center</span>
+        <span class="n">source_points</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -815,42 +785,17 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Source Points per Dimension needs three entries&quot;</span><span class="p">)</span>
-        <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
-        <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-            <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
-            <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
-
-        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
-        <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
-
-        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="n">start_length</span> <span class="o">=</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
-        <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
-            <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
-
-        <span class="c1"># iterate through each dimension, building a list of source points</span>
-        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">radial_location</span> <span class="ow">in</span> <span class="n">annular_locations</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="n">radial_location</span>
-            <span class="k">for</span> <span class="n">angle_location</span> <span class="ow">in</span> <span class="n">angle_locations</span><span class="p">:</span>
-                <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
-                <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
-                    <span class="n">y</span> <span class="o">=</span> <span class="n">length_location</span>
-                    <span class="c1"># convert cylindrical to rectangular coordinates</span>
-                    <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-                    <span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
-                    <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+        <span class="n">some_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_generic_cylinder_source_points</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">))</span>
+        <span class="c1"># rotate the point set from the Z-axis to the Y-axis</span>
+        <span class="c1"># (y replaced by z; z replaced by -y)</span>
+        <span class="n">source_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">some_points</span><span class="p">)</span>
+        <span class="n">source_points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">some_points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">source_points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">some_points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">source_points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">some_points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># shift the point set to the specified cylinder center</span>
+        <span class="n">source_points</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -895,43 +840,75 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Source Points per Dimension needs three entries&quot;</span><span class="p">)</span>
-        <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
-        <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
-        <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-            <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
-            <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
-
-        <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
-        <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
-
-        <span class="n">length_increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="n">start_length</span> <span class="o">=</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
-        <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
-            <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_length</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
-
-        <span class="c1"># iterate through each dimension, building a list of source points</span>
-        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">radial_location</span> <span class="ow">in</span> <span class="n">annular_locations</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="n">radial_location</span>
-            <span class="k">for</span> <span class="n">angle_location</span> <span class="ow">in</span> <span class="n">angle_locations</span><span class="p">:</span>
-                <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
-                <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
-                    <span class="n">x</span> <span class="o">=</span> <span class="n">length_location</span>
-                    <span class="c1"># convert cylindrical to rectangular coordinates</span>
-                    <span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
-                    <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-                    <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+        <span class="n">some_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_generic_cylinder_source_points</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">))</span>
+        <span class="c1"># rotate the point set from the Z-axis to the Y-axis</span>
+        <span class="c1"># (x replaced by z; z replaced by -x)</span>
+        <span class="n">source_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">some_points</span><span class="p">)</span>
+        <span class="n">source_points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">some_points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">source_points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">some_points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">source_points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">some_points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># shift the point set to the specified cylinder center</span>
+        <span class="n">source_points</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
+
+
+<span class="k">def</span> <span class="nf">_generic_cylinder_source_points</span><span class="p">(</span><span class="n">points_per_dimension</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a list of point sources within a Z-aligned</span>
+<span class="sd">    cylinder centered on the origin.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :class:`list` of :class:`numpy.adarray`</span>
+<span class="sd">        A list of vector locations within the Source body.</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ----------</span>
+<span class="sd">    points_per_dimension : :obj:`list`</span>
+<span class="sd">        list of number of quadrature points per dimension: r, theta, z</span>
+<span class="sd">    length : float</span>
+<span class="sd">        The length of the cylinder.</span>
+<span class="sd">    radius : float</span>
+<span class="sd">        The radius of the cylinder.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># calculate the radius of each &quot;equal area&quot; annular region</span>
+    <span class="n">total_area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">annular_area</span> <span class="o">=</span> <span class="n">total_area</span><span class="o">/</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">old_radius</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">running_area</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">annular_locations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">new_radius</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+        <span class="n">annular_locations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_radius</span><span class="o">+</span><span class="n">old_radius</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">old_radius</span> <span class="o">=</span> <span class="n">new_radius</span>
+        <span class="n">running_area</span> <span class="o">=</span> <span class="n">running_area</span><span class="o">+</span><span class="n">annular_area</span>
+
+    <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
+
+    <span class="n">length_increment</span> <span class="o">=</span> <span class="n">length</span><span class="o">/</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">start_location</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">length</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+        <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_location</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
+
+    <span class="c1"># iterate through each dimension, building a list of source points</span>
+    <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">radial_location</span> <span class="ow">in</span> <span class="n">annular_locations</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">radial_location</span>
+        <span class="k">for</span> <span class="n">angle_location</span> <span class="ow">in</span> <span class="n">angle_locations</span><span class="p">:</span>
+            <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
+            <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
+                <span class="n">z</span> <span class="o">=</span> <span class="n">length_location</span>
+                <span class="c1"># convert cylindrical to rectangular coordinates</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">source_points</span>
 </pre></div>
 
            </div>
@@ -942,7 +919,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Jan 22, 2023.
+      <span class="lastupdated">Last updated on Feb 12, 2023.
       </span></p>
   </div>
 

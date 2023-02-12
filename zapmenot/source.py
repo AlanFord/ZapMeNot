@@ -654,42 +654,12 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         if len(self._points_per_dimension) != 3:
             raise ValueError(
                 "Source Points per Dimension needs three entries")
-        # calculate the radius of each "equal area" annular region
-        total_area = math.pi*self.radius**2
-        annular_area = total_area/self._points_per_dimension[0]
-        old_radius = 0
-        running_area = 0
-        annular_locations = []
-        for i in range(self._points_per_dimension[0]):
-            new_radius = math.sqrt((running_area+annular_area)/math.pi)
-            annular_locations.append((new_radius+old_radius)/2)
-            old_radius = new_radius
-            running_area = running_area+annular_area
-
-        angle_increment = 2*math.pi/self._points_per_dimension[1]
-        start_angle = angle_increment/2
-        angle_locations = []
-        for i in range(self._points_per_dimension[1]):
-            angle_locations.append(start_angle + (i*angle_increment))
-
-        length_increment = self.length/self._points_per_dimension[2]
-        start_length = length_increment/2
-        length_locations = []
-        for i in range(self._points_per_dimension[2]):
-            length_locations.append(start_length + (i*length_increment))
-
-        # iterate through each dimension, building a list of source points
-        source_points = []
-        for radial_location in annular_locations:
-            r = radial_location
-            for angle_location in angle_locations:
-                theta = angle_location
-                for length_location in length_locations:
-                    z = length_location
-                    # convert cylindrical to rectangular coordinates
-                    x = r * math.cos(theta)
-                    y = r * math.sin(theta)
-                    source_points.append([x, y, z])
+        source_points = _generic_cylinder_source_points(
+            self._points_per_dimension,
+            self.length, self.radius)
+        # no rotation is needed
+        # shift the point set to the specified cylinder center
+        source_points += (self.origin + self.end)/2
         return source_points
 
 # -----------------------------------------------------------
@@ -734,42 +704,17 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         if len(self._points_per_dimension) != 3:
             raise ValueError(
                 "Source Points per Dimension needs three entries")
-        # calculate the radius of each "equal area" annular region
-        total_area = math.pi*self.radius**2
-        annular_area = total_area/self._points_per_dimension[0]
-        old_radius = 0
-        running_area = 0
-        annular_locations = []
-        for i in range(self._points_per_dimension[0]):
-            new_radius = math.sqrt((running_area+annular_area)/math.pi)
-            annular_locations.append((new_radius+old_radius)/2)
-            old_radius = new_radius
-            running_area = running_area+annular_area
-
-        angle_increment = 2*math.pi/self._points_per_dimension[1]
-        start_angle = angle_increment/2
-        angle_locations = []
-        for i in range(self._points_per_dimension[1]):
-            angle_locations.append(start_angle + (i*angle_increment))
-
-        length_increment = self.length/self._points_per_dimension[2]
-        start_length = length_increment/2
-        length_locations = []
-        for i in range(self._points_per_dimension[2]):
-            length_locations.append(start_length + (i*length_increment))
-
-        # iterate through each dimension, building a list of source points
-        source_points = []
-        for radial_location in annular_locations:
-            r = radial_location
-            for angle_location in angle_locations:
-                theta = angle_location
-                for length_location in length_locations:
-                    y = length_location
-                    # convert cylindrical to rectangular coordinates
-                    x = r * math.cos(theta)
-                    z = -(r * math.sin(theta))
-                    source_points.append([x, y, z])
+        some_points = np.array(_generic_cylinder_source_points(
+            self._points_per_dimension,
+            self.length, self.radius))
+        # rotate the point set from the Z-axis to the Y-axis
+        # (y replaced by z; z replaced by -y)
+        source_points = np.empty_like(some_points)
+        source_points[:, 0] = some_points[:, 0]
+        source_points[:, 1] = some_points[:, 2]
+        source_points[:, 2] = -some_points[:, 1]
+        # shift the point set to the specified cylinder center
+        source_points += (self.origin + self.end)/2
         return source_points
 
 # -----------------------------------------------------------
@@ -814,40 +759,72 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         if len(self._points_per_dimension) != 3:
             raise ValueError(
                 "Source Points per Dimension needs three entries")
-        # calculate the radius of each "equal area" annular region
-        total_area = math.pi*self.radius**2
-        annular_area = total_area/self._points_per_dimension[0]
-        old_radius = 0
-        running_area = 0
-        annular_locations = []
-        for i in range(self._points_per_dimension[0]):
-            new_radius = math.sqrt((running_area+annular_area)/math.pi)
-            annular_locations.append((new_radius+old_radius)/2)
-            old_radius = new_radius
-            running_area = running_area+annular_area
-
-        angle_increment = 2*math.pi/self._points_per_dimension[1]
-        start_angle = angle_increment/2
-        angle_locations = []
-        for i in range(self._points_per_dimension[1]):
-            angle_locations.append(start_angle + (i*angle_increment))
-
-        length_increment = self.length/self._points_per_dimension[2]
-        start_length = length_increment/2
-        length_locations = []
-        for i in range(self._points_per_dimension[2]):
-            length_locations.append(start_length + (i*length_increment))
-
-        # iterate through each dimension, building a list of source points
-        source_points = []
-        for radial_location in annular_locations:
-            r = radial_location
-            for angle_location in angle_locations:
-                theta = angle_location
-                for length_location in length_locations:
-                    x = length_location
-                    # convert cylindrical to rectangular coordinates
-                    z = -(r * math.cos(theta))
-                    y = r * math.sin(theta)
-                    source_points.append([x, y, z])
+        some_points = np.array(_generic_cylinder_source_points(
+            self._points_per_dimension,
+            self.length, self.radius))
+        # rotate the point set from the Z-axis to the Y-axis
+        # (x replaced by z; z replaced by -x)
+        source_points = np.empty_like(some_points)
+        source_points[:, 0] = some_points[:, 2]
+        source_points[:, 1] = some_points[:, 1]
+        source_points[:, 2] = -some_points[:, 0]
+        # shift the point set to the specified cylinder center
+        source_points += (self.origin + self.end)/2
         return source_points
+
+
+def _generic_cylinder_source_points(points_per_dimension, length, radius):
+    """Generates a list of point sources within a Z-aligned
+    cylinder centered on the origin.
+
+    Returns
+    -------
+    :class:`list` of :class:`numpy.adarray`
+        A list of vector locations within the Source body.
+
+    Arguments
+    ----------
+    points_per_dimension : :obj:`list`
+        list of number of quadrature points per dimension: r, theta, z
+    length : float
+        The length of the cylinder.
+    radius : float
+        The radius of the cylinder.
+    """
+    # calculate the radius of each "equal area" annular region
+    total_area = math.pi*radius**2
+    annular_area = total_area/points_per_dimension[0]
+    old_radius = 0
+    running_area = 0
+    annular_locations = []
+    for i in range(points_per_dimension[0]):
+        new_radius = math.sqrt((running_area+annular_area)/math.pi)
+        annular_locations.append((new_radius+old_radius)/2)
+        old_radius = new_radius
+        running_area = running_area+annular_area
+
+    angle_increment = 2*math.pi/points_per_dimension[1]
+    start_angle = angle_increment/2
+    angle_locations = []
+    for i in range(points_per_dimension[1]):
+        angle_locations.append(start_angle + (i*angle_increment))
+
+    length_increment = length/points_per_dimension[2]
+    start_location = -(length/2) + length_increment/2
+    length_locations = []
+    for i in range(points_per_dimension[2]):
+        length_locations.append(start_location + (i*length_increment))
+
+    # iterate through each dimension, building a list of source points
+    source_points = []
+    for radial_location in annular_locations:
+        r = radial_location
+        for angle_location in angle_locations:
+            theta = angle_location
+            for length_location in length_locations:
+                z = length_location
+                # convert cylindrical to rectangular coordinates
+                x = r * math.cos(theta)
+                y = r * math.sin(theta)
+                source_points.append([x, y, z])
+    return source_points

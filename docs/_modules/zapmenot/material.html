@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>zapmenot.material &mdash; Zapmenot 0.0.2 documentation</title>
+  <title>zapmenot.material &mdash; Zapmenot 0.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -29,7 +29,7 @@
             <a href="../../index.html" class="icon icon-home"> Zapmenot
           </a>
               <div class="version">
-                0.0.2
+                0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -86,6 +86,11 @@
 <span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">import</span> <span class="nn">pkg_resources</span>
 
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">yaml</span> <span class="kn">import</span> <span class="n">CLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">CDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">yaml</span> <span class="kn">import</span> <span class="n">FullLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">SafeDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
+
 
 <div class="viewcode-block" id="Material"><a class="viewcode-back" href="../../module-docs.html#zapmenot.material.Material">[docs]</a><span class="k">class</span> <span class="nc">Material</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Encapsulates the data in the MaterialLibrary.yml file.</span>
@@ -120,7 +125,7 @@
             <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;materialLibrary.yml&#39;</span>
             <span class="n">filepath</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
             <span class="n">stream</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-            <span class="n">Material</span><span class="o">.</span><span class="n">_library</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+            <span class="n">Material</span><span class="o">.</span><span class="n">_library</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">MyLoader</span><span class="p">)</span>
             <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
         <span class="c1"># check to see if the name is in the library</span>
@@ -414,7 +419,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Jan 22, 2023.
+      <span class="lastupdated">Last updated on Feb 12, 2023.
       </span></p>
   </div>
 
