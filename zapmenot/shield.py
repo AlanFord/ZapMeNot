@@ -231,57 +231,81 @@ class SemiInfiniteXSlab(Shield):
 # -----------------------------------------------------------
 
 
-# class Sphere(Shield):
-#     def __init__(self, material_name, sphere_center, sphere_radius, density=None):
-#         '''Initialize material composition and location of the slab shield'''
-#         super().__init__(material_name=material_name, density=density)
-#         self.center = np.array(sphere_center)
-#         self.radius = np.array(sphere_radius)
+class Sphere(Shield):
+    """A spherical shield.
 
-#     def get_crossing_mfp(self, ray, photon_energy):
-#         '''returns the crossing mfp'''
-#         super().get_crossing_mfp(ray, photon_energy)    # validate the arguments
-#         distance = self._get_crossing_length(ray)
-#         return self.material.get_mfp(photon_energy, distance)
+    Parameters
+    ----------
+    material_name : :obj:`material.Material`
+        Shield material type
+    sphere_center : list
+        list of floats (x, y, and z coordinates).
+    sphere_radius : float
+        radius of the shield.
+    density : float, optional
+        Material density in g/cm3.
+    """
+    '''
+    Attributes
+    ----------
+    material : :class: `material.Material`
+        Material properties of the shield
+    x_start : float
+        X axis location of the inner edge of the shield.
+    x_end : float
+        X axis location of the outer edge of the shield.
+    '''
+    def __init__(self, material_name, sphere_center, sphere_radius,
+                 density=None):
+        '''Initialize material composition and location of the slab shield'''
+        super().__init__(material_name=material_name, density=density)
+        self.center = np.array(sphere_center)
+        self.radius = np.array(sphere_radius)
 
-#     def _get_crossing_length(self, ray):
-#         # based on
-#         # http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
-#         super()._get_crossing_length(ray)  # validate the arguments
-#         a = np.dot(ray._dir, ray._dir)
-#         b = 2 * np.dot(ray._dir, ray._origin - self.center)
-#         c = np.dot(ray._origin-self.center, ray._origin -
-#                    self.center) - self.radius**2
-#         discriminant = b**2 - 4*a*c
-#         if discriminant <= 0:
-#             # sphere is missed or tangent
-#             return 0
-#         root = np.sqrt(discriminant)
-#         t0 = (-b - root)/(2*a)
-#         t1 = (-b + root)/(2*a)
-#         big_list = []
-#         for a_length in [t0, t1]:
-#             if (a_length >= 0) and (a_length <= ray._length):
-#                 big_list.append(a_length)
-#         if len(big_list) != 2:
-#             # if not 2 intersections, look for ray endpoints inside the sphere
-#             if self.contains(ray._origin):
-#                 big_list.append(0)
-#             if self.contains(ray._end):
-#                 big_list.append(ray._length)
-#         if len(big_list) == 0:
-#             # ray misses the sphere
-#             return 0
-#         if len(big_list) != 2:
-#             # this shouldn't occur
-#             raise ValueError("Shield doesn't have 2 crossings")
-#         return abs(big_list[1]-big_list[0])
+    def get_crossing_mfp(self, ray, photon_energy):
+        '''returns the crossing mfp'''
+        super().get_crossing_mfp(ray, photon_energy)  # validate the arguments
+        distance = self._get_crossing_length(ray)
+        return self.material.get_mfp(photon_energy, distance)
 
-#     def contains(self, point):
-#         ray = point - self.center
-#         if np.dot(ray, ray) > self.radius**2:
-#             return False
-#         return True
+    def _get_crossing_length(self, ray):
+        # based on
+        # http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
+        super()._get_crossing_length(ray)  # validate the arguments
+        a = np.dot(ray._dir, ray._dir)
+        b = 2 * np.dot(ray._dir, ray._origin - self.center)
+        c = np.dot(ray._origin-self.center, ray._origin -
+                   self.center) - self.radius**2
+        discriminant = b**2 - 4*a*c
+        if discriminant <= 0:
+            # sphere is missed or tangent
+            return 0
+        root = np.sqrt(discriminant)
+        t0 = (-b - root)/(2*a)
+        t1 = (-b + root)/(2*a)
+        big_list = []
+        for a_length in [t0, t1]:
+            if (a_length >= 0) and (a_length <= ray._length):
+                big_list.append(a_length)
+        if len(big_list) != 2:
+            # if not 2 intersections, look for ray endpoints inside the sphere
+            if self.contains(ray._origin):
+                big_list.append(0)
+            if self.contains(ray._end):
+                big_list.append(ray._length)
+        if len(big_list) == 0:
+            # ray misses the sphere
+            return 0
+        if len(big_list) != 2:
+            # this shouldn't occur
+            raise ValueError("Shield doesn't have 2 crossings")
+        return abs(big_list[1]-big_list[0])
+
+    def contains(self, point):
+        ray = point - self.center
+        if np.dot(ray, ray) > self.radius**2:
+            return False
+        return True
 
 # -----------------------------------------------------------
 
