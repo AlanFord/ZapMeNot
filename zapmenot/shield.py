@@ -695,8 +695,8 @@ class InfiniteAnnulus(Shield):
             distance = np.linalg.norm(intersection - plane_point)
             if min_collision_distance is None or \
                (distance < min_collision_distance):
-                    min_collision_distance = distance
-                    collision_point = intersection
+                min_collision_distance = distance
+                collision_point = intersection
         fakeElipsisRadius = 2 * self.outer_radius
         # generate a bounding box centered at "center" and
         # a width of 2*outer_radius
