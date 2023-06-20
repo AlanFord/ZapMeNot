@@ -124,69 +124,70 @@ class TestSemiInfiniteXSlab():
 
 
 # =============================================================
-# class TestSphere():
+class TestSphere():
 
-# 	@pytest.fixture(scope="class")
-# 	def create_shield(self):
-# 		myShield = shield.Sphere("iron", sphere_radius=10, sphere_center=[0,0,0])
-# 		return myShield
+    @pytest.fixture(scope="class")
+    def create_shield(self):
+        myShield = shield.Sphere("iron", sphere_radius=10,
+                                 sphere_center=[0, 0, 0])
+        return myShield
 
-#   def test_init(self, create_shield):
-#       assert create_shield.inner_radius == 2
-#       assert create_shield.outer_radius == 4
-#       assert all(create_shield.origin == [0, 0, -50])
-#       assert all(create_shield.dir == [0, 0, 1])
+    def test_init(self, create_shield):
+        assert create_shield.inner_radius == 2
+        assert create_shield.outer_radius == 4
+        assert all(create_shield.origin == [0, 0, -50])
+        assert all(create_shield.dir == [0, 0, 1])
 
-# 	def test_crossing_length0(self, create_shield):
-# 		# basic ray crossing
-# 		length = create_shield.get_crossing_length(
-#           ray.FiniteLengthRay([-10, -10, -10], [10, 10, 10]))
-# 		assert length == pytest.approx(20)
+    def test_crossing_length0(self, create_shield):
+        # basic ray crossing
+        length = create_shield.get_crossing_length(
+          ray.FiniteLengthRay([-10, -10, -10], [10, 10, 10]))
+        assert length == pytest.approx(20)
 
-# 	def test_crossing_length1(self, create_shield):
-# 		# try reversing the direction
-# 		length = create_shield.get_crossing_length(
-#           ray.FiniteLengthRay([10, 10, 10], [-10, -10, -10]))
-# 		assert length == pytest.approx(20)
+    def test_crossing_length1(self, create_shield):
+        # try reversing the direction
+        length = create_shield.get_crossing_length(
+          ray.FiniteLengthRay([10, 10, 10], [-10, -10, -10]))
+        assert length == pytest.approx(20)
 
-# 	def test_crossing_length2(self, create_shield):
-# 		# ray misses the sphere
-# 		length = create_shield.get_crossing_length(
-#           ray.FiniteLengthRay([-15, -15, -15], [-15, -15, 15]))
-# 		assert length == 0
+    def test_crossing_length2(self, create_shield):
+        # ray misses the sphere
+        length = create_shield.get_crossing_length(
+          ray.FiniteLengthRay([-15, -15, -15], [-15, -15, 15]))
+        assert length == 0
 
-# 	def test_crossing_length3(self, create_shield):
-# 		# ray starts inside the sphere and traverse outwards
-# 		length = create_shield.get_crossing_length(
-#           ray.FiniteLengthRay([-1, -1, -1], [10, 10, 10]))
-# 		assert length == 10+math.sqrt(3)
+    def test_crossing_length3(self, create_shield):
+        # ray starts inside the sphere and traverse outwards
+        length = create_shield.get_crossing_length(
+          ray.FiniteLengthRay([-1, -1, -1], [10, 10, 10]))
+        assert length == 10+math.sqrt(3)
 
-# 	def test_crossing_length4(self, create_shield):
-# 		# ray starts outside the sphere and ends inside the sphere
-# 		length = create_shield.get_crossing_length(
-#           ray.FiniteLengthRay([10, 10, 10], [-1, -1, -1]))
-# 		assert length == pytest.approx(10+math.sqrt(3))
+    def test_crossing_length4(self, create_shield):
+        # ray starts outside the sphere and ends inside the sphere
+        length = create_shield.get_crossing_length(
+          ray.FiniteLengthRay([10, 10, 10], [-1, -1, -1]))
+        assert length == pytest.approx(10+math.sqrt(3))
 
-# 	def test_crossing_length5(self, create_shield):
-# 		# ray contained entirely within the sphere
-# 		length = create_shield.get_crossing_length(
-#           ray.FiniteLengthRay([1, 1, 1], [-1, -1, -1]))
-# 		assert length == 2*math.sqrt(3)
+    def test_crossing_length5(self, create_shield):
+        # ray contained entirely within the sphere
+        length = create_shield.get_crossing_length(
+          ray.FiniteLengthRay([1, 1, 1], [-1, -1, -1]))
+        assert length == 2*math.sqrt(3)
 
-# 	# test getting a crossing mfp
-# 	def test_get_special_MFP(self, create_shield):
-# 		start = [0, 0, 0]
-# 		end = [100, 0, 0]
-# 		aRay = ray.FiniteLengthRay(start, end)
-# 		mfp = create_shield.get_crossing_mfp(aRay, 1)
-# 		# data extracted from materialLibrary.yml for iron at 1 MeV
-# 		xsec = 5.957E-02
-# 		density = 7.874
-# 		calculated_mfp = xsec*density*10 # 10 cm crossing width of shield
-# 		assert mfp == pytest.approx(calculated_mfp)
+    # test getting a crossing mfp
+    def test_get_special_MFP(self, create_shield):
+        start = [0, 0, 0]
+        end = [100, 0, 0]
+        aRay = ray.FiniteLengthRay(start, end)
+        mfp = create_shield.get_crossing_mfp(aRay, 1)
+        # data extracted from materialLibrary.yml for iron at 1 MeV
+        xsec = 5.957E-02
+        density = 7.874
+        calculated_mfp = xsec*density*10  # 10 cm crossing width of shield
+        assert mfp == pytest.approx(calculated_mfp)
 
-#   def test_infinite(self, create_shield):
-#       assert create_shield.is_infinite() is False
+    def test_infinite(self, create_shield):
+        assert create_shield.is_infinite() is False
 
 
 # =============================================================
