@@ -78,7 +78,7 @@ hydrogen:
   gp-coff-energy: null
 helium:
   density: 1.663E-04
-  density-units: g/cm4
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -115,7 +115,7 @@ helium:
   gp-coff-energy: null
 lithium:
   density: 5.340E-01
-  density-units: g/cm5
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -152,7 +152,7 @@ lithium:
   gp-coff-energy: null
 beryllium:
   density: 1.848E+00
-  density-units: g/cm6
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -240,7 +240,7 @@ beryllium:
     - [1.306, 0.802, 0.057, 12.34, -0.0247]
 boron:
   density: 2.370E+00
-  density-units: g/cm7
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -328,7 +328,7 @@ boron:
     - [1.286, 0.830, 0.048, 14.00, -0.0243]
 carbon:
   density: 1.700E+00
-  density-units: g/cm8
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -416,7 +416,7 @@ carbon:
     - [1.276, 0.841, 0.046, 15.27, -0.0296]
 nitrogen:
   density: 1.165E-03
-  density-units: g/cm9
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -504,7 +504,7 @@ nitrogen:
     - [1.271, 0.841, 0.048, 15.04, -0.0339]
 oxygen:
   density: 1.332E-03
-  density-units: g/cm10
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -592,7 +592,7 @@ oxygen:
     - [1.265, 0.842, 0.050, 15.03, -0.0387]
 fluorine:
   density: 1.580E-03
-  density-units: g/cm11
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -629,7 +629,7 @@ fluorine:
   gp-coff-energy: null
 neon:
   density: 8.385E-04
-  density-units: g/cm12
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -666,7 +666,7 @@ neon:
   gp-coff-energy: null
 sodium:
   density: 9.710E-01
-  density-units: g/cm13
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -754,7 +754,7 @@ sodium:
     - [1.263, 0.823, 0.064, 14.35, -0.0562]
 magnesium:
   density: 1.740E+00
-  density-units: g/cm14
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -842,7 +842,7 @@ magnesium:
     - [1.253, 0.847, 0.057, 14.24, -0.0511]
 aluminum:
   density: 2.699E+00
-  density-units: g/cm15
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -930,7 +930,7 @@ aluminum:
     - [1.244, 0.869, 0.050, 14.91, -0.0476]
 silicon:
   density: 2.330E+00
-  density-units: g/cm16
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1018,7 +1018,7 @@ silicon:
     - [1.236, 0.887, 0.047, 13.39, -0.0432]
 phosphorus:
   density: 2.200E+00
-  density-units: g/cm17
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1106,7 +1106,7 @@ phosphorus:
     - [1.235, 0.879, 0.053, 13.06, -0.0508]
 sulfur:
   density: 2.000E+00
-  density-units: g/cm18
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1194,7 +1194,7 @@ sulfur:
     - [1.228, 0.898, 0.048, 13.24, -0.0471]
 chlorine:
   density: 2.995E-03
-  density-units: g/cm19
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1231,7 +1231,7 @@ chlorine:
   gp-coff-energy: null
 argon:
   density: 1.662E-03
-  density-units: g/cm20
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1319,7 +1319,7 @@ argon:
     - [1.244, 0.842, 0.072, 13.87, -0.0710]
 potassium:
   density: 8.620E-01
-  density-units: g/cm21
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1407,7 +1407,7 @@ potassium:
     - [1.218, 0.920, 0.047, 13.48, -0.0518]
 calcium:
   density: 1.550E+00
-  density-units: g/cm22
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1495,7 +1495,7 @@ calcium:
     - [1.219, 0.916, 0.050, 13.91, -0.0551]
 scandium:
   density: 2.989E+00
-  density-units: g/cm23
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1532,7 +1532,7 @@ scandium:
   gp-coff-energy: null
 titanium:
   density: 4.540E+00
-  density-units: g/cm24
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1569,7 +1569,7 @@ titanium:
   gp-coff-energy: null
 vanadium:
   density: 6.110E+00
-  density-units: g/cm25
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1606,7 +1606,7 @@ vanadium:
   gp-coff-energy: null
 chromium:
   density: 7.180E+00
-  density-units: g/cm26
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1643,7 +1643,7 @@ chromium:
   gp-coff-energy: null
 manganese:
   density: 7.440E+00
-  density-units: g/cm27
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1680,7 +1680,7 @@ manganese:
   gp-coff-energy: null
 iron:
   density: 7.874E+00
-  density-units: g/cm28
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1768,7 +1768,7 @@ iron:
     - [1.199, 0.957, 0.049, 14.37, -0.0594]
 cobalt:
   density: 8.900E+00
-  density-units: g/cm29
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1805,7 +1805,7 @@ cobalt:
   gp-coff-energy: null
 nickel:
   density: 8.902E+00
-  density-units: g/cm30
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1842,7 +1842,7 @@ nickel:
   gp-coff-energy: null
 copper:
   density: 8.960E+00
-  density-units: g/cm31
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1930,7 +1930,7 @@ copper:
     - [1.191, 0.969, 0.052, 14.48, -0.0640]
 zinc:
   density: 7.133E+00
-  density-units: g/cm32
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -1967,7 +1967,7 @@ zinc:
   gp-coff-energy: null
 gallium:
   density: 5.904E+00
-  density-units: g/cm33
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2004,7 +2004,7 @@ gallium:
   gp-coff-energy: null
 germanium:
   density: 5.323E+00
-  density-units: g/cm34
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2041,7 +2041,7 @@ germanium:
   gp-coff-energy: null
 arsenic:
   density: 5.730E+00
-  density-units: g/cm35
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2078,7 +2078,7 @@ arsenic:
   gp-coff-energy: null
 selenium:
   density: 4.500E+00
-  density-units: g/cm36
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2115,7 +2115,7 @@ selenium:
   gp-coff-energy: null
 bromine:
   density: 7.072E-03
-  density-units: g/cm37
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2152,7 +2152,7 @@ bromine:
   gp-coff-energy: null
 krypton:
   density: 3.478E-03
-  density-units: g/cm38
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2189,7 +2189,7 @@ krypton:
   gp-coff-energy: null
 rubidium:
   density: 1.532E+00
-  density-units: g/cm39
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2226,7 +2226,7 @@ rubidium:
   gp-coff-energy: null
 strontium:
   density: 2.540E+00
-  density-units: g/cm40
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2263,7 +2263,7 @@ strontium:
   gp-coff-energy: null
 yttrium:
   density: 4.469E+00
-  density-units: g/cm41
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2300,7 +2300,7 @@ yttrium:
   gp-coff-energy: null
 zirconium:
   density: 6.506E+00
-  density-units: g/cm42
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2337,7 +2337,7 @@ zirconium:
   gp-coff-energy: null
 niobium:
   density: 8.570E+00
-  density-units: g/cm43
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2374,7 +2374,7 @@ niobium:
   gp-coff-energy: null
 molybdenum:
   density: 1.022E+01
-  density-units: g/cm44
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2476,7 +2476,7 @@ molybdenum:
     - [1.573, 1.118, 0.035, 14.16, -0.0599]
 technetium:
   density: 1.150E+01
-  density-units: g/cm45
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2513,7 +2513,7 @@ technetium:
   gp-coff-energy: null
 ruthenium:
   density: 1.241E+01
-  density-units: g/cm46
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2550,7 +2550,7 @@ ruthenium:
   gp-coff-energy: null
 rhodium:
   density: 1.241E+01
-  density-units: g/cm47
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2587,7 +2587,7 @@ rhodium:
   gp-coff-energy: null
 palladium:
   density: 1.202E+01
-  density-units: g/cm48
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2624,7 +2624,7 @@ palladium:
   gp-coff-energy: null
 silver:
   density: 1.050E+01
-  density-units: g/cm49
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2661,7 +2661,7 @@ silver:
   gp-coff-energy: null
 cadmium:
   density: 8.650E+00
-  density-units: g/cm50
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2698,7 +2698,7 @@ cadmium:
   gp-coff-energy: null
 indium:
   density: 7.310E+00
-  density-units: g/cm51
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2735,7 +2735,7 @@ indium:
   gp-coff-energy: null
 tin:
   density: 7.310E+00
-  density-units: g/cm52
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2835,7 +2835,7 @@ tin:
     - [1.592, 1.207, 0.026, 13.91, -0.0566]
 antimony:
   density: 6.691E+00
-  density-units: g/cm53
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2872,7 +2872,7 @@ antimony:
   gp-coff-energy: null
 tellurium:
   density: 6.240E+00
-  density-units: g/cm54
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2909,7 +2909,7 @@ tellurium:
   gp-coff-energy: null
 iodine:
   density: 4.930E+00
-  density-units: g/cm55
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2946,7 +2946,7 @@ iodine:
   gp-coff-energy: null
 xenon:
   density: 5.485E-03
-  density-units: g/cm56
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -2983,7 +2983,7 @@ xenon:
   gp-coff-energy: null
 cesium:
   density: 1.873E+00
-  density-units: g/cm57
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3020,7 +3020,7 @@ cesium:
   gp-coff-energy: null
 barium:
   density: 3.500E+00
-  density-units: g/cm58
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3057,7 +3057,7 @@ barium:
   gp-coff-energy: null
 lanthanum:
   density: 6.154E+00
-  density-units: g/cm59
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3163,7 +3163,7 @@ lanthanum:
     - [2.180, 1.316, 0.008, 13.68, -0.0396]
 cerium:
   density: 6.657E+00
-  density-units: g/cm60
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3200,7 +3200,7 @@ cerium:
   gp-coff-energy: null
 praseodymium:
   density: 6.710E+00
-  density-units: g/cm61
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3237,7 +3237,7 @@ praseodymium:
   gp-coff-energy: null
 neodymium:
   density: 6.900E+00
-  density-units: g/cm62
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3274,7 +3274,7 @@ neodymium:
   gp-coff-energy: null
 promethium:
   density: 7.220E+00
-  density-units: g/cm63
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3311,7 +3311,7 @@ promethium:
   gp-coff-energy: null
 samarium:
   density: 7.460E+00
-  density-units: g/cm64
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3348,7 +3348,7 @@ samarium:
   gp-coff-energy: null
 europium:
   density: 5.243E+00
-  density-units: g/cm65
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3385,7 +3385,7 @@ europium:
   gp-coff-energy: null
 gadolinium:
   density: 7.900E+00
-  density-units: g/cm66
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3491,7 +3491,7 @@ gadolinium:
     - [2.000, 1.358, 0.005, 13.71, -0.0370]
 terbium:
   density: 8.229E+00
-  density-units: g/cm67
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3528,7 +3528,7 @@ terbium:
   gp-coff-energy: null
 dysprosium:
   density: 8.550E+00
-  density-units: g/cm68
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3565,7 +3565,7 @@ dysprosium:
   gp-coff-energy: null
 holmium:
   density: 8.795E+00
-  density-units: g/cm69
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3602,7 +3602,7 @@ holmium:
   gp-coff-energy: null
 erbium:
   density: 9.066E+00
-  density-units: g/cm70
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3639,7 +3639,7 @@ erbium:
   gp-coff-energy: null
 thulium:
   density: 9.321E+00
-  density-units: g/cm71
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3676,7 +3676,7 @@ thulium:
   gp-coff-energy: null
 ytterbium:
   density: 6.730E+00
-  density-units: g/cm72
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3713,7 +3713,7 @@ ytterbium:
   gp-coff-energy: null
 lutetium:
   density: 9.840E+00
-  density-units: g/cm73
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3750,7 +3750,7 @@ lutetium:
   gp-coff-energy: null
 hafnium:
   density: 1.331E+01
-  density-units: g/cm74
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3787,7 +3787,7 @@ hafnium:
   gp-coff-energy: null
 tantalum:
   density: 1.665E+01
-  density-units: g/cm75
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3824,7 +3824,7 @@ tantalum:
   gp-coff-energy: null
 tungsten:
   density: 1.930E+01
-  density-units: g/cm76
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3928,7 +3928,7 @@ tungsten:
     - [1.589, 1.335, 0.016, 13.60, -0.0494]
 rhenium:
   density: 2.102E+01
-  density-units: g/cm77
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -3965,7 +3965,7 @@ rhenium:
   gp-coff-energy: null
 osmium:
   density: 2.257E+01
-  density-units: g/cm78
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4002,7 +4002,7 @@ osmium:
   gp-coff-energy: null
 iridium:
   density: 2.242E+01
-  density-units: g/cm79
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4039,7 +4039,7 @@ iridium:
   gp-coff-energy: null
 platinum:
   density: 2.145E+01
-  density-units: g/cm80
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4076,7 +4076,7 @@ platinum:
   gp-coff-energy: null
 gold:
   density: 1.932E+01
-  density-units: g/cm81
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4113,7 +4113,7 @@ gold:
   gp-coff-energy: null
 mercury:
   density: 1.355E+01
-  density-units: g/cm82
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4150,7 +4150,7 @@ mercury:
   gp-coff-energy: null
 thallium:
   density: 1.172E+01
-  density-units: g/cm83
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4187,7 +4187,7 @@ thallium:
   gp-coff-energy: null
 lead:
   density: 1.135E+01
-  density-units: g/cm84
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4295,7 +4295,7 @@ lead:
     - [1.573, 1.337, 0.016, 13.54, -0.0463]
 bismuth:
   density: 9.747E+00
-  density-units: g/cm85
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4332,7 +4332,7 @@ bismuth:
   gp-coff-energy: null
 polonium:
   density: 9.320E+00
-  density-units: g/cm86
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4369,7 +4369,7 @@ polonium:
   gp-coff-energy: null
 astatine:
   density: 1.000E+01
-  density-units: g/cm87
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4406,7 +4406,7 @@ astatine:
   gp-coff-energy: null
 radon:
   density: 9.066E-03
-  density-units: g/cm88
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4443,7 +4443,7 @@ radon:
   gp-coff-energy: null
 francium:
   density: 1.000E+01
-  density-units: g/cm89
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4480,7 +4480,7 @@ francium:
   gp-coff-energy: null
 radium:
   density: 5.000E+00
-  density-units: g/cm90
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4517,7 +4517,7 @@ radium:
   gp-coff-energy: null
 actinium:
   density: 1.007E+01
-  density-units: g/cm91
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4554,7 +4554,7 @@ actinium:
   gp-coff-energy: null
 thorium:
   density: 1.172E+01
-  density-units: g/cm92
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4591,7 +4591,7 @@ thorium:
   gp-coff-energy: null
 protactinium:
   density: 1.537E+01
-  density-units: g/cm93
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4628,7 +4628,7 @@ protactinium:
   gp-coff-energy: null
 uranium:
   density: 1.895E+01
-  density-units: g/cm94
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4740,7 +4740,7 @@ uranium:
     - [1.557, 1.328, 0.015, 13.75, -0.0405]
 neptunium:
   density: 1.000E+01
-  density-units: g/cm95
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4777,7 +4777,7 @@ neptunium:
   gp-coff-energy: null
 plutonium:
   density: 1.000E+01
-  density-units: g/cm96
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4814,7 +4814,7 @@ plutonium:
   gp-coff-energy: null
 americium:
   density: 1.000E+01
-  density-units: g/cm97
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4851,7 +4851,7 @@ americium:
   gp-coff-energy: null
 curium:
   density: 1.000E+01
-  density-units: g/cm98
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4888,7 +4888,7 @@ curium:
   gp-coff-energy: null
 berkelium:
   density: 1.000E+01
-  density-units: g/cm99
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4925,7 +4925,7 @@ berkelium:
   gp-coff-energy: null
 californium:
   density: 1.000E+01
-  density-units: g/cm100
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4962,7 +4962,7 @@ californium:
   gp-coff-energy: null
 einsteinium:
   density: 1.000E+01
-  density-units: g/cm101
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -4999,7 +4999,7 @@ einsteinium:
   gp-coff-energy: null
 fermium:
   density: 1.000E+01
-  density-units: g/cm102
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -5036,7 +5036,7 @@ fermium:
   gp-coff-energy: null
 air:
   density: 0.001205
-  density-units: g/cm102
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -5181,7 +5181,7 @@ air:
     - 1.308E-02
 water:
   density: 1.0
-  density-units: g/cm102
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -5269,7 +5269,7 @@ water:
     - [1.267, 0.843, 0.047, 15.08, -0.0336]
 concrete:
   density: 2.3
-  density-units: g/cm102
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -5357,7 +5357,7 @@ concrete:
     - [1.260, 0.823, 0.065, 14.28, -0.0581]
 uo2:
   density: 10.412
-  density-units: g/cm102
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -5394,7 +5394,7 @@ uo2:
   gp-coff-energy: null
 ss304l:
   density: 8.0
-  density-units: g/cm102
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
@@ -5431,7 +5431,7 @@ ss304l:
   gp-coff-energy: null
 resin:
   density: 2.01
-  density-units: g/cm102
+  density-units: g/cm3
   energy-units: MeV
   mass-atten-coff-units: cm2/g
   mass-atten-coff-energy: *id001
