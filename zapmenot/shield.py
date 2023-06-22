@@ -250,10 +250,10 @@ class Sphere(Shield):
     ----------
     material : :class: `material.Material`
         Material properties of the shield
-    x_start : float
-        X axis location of the inner edge of the shield.
-    x_end : float
-        X axis location of the outer edge of the shield.
+    center : list
+        list of floats (x, y, and z coordinates).
+    radius : float
+        radius of the sphere.
     '''
     def __init__(self, material_name, sphere_center, sphere_radius,
                  density=None):
@@ -261,6 +261,11 @@ class Sphere(Shield):
         super().__init__(material_name=material_name, density=density)
         self.center = np.array(sphere_center)
         self.radius = np.array(sphere_radius)
+
+    def is_infinite(self):
+        '''Returns true if any dimension is infinite, false otherwise
+        '''
+        return False
 
     def get_crossing_mfp(self, ray, photon_energy):
         '''returns the crossing mfp'''
@@ -270,7 +275,7 @@ class Sphere(Shield):
 
     def _get_crossing_length(self, ray):
         # based on
-        # http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
+        # https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection
         super()._get_crossing_length(ray)  # validate the arguments
         a = np.dot(ray._dir, ray._dir)
         b = 2 * np.dot(ray._dir, ray._origin - self.center)

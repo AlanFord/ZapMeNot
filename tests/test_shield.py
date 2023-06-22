@@ -133,44 +133,42 @@ class TestSphere():
         return myShield
 
     def test_init(self, create_shield):
-        assert create_shield.inner_radius == 2
-        assert create_shield.outer_radius == 4
-        assert all(create_shield.origin == [0, 0, -50])
-        assert all(create_shield.dir == [0, 0, 1])
+        assert create_shield.radius == 10
+        assert all(create_shield.center == [0, 0, 0])
 
     def test_crossing_length0(self, create_shield):
         # basic ray crossing
-        length = create_shield.get_crossing_length(
+        length = create_shield._get_crossing_length(
           ray.FiniteLengthRay([-10, -10, -10], [10, 10, 10]))
         assert length == pytest.approx(20)
 
     def test_crossing_length1(self, create_shield):
         # try reversing the direction
-        length = create_shield.get_crossing_length(
+        length = create_shield._get_crossing_length(
           ray.FiniteLengthRay([10, 10, 10], [-10, -10, -10]))
         assert length == pytest.approx(20)
 
     def test_crossing_length2(self, create_shield):
         # ray misses the sphere
-        length = create_shield.get_crossing_length(
+        length = create_shield._get_crossing_length(
           ray.FiniteLengthRay([-15, -15, -15], [-15, -15, 15]))
         assert length == 0
 
     def test_crossing_length3(self, create_shield):
         # ray starts inside the sphere and traverse outwards
-        length = create_shield.get_crossing_length(
+        length = create_shield._get_crossing_length(
           ray.FiniteLengthRay([-1, -1, -1], [10, 10, 10]))
         assert length == 10+math.sqrt(3)
 
     def test_crossing_length4(self, create_shield):
         # ray starts outside the sphere and ends inside the sphere
-        length = create_shield.get_crossing_length(
+        length = create_shield._get_crossing_length(
           ray.FiniteLengthRay([10, 10, 10], [-1, -1, -1]))
         assert length == pytest.approx(10+math.sqrt(3))
 
     def test_crossing_length5(self, create_shield):
         # ray contained entirely within the sphere
-        length = create_shield.get_crossing_length(
+        length = create_shield._get_crossing_length(
           ray.FiniteLengthRay([1, 1, 1], [-1, -1, -1]))
         assert length == 2*math.sqrt(3)
 
