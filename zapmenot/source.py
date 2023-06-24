@@ -169,7 +169,8 @@ class Source(abc.ABC):
 
         This list of photons combines the Isotopes and the
         unique_photons specified in the Source definition.
-        The photon intensities are scaled to **one source point**.
+        The photon intensities are scaled to
+        **an integral over the source volume**.
 
         Returns
         -------
@@ -247,10 +248,18 @@ class Source(abc.ABC):
 
     @abc.abstractmethod
     def _get_source_points(self):
+        """Generates a list of point sources within the Source geometry.
+        """
         pass
 
     @abc.abstractmethod
     def _get_source_point_weights(self):
+        '''
+        Returns a list of quadrature weights for the quadrature locations
+        within the source volume.  Note that the weights should sum to the
+        number of quadrature locations.  When a uniform weighting is requires,
+        the weights should have a value of 1.0 for all quadrature locations.
+        '''
         pass
 
     @property
@@ -321,6 +330,12 @@ class LineSource(Source, shield.Shield):
         return False
 
     def _get_source_point_weights(self):
+        '''
+        Returns a list of quadrature weights for the quadrature locations
+        within the source volume.  Note that the weights should sum to the
+        number of quadrature locations.  When a uniform weighting is requires,
+        the weights should have a value of 1.0 for all quadrature locations.
+        '''
         return [1.0 / np.product(self._points_per_dimension)] * \
             np.product(self._points_per_dimension)
 
@@ -444,6 +459,12 @@ class PointSource(Source, shield.Shield):
         return False
 
     def _get_source_point_weights(self):
+        '''
+        Returns a list of quadrature weights for the quadrature locations
+        within the source volume.  Note that the weights should sum to the
+        number of quadrature locations.  When a uniform weighting is requires,
+        the weights should have a value of 1.0 for all quadrature locations.
+        '''
         return [1.0 / np.product(self._points_per_dimension)] * \
             np.product(self._points_per_dimension)
 
@@ -510,53 +531,79 @@ class PointSource(Source, shield.Shield):
 # -----------------------------------------------------------
 
 
-# class SphereSource(Source, shield.Sphere):
-#     '''Axis-Aligned rectangular box source'''
-#     # initialize with box_center, box_dimensions, material(optional),
-#     # density(optional)
+class SphereSource(Source, shield.Sphere):
+    '''Models a Spherical source
+    Parameters
+    ----------
+    material_name : :obj:`material.Material`
+        Shield material type
+    sphere_center : list
+        list of floats (x, y, and z coordinates).
+    sphere_radius : float
+        radius of the shield.
+    density : float, optional
+        Material density in g/cm3.
 
-#     def __init__(self, **kwargs):
-#         super().__init__(**kwargs)
+    Attributes
+    ----------
+    material : :class: `material.Material`
+        Material properties of the shield
+    center : list
+        list of floats (x, y, and z coordinates).
+    radius : float
+        radius of the sphere.
+    '''
 
-#    def _get_source_point_weights(self):
-#         pass
+    # initialize with box_center, box_dimensions, material(optional),
+    # density(optional)
 
-#     def _get_source_points(self):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
-#         # calculate the radius of each "equal area" annular region
-#         totalVolume = 4/3*math.pi*self.radius**3
-#         old_radius = 0
-#         annular_locations = []
-#         for i in range(self._points_per_dimension[0]):
-#             new_radius = math.sqrt((running_area+annular_area)/math.pi)
-#             annular_locations.append((new_radius+old_radius)/2)
-#             old_radius = new_radius
+    def _get_source_point_weights(self):
+        '''
+        Returns a list of quadrature weights for the quadrature locations
+        within the source volume.  Note that the weights should sum to the
+        number of quadrature locations.  When a uniform weighting is requires,
+        the weights should have a value of 1.0 for all quadrature locations.
+        '''
+        pass
 
-#         angle_increment = 2*math.pi/self._points_per_dimension[1]
-#         start_angle = angle_increment/2
-#         angle_locations = []
-#         for i in range(self._points_per_dimension[1]):
-#             angle_locations.append(start_angle + (i*angle_increment))
+    def _get_source_points(self):
+        # calculate the radius of each "equal area" annular region
+        totalVolume = 4/3*math.pi*self.radius**3
+        old_radius = 0
+        annular_locations = []
+        for i in range(self._points_per_dimension[0]):
+            new_radius = math.sqrt((running_area+annular_area)/math.pi)
+            annular_locations.append((new_radius+old_radius)/2)
+            old_radius = new_radius
 
-#         length_increment = self.length/self._points_per_dimension[2]
-#         start_length = length_increment/2
-#         length_locations = []
-#         for i in range(self._points_per_dimension[2]):
-#             length_locations.append(start_length + (i*length_increment))
+        angle_increment = 2*math.pi/self._points_per_dimension[1]
+        start_angle = angle_increment/2
+        angle_locations = []
+        for i in range(self._points_per_dimension[1]):
+            angle_locations.append(start_angle + (i*angle_increment))
 
-#         # iterate through each dimension, building a list of source points
-#         source_points = []
-#         for radial_location in annular_locations:
-#             r = radial_location
-#             for angle_location in angle_locations:
-#                 theta = angle_location
-#                 for length_location in length_locations:
-#                     z = length_location
-#                     # convert cylindrical to rectangular coordinates
-#                     x = r * math.cos(theta)
-#                     y = r * math.sin(theta)
-#                     source_points.append([x, y, z])
-#         return source_points
+        length_increment = self.length/self._points_per_dimension[2]
+        start_length = length_increment/2
+        length_locations = []
+        for i in range(self._points_per_dimension[2]):
+            length_locations.append(start_length + (i*length_increment))
+
+        # iterate through each dimension, building a list of source points
+        source_points = []
+        for radial_location in annular_locations:
+            r = radial_location
+            for angle_location in angle_locations:
+                theta = angle_location
+                for length_location in length_locations:
+                    z = length_location
+                    # convert cylindrical to rectangular coordinates
+                    x = r * math.cos(theta)
+                    y = r * math.sin(theta)
+                    source_points.append([x, y, z])
+        return source_points
 
 # -----------------------------------------------------------
 
@@ -585,6 +632,12 @@ class BoxSource(Source, shield.Box):
         super().__init__(**kwargs)
 
     def _get_source_point_weights(self):
+        '''
+        Returns a list of quadrature weights for the quadrature locations
+        within the source volume.  Note that the weights should sum to the
+        number of quadrature locations.  When a uniform weighting is requires,
+        the weights should have a value of 1.0 for all quadrature locations.
+        '''
         return [1.0 / np.product(self._points_per_dimension)] * \
             np.product(self._points_per_dimension)
 
@@ -639,6 +692,12 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         super().__init__(**kwargs)
 
     def _get_source_point_weights(self):
+        '''
+        Returns a list of quadrature weights for the quadrature locations
+        within the source volume.  Note that the weights should sum to the
+        number of quadrature locations.  When a uniform weighting is requires,
+        the weights should have a value of 1.0 for all quadrature locations.
+        '''
         return [1.0 / np.product(self._points_per_dimension)] * \
             np.product(self._points_per_dimension)
 
@@ -689,6 +748,12 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         super().__init__(**kwargs)
 
     def _get_source_point_weights(self):
+        '''
+        Returns a list of quadrature weights for the quadrature locations
+        within the source volume.  Note that the weights should sum to the
+        number of quadrature locations.  When a uniform weighting is requires,
+        the weights should have a value of 1.0 for all quadrature locations.
+        '''
         return [1.0 / np.product(self._points_per_dimension)] * \
             np.product(self._points_per_dimension)
 
@@ -744,6 +809,12 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         super().__init__(**kwargs)
 
     def _get_source_point_weights(self):
+        '''
+        Returns a list of quadrature weights for the quadrature locations
+        within the source volume.  Note that the weights should sum to the
+        number of quadrature locations.  When a uniform weighting is requires,
+        the weights should have a value of 1.0 for all quadrature locations.
+        '''
         return [1.0 / np.product(self._points_per_dimension)] * \
             np.product(self._points_per_dimension)
 
