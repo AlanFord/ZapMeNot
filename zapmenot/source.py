@@ -571,7 +571,7 @@ class SphereSource(Source, shield.Sphere):
     @points_per_dimension.setter
     def points_per_dimension(self, value):
         """list of integers : Number of source points per dimension."""
-            # verify there are three values in the list
+        # verify there are three values in the list
         if len(value) != 3:
             raise ValueError(
                 "Source Points per Dimension needs three entries")
@@ -610,7 +610,7 @@ class SphereSource(Source, shield.Sphere):
         y = self.rLocations*np.sin(self.thetaLocations) * \
             np.sin(self.phiLocations)
         z = self.rLocations*np.cos(self.thetaLocations)
-        bigly = np.array([x, y, z])
+        bigly = np.array([x, y, z]).transpose() + self.center
         return bigly.tolist()
 
 
