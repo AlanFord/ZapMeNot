@@ -1,6 +1,7 @@
 import abc
 import math
 import numpy as np
+import numpy.matlib
 from enum import Enum
 
 from . import shield, isotope
@@ -554,11 +555,38 @@ class SphereSource(Source, shield.Sphere):
         radius of the sphere.
     '''
 
-    # initialize with box_center, box_dimensions, material(optional),
-    # density(optional)
+    def __init__(self, material_name, sphere_center, sphere_radius,
+                 density=None, **kwargs):
+        # kwargs['material_name'] = material_name
+        kwargs['sphere_center'] = sphere_center
+        kwargs['sphere_radius'] = sphere_radius
+        super().__init__(material_name=material_name, **kwargs)
+        self.points_per_dimension = [10, 10, 10]  # triggers quadrature calcs
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    @property
+    def points_per_dimension(self):
+        """list of integers : Number of source points per dimension."""
+        return Source.points_per_dimension.fget(self)
+
+    @points_per_dimension.setter
+    def points_per_dimension(self, value):
+        """list of integers : Number of source points per dimension."""
+            # verify there are three values in the list
+        if len(value) != 3:
+            raise ValueError(
+                "Source Points per Dimension needs three entries")
+        Source.points_per_dimension.fset(self, value)
+        # update the quadrature and weights
+        nR = self._points_per_dimension[0]
+        nTheta = self._points_per_dimension[1]
+        nPhi = self._points_per_dimension[2]
+        r, t, p, w = _spherequad(nR, nTheta, nPhi, self.radius)
+        # normalize the weights relative to a uniform quadrature
+        totalVolume = 4/3*math.pi*self.radius**3
+        self.weights = w / (totalVolume/(nR*nTheta*nPhi))
+        self.rLocations = r
+        self.thetaLocations = t
+        self.phiLocations = p
 
     def _get_source_point_weights(self):
         '''
@@ -567,43 +595,24 @@ class SphereSource(Source, shield.Sphere):
         number of quadrature locations.  When a uniform weighting is requires,
         the weights should have a value of 1.0 for all quadrature locations.
         '''
-        pass
+        return self.weights
 
     def _get_source_points(self):
-        # calculate the radius of each "equal area" annular region
-        totalVolume = 4/3*math.pi*self.radius**3
-        old_radius = 0
-        annular_locations = []
-        for i in range(self._points_per_dimension[0]):
-            new_radius = math.sqrt((running_area+annular_area)/math.pi)
-            annular_locations.append((new_radius+old_radius)/2)
-            old_radius = new_radius
+        """Generates a list of point sources within the Source geometry.
 
-        angle_increment = 2*math.pi/self._points_per_dimension[1]
-        start_angle = angle_increment/2
-        angle_locations = []
-        for i in range(self._points_per_dimension[1]):
-            angle_locations.append(start_angle + (i*angle_increment))
+        Returns
+        -------
+        :class:`list` of :class:`numpy.adarray`
+            A list of vector locations within the Source body.
+        """
+        x = self.rLocations*np.sin(self.thetaLocations) * \
+            np.cos(self.phiLocations)
+        y = self.rLocations*np.sin(self.thetaLocations) * \
+            np.sin(self.phiLocations)
+        z = self.rLocations*np.cos(self.thetaLocations)
+        bigly = np.array([x, y, z])
+        return bigly.tolist()
 
-        length_increment = self.length/self._points_per_dimension[2]
-        start_length = length_increment/2
-        length_locations = []
-        for i in range(self._points_per_dimension[2]):
-            length_locations.append(start_length + (i*length_increment))
-
-        # iterate through each dimension, building a list of source points
-        source_points = []
-        for radial_location in annular_locations:
-            r = radial_location
-            for angle_location in angle_locations:
-                theta = angle_location
-                for length_location in length_locations:
-                    z = length_location
-                    # convert cylindrical to rectangular coordinates
-                    x = r * math.cos(theta)
-                    y = r * math.sin(theta)
-                    source_points.append([x, y, z])
-        return source_points
 
 # -----------------------------------------------------------
 
@@ -899,3 +908,77 @@ def _generic_cylinder_source_points(points_per_dimension, length, radius):
                 y = r * math.sin(theta)
                 source_points.append([x, y, z])
     return source_points
+
+
+def _spherequad(nr, nTheta, nPhi, rad):
+    '''
+    R,T,P,W =_spherequad(NR,NT,NP,RAD) computes the product grid nodes in
+    r, theta, and phi in spherical and the corresponding quadrature weights
+    for a sphere of radius RAD>0. NR is the number of radial nodes, NT is
+    the number of theta angle nodes in [0,pi], and NP is the number of phi
+    angle nodes in [0, 2*pi]. The sphere radius RAD can be set to infinity,
+    however, the functions to be integrated must decay exponentially with
+    radius to obtain a reasonable numerical approximation.
+
+    Source adapted from:
+    https://www.mathworks.com/matlabcentral/fileexchange/10750
+    Written by: Greg von Winckel - 04/13/2006
+    Contact: gregvw(at)math(dot)unm(dot)edu
+    URL: http://www.math.unm.edu/~gregvw
+    '''
+    r, wr = _rquad(nr, 2)         # radial weights and nodes (mapped Jacobi)
+
+    if rad == float('inf'):        # infinite radius sphere
+        wr = wr/(1-r)**4           # singular map of sphere radius
+        r = r/(1-r)
+    else:                        # finite radius sphere
+        wr = wr*rad**3             # Scale sphere radius
+        r = r*rad
+    x, wt = _rquad(nTheta, 0)
+
+    t = np.arccos((2*x-1))  # theta weights and nodes (mapped Legendre)
+    wt = 2*wt
+
+    p = 2*np.pi*np.linspace(0, nPhi-1, nPhi)/nPhi  # phi nodes (Gauss-Fourier)
+    wp = 2*np.pi*np.ones(nPhi)/nPhi        # phi weights
+    rr, tt, pp = np.meshgrid(r, t, p)   # Compute the product grid
+
+    r = rr.flatten('F')
+    t = tt.flatten('F')
+    p = pp.flatten('F')
+
+    wt = wt[:, np.newaxis]
+    wr = wr[:, np.newaxis]
+    wp = wp[:, np.newaxis]
+
+    w = np.reshape(
+        np.dot(np.reshape(np.dot(wt, wr.transpose()), (nr*nTheta, 1), 'F'),
+               wp.transpose()), (nr*nTheta*nPhi, 1), 'F')
+    w = w.reshape(-1)
+    return r, t, p, w
+
+
+def _rquad(N, k):
+    '''
+    Functional routine used by _spherequad
+    '''
+    k1 = k+1
+    k2 = k+2
+    n = np.arange(1, N+1)
+    nnk = 2*n+k
+    A = np.insert(np.matlib.repeat(k**2, N) / (nnk*(nnk+2)), 0, k/k2)
+    n = np.arange(2, N+1)
+    nnk = nnk[1:N+1]
+    B1 = 4*k1/(k2*k2*(k+3))
+    nk = n+k
+    nnk2 = nnk*nnk
+    B = 4*(n*nk)**2/(nnk2*nnk2-nnk2)
+    ab = np.column_stack((A, np.concatenate(([(2**k1)/k1], [B1], B))))
+    s = np.sqrt(ab[1:N, 1])
+    [X, V] = np.linalg.eig(np.diag(ab[0:N, 0], 0)+np.diag(s, -1)+np.diag(s, 1))
+    indexes = np.argsort(X)
+    X = np.sort(X)
+    V = V[:, indexes]
+    x = (X+1)/2
+    w = (1/2)**(k1)*ab[0, 1]*V[0]**2
+    return x, w

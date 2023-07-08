@@ -256,7 +256,7 @@ class Sphere(Shield):
         radius of the sphere.
     '''
     def __init__(self, material_name, sphere_center, sphere_radius,
-                 density=None):
+                 density=None, **kwargs):
         '''Initialize material composition and location of the slab shield'''
         super().__init__(material_name=material_name, density=density)
         self.center = np.array(sphere_center)
