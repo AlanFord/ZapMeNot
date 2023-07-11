@@ -228,11 +228,6 @@ class Model:
             # total_uncollided_energy_flux - an INTEGRAL of uncollided energy
             #    flux for a at the detector and a specific photon energy
             #
-            # note the division by np.asarray(source_point_weights).  This
-            # distributes the total photon yield among the quadrature points.
-            # Thus the sum of np.asarray(source_point_weights) should be the
-            # number of quadrature points.  A uniform weighting scheme should
-            # have uniform weights of 1.0.
             uncollided_point_energy_flux = photon_yield * \
                 np.asarray(source_point_weights) \
                 * uncollided_flux_factor * photon_energy * \

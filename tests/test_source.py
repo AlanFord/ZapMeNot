@@ -675,8 +675,7 @@ class TestSphericalSource():
         # quadrature section.  To generate weights used by ZapMeNot, the 
         # weights must be scaled by the average weight.
         volume = (4./3.)*np.pi*(10**3)
-        scaleBy = volume/(4*5*6)
-        w_reference = [x / scaleBy for x in w_reference]
+        w_reference = [x / volume for x in w_reference]
 
         a = create_source._get_source_point_weights()
         np.testing.assert_allclose(a, w_reference)
