@@ -158,6 +158,34 @@ class TestLineSource():
 
 
 # =============================================================
+class TestSphericalSource():
+
+    # spherical source with no shielding
+    # air density of 1E-10 g/cm3, similating void
+    # 10 cm radius with radial and angular quadratures of 10
+    # dose point is 20 cm from sphere origin
+    # sphere center located at coordinates [4, 5, 6], so
+    #   dose point is at [4, 5, 26] for dose point on the Z axis
+    #   and [24, 5, 6] for dose point on the X axis
+    # Source is 1 Bq of 1 MeV photons
+    #
+    # Microshield dose (unknown quadrature method) result is 3.875e-07 mR/hr.
+    # Matlab dose result is 3.868745387518610e-07 mR/hr.
+    def test_Case0(self):
+        myModel = model.Model()
+        mySource = source.SphereSource("air", sphere_radius=10,
+                                       sphere_center=[4, 5, 6], density=0)
+        mySource.points_per_dimension = [10, 10, 10]
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 1  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(4, 5, 26))
+        result = myModel.calculate_exposure()
+        assert result == pytest.approx(3.868745387518610e-07)
+
+
+# =============================================================
 class TestZAlignedCylinderSource():
 
     # line source with no shielding
