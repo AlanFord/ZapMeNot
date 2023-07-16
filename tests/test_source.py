@@ -241,7 +241,7 @@ class TestBoxSource():
     def create_source(self):
         my_source = source.BoxSource(box_center=[4, 5, 6],
                                      box_dimensions=[10, 10, 10],
-                                     material_name='iron')
+                                     material_name='iron', density=1.2)
         return my_source
 
     def test_init(self, create_source):
@@ -249,6 +249,7 @@ class TestBoxSource():
         assert all(create_source.box_center == [4, 5, 6])
         assert all(create_source.box_dimensions == [10, 10, 10])
         assert create_source.material.name == "iron"
+        assert create_source.material.density == 1.2
         # test attribute of source class
         assert create_source._include_key_progeny is False
         assert create_source.points_per_dimension == [10, 10, 10]
@@ -300,7 +301,8 @@ class TestXAlignedCylinderSource():
     def create_source(self):
         my_source = source.XAlignedCylinderSource(
             cylinder_center=[-1, 2, 3],
-            cylinder_length=10, cylinder_radius=5, material_name='iron')
+            cylinder_length=10, cylinder_radius=5, material_name='iron',
+            density=1.2)
         my_source.points_per_dimension = [3, 3, 3]
         return my_source
 
@@ -312,6 +314,7 @@ class TestXAlignedCylinderSource():
         assert all(create_source.end == [4, 2, 3])
         assert all(create_source.dir == [1, 0, 0])
         assert create_source.material.name == "iron"
+        assert create_source.material.density == 1.2
         # test attribute of source class
         assert create_source._include_key_progeny is False
         assert create_source.points_per_dimension == [3, 3, 3]
@@ -371,7 +374,8 @@ class TestYAlignedCylinderSource():
     def create_source(self):
         my_source = source.YAlignedCylinderSource(
             cylinder_center=[-1, 2, 3],
-            cylinder_length=10, cylinder_radius=5, material_name='iron')
+            cylinder_length=10, cylinder_radius=5, material_name='iron',
+            density=1.2)
         my_source.points_per_dimension = [3, 3, 3]
         return my_source
 
@@ -383,6 +387,7 @@ class TestYAlignedCylinderSource():
         assert all(create_source.end == [-1, 7, 3])
         assert all(create_source.dir == [0, 1, 0])
         assert create_source.material.name == "iron"
+        assert create_source.material.density == 1.2
         # test attribute of source class
         assert create_source._include_key_progeny is False
         assert create_source.points_per_dimension == [3, 3, 3]
@@ -442,7 +447,8 @@ class TestZAlignedCylinderSource():
     def create_source(self):
         my_source = source.ZAlignedCylinderSource(
             cylinder_center=[-1, 2, 3],
-            cylinder_length=10, cylinder_radius=5, material_name='iron')
+            cylinder_length=10, cylinder_radius=5, material_name='iron',
+            density=1.2)
         my_source.points_per_dimension = [3, 3, 3]
         return my_source
 
@@ -454,6 +460,7 @@ class TestZAlignedCylinderSource():
         assert all(create_source.end == [-1, 2, 8])
         assert all(create_source.dir == [0, 0, 1])
         assert create_source.material.name == "iron"
+        assert create_source.material.density == 1.2
         # test attribute of source class
         assert create_source._include_key_progeny is False
         assert create_source.points_per_dimension == [3, 3, 3]
@@ -511,7 +518,7 @@ class TestSphericalSource():
     # setup routine for subsequent tests
     @pytest.fixture(scope="function")
     def create_source(self):
-        my_source = source.SphereSource("air", sphere_radius=10,
+        my_source = source.SphereSource("air", density=1.2, sphere_radius=10,
                                         sphere_center=[4, 5, 6])
         return my_source
 
@@ -520,6 +527,7 @@ class TestSphericalSource():
         assert all(create_source.center == [4, 5, 6])
         assert create_source.radius == 10
         assert create_source.material.name == "air"
+        assert create_source.material.density == 1.2
         # test attribute of source class
         assert create_source._include_key_progeny is False
         assert create_source.points_per_dimension == [10, 10, 10]
@@ -647,7 +655,7 @@ class TestSphericalSource():
         # now let's relocate the center from (0,0,0) to (4,5,6)
         bigly = bigly + [4, 5, 6]
         np.testing.assert_allclose(create_source._get_source_points(), 
-                                   bigly) # , rtol=0.99, atol=1e-14)
+                                   bigly)  # , rtol=0.99, atol=1e-14)
 
         create_source.add_isotope_curies('Ar-41', 3.14)
         create_source.add_isotope_bq('Br-80m', 1E6)

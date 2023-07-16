@@ -38,5 +38,5 @@ shieldingFactor = exp(-mfp);  % should be 1
 uncollidedFlux = sourceBq .* w ./ (4*pi().*lengths.^2) * shieldingFactor;
 uncollidedEnergyFlux = uncollidedFlux .* 1; % 1 MeV
 uncollidedExposure = uncollidedEnergyFlux .* 1.835E-8 .* airMassEnAbsCoeff;
-finalExposure = sum(uncollidedExposure);
-finalExposure = finalExposure .*(1000*3600) % convert from R/sec to mR/hr
+finalExposure = uncollidedExposure .*(1000*3600); % convert from R/sec to mR/h
+finalExposureSum = sum(finalExposure)
