@@ -560,10 +560,11 @@ class SphereSource(Source, shield.Sphere):
 
     def __init__(self, material_name, sphere_center, sphere_radius,
                  density=None, **kwargs):
-        # kwargs['material_name'] = material_name
+        kwargs['material_name'] = material_name
         kwargs['sphere_center'] = sphere_center
         kwargs['sphere_radius'] = sphere_radius
-        super().__init__(material_name=material_name, **kwargs)
+        kwargs['density'] = density
+        super().__init__(**kwargs)
         self.points_per_dimension = [10, 10, 10]  # triggers quadrature calcs
 
     @property
