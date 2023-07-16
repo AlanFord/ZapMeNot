@@ -312,6 +312,17 @@ class Sphere(Shield):
             return False
         return True
 
+    def draw(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A Sphere object representing the sphere shield.
+        """
+        if pyvista_found:
+            return pyvista.Sphere(radius=self.radius, center=self.center)
+
 # -----------------------------------------------------------
 
 

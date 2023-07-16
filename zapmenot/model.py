@@ -289,7 +289,7 @@ class Model:
                 if isinstance(thisShield, source.Source):
                     # point sources are handled later
                     if len(self.source._get_source_points()) != 1:
-                        pl.add_mesh(thisShield.draw(), 
+                        pl.add_mesh(thisShield.draw(),
                                     sourceColor, label='source', line_width=3)
                 else:
                     pl.add_mesh(thisShield.draw(), shieldColor)

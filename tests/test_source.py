@@ -654,7 +654,7 @@ class TestSphericalSource():
         # print(bigly)
         # now let's relocate the center from (0,0,0) to (4,5,6)
         bigly = bigly + [4, 5, 6]
-        np.testing.assert_allclose(create_source._get_source_points(), 
+        np.testing.assert_allclose(create_source._get_source_points(),
                                    bigly)  # , rtol=0.99, atol=1e-14)
 
         create_source.add_isotope_curies('Ar-41', 3.14)
@@ -680,7 +680,7 @@ class TestSphericalSource():
                        55.5793554661618, 27.5124420571997]
         w_reference = w_reference*6
         # note that these raw weights from _spherequad are the volumes of each
-        # quadrature section.  To generate weights used by ZapMeNot, the 
+        # quadrature section.  To generate weights used by ZapMeNot, the
         # weights must be scaled by the average weight.
         volume = (4./3.)*np.pi*(10**3)
         w_reference = [x / volume for x in w_reference]
