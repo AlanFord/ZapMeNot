@@ -99,15 +99,22 @@ function GP = ExtrapolatedBuildupFactor(energy, mfp, material)
     if mfp <= 0
         mfp = 0;
     end
-    if mfp > 60
-        mfp = 60;
+    if mfp > 80
+        mfp = 80;
     end
     if mfp <= 40
         K = (c * (mfp^a)) + (d * (tanh(mfp/X -2) - tanh(-2))) / (1 - tanh(-2));
     else
         K35 = (c * (35^a)) + (d * (tanh(35/X -2) - tanh(-2))) / (1 - tanh(-2));
         K40 = (c * (40^a)) + (d * (tanh(40/X -2) - tanh(-2))) / (1 - tanh(-2));
-        K = 1 + (K35-1) * exp((1-(mfp/35)^0.1)/(1-(40/35)^0.1)*log((K40-1)/(K35-1)));
+        fm = 0.8;
+        Xi = (((mfp/35)^0.1)-1) / (((40/35)^0.1)-1);
+        testVal = (K40-1)/(K35-1);
+        if testVal >= 0 && testVal <= 1
+            K = 1 + (K35-1) * (((K40-1)/(K35-1))^Xi);
+        else
+            K = K35 * (K40/K35)^(Xi^fm);
+        end
     end
     if K == 1
         GP = 1 + (b-1)*mfp;

@@ -289,8 +289,8 @@ class Material:
             mfps = np.asarray([mfp])
         else:
             mfps = mfp
-        #ensure all values in the mpfs array are limited to a range of 0 to 60
-        mfps[mfps > 60] = 60
+        #ensure all values in the mpfs array are limited to a range of 0 to 80
+        mfps[mfps > 80] = 80
         mfps[mfps < 0] = 0
         # initialize the array of K values to 0
         K = np.zeros(mfps.size)  # default values for mfps = 0 -> buildup factor = 1
@@ -304,19 +304,23 @@ class Material:
                 (1 - np.tanh(-2))
             K40 = (c * (40**a)) + (d * (np.tanh(40/X - 2) - np.tanh(-2))) / \
                 (1 - np.tanh(-2))
-            
-            Xi = np.zeros(mfps.size)
-            Xi[mfps > 40] = (np.float_power(mfps[mfps > 40]/35., 0.1) -1) / \
-                            (np.float_power(40./35., 0.1) -1)
-            fm = 0.8
-            # fm = 1.0
-            exponent = np.zeros(mfps.size)
-            exponent[mfps > 40] = np.float_power(Xi[mfps > 40], fm)
-            ratio = (K40-1)/(K35-1)
-            if ratio >= 0 and ratio <= 1:
-                K[mfps > 40] = 1 + (K35-1) * np.float_power(ratio, Xi[mfps > 40])
+            if np.abs(K40-K35) < 1E-4:
+                K[mfps > 40] = K40
             else:
-                K[mfps > 40] = K35 * np.float_power(K40/K35, exponent[mfps > 40])
+                Xi = np.zeros(mfps.size)
+                Xi[mfps > 40] = (np.float_power(mfps[mfps > 40]/35., 0.1) -1) / \
+                                (np.float_power(40./35., 0.1) -1)
+                fm = 0.8
+                exponent = np.zeros(mfps.size)
+                exponent[mfps > 40] = np.float_power(Xi[mfps > 40], fm)
+                if np.abs(K35-1) < 1E-4:
+                    ratio = 1E4   # a dummy large value
+                else:
+                    ratio = (K40-1)/(K35-1)
+                if ratio >= 0 and ratio <= 1:
+                    K[mfps > 40] = 1 + (K35-1) * np.float_power(ratio, Xi[mfps > 40])
+                else:
+                    K[mfps > 40] = K35 * np.float_power(K40/K35, exponent[mfps > 40])
 
         answers = np.ones(mfps.size)  # set default values to 1
         answers[K == 1] = 1 + (b-1) * mfps[K == 1]
@@ -326,88 +330,4 @@ class Material:
         if np.shape(mfp) == ():
             return answers[0]
         else:
-            return answers
-
-    @staticmethod
-    def old_GP(a, b, c, d, X, mfp):
-        """Calculates the photon buildup factor using Geometric Progression
-
-        Parameters
-        ----------
-        a : float
-            A GP fitting coefficient
-        b : float
-            A GP fitting coefficient
-        c : float
-            A GP fitting coefficient
-        d : float
-            A GP fitting coefficient
-        X : float
-            A GP fitting coefficient
-        mfp : float (for a single mfp) or a numpy array (for several mfp's)
-            The mean free path through the material in cm
-
-        Returns
-        -------
-        float or :class:`numpy.ndarray`
-            Vector of photon exposure buildup factors in air
-
-        Important Details
-        -----------------
-        The number of mean free paths (mfp) used to calculate the buildup
-        factor is limited to a value of 40 or less.  This is an inherent
-        limitation of the source document, ANS-6.4.3-1991.  In normal use this
-        limitation is only expected to be encountered in cases involving low
-        energy photons (with a relatively small mean free path) and
-        thick shields.  In those instances the uncolided flux should be very
-        small.  Even with a larger buildup factor the contribution of these
-        photons to exposure should be minimal and other higher energy photons
-        should dominate.  The exception would be xrays combined with very thick
-        shiekding.  In those cases a higher-order shielding code
-        should be used.
-        """
-        if np.shape(mfp) == ():
-            if mfp <= 0:  # this accomodates a little rounding error
-                return 1
-            if mfp > 60:
-                mfp = 60  # limit results to mfp <= 60
-            if mfp <= 40:
-                K = (c * (mfp**a)) + (d * (np.tanh(mfp/X - 2) - np.tanh(-2))) / \
-                    (1 - np.tanh(-2))
-            else:
-                K35 = (c * (35**a)) + (d * (np.tanh(35/X - 2) - np.tanh(-2))) / \
-                    (1 - np.tanh(-2))
-                K40 = (c * (40**a)) + (d * (np.tanh(40/X - 2) - np.tanh(-2))) / \
-                    (1 - np.tanh(-2))
-                print('k35 = '+ str(K35) + ", K40 =  " + str(K40))
-                part1 = np.log((K40-1)/(K35-1))
-                part2 = (1-(mfp/35)**0.1)/(1-(40/35)**0.1)
-                K = 1 + (K35 - 1) * np.exp(part1*part2)
-            if K == 1:
-                answer = 1 + (b-1) * mfp
-            elif K != 1:
-                answer = 1 + (b-1)*((K**mfp) - 1)/(K - 1)
-            return answer
-        else:
-            mfp[mfp > 60] = 60
-            mfp[mfp < 0] = 0
-            K = np.zeros(mfp.size)  # default values for mfp = 0 -> buildup factor = 1
-            # cases that do not need extrapolation
-            K[np.logical_and(mfp > 0, mfp <= 40)] = (c * (mfp[np.logical_and(mfp > 0, mfp <= 40)]**a)) + \
-                (d * (np.tanh(mfp[np.logical_and(mfp > 0, mfp <= 40)]/X - 2) - np.tanh(-2))) / \
-                (1 - np.tanh(-2))
-            # cases that do need extrapolation
-            if np.any(mfp > 40):  # skip this step if no extrapolations needed
-                K35 = (c * (35**a)) + (d * (np.tanh(35/X - 2) - np.tanh(-2))) / \
-                    (1 - np.tanh(-2))
-                K40 = (c * (40**a)) + (d * (np.tanh(40/X - 2) - np.tanh(-2))) / \
-                    (1 - np.tanh(-2))
-                K[mfp > 40] = 1 + (K35 - 1) * \
-                    np.exp(np.log((K40-1)/(K35-1)) *
-                           (1-(mfp[mfp > 40]/35)**0.1)/(1-(40/35)**0.1))
-
-            answers = np.ones(mfp.size)  # set default values to 1
-            answers[K == 1] = 1 + (b-1) * mfp[K == 1]
-            answers[K != 1] = 1 + \
-                (b-1)*((np.power(K[K != 1], mfp[K != 1])) - 1)/(K[K != 1] - 1)
             return answers
