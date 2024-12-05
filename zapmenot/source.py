@@ -339,8 +339,8 @@ class LineSource(Source, shield.Shield):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.product(self._points_per_dimension)] * \
-            np.product(self._points_per_dimension)
+        return [1.0 / np.prod(self._points_per_dimension)] * \
+            np.prod(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -469,8 +469,8 @@ class PointSource(Source, shield.Shield):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.product(self._points_per_dimension)] * \
-            np.product(self._points_per_dimension)
+        return [1.0 / np.prod(self._points_per_dimension)] * \
+            np.prod(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -656,8 +656,8 @@ class BoxSource(Source, shield.Box):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.product(self._points_per_dimension)] * \
-            np.product(self._points_per_dimension)
+        return [1.0 / np.prod(self._points_per_dimension)] * \
+            np.prod(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -717,8 +717,8 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.product(self._points_per_dimension)] * \
-            np.product(self._points_per_dimension)
+        return [1.0 / np.prod(self._points_per_dimension)] * \
+            np.prod(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -774,8 +774,8 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.product(self._points_per_dimension)] * \
-            np.product(self._points_per_dimension)
+        return [1.0 / np.prod(self._points_per_dimension)] * \
+            np.prod(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
@@ -836,8 +836,8 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.product(self._points_per_dimension)] * \
-            np.product(self._points_per_dimension)
+        return [1.0 / np.prod(self._points_per_dimension)] * \
+            np.prod(self._points_per_dimension)
 
     def _get_source_points(self):
         """Generates a list of point sources within the Source geometry.
