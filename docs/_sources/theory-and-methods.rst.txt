@@ -62,10 +62,10 @@ and Buildup Factors for Engineering Materials."
 Note that the buildup factors in GP form as provided in ANSI/ANS-6.4.3 are only valid for distances 
 up to 40 mean free paths.  This is generally not a limitation, as the uncollided flux at some energy E 
 traversing 40 mean free paths has been reduced by a factor of at least :math:`10^{-13}`.  
-However, extrapolation of buildup factors out to 60 mean free paths has been implemented
-in ZapMeNot based on methods described in `"Evaluation of Geometric Progression (GP) Buildup Factors Using MCNPX 2.7.0"`_ by Kim, et al., 2013.
+However, extrapolation of buildup factors out to 80 mean free paths has been implemented
+in ZapMeNot based on methods described in `"Development of New Gamma-Ray Buildup Factor and Application to Shielding Calculations"`_ by Harima, et al., 1991.
 
-.. _"Evaluation of Geometric Progression (GP) Buildup Factors Using MCNPX 2.7.0": https://www.kns.org/files/pre_paper/1/13F-06A-2A-김경오.pdf
+.. _"Development of New Gamma-Ray Buildup Factor and Application to Shielding Calculations": https://www.tandfonline.com/doi/pdf/10.1080/18811248.1991.9731324
 
 Quadrature
 ----------

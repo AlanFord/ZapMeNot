@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>zapmenot.model &mdash; Zapmenot 0.1 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -26,14 +27,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Zapmenot
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Zapmenot
           </a>
               <div class="version">
                 0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -67,7 +72,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
       <li class="breadcrumb-item active">zapmenot.model</li>
       <li class="wy-breadcrumbs-aside">
@@ -91,7 +96,9 @@
     <span class="kn">import</span> <span class="nn">pyvista</span>
 
 
-<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+<div class="viewcode-block" id="Model">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model">[docs]</a>
+<span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs point-kernel shielding analysis.</span>
 
 <span class="sd">    The Model class combines various shielding elements to perform</span>
@@ -133,7 +140,9 @@
         <span class="c1"># per ion in air of 33.85 [ICRU Report 39, 1979].</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
 
-<div class="viewcode-block" id="Model.set_filler_material"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_filler_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_filler_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler_material</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.set_filler_material">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_filler_material">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_filler_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler_material</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Set the filler material used by the model</span>
 
 <span class="sd">        Parameters</span>
@@ -151,7 +160,10 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid density: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">density</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span></div>
 
-<div class="viewcode-block" id="Model.add_source"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_source">[docs]</a>    <span class="k">def</span> <span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Model.add_source">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_source">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the source used by the model.</span>
 
 <span class="sd">        Parameters</span>
@@ -166,7 +178,10 @@
         <span class="c1"># don&#39;t forget that sources are shields too!</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_source</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Model.add_shield"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_shield">[docs]</a>    <span class="k">def</span> <span class="nf">add_shield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shield</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Model.add_shield">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_shield">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_shield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shield</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a shield to the collection of shields used by the model.</span>
 
 <span class="sd">        Parameters</span>
@@ -178,7 +193,10 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid shield&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_shield</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Model.add_detector"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_detector">[docs]</a>    <span class="k">def</span> <span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Model.add_detector">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_detector">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the detector used by the model.</span>
 
 <span class="sd">        Parameters</span>
@@ -190,7 +208,10 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid detector&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="n">new_detector</span></div>
 
-<div class="viewcode-block" id="Model.set_buildup_factor_material"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_buildup_factor_material">[docs]</a>    <span class="k">def</span> <span class="nf">set_buildup_factor_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_material</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Model.set_buildup_factor_material">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_buildup_factor_material">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_buildup_factor_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_material</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the material used to calculation exposure buildup factors.</span>
 
 <span class="sd">        Parameters</span>
@@ -202,7 +223,10 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid buildup factor material&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span> <span class="o">=</span> <span class="n">new_material</span></div>
 
-<div class="viewcode-block" id="Model.calculate_exposure"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.calculate_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Model.calculate_exposure">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.calculate_exposure">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the exposure at the detector location.</span>
 
 <span class="sd">        Note:  Significant use of Numpy arrays to speed up evaluating the</span>
@@ -226,7 +250,10 @@
             <span class="n">integral_results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">an_array</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span>
             <span class="k">return</span> <span class="n">integral_results</span>  <span class="c1"># mR/hr</span></div>
 
-<div class="viewcode-block" id="Model.generate_summary"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.generate_summary">[docs]</a>    <span class="k">def</span> <span class="nf">generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Model.generate_summary">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.generate_summary">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the energy flux and exposure at the detector location.</span>
 
 <span class="sd">        Note:  Significant use of Numpy arrays to speed up evaluating the</span>
@@ -302,6 +329,13 @@
                         <span class="n">photon_energy</span><span class="p">,</span> <span class="n">total_mfp</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">buildup_factor</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="c1"># Notes for the following code:</span>
+            <span class="c1"># uncollided_point_energy_flux - an ARRAY of uncollided energy</span>
+            <span class="c1">#    flux for a at the detector from a range of quadrature</span>
+            <span class="c1">#    locations and a specific photon energy</span>
+            <span class="c1"># total_uncollided_energy_flux - an INTEGRAL of uncollided energy</span>
+            <span class="c1">#    flux for a at the detector and a specific photon energy</span>
+            <span class="c1">#</span>
             <span class="n">uncollided_point_energy_flux</span> <span class="o">=</span> <span class="n">photon_yield</span> <span class="o">*</span> \
                 <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">source_point_weights</span><span class="p">)</span> \
                 <span class="o">*</span> <span class="n">uncollided_flux_factor</span> <span class="o">*</span> <span class="n">photon_energy</span> <span class="o">*</span> \
@@ -322,7 +356,10 @@
 
         <span class="k">return</span> <span class="n">results_by_photon_energy</span></div>
 
-<div class="viewcode-block" id="Model.display"><a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Model.display">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.display">[docs]</a>
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Produces a graphic display of the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -335,6 +372,7 @@
             <span class="n">pl</span><span class="o">.</span><span class="n">show_bounds</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="s1">&#39;front&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span> <span class="n">all_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">add_legend</span><span class="p">(</span><span class="n">face</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
 
     <span class="k">def</span> <span class="nf">_trimBlocks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -363,7 +401,7 @@
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">thisShield</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">):</span>
                     <span class="c1"># point sources are handled later</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                        <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span> 
+                        <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span>
                                     <span class="n">sourceColor</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span> <span class="n">shieldColor</span><span class="p">)</span>
@@ -465,6 +503,7 @@
         <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
             <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">detectorColor</span><span class="p">,</span>
             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;detector&#39;</span><span class="p">)</span></div>
+
         <span class="c1"># pl.set_background(color=&#39;white&#39;)</span>
 </pre></div>
 
@@ -476,7 +515,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Feb 12, 2023.
+      <span class="lastupdated">Last updated on Dec 05, 2024.
       </span></p>
   </div>
 
