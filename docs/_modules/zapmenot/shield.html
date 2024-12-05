@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>zapmenot.shield &mdash; Zapmenot 0.1 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -26,14 +27,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Zapmenot
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Zapmenot
           </a>
               <div class="version">
                 0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -67,7 +72,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
       <li class="breadcrumb-item active">zapmenot.shield</li>
       <li class="wy-breadcrumbs-aside">
@@ -96,7 +101,9 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="Shield"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield">[docs]</a><span class="k">class</span> <span class="nc">Shield</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="Shield">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield">[docs]</a>
+<span class="k">class</span> <span class="nc">Shield</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abtract class to model a photon shield.</span>
 
 <span class="sd">    Parameters</span>
@@ -124,10 +131,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Shield.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield.is_infinite">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<div class="viewcode-block" id="Shield.is_infinite">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield.is_infinite">[docs]</a>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>
+
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ray</span><span class="p">):</span>
@@ -142,7 +152,9 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a_ray</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid ray object&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Shield.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield.get_crossing_mfp">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<div class="viewcode-block" id="Shield.get_crossing_mfp">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield.get_crossing_mfp">[docs]</a>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
@@ -158,6 +170,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid ray object&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid photon energy&quot;</span><span class="p">)</span></div>
+
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_line_plane_collision</span><span class="p">(</span><span class="n">plane_normal</span><span class="p">,</span> <span class="n">plane_point</span><span class="p">,</span> <span class="n">ray_origin</span><span class="p">,</span>
@@ -190,10 +203,13 @@
         <span class="n">t</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">plane_normal</span><span class="p">)</span><span class="o">/</span><span class="n">ndotu</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="SemiInfiniteXSlab"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab">[docs]</a><span class="k">class</span> <span class="nc">SemiInfiniteXSlab</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="SemiInfiniteXSlab">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab">[docs]</a>
+<span class="k">class</span> <span class="nc">SemiInfiniteXSlab</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A semi-infinite slab shield perpendicular to the X axis.</span>
 
 <span class="sd">    Parameters</span>
@@ -223,10 +239,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">x_start</span> <span class="o">=</span> <span class="n">x_start</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_end</span> <span class="o">=</span> <span class="n">x_end</span>
 
-<div class="viewcode-block" id="SemiInfiniteXSlab.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SemiInfiniteXSlab.is_infinite">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab.is_infinite">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">True</span></div>
+
 
     <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the linear intersection length of a ray and the shield</span>
@@ -276,7 +295,9 @@
         <span class="c1"># we are left with a full crossing</span>
         <span class="k">return</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
 
-<div class="viewcode-block" id="SemiInfiniteXSlab.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<div class="viewcode-block" id="SemiInfiniteXSlab.get_crossing_mfp">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab.get_crossing_mfp">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -292,7 +313,10 @@
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SemiInfiniteXSlab.draw"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SemiInfiniteXSlab.draw">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -304,70 +328,126 @@
             <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_end</span><span class="p">,</span> <span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span>
                                        <span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span></div>
 
+
     <span class="k">def</span> <span class="nf">_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
         <span class="c1"># project a point onto the surface of the infinite shield</span>
         <span class="c1"># this is a semi-infinite slab, with a finite X width,</span>
         <span class="c1"># so return two x values at the specified y and z</span>
         <span class="k">return</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_start</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_end</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)]</span></div>
-<span class="c1"># -----------------------------------------------------------</span>
-
-
-<span class="c1"># class Sphere(Shield):</span>
-<span class="c1">#     def __init__(self, material_name, sphere_center, sphere_radius, density=None):</span>
-<span class="c1">#         &#39;&#39;&#39;Initialize material composition and location of the slab shield&#39;&#39;&#39;</span>
-<span class="c1">#         super().__init__(material_name=material_name, density=density)</span>
-<span class="c1">#         self.center = np.array(sphere_center)</span>
-<span class="c1">#         self.radius = np.array(sphere_radius)</span>
-
-<span class="c1">#     def get_crossing_mfp(self, ray, photon_energy):</span>
-<span class="c1">#         &#39;&#39;&#39;returns the crossing mfp&#39;&#39;&#39;</span>
-<span class="c1">#         super().get_crossing_mfp(ray, photon_energy)    # validate the arguments</span>
-<span class="c1">#         distance = self._get_crossing_length(ray)</span>
-<span class="c1">#         return self.material.get_mfp(photon_energy, distance)</span>
-
-<span class="c1">#     def _get_crossing_length(self, ray):</span>
-<span class="c1">#         # based on</span>
-<span class="c1">#         # http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/</span>
-<span class="c1">#         super()._get_crossing_length(ray)  # validate the arguments</span>
-<span class="c1">#         a = np.dot(ray._dir, ray._dir)</span>
-<span class="c1">#         b = 2 * np.dot(ray._dir, ray._origin - self.center)</span>
-<span class="c1">#         c = np.dot(ray._origin-self.center, ray._origin -</span>
-<span class="c1">#                    self.center) - self.radius**2</span>
-<span class="c1">#         discriminant = b**2 - 4*a*c</span>
-<span class="c1">#         if discriminant &lt;= 0:</span>
-<span class="c1">#             # sphere is missed or tangent</span>
-<span class="c1">#             return 0</span>
-<span class="c1">#         root = np.sqrt(discriminant)</span>
-<span class="c1">#         t0 = (-b - root)/(2*a)</span>
-<span class="c1">#         t1 = (-b + root)/(2*a)</span>
-<span class="c1">#         big_list = []</span>
-<span class="c1">#         for a_length in [t0, t1]:</span>
-<span class="c1">#             if (a_length &gt;= 0) and (a_length &lt;= ray._length):</span>
-<span class="c1">#                 big_list.append(a_length)</span>
-<span class="c1">#         if len(big_list) != 2:</span>
-<span class="c1">#             # if not 2 intersections, look for ray endpoints inside the sphere</span>
-<span class="c1">#             if self.contains(ray._origin):</span>
-<span class="c1">#                 big_list.append(0)</span>
-<span class="c1">#             if self.contains(ray._end):</span>
-<span class="c1">#                 big_list.append(ray._length)</span>
-<span class="c1">#         if len(big_list) == 0:</span>
-<span class="c1">#             # ray misses the sphere</span>
-<span class="c1">#             return 0</span>
-<span class="c1">#         if len(big_list) != 2:</span>
-<span class="c1">#             # this shouldn&#39;t occur</span>
-<span class="c1">#             raise ValueError(&quot;Shield doesn&#39;t have 2 crossings&quot;)</span>
-<span class="c1">#         return abs(big_list[1]-big_list[0])</span>
-
-<span class="c1">#     def contains(self, point):</span>
-<span class="c1">#         ray = point - self.center</span>
-<span class="c1">#         if np.dot(ray, ray) &gt; self.radius**2:</span>
-<span class="c1">#             return False</span>
-<span class="c1">#         return True</span>
 
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="Box"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box">[docs]</a><span class="k">class</span> <span class="nc">Box</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="Sphere">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere">[docs]</a>
+<span class="k">class</span> <span class="nc">Sphere</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A spherical shield.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    material_name : :obj:`material.Material`</span>
+<span class="sd">        Shield material type</span>
+<span class="sd">    sphere_center : list</span>
+<span class="sd">        list of floats (x, y, and z coordinates).</span>
+<span class="sd">    sphere_radius : float</span>
+<span class="sd">        radius of the shield.</span>
+<span class="sd">    density : float, optional</span>
+<span class="sd">        Material density in g/cm3.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    material : :class: `material.Material`</span>
+<span class="sd">        Material properties of the shield</span>
+<span class="sd">    center : list</span>
+<span class="sd">        list of floats (x, y, and z coordinates).</span>
+<span class="sd">    radius : float</span>
+<span class="sd">        radius of the sphere.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">sphere_center</span><span class="p">,</span> <span class="n">sphere_radius</span><span class="p">,</span>
+                 <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Initialize material composition and location of the slab shield&#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sphere_center</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sphere_radius</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Sphere.is_infinite">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere.is_infinite">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns true if any dimension is infinite, false otherwise</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Sphere.get_crossing_mfp">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere.get_crossing_mfp">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;returns the crossing mfp&#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>  <span class="c1"># validate the arguments</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
+        <span class="c1"># based on</span>
+        <span class="c1"># https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>  <span class="c1"># validate the arguments</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_dir</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">_dir</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_dir</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">_origin</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_origin</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">_origin</span> <span class="o">-</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">discriminant</span> <span class="o">=</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+        <span class="k">if</span> <span class="n">discriminant</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># sphere is missed or tangent</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">discriminant</span><span class="p">)</span>
+        <span class="n">t0</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">root</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">root</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">big_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">a_length</span> <span class="ow">in</span> <span class="p">[</span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">a_length</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a_length</span> <span class="o">&lt;=</span> <span class="n">ray</span><span class="o">.</span><span class="n">_length</span><span class="p">):</span>
+                <span class="n">big_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_length</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">big_list</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># if not 2 intersections, look for ray endpoints inside the sphere</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_origin</span><span class="p">):</span>
+                <span class="n">big_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_end</span><span class="p">):</span>
+                <span class="n">big_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_length</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">big_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># ray misses the sphere</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">big_list</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># this shouldn&#39;t occur</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Shield doesn&#39;t have 2 crossings&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">big_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">big_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
+        <span class="n">ray</span> <span class="o">=</span> <span class="n">point</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">ray</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="Sphere.draw">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a display object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`pyvista.PolyData`</span>
+<span class="sd">            A Sphere object representing the sphere shield.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span></div>
+</div>
+
+
+<span class="c1"># -----------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="Box">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box">[docs]</a>
+<span class="k">class</span> <span class="nc">Box</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A rectangular polyhedron shield.</span>
 
 <span class="sd">    All sides of the box shield must be axis-aligned.</span>
@@ -400,12 +480,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">box_center</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">box_dimensions</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Box.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Box.is_infinite">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box.is_infinite">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="Box.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Box.get_crossing_mfp">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box.get_crossing_mfp">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -420,6 +505,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the linear intersection length of a ray and the shield</span>
@@ -532,7 +618,9 @@
 
         <span class="k">return</span> <span class="n">results</span>
 
-<div class="viewcode-block" id="Box.draw"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Box.draw">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -547,12 +635,16 @@
             <span class="n">ymax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
             <span class="n">zmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
             <span class="n">zmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
-            <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">zmin</span><span class="p">,</span> <span class="n">zmax</span><span class="p">))</span></div></div>
+            <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">zmin</span><span class="p">,</span> <span class="n">zmax</span><span class="p">))</span></div>
+</div>
+
 
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="InfiniteAnnulus"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">InfiniteAnnulus</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="InfiniteAnnulus">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus">[docs]</a>
+<span class="k">class</span> <span class="nc">InfiniteAnnulus</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An annular shield of infinite length</span>
 
 <span class="sd">    Parameters</span>
@@ -594,12 +686,17 @@
         <span class="n">axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cylinder_axis</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="n">axis</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
 
-<div class="viewcode-block" id="InfiniteAnnulus.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InfiniteAnnulus.is_infinite">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus.is_infinite">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="InfiniteAnnulus.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+
+<div class="viewcode-block" id="InfiniteAnnulus.get_crossing_mfp">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus.get_crossing_mfp">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -614,6 +711,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the linear intersection length of a ray and the shield</span>
@@ -717,7 +815,9 @@
                         <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span>
 
-<div class="viewcode-block" id="InfiniteAnnulus.draw"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InfiniteAnnulus.draw">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -735,6 +835,7 @@
                                 <span class="n">outer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">outer_radius</span><span class="p">,</span> <span class="n">c_res</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
             <span class="n">cyl1</span> <span class="o">=</span> <span class="n">disc</span><span class="o">.</span><span class="n">extrude</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="o">*</span><span class="mi">4000</span><span class="p">,</span> <span class="n">capping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">cyl1</span></div>
+
 
     <span class="k">def</span> <span class="nf">_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
         <span class="c1"># TODO: generalize this by using a degenerate cylinder</span>
@@ -776,8 +877,8 @@
             <span class="n">distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">intersection</span> <span class="o">-</span> <span class="n">plane_point</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">min_collision_distance</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> \
                <span class="p">(</span><span class="n">distance</span> <span class="o">&lt;</span> <span class="n">min_collision_distance</span><span class="p">):</span>
-                    <span class="n">min_collision_distance</span> <span class="o">=</span> <span class="n">distance</span>
-                    <span class="n">collision_point</span> <span class="o">=</span> <span class="n">intersection</span>
+                <span class="n">min_collision_distance</span> <span class="o">=</span> <span class="n">distance</span>
+                <span class="n">collision_point</span> <span class="o">=</span> <span class="n">intersection</span>
         <span class="n">fakeElipsisRadius</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer_radius</span>
         <span class="c1"># generate a bounding box centered at &quot;center&quot; and</span>
         <span class="c1"># a width of 2*outer_radius</span>
@@ -788,10 +889,13 @@
                 <span class="n">collision_point</span> <span class="o">-</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fakeElipsisRadius</span><span class="p">],</span>
                 <span class="n">collision_point</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fakeElipsisRadius</span><span class="p">]]</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="YAlignedInfiniteAnnulus"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.YAlignedInfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">YAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
+<div class="viewcode-block" id="YAlignedInfiniteAnnulus">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.YAlignedInfiniteAnnulus">[docs]</a>
+<span class="k">class</span> <span class="nc">YAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An annular shield of infinite length aligned with the Y axis</span>
 
 <span class="sd">    Parameters</span>
@@ -830,10 +934,13 @@
                          <span class="n">cylinder_outer_radius</span><span class="o">=</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
                          <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="XAlignedInfiniteAnnulus"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.XAlignedInfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">XAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
+<div class="viewcode-block" id="XAlignedInfiniteAnnulus">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.XAlignedInfiniteAnnulus">[docs]</a>
+<span class="k">class</span> <span class="nc">XAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An annular shield of infinite length aligned with the X axis</span>
 
 <span class="sd">    Parameters</span>
@@ -871,10 +978,13 @@
                          <span class="n">cylinder_outer_radius</span><span class="o">=</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
                          <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="ZAlignedInfiniteAnnulus"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.ZAlignedInfiniteAnnulus">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
+<div class="viewcode-block" id="ZAlignedInfiniteAnnulus">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.ZAlignedInfiniteAnnulus">[docs]</a>
+<span class="k">class</span> <span class="nc">ZAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An annular shield of infinite length aligned with the Z axis</span>
 
 <span class="sd">    Parameters</span>
@@ -913,10 +1023,13 @@
                          <span class="n">cylinder_outer_radius</span><span class="o">=</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
                          <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="CappedCylinder"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder">[docs]</a><span class="k">class</span> <span class="nc">CappedCylinder</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="CappedCylinder">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder">[docs]</a>
+<span class="k">class</span> <span class="nc">CappedCylinder</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length</span>
 
 <span class="sd">    Parameters</span>
@@ -958,12 +1071,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span>
 
-<div class="viewcode-block" id="CappedCylinder.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CappedCylinder.is_infinite">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder.is_infinite">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="CappedCylinder.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+
+<div class="viewcode-block" id="CappedCylinder.get_crossing_mfp">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder.get_crossing_mfp">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -978,6 +1096,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the linear intersection length of a ray and the shield</span>
@@ -1095,7 +1214,9 @@
                     <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span>
 
-<div class="viewcode-block" id="CappedCylinder.draw"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CappedCylinder.draw">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -1107,12 +1228,16 @@
             <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
             <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Cylinder</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">center</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
                                     <span class="n">direction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
-                                    <span class="n">radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span></div></div>
+                                    <span class="n">radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span></div>
+</div>
+
 
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="YAlignedCylinder"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.YAlignedCylinder">[docs]</a><span class="k">class</span> <span class="nc">YAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="YAlignedCylinder">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.YAlignedCylinder">[docs]</a>
+<span class="k">class</span> <span class="nc">YAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length aligned with the Y axis</span>
 
 <span class="sd">    Parameters</span>
@@ -1157,10 +1282,13 @@
                          <span class="n">cylinder_end</span><span class="o">=</span><span class="n">cylinder_end</span><span class="p">,</span>
                          <span class="n">cylinder_radius</span><span class="o">=</span><span class="n">cylinder_radius</span><span class="p">)</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="XAlignedCylinder"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.XAlignedCylinder">[docs]</a><span class="k">class</span> <span class="nc">XAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="XAlignedCylinder">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.XAlignedCylinder">[docs]</a>
+<span class="k">class</span> <span class="nc">XAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length aligned with the X axis</span>
 
 <span class="sd">    Parameters</span>
@@ -1206,10 +1334,13 @@
                          <span class="n">cylinder_end</span><span class="o">=</span><span class="n">cylinder_end</span><span class="p">,</span>
                          <span class="n">cylinder_radius</span><span class="o">=</span><span class="n">cylinder_radius</span><span class="p">)</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="ZAlignedCylinder"><a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.ZAlignedCylinder">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="ZAlignedCylinder">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.ZAlignedCylinder">[docs]</a>
+<span class="k">class</span> <span class="nc">ZAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length aligned with the Z axis</span>
 
 <span class="sd">    Parameters</span>
@@ -1254,6 +1385,7 @@
                          <span class="n">cylinder_start</span><span class="o">=</span><span class="n">cylinder_start</span><span class="p">,</span>
                          <span class="n">cylinder_end</span><span class="o">=</span><span class="n">cylinder_end</span><span class="p">,</span>
                          <span class="n">cylinder_radius</span><span class="o">=</span><span class="n">cylinder_radius</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>
@@ -1264,7 +1396,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Feb 12, 2023.
+      <span class="lastupdated">Last updated on Dec 05, 2024.
       </span></p>
   </div>
 

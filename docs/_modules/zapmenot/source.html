@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>zapmenot.source &mdash; Zapmenot 0.1 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -26,14 +27,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Zapmenot
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Zapmenot
           </a>
               <div class="version">
                 0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -67,7 +72,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
       <li class="breadcrumb-item active">zapmenot.source</li>
       <li class="wy-breadcrumbs-aside">
@@ -82,6 +87,7 @@
 <span></span><span class="kn">import</span> <span class="nn">abc</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.matlib</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">shield</span><span class="p">,</span> <span class="n">isotope</span>
@@ -95,7 +101,9 @@
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="GroupOption"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.GroupOption">[docs]</a><span class="k">class</span> <span class="nc">GroupOption</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="GroupOption">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.GroupOption">[docs]</a>
+<span class="k">class</span> <span class="nc">GroupOption</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set of possible energy group options.  The options</span>
 <span class="sd">    include &#39;group&#39;, &#39;discrete&#39;, and &#39;hybrid&#39;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -103,10 +111,13 @@
     <span class="n">HYBRID</span> <span class="o">=</span> <span class="s2">&quot;hybrid&quot;</span>
     <span class="n">DISCRETE</span> <span class="o">=</span> <span class="s2">&quot;discrete&quot;</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source">[docs]</a><span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="Source">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source">[docs]</a>
+<span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abtract class to model a radiation source.</span>
 
 <span class="sd">    Maintains a list of isotopes and can return a list of point source</span>
@@ -167,7 +178,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;bool : State defining if key progeny should be included.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span> <span class="o">=</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="Source.add_isotope_curies"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.add_isotope_curies">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_curies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="p">):</span>
+<div class="viewcode-block" id="Source.add_isotope_curies">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.add_isotope_curies">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_isotope_curies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds an isotope and activity in curies to the isotope list</span>
 
 <span class="sd">        Parameters</span>
@@ -179,7 +192,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_isotope</span><span class="p">,</span> <span class="n">curies</span><span class="o">*</span><span class="mf">3.7E10</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Source.add_isotope_bq"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.add_isotope_bq">[docs]</a>    <span class="k">def</span> <span class="nf">add_isotope_bq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">becquerels</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Source.add_isotope_bq">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.add_isotope_bq">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_isotope_bq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_isotope</span><span class="p">,</span> <span class="n">becquerels</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds an isotope and activity in becquerels to the isotope list</span>
 
 <span class="sd">        Parameters</span>
@@ -191,7 +207,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_isotope</span><span class="p">,</span> <span class="n">becquerels</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Source.add_photon"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.add_photon">[docs]</a>    <span class="k">def</span> <span class="nf">add_photon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Source.add_photon">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.add_photon">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_photon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a photon and intensity to the photon list</span>
 
 <span class="sd">        Parameters</span>
@@ -203,7 +222,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Source.list_isotopes"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.list_isotopes">[docs]</a>    <span class="k">def</span> <span class="nf">list_isotopes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Source.list_isotopes">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.list_isotopes">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_isotopes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of isotopes in the source</span>
 
 <span class="sd">        Returns</span>
@@ -214,7 +236,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isotope_list</span></div>
 
-<div class="viewcode-block" id="Source.list_discrete_photons"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.list_discrete_photons">[docs]</a>    <span class="k">def</span> <span class="nf">list_discrete_photons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Source.list_discrete_photons">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.list_discrete_photons">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_discrete_photons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of individual photons in the source.</span>
 
 <span class="sd">        The list includes only those photons that have been added</span>
@@ -228,6 +253,7 @@
 <span class="sd">            photon energy in MeV and an activity in Bq.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_photons</span></div>
+
 
     <span class="c1"># def _get_distributed_source_list(self):</span>
     <span class="c1">#     &quot;&quot;&quot;Returns a list of photons in the source</span>
@@ -245,12 +271,15 @@
     <span class="c1">#     list = self.get_photon_source_list()</span>
     <span class="c1">#     scaling_factor = np.prod(self._points_per_dimension)</span>
 
-<div class="viewcode-block" id="Source.get_photon_source_list"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.get_photon_source_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_photon_source_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Source.get_photon_source_list">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.get_photon_source_list">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_photon_source_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of photons in the source</span>
 
 <span class="sd">        This list of photons combines the Isotopes and the</span>
 <span class="sd">        unique_photons specified in the Source definition.</span>
-<span class="sd">        The photon intensities are scaled to **one source point**.</span>
+<span class="sd">        The photon intensities are scaled to</span>
+<span class="sd">        **an integral over the source volume**.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -326,12 +355,22 @@
             <span class="n">photon_list</span> <span class="o">=</span> <span class="n">returnValue</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">photon_list</span></div>
 
+
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of quadrature weights for the quadrature locations</span>
+<span class="sd">        within the source volume.  Note that the weights should sum to 1.0,</span>
+<span class="sd">        each weight representing the fraction of the source associated with</span>
+<span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
+<span class="sd">        the weights should have constant values that sum to 1.0.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span>
 
     <span class="nd">@property</span>
@@ -357,10 +396,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="n">value</span></div>
 
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="LineSource"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource">[docs]</a><span class="k">class</span> <span class="nc">LineSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="LineSource">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource">[docs]</a>
+<span class="k">class</span> <span class="nc">LineSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a line radiation source</span>
 
 <span class="sd">    Parameters</span>
@@ -396,12 +438,22 @@
         <span class="c1"># single dimension</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
 
-<div class="viewcode-block" id="LineSource.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LineSource.is_infinite">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource.is_infinite">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
+
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of quadrature weights for the quadrature locations</span>
+<span class="sd">        within the source volume.  Note that the weights should sum to 1.0,</span>
+<span class="sd">        each weight representing the fraction of the source associated with</span>
+<span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
+<span class="sd">        the weights should have constant values that sum to 1.0.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
             <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
@@ -450,7 +502,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span>
 
-<div class="viewcode-block" id="LineSource.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<div class="viewcode-block" id="LineSource.get_crossing_mfp">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource.get_crossing_mfp">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -468,7 +522,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="LineSource.draw"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="LineSource.draw">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -477,12 +534,16 @@
 <span class="sd">            A line object representing the line source.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Line</span><span class="p">(</span><span class="n">pointa</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span> <span class="n">pointb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span></div></div>
+            <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Line</span><span class="p">(</span><span class="n">pointa</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span> <span class="n">pointb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span></div>
+</div>
+
 
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="PointSource"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource">[docs]</a><span class="k">class</span> <span class="nc">PointSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+<div class="viewcode-block" id="PointSource">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource">[docs]</a>
+<span class="k">class</span> <span class="nc">PointSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a point radiation source</span>
 
 <span class="sd">    Parameters</span>
@@ -519,12 +580,22 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-<div class="viewcode-block" id="PointSource.is_infinite"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.is_infinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PointSource.is_infinite">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.is_infinite">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
+
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of quadrature weights for the quadrature locations</span>
+<span class="sd">        within the source volume.  Note that the weights should sum to 1.0,</span>
+<span class="sd">        each weight representing the fraction of the source associated with</span>
+<span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
+<span class="sd">        the weights should have constant values that sum to 1.0.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
             <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
@@ -555,7 +626,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span>
 
-<div class="viewcode-block" id="PointSource.get_crossing_mfp"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.get_crossing_mfp">[docs]</a>    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
+<div class="viewcode-block" id="PointSource.get_crossing_mfp">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.get_crossing_mfp">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -574,7 +647,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="PointSource.draw"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PointSource.draw">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a display object</span>
 
 <span class="sd">        Returns</span>
@@ -585,64 +661,110 @@
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
             <span class="c1"># this returns a degenerate line, equivalent to a point</span>
             <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Line</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="p">),</span>
-                                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="p">))</span></div></div>
+                                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="p">))</span></div>
+</div>
+
+
+
+<span class="c1"># -----------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="SphereSource">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.SphereSource">[docs]</a>
+<span class="k">class</span> <span class="nc">SphereSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Sphere</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Models a Spherical source</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    material_name : :obj:`material.Material`</span>
+<span class="sd">        Shield material type</span>
+<span class="sd">    sphere_center : list</span>
+<span class="sd">        list of floats (x, y, and z coordinates).</span>
+<span class="sd">    sphere_radius : float</span>
+<span class="sd">        radius of the shield.</span>
+<span class="sd">    density : float, optional</span>
+<span class="sd">        Material density in g/cm3.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    material : :class: `material.Material`</span>
+<span class="sd">        Material properties of the shield</span>
+<span class="sd">    center : list</span>
+<span class="sd">        list of floats (x, y, and z coordinates).</span>
+<span class="sd">    radius : float</span>
+<span class="sd">        radius of the sphere.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">,</span> <span class="n">sphere_center</span><span class="p">,</span> <span class="n">sphere_radius</span><span class="p">,</span>
+                 <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;material_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">material_name</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sphere_center&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sphere_center</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sphere_radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sphere_radius</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">density</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>  <span class="c1"># triggers quadrature calcs</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">points_per_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;list of integers : Number of source points per dimension.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Source</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="o">.</span><span class="n">fget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@points_per_dimension</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">points_per_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;list of integers : Number of source points per dimension.&quot;&quot;&quot;</span>
+        <span class="c1"># verify there are three values in the list</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Source Points per Dimension needs three entries&quot;</span><span class="p">)</span>
+        <span class="n">Source</span><span class="o">.</span><span class="n">points_per_dimension</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="c1"># update the quadrature and weights</span>
+        <span class="n">nR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">nTheta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">nPhi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">_spherequad</span><span class="p">(</span><span class="n">nR</span><span class="p">,</span> <span class="n">nTheta</span><span class="p">,</span> <span class="n">nPhi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+        <span class="c1"># the weights generated by _spherequad represent the volume</span>
+        <span class="c1"># associated with each quadrature point.  The weights needed</span>
+        <span class="c1">#  by ZapMeNot are the FRACTION of</span>
+        <span class="c1"># the sphere&#39;s volume represented by each quadrature point.</span>
+        <span class="n">totalVolume</span> <span class="o">=</span> <span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="n">totalVolume</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rLocations</span> <span class="o">=</span> <span class="n">r</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thetaLocations</span> <span class="o">=</span> <span class="n">t</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phiLocations</span> <span class="o">=</span> <span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of quadrature weights for the quadrature locations</span>
+<span class="sd">        within the source volume.  Note that the weights should sum to 1.0,</span>
+<span class="sd">        each weight representing the fraction of the source associated with</span>
+<span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
+<span class="sd">        the weights should have constant values that sum to 1.0.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span>
+
+    <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
+<span class="sd">            A list of vector locations within the Source body.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rLocations</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thetaLocations</span><span class="p">)</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phiLocations</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rLocations</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thetaLocations</span><span class="p">)</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phiLocations</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rLocations</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thetaLocations</span><span class="p">)</span>
+        <span class="n">bigly</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span>
+        <span class="k">return</span> <span class="n">bigly</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
 
 
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<span class="c1"># class SphereSource(Source, shield.Sphere):</span>
-<span class="c1">#     &#39;&#39;&#39;Axis-Aligned rectangular box source&#39;&#39;&#39;</span>
-<span class="c1">#     # initialize with box_center, box_dimensions, material(optional),</span>
-<span class="c1">#     # density(optional)</span>
-
-<span class="c1">#     def __init__(self, **kwargs):</span>
-<span class="c1">#         super().__init__(**kwargs)</span>
-
-<span class="c1">#    def _get_source_point_weights(self):</span>
-<span class="c1">#         pass</span>
-
-<span class="c1">#     def _get_source_points(self):</span>
-
-<span class="c1">#         # calculate the radius of each &quot;equal area&quot; annular region</span>
-<span class="c1">#         totalVolume = 4/3*math.pi*self.radius**3</span>
-<span class="c1">#         old_radius = 0</span>
-<span class="c1">#         annular_locations = []</span>
-<span class="c1">#         for i in range(self._points_per_dimension[0]):</span>
-<span class="c1">#             new_radius = math.sqrt((running_area+annular_area)/math.pi)</span>
-<span class="c1">#             annular_locations.append((new_radius+old_radius)/2)</span>
-<span class="c1">#             old_radius = new_radius</span>
-
-<span class="c1">#         angle_increment = 2*math.pi/self._points_per_dimension[1]</span>
-<span class="c1">#         start_angle = angle_increment/2</span>
-<span class="c1">#         angle_locations = []</span>
-<span class="c1">#         for i in range(self._points_per_dimension[1]):</span>
-<span class="c1">#             angle_locations.append(start_angle + (i*angle_increment))</span>
-
-<span class="c1">#         length_increment = self.length/self._points_per_dimension[2]</span>
-<span class="c1">#         start_length = length_increment/2</span>
-<span class="c1">#         length_locations = []</span>
-<span class="c1">#         for i in range(self._points_per_dimension[2]):</span>
-<span class="c1">#             length_locations.append(start_length + (i*length_increment))</span>
-
-<span class="c1">#         # iterate through each dimension, building a list of source points</span>
-<span class="c1">#         source_points = []</span>
-<span class="c1">#         for radial_location in annular_locations:</span>
-<span class="c1">#             r = radial_location</span>
-<span class="c1">#             for angle_location in angle_locations:</span>
-<span class="c1">#                 theta = angle_location</span>
-<span class="c1">#                 for length_location in length_locations:</span>
-<span class="c1">#                     z = length_location</span>
-<span class="c1">#                     # convert cylindrical to rectangular coordinates</span>
-<span class="c1">#                     x = r * math.cos(theta)</span>
-<span class="c1">#                     y = r * math.sin(theta)</span>
-<span class="c1">#                     source_points.append([x, y, z])</span>
-<span class="c1">#         return source_points</span>
-
-<span class="c1"># -----------------------------------------------------------</span>
-
-
-<div class="viewcode-block" id="BoxSource"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.BoxSource">[docs]</a><span class="k">class</span> <span class="nc">BoxSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Box</span><span class="p">):</span>
+<div class="viewcode-block" id="BoxSource">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.BoxSource">[docs]</a>
+<span class="k">class</span> <span class="nc">BoxSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Box</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a Axis-Aligned rectangular box source</span>
 
 <span class="sd">    Parameters</span>
@@ -666,6 +788,13 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of quadrature weights for the quadrature locations</span>
+<span class="sd">        within the source volume.  Note that the weights should sum to 1.0,</span>
+<span class="sd">        each weight representing the fraction of the source associated with</span>
+<span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
+<span class="sd">        the weights should have constant values that sum to 1.0.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
             <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
@@ -693,10 +822,13 @@
                     <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="ZAlignedCylinderSource"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.ZAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">ZAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">ZAlignedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="ZAlignedCylinderSource">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.ZAlignedCylinderSource">[docs]</a>
+<span class="k">class</span> <span class="nc">ZAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">ZAlignedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the Z axis.</span>
 
 <span class="sd">    Parameters</span>
@@ -720,6 +852,13 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of quadrature weights for the quadrature locations</span>
+<span class="sd">        within the source volume.  Note that the weights should sum to 1.0,</span>
+<span class="sd">        each weight representing the fraction of the source associated with</span>
+<span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
+<span class="sd">        the weights should have constant values that sum to 1.0.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
             <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
@@ -743,10 +882,13 @@
         <span class="n">source_points</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="YAlignedCylinderSource"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.YAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">YAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">YAlignedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="YAlignedCylinderSource">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.YAlignedCylinderSource">[docs]</a>
+<span class="k">class</span> <span class="nc">YAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">YAlignedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the Y axis.</span>
 
 <span class="sd">    Parameters</span>
@@ -770,6 +912,13 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of quadrature weights for the quadrature locations</span>
+<span class="sd">        within the source volume.  Note that the weights should sum to 1.0,</span>
+<span class="sd">        each weight representing the fraction of the source associated with</span>
+<span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
+<span class="sd">        the weights should have constant values that sum to 1.0.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
             <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
@@ -798,10 +947,13 @@
         <span class="n">source_points</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
 
+
 <span class="c1"># -----------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="XAlignedCylinderSource"><a class="viewcode-back" href="../../module-docs.html#zapmenot.source.XAlignedCylinderSource">[docs]</a><span class="k">class</span> <span class="nc">XAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">XAlignedCylinder</span><span class="p">):</span>
+<div class="viewcode-block" id="XAlignedCylinderSource">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.XAlignedCylinderSource">[docs]</a>
+<span class="k">class</span> <span class="nc">XAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">XAlignedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the X axis.</span>
 
 <span class="sd">    Parameters</span>
@@ -825,6 +977,13 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Returns a list of quadrature weights for the quadrature locations</span>
+<span class="sd">        within the source volume.  Note that the weights should sum to 1.0,</span>
+<span class="sd">        each weight representing the fraction of the source associated with</span>
+<span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
+<span class="sd">        the weights should have constant values that sum to 1.0.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
             <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
@@ -852,6 +1011,7 @@
         <span class="c1"># shift the point set to the specified cylinder center</span>
         <span class="n">source_points</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
         <span class="k">return</span> <span class="n">source_points</span></div>
+
 
 
 <span class="k">def</span> <span class="nf">_generic_cylinder_source_points</span><span class="p">(</span><span class="n">points_per_dimension</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
@@ -909,6 +1069,80 @@
                 <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
                 <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">source_points</span>
+
+
+<span class="k">def</span> <span class="nf">_spherequad</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">nTheta</span><span class="p">,</span> <span class="n">nPhi</span><span class="p">,</span> <span class="n">rad</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    R,T,P,W =_spherequad(NR,NT,NP,RAD) computes the product grid nodes in</span>
+<span class="sd">    r, theta, and phi in spherical and the corresponding quadrature weights</span>
+<span class="sd">    for a sphere of radius RAD&gt;0. NR is the number of radial nodes, NT is</span>
+<span class="sd">    the number of theta angle nodes in [0,pi], and NP is the number of phi</span>
+<span class="sd">    angle nodes in [0, 2*pi]. The sphere radius RAD can be set to infinity,</span>
+<span class="sd">    however, the functions to be integrated must decay exponentially with</span>
+<span class="sd">    radius to obtain a reasonable numerical approximation.</span>
+
+<span class="sd">    Source adapted from:</span>
+<span class="sd">    https://www.mathworks.com/matlabcentral/fileexchange/10750</span>
+<span class="sd">    Written by: Greg von Winckel - 04/13/2006</span>
+<span class="sd">    Contact: gregvw(at)math(dot)unm(dot)edu</span>
+<span class="sd">    URL: http://www.math.unm.edu/~gregvw</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">wr</span> <span class="o">=</span> <span class="n">_rquad</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>         <span class="c1"># radial weights and nodes (mapped Jacobi)</span>
+
+    <span class="k">if</span> <span class="n">rad</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">):</span>        <span class="c1"># infinite radius sphere</span>
+        <span class="n">wr</span> <span class="o">=</span> <span class="n">wr</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>           <span class="c1"># singular map of sphere radius</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>                        <span class="c1"># finite radius sphere</span>
+        <span class="n">wr</span> <span class="o">=</span> <span class="n">wr</span><span class="o">*</span><span class="n">rad</span><span class="o">**</span><span class="mi">3</span>             <span class="c1"># Scale sphere radius</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">rad</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">wt</span> <span class="o">=</span> <span class="n">_rquad</span><span class="p">(</span><span class="n">nTheta</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># theta weights and nodes (mapped Legendre)</span>
+    <span class="n">wt</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">wt</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nPhi</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nPhi</span><span class="p">)</span><span class="o">/</span><span class="n">nPhi</span>  <span class="c1"># phi nodes (Gauss-Fourier)</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">nPhi</span><span class="p">)</span><span class="o">/</span><span class="n">nPhi</span>        <span class="c1"># phi weights</span>
+    <span class="n">rr</span><span class="p">,</span> <span class="n">tt</span><span class="p">,</span> <span class="n">pp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>   <span class="c1"># Compute the product grid</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+
+    <span class="n">wt</span> <span class="o">=</span> <span class="n">wt</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="n">wr</span> <span class="o">=</span> <span class="n">wr</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="n">wp</span> <span class="o">=</span> <span class="n">wp</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span> <span class="n">wr</span><span class="o">.</span><span class="n">transpose</span><span class="p">()),</span> <span class="p">(</span><span class="n">nr</span><span class="o">*</span><span class="n">nTheta</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;F&#39;</span><span class="p">),</span>
+               <span class="n">wp</span><span class="o">.</span><span class="n">transpose</span><span class="p">()),</span> <span class="p">(</span><span class="n">nr</span><span class="o">*</span><span class="n">nTheta</span><span class="o">*</span><span class="n">nPhi</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;F&#39;</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">w</span>
+
+
+<span class="k">def</span> <span class="nf">_rquad</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Functional routine used by _spherequad</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">k1</span> <span class="o">=</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">k2</span> <span class="o">=</span> <span class="n">k</span><span class="o">+</span><span class="mi">2</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">nnk</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="n">k</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matlib</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">k</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">nnk</span><span class="o">*</span><span class="p">(</span><span class="n">nnk</span><span class="o">+</span><span class="mi">2</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="o">/</span><span class="n">k2</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">nnk</span> <span class="o">=</span> <span class="n">nnk</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">B1</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">k1</span><span class="o">/</span><span class="p">(</span><span class="n">k2</span><span class="o">*</span><span class="n">k2</span><span class="o">*</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">nk</span> <span class="o">=</span> <span class="n">n</span><span class="o">+</span><span class="n">k</span>
+    <span class="n">nnk2</span> <span class="o">=</span> <span class="n">nnk</span><span class="o">*</span><span class="n">nnk</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">nk</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">nnk2</span><span class="o">*</span><span class="n">nnk2</span><span class="o">-</span><span class="n">nnk2</span><span class="p">)</span>
+    <span class="n">ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([(</span><span class="mi">2</span><span class="o">**</span><span class="n">k1</span><span class="p">)</span><span class="o">/</span><span class="n">k1</span><span class="p">],</span> <span class="p">[</span><span class="n">B1</span><span class="p">],</span> <span class="n">B</span><span class="p">))))</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="p">[</span><span class="n">X</span><span class="p">,</span> <span class="n">V</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:,</span> <span class="n">indexes</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">k1</span><span class="p">)</span><span class="o">*</span><span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">w</span>
 </pre></div>
 
            </div>
@@ -919,7 +1153,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Feb 12, 2023.
+      <span class="lastupdated">Last updated on Dec 05, 2024.
       </span></p>
   </div>
 

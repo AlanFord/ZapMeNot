@@ -140,7 +140,7 @@ def test_getBuildupFactor():
     with pytest.raises(ValueError):
         b = a.get_buildup_factor(0.66, "waldo", "GP")  # non-numeric mfp
     # test large mfp
-    b = a.get_buildup_factor(0.66, 60, "GP")
+    b = a.get_buildup_factor(0.66, 80, "GP")
     c = a.get_buildup_factor(0.66, 100, "GP")
     assert b == c
     # using list of mfps
@@ -154,17 +154,30 @@ def test_getExtrapolation():
     a = material.Material("iron")
     # test extrapolation beyond 40 mfp
     mfparray = np.array([1, 5, 10, 15, 20, 25, 30, 35, 39.9, 40.1,
-                        45, 50, 55, 60, 61, 70])
+                        45, 50, 55, 60, 70, 80, 81, 90])
     b = a.get_buildup_factor(2.9, mfparray, "GP")
-    matlab_results = [1.634959486477451, 4.526308321088647,
-                      8.889077334592749, 14.048163698926990,
-                      19.816843914781639, 25.879736425922086,
-                      32.137817567022324, 38.842936560558051,
-                      46.119901481552702, 46.430286941379634,
-                      54.182369147237253, 62.558129048596001,
-                      71.403777053323665, 80.719961338782880,
-                      80.719961338782880, 80.719961338782880]
+    matlab_results = [1.634959486477451e+00, 4.526308321088647e+00,
+                      8.889077334592749e+00, 1.404816369892699e+01,
+                      1.981684391478164e+01, 2.587973642592209e+01,
+                      3.213781756702232e+01, 3.884293656055805e+01,
+                      4.611990148155270e+01, 4.643028694137963e+01,
+                      5.418236914723725e+01, 6.255812904859600e+01,
+                      7.140377705332367e+01, 8.071996133878288e+01,
+                      1.007700183794541e+02, 1.227255609369946e+02,
+                      1.227255609369946e+02, 1.227255609369946e+02]
     assert b == pytest.approx(matlab_results)
+
+
+# test extrapolation of buildup factor for air at a point where an
+# earlier buildup factor extrapolation method failed
+# see https://github.com/AlanFord/ZapMeNot/issues/23
+# reference: getAirExtrapolation.m (matlab script)
+def test_getExtrapolation2():
+    a = material.Material("air")
+    # test extrapolation beyond 40 mfp
+    b = a.get_buildup_factor(0.033865, 45, "GP")
+    matlab_result = 8.449318679685693e+01          
+    assert b == pytest.approx(matlab_result)
 
 
 # test calculation of a list of buildup factors from a list of mfp
