@@ -326,25 +326,26 @@ class Model:
         blocks.append(self.detector.draw())
 
         # check for a zero width bounding box in any direction
-        bounds = blocks.bounds
-        x_width = abs(bounds[1] - bounds[0])
-        y_width = abs(bounds[3] - bounds[2])
-        z_width = abs(bounds[5] - bounds[4])
+        xmin, xmax, ymin, ymax, zmin, zmax = blocks.bounds
+        x_width = abs(xmax - xmin)
+        y_width = abs(ymax - ymin)
+        z_width = abs(zmax - zmin)
         max_width = max(x_width, y_width, z_width)
         # define a minimum dimension as 20% of the maximum dimension
         min_width = max_width * 0.20
         # check for dimensions smaller than the defined minimum
         if x_width < min_width:
-            bounds[0] = bounds[0] - min_width/2
-            bounds[1] = bounds[1] + min_width/2
+            xmin = xmin - min_width/2
+            xmax = xmax + min_width/2
         if y_width < min_width:
-            bounds[2] = bounds[2] - min_width/2
-            bounds[3] = bounds[3] + min_width/2
+            ymin = ymin - min_width/2
+            ymax = ymax + min_width/2
         if z_width < min_width:
-            bounds[4] = bounds[4] - min_width/2
-            bounds[5] = bounds[5] + min_width/2
+            zmin = zmin - min_width/2
+            zmax = zmax + min_width/2
         # increase the display bounds by a smidge to avoid
         #   inadvertent clipping
+        bounds = [xmin, xmax, ymin, ymax, zmin, zmax]
         boundingBox = [x * 1.01 for x in bounds]
         return boundingBox
 
