@@ -1,7 +1,6 @@
 import abc
 import math
 import numpy as np
-import numpy.matlib
 from enum import Enum
 
 from . import shield, isotope
@@ -978,7 +977,7 @@ def _rquad(N, k):
     k2 = k+2
     n = np.arange(1, N+1)
     nnk = 2*n+k
-    A = np.insert(np.matlib.repeat(k**2, N) / (nnk*(nnk+2)), 0, k/k2)
+    A = np.insert(np.full(N, k**2) / (nnk*(nnk+2)), 0, k/k2)
     n = np.arange(2, N+1)
     nnk = nnk[1:N+1]
     B1 = 4*k1/(k2*k2*(k+3))
