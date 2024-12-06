@@ -1,11 +1,15 @@
 import yaml
-import pkg_resources
 
 try:
     from yaml import CLoader as MyLoader, CDumper as MyDumper
 except ImportError:
     from yaml import FullLoader as MyLoader, SafeDumper as MyDumper
 
+try:
+    from importlib import resources as impresources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as impresources
 
 class Isotope:
     """Encapsulates isotope data from the IsotopeLibrary.yml file.
@@ -35,8 +39,12 @@ class Isotope:
         # initialize the class library if it has not already been done
         if Isotope._library is None:
             path = 'isotopeLibrary.yml'
-            filepath = pkg_resources.resource_filename(__name__, path)
-            stream = open(filepath, 'r')
+            try:
+                inp_file = (impresources.files(__package__) / path)
+                stream = inp_file.open("rt") # or "rt" as text file with universal newlines
+            except AttributeError:
+                # Python < PY3.9, fall back to method deprecated in PY3.11.
+                stream = impresources.open_text(__package__, path)
             Isotope._library = yaml.load(stream, Loader=MyLoader)
             stream.close()
 
