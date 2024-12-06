@@ -364,7 +364,7 @@ class Model:
         """
         point_ratio = 0.05
         sourceColor = 'red'
-        detectorColor = 'yellow'
+        detectorColor = 'green'
         widths = [abs(pl.bounds[1] - pl.bounds[0]),
                   abs(pl.bounds[3] - pl.bounds[2]),
                   abs(pl.bounds[5] - pl.bounds[4])]
