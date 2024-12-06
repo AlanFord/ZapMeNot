@@ -87,15 +87,18 @@
 <span></span><span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">Akima1DInterpolator</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">numbers</span>
-<span class="c1"># from collections.abc import Iterable</span>
 <span class="kn">import</span> <span class="nn">yaml</span>
-<span class="kn">import</span> <span class="nn">pkg_resources</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">yaml</span> <span class="kn">import</span> <span class="n">CLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">CDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">yaml</span> <span class="kn">import</span> <span class="n">FullLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">SafeDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
 
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">resources</span> <span class="k">as</span> <span class="n">impresources</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="c1"># Try backported to PY&lt;37 `importlib_resources`.</span>
+    <span class="kn">import</span> <span class="nn">importlib_resources</span> <span class="k">as</span> <span class="nn">impresources</span>
 
 <div class="viewcode-block" id="Material">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.material.Material">[docs]</a>
@@ -112,7 +115,7 @@
 <span class="sd">        The material to be extracted from the material library</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    _library</span>
@@ -130,8 +133,12 @@
         <span class="c1"># initialize the class library if it has not already been done</span>
         <span class="k">if</span> <span class="n">Material</span><span class="o">.</span><span class="n">_library</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;materialLibrary.yml&#39;</span>
-            <span class="n">filepath</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-            <span class="n">stream</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">inp_file</span> <span class="o">=</span> <span class="p">(</span><span class="n">impresources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span> <span class="o">/</span> <span class="n">path</span><span class="p">)</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="n">inp_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="c1"># or &quot;rt&quot; as text file with universal newlines</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="c1"># Python &lt; PY3.9, fall back to method deprecated in PY3.11.</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="n">impresources</span><span class="o">.</span><span class="n">open_text</span><span class="p">(</span><span class="n">__package__</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
             <span class="n">Material</span><span class="o">.</span><span class="n">_library</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">MyLoader</span><span class="p">)</span>
             <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
@@ -185,7 +192,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">density</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`float` : The density of the material in g/cm\ :sup:`3` &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;:class:`float` : The density of the material in g/cm\ :sup:`3` &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span>
 
     <span class="nd">@density</span><span class="o">.</span><span class="n">setter</span>
@@ -442,7 +449,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Dec 05, 2024.
+      <span class="lastupdated">Last updated on Dec 06, 2024.
       </span></p>
   </div>
 

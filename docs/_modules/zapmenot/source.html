@@ -87,7 +87,6 @@
 <span></span><span class="kn">import</span> <span class="nn">abc</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">numpy.matlib</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">shield</span><span class="p">,</span> <span class="n">isotope</span>
@@ -454,8 +453,8 @@
 <span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
 <span class="sd">        the weights should have constant values that sum to 1.0.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -596,8 +595,8 @@
 <span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
 <span class="sd">        the weights should have constant values that sum to 1.0.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -795,8 +794,8 @@
 <span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
 <span class="sd">        the weights should have constant values that sum to 1.0.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -859,8 +858,8 @@
 <span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
 <span class="sd">        the weights should have constant values that sum to 1.0.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -919,8 +918,8 @@
 <span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
 <span class="sd">        the weights should have constant values that sum to 1.0.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -984,8 +983,8 @@
 <span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
 <span class="sd">        the weights should have constant values that sum to 1.0.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)]</span> <span class="o">*</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_source_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a list of point sources within the Source geometry.</span>
@@ -1127,7 +1126,7 @@
     <span class="n">k2</span> <span class="o">=</span> <span class="n">k</span><span class="o">+</span><span class="mi">2</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">nnk</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="n">k</span>
-    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matlib</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">k</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">nnk</span><span class="o">*</span><span class="p">(</span><span class="n">nnk</span><span class="o">+</span><span class="mi">2</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="o">/</span><span class="n">k2</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">nnk</span><span class="o">*</span><span class="p">(</span><span class="n">nnk</span><span class="o">+</span><span class="mi">2</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="o">/</span><span class="n">k2</span><span class="p">)</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">nnk</span> <span class="o">=</span> <span class="n">nnk</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">B1</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">k1</span><span class="o">/</span><span class="p">(</span><span class="n">k2</span><span class="o">*</span><span class="n">k2</span><span class="o">*</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">3</span><span class="p">))</span>
@@ -1153,7 +1152,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Dec 05, 2024.
+      <span class="lastupdated">Last updated on Dec 06, 2024.
       </span></p>
   </div>
 

@@ -27,7 +27,7 @@ class Material:
         The material to be extracted from the material library
     """
 
-    '''
+    r'''
     Attributes
     ----------
     _library
@@ -104,7 +104,7 @@ class Material:
 
     @property
     def density(self):
-        """:class:`float` : The density of the material in g/cm\ :sup:`3` """
+        r""":class:`float` : The density of the material in g/cm\ :sup:`3` """
         return self._density
 
     @density.setter
