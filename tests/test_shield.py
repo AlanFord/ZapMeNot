@@ -158,7 +158,7 @@ class TestSphere():
         # ray starts inside the sphere and traverse outwards
         length = create_shield._get_crossing_length(
           ray.FiniteLengthRay([-1, -1, -1], [10, 10, 10]))
-        assert length == 10+math.sqrt(3)
+        assert length == pytest.approx(10+math.sqrt(3))
 
     def test_crossing_length4(self, create_shield):
         # ray starts outside the sphere and ends inside the sphere

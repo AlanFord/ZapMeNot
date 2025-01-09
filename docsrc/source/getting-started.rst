@@ -54,7 +54,7 @@ where the zapmenot.yml file contains the following:
     - defaults
     - conda-forge
     dependencies:
-    - python=3.9
+    - python>=3.9
     - scipy>=0.14
     - numpy>=1.18.1
     - pyyaml>=5.3
@@ -62,6 +62,8 @@ where the zapmenot.yml file contains the following:
     - git
     # optional for graphics capability
     - pyvista
+    - vtk>=9.3
+    - trame=2.5.2
     # optional for jupyterlab capability
     - jupyterlab
     - matplotlib
