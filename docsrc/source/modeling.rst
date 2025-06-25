@@ -3,7 +3,14 @@ Modeling in ZapMeNot
 ====================
 
 A model in ZapMeNot requires, at a minimum, a source and a detector (a.k.a. a dose point).
-The source can be a simple point source, a line source, or a volumetric source (a box, cylinder, etc.).
+The source can be a simple point source, a line source, or a volumetric source.  Volumetric sources include:
+
+ - BoxSource
+ - SphereSource
+ - XAlignedCylinderSource
+ - YAlignedCylinderSource
+ - ZAlignedCylinderSource
+
 A point source is defined by an XYZ location and a radioative source composition.  The source composition
 can be specified in curies (Ci) of an isotope, becquerels (bq) of an isotope, or by photon energy and intensity.
 A complex source can be a combination of all three specification types.
@@ -58,8 +65,30 @@ and detector:
     myModel.add_detector(a_detector)
     
 One or more radiation shields can be optionally added to the model.  A shield is by definition a three-dimensional
-body.  Standard shield types include, among others, a box (rectangular para, a cylinder, an infinite annulus,
-and an infinitely-long slab.  Each shield requires a material type and, optionally, a density.  Shields will alter
+body.  Standard shield types include:
+
+ - Box
+ - SemiInfiniteXSlab
+ - Sphere
+ - CappedCylinder
+ - XAlignedCylinder
+ - YAlignedCylinder
+ - ZAlignedCylinder
+ - InfiniteAnnulus
+ - XAlignedInfiniteAnnulus
+ - YAlignedInfiniteAnnulus
+ - ZAlignedInfiniteAnnulus
+
+The CappedCylinder and the InfiniteAnnulus are the moste general, can be oriented in any direction,
+and require the most input to create.  The Box is a rectangular parallelpiped having sides aligned with 
+the coordinate system axes.  The SemiInfiniteX Slab is, well, a slab of material with a finite thickness
+in the X direction, infinite in the other directions.  It can be positiond at any X location.
+The Sphere can be freely positioned but has its major axis aligned with the Z direction.  This has some impact
+on the quadrature used (more on that later).
+For user convenience the "aligned" cylinders and annuli have been included to simplify the input
+required to build a model.
+
+Each shield requires a material type and, optionally, a density.  Shields will alter
 the calculated doses only when the shields completely or partially interrupt the line-of-sight between the source and
 the detector.  The following
 code block demonstrates creating two shields and adding them to a model:
