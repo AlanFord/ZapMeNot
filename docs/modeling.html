@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Modeling in ZapMeNot &mdash; Zapmenot 0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=2709fde1"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -36,9 +34,6 @@
           <a href="index.html" class="icon icon-home">
             Zapmenot
           </a>
-              <div class="version">
-                0.1
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -89,8 +84,17 @@
   <section id="modeling-in-zapmenot">
 <h1>Modeling in ZapMeNot<a class="headerlink" href="#modeling-in-zapmenot" title="Link to this heading"></a></h1>
 <p>A model in ZapMeNot requires, at a minimum, a source and a detector (a.k.a. a dose point).
-The source can be a simple point source, a line source, or a volumetric source (a box, cylinder, etc.).
-A point source is defined by an XYZ location and a radioative source composition.  The source composition
+The source can be a simple point source, a line source, or a volumetric source.  Volumetric sources include:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BoxSource</p></li>
+<li><p>SphereSource</p></li>
+<li><p>XAlignedCylinderSource</p></li>
+<li><p>YAlignedCylinderSource</p></li>
+<li><p>ZAlignedCylinderSource</p></li>
+</ul>
+</div></blockquote>
+<p>A point source is defined by an XYZ location and a radioative source composition.  The source composition
 can be specified in curies (Ci) of an isotope, becquerels (bq) of an isotope, or by photon energy and intensity.
 A complex source can be a combination of all three specification types.
 An example of specifying a point source is</p>
@@ -132,8 +136,31 @@ and detector:</p>
 </pre></div>
 </div>
 <p>One or more radiation shields can be optionally added to the model.  A shield is by definition a three-dimensional
-body.  Standard shield types include, among others, a box (rectangular para, a cylinder, an infinite annulus,
-and an infinitely-long slab.  Each shield requires a material type and, optionally, a density.  Shields will alter
+body.  Standard shield types include:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Box</p></li>
+<li><p>SemiInfiniteXSlab</p></li>
+<li><p>Sphere</p></li>
+<li><p>CappedCylinder</p></li>
+<li><p>XAlignedCylinder</p></li>
+<li><p>YAlignedCylinder</p></li>
+<li><p>ZAlignedCylinder</p></li>
+<li><p>InfiniteAnnulus</p></li>
+<li><p>XAlignedInfiniteAnnulus</p></li>
+<li><p>YAlignedInfiniteAnnulus</p></li>
+<li><p>ZAlignedInfiniteAnnulus</p></li>
+</ul>
+</div></blockquote>
+<p>The CappedCylinder and the InfiniteAnnulus are the moste general, can be oriented in any direction,
+and require the most input to create.  The Box is a rectangular parallelpiped having sides aligned with
+the coordinate system axes.  The SemiInfiniteX Slab is, well, a slab of material with a finite thickness
+in the X direction, infinite in the other directions.  It can be positiond at any X location.
+The Sphere can be freely positioned but has its major axis aligned with the Z direction.  This has some impact
+on the quadrature used (more on that later).
+For user convenience the “aligned” cylinders and annuli have been included to simplify the input
+required to build a model.</p>
+<p>Each shield requires a material type and, optionally, a density.  Shields will alter
 the calculated doses only when the shields completely or partially interrupt the line-of-sight between the source and
 the detector.  The following
 code block demonstrates creating two shields and adding them to a model:</p>
@@ -200,7 +227,7 @@ Ba-140, Cs-137, Cd-144, Ru-103, Ru-106, Sr-90, and Sn-113.  The following exampl
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Dec 05, 2024.
+      <span class="lastupdated">Last updated on Jun 22, 2025.
       </span></p>
   </div>
 
