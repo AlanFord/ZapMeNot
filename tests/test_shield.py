@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from zapmenot import shield, ray
+from zapmenot import shield, ray, material
 
 pytestmark = pytest.mark.basic
 
@@ -187,6 +187,74 @@ class TestSphere():
     def test_infinite(self, create_shield):
         assert create_shield.is_infinite() is False
 
+    def test_add_shell(self,create_shield):
+        create_shield.add_shell('concrete', 4, 5)
+        assert create_shield.shell != None
+        assert create_shield.shell.radius == 14
+        assert create_shield.shell.material.name == 'concrete'
+        assert create_shield.shell.material.density == 5
+
+    def test_add_shell_zero_thickness(self,create_shield):
+        create_shield.add_shell('concrete', 0, 5)
+        assert create_shield.shell == None
+
+    def test_add_shell_negative_thickness(self,create_shield):
+        create_shield.add_shell('concrete', -1, 5)
+        assert create_shield.shell == None
+
+    def test_no_shell(self,create_shield):
+        assert create_shield.shell == None
+
+    def test_shell_crossing1(self,create_shield):
+        start = [-100, 0, 10]
+        end = [100, 0, 10]
+        aRay = ray.FiniteLengthRay(start, end)
+        create_shield.add_shell('carbon', 5)
+        mfp = create_shield.get_crossing_mfp(aRay, 1)
+        #shell
+        # data extracted from materialLibrary.yml for boron at 1 MeV
+        shell_xsec = 6.352E-02
+        shell_density = 1.7
+        shell_crossing_length = 2 * math.sqrt(15**2 - 10**2)  # equation for the chord of a circle
+        calculated_mfp = shell_xsec*shell_density*shell_crossing_length
+        assert mfp == pytest.approx(calculated_mfp)
+
+    def test_shell_crossing2(self,create_shield):
+        start = [-100, 0, 12]
+        end = [100, 0, 12]
+        aRay = ray.FiniteLengthRay(start, end)
+        create_shield.add_shell('carbon', 5)
+        mfp = create_shield.get_crossing_mfp(aRay, 1)
+        #shell
+        # data extracted from materialLibrary.yml for boron at 1 MeV
+        shell_xsec = 6.352E-02
+        shell_density = 1.7
+        shell_crossing_length = 2 * math.sqrt(15**2 - 12**2)  # equation for the chord of a circle
+        calculated_mfp = shell_xsec*shell_density*shell_crossing_length
+        assert mfp == pytest.approx(calculated_mfp)
+
+    def test_shell_crossing3(self,create_shield):
+        start = [-100, 0, 8]
+        end = [100, 0, 8]
+        aRay = ray.FiniteLengthRay(start, end)
+        create_shield.add_shell('carbon', 5)
+        mfp = create_shield.get_crossing_mfp(aRay, 1)
+        # main body:
+        # data extracted from materialLibrary.yml for iron at 1 MeV
+        central_xsec = 5.957E-02
+        central_density = 7.874
+        #shell:
+        # data extracted from materialLibrary.yml for boron at 1 MeV
+        shell_xsec = 6.352E-02
+        shell_density = 1.7
+        body_crossing_length = 2 * math.sqrt(10**2 - 8**2)  # equation for the chord of a circle
+        total_crossing_length = 2 * math.sqrt(15**2 - 8**2)  # equation for the chord of a circle
+        shell_crossing_length = total_crossing_length - body_crossing_length
+        central_mfp = central_xsec * central_density * body_crossing_length
+        shell_mfp = shell_xsec * shell_density * shell_crossing_length
+        calculated_mfp =  central_mfp + shell_mfp 
+        assert mfp == pytest.approx(calculated_mfp)
+        
 
 # =============================================================
 class TestBox():

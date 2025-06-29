@@ -232,7 +232,7 @@ class SemiInfiniteXSlab(Shield):
 
 
 class Sphere(Shield):
-    """A spherical shield.
+    """A spherical shield with an optional shell.
 
     Parameters
     ----------
@@ -261,6 +261,14 @@ class Sphere(Shield):
         super().__init__(material_name=material_name, density=density)
         self.center = np.array(sphere_center)
         self.radius = np.array(sphere_radius)
+        self.shell = None
+
+    def add_shell(self, material_name, thickness, density=None):
+        if thickness > 0:
+            shell_radius = self.radius + thickness
+            self.shell = Sphere(material_name,self.center, shell_radius, density)
+        else:
+            self.shell = None
 
     def is_infinite(self):
         '''Returns true if any dimension is infinite, false otherwise
@@ -270,10 +278,22 @@ class Sphere(Shield):
     def get_crossing_mfp(self, ray, photon_energy):
         '''returns the crossing mfp'''
         super().get_crossing_mfp(ray, photon_energy)  # validate the arguments
-        distance = self._get_crossing_length(ray)
-        return self.material.get_mfp(photon_energy, distance)
-
+        central_distance = self._get_primitive_crossing_length(ray)
+        central_mfp = self.material.get_mfp(photon_energy, central_distance)
+        shell_mfp = 0
+        if self.shell:
+            outer_distance = self.shell._get_primitive_crossing_length(ray)
+            shell_distance = outer_distance - central_distance
+            shell_mfp = self.shell.material.get_mfp(photon_energy, shell_distance)
+        return shell_mfp + central_mfp
+    
     def _get_crossing_length(self, ray):
+        if self.shell:
+            return self.shell._get_primitive_crossing_length(ray)
+        else:
+            return self._get_primitive_crossing_length(ray)
+
+    def _get_primitive_crossing_length(self, ray):
         # based on
         # https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection
         super()._get_crossing_length(ray)  # validate the arguments
