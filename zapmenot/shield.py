@@ -262,11 +262,13 @@ class Sphere(Shield):
         self.center = np.array(sphere_center)
         self.radius = np.array(sphere_radius)
         self.shell = None
+        self.outer = self
 
     def add_shell(self, material_name, thickness, density=None):
         if thickness > 0:
             shell_radius = self.radius + thickness
             self.shell = Sphere(material_name,self.center, shell_radius, density)
+            self.outer = self.shell
         else:
             self.shell = None
 
@@ -288,10 +290,7 @@ class Sphere(Shield):
         return shell_mfp + central_mfp
     
     def _get_crossing_length(self, ray):
-        if self.shell:
-            return self.shell._get_primitive_crossing_length(ray)
-        else:
-            return self._get_primitive_crossing_length(ray)
+        return self.outer._get_primitive_crossing_length(ray)
 
     def _get_primitive_crossing_length(self, ray):
         # based on
