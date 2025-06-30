@@ -340,7 +340,10 @@ class Sphere(Shield):
             A Sphere object representing the sphere shield.
         """
         if pyvista_found:
-            return pyvista.Sphere(radius=self.radius, center=self.center)
+            if self.shell:
+                return pyvista.Sphere(radius=self.shell.radius, center=self.shell.center)
+            else:
+                return pyvista.Sphere(radius=self.radius, center=self.center)
 
 # -----------------------------------------------------------
 
