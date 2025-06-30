@@ -341,7 +341,8 @@ class Sphere(Shield):
         """
         if pyvista_found:
             if self.shell:
-                return pyvista.Sphere(radius=self.shell.radius, center=self.shell.center)
+                return [pyvista.Sphere(radius=self.radius, center=self.center),
+                        pyvista.Sphere(radius=self.shell.radius, center=self.shell.center)]
             else:
                 return pyvista.Sphere(radius=self.radius, center=self.center)
 
