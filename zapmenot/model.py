@@ -294,14 +294,14 @@ class Model:
                             pl.add_mesh(items, sourceColor, label='source', line_width=3)
                         else:
                             pl.add_mesh(items[0], sourceColor, label='source', line_width=3)
-                            pl.add_mesh(items[0], shieldColor, line_width=3, opacity=0.2)
+                            pl.add_mesh(items[1], shieldColor, line_width=3, opacity=0.5)
                 else:
                     items = thisShield.draw()
                     if not isinstance(items, list):
                         pl.add_mesh(items, shieldColor)
                     else:
                         pl.add_mesh(items[0], shieldColor)
-                        pl.add_mesh(items[1], shieldColor, opacity=0.2)
+                        pl.add_mesh(items[1], shieldColor, opacity=0.5)
         # now add the "bounds" as a transparent block to for a display size
         mesh = pyvista.Box(bounds)
         pl.add_mesh(mesh, opacity=0)

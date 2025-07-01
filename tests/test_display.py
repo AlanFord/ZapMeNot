@@ -112,6 +112,21 @@ class TestDisplay():
             "iron", box_center=[15, 0, 0], box_dimensions=[10, 10, 10]))
         myModel.display()
 
+    def test_SphericalSourceWithShell_BoxShield(self):
+        # test of model display and a point source and spherical shield
+        myModel = model.Model()
+        mySource = source.SphereSource(material_name='iron', sphere_center = [0, 0, 0], 
+                                       sphere_radius=5)
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        mySource.add_shell('carbon', 5)
+        myModel.add_source(mySource)
+        myModel.add_detector(detector.Detector(100, 0, 0))
+        myModel.add_shield(shield.Box(
+            "iron", box_center=[25, 0, 0], box_dimensions=[10, 10, 10]))
+        myModel.display()
+
     def test_PointSource_InfiniteAnnulusShield(self):
         myModel = model.Model()
         mySource = source.PointSource(0, 0, 0)
