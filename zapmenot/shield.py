@@ -232,7 +232,7 @@ class SemiInfiniteXSlab(Shield):
 
 
 class Sphere(Shield):
-    """A spherical shield.
+    """A spherical shield with an optional shell.
 
     Parameters
     ----------
@@ -261,6 +261,17 @@ class Sphere(Shield):
         super().__init__(material_name=material_name, density=density)
         self.center = np.array(sphere_center)
         self.radius = np.array(sphere_radius)
+        self.shell = None
+        self.outer = self
+
+    def add_shell(self, material_name, thickness, density=None):
+        '''instantiates a Sphere object representing a spherical shell'''
+        if thickness > 0:
+            shell_radius = self.radius + thickness
+            self.shell = Sphere(material_name,self.center, shell_radius, density)
+            self.outer = self.shell
+        else:
+            self.shell = None
 
     def is_infinite(self):
         '''Returns true if any dimension is infinite, false otherwise
@@ -270,12 +281,26 @@ class Sphere(Shield):
     def get_crossing_mfp(self, ray, photon_energy):
         '''returns the crossing mfp'''
         super().get_crossing_mfp(ray, photon_energy)  # validate the arguments
-        distance = self._get_crossing_length(ray)
-        return self.material.get_mfp(photon_energy, distance)
-
+        central_distance = self._get_primitive_crossing_length(ray)
+        central_mfp = self.material.get_mfp(photon_energy, central_distance)
+        shell_mfp = 0
+        if self.shell:
+            outer_distance = self.shell._get_primitive_crossing_length(ray)
+            shell_distance = outer_distance - central_distance
+            shell_mfp = self.shell.material.get_mfp(photon_energy, shell_distance)
+        return shell_mfp + central_mfp
+    
     def _get_crossing_length(self, ray):
-        # based on
+        '''returns the crossing length of the spherical shield, including the shell, if any'''
+        return self.outer._get_primitive_crossing_length(ray)
+
+    def _get_primitive_crossing_length(self, ray):
+        '''
+        returns the crossing length of only the spherical primitive being addressed.
+        If the primitive has an associated shell, the shell is not included
+        Based on
         # https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection
+        '''
         super()._get_crossing_length(ray)  # validate the arguments
         a = np.dot(ray._dir, ray._dir)
         b = 2 * np.dot(ray._dir, ray._origin - self.center)
@@ -307,6 +332,9 @@ class Sphere(Shield):
         return abs(big_list[1]-big_list[0])
 
     def contains(self, point):
+        '''
+        Returns true if the point is contained within the sphere, otherwise false
+        '''
         ray = point - self.center
         if np.dot(ray, ray) > self.radius**2:
             return False
@@ -321,7 +349,11 @@ class Sphere(Shield):
             A Sphere object representing the sphere shield.
         """
         if pyvista_found:
-            return pyvista.Sphere(radius=self.radius, center=self.center)
+            if self.shell:
+                return [pyvista.Sphere(radius=self.radius, center=self.center),
+                        pyvista.Sphere(radius=self.shell.radius, center=self.shell.center)]
+            else:
+                return pyvista.Sphere(radius=self.radius, center=self.center)
 
 # -----------------------------------------------------------
 

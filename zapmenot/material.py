@@ -135,8 +135,10 @@ class Material:
         if not isinstance(distance, numbers.Number) or \
            distance < 0:
             raise ValueError("Invalid distance: " + str(distance))
-
-        return distance * self._density * self.get_mass_atten_coeff(energy)
+        if distance == 0:
+            return 0
+        else:
+            return distance * self._density * self.get_mass_atten_coeff(energy)
 
     def get_mass_atten_coeff(self, energy):
         r"""Calculates the mass attenuation coefficient at the given energy
