@@ -596,11 +596,16 @@ class SphereSource(Source, shield.Sphere):
 
     def _get_source_point_weights(self):
         '''
-        Returns a list of quadrature weights for the quadrature locations
+        Generates a list of quadrature weights for the quadrature locations
         within the source volume.  Note that the weights should sum to 1.0,
         each weight representing the fraction of the source associated with
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
+
+        Returns
+        -------
+        :class:`list` 
+            A list of quadrature weights.
         '''
         return self.weights
 
@@ -609,7 +614,7 @@ class SphereSource(Source, shield.Sphere):
 
         Returns
         -------
-        :class:`list` of :class:`numpy.adarray`
+        :class:`list` of :class:`numpy.ndarray`
             A list of vector locations within the Source body.
         """
         x = self.rLocations*np.sin(self.thetaLocations) * \

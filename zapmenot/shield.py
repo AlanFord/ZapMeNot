@@ -265,6 +265,7 @@ class Sphere(Shield):
         self.outer = self
 
     def add_shell(self, material_name, thickness, density=None):
+        '''instantiates a Sphere object representing a spherical shell'''
         if thickness > 0:
             shell_radius = self.radius + thickness
             self.shell = Sphere(material_name,self.center, shell_radius, density)
@@ -290,11 +291,16 @@ class Sphere(Shield):
         return shell_mfp + central_mfp
     
     def _get_crossing_length(self, ray):
+        '''returns the crossing length of the spherical shield, including the shell, if any'''
         return self.outer._get_primitive_crossing_length(ray)
 
     def _get_primitive_crossing_length(self, ray):
-        # based on
+        '''
+        returns the crossing length of only the spherical primitive being addressed.
+        If the primitive has an associated shell, the shell is not included
+        Based on
         # https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection
+        '''
         super()._get_crossing_length(ray)  # validate the arguments
         a = np.dot(ray._dir, ray._dir)
         b = 2 * np.dot(ray._dir, ray._origin - self.center)
@@ -326,6 +332,9 @@ class Sphere(Shield):
         return abs(big_list[1]-big_list[0])
 
     def contains(self, point):
+        '''
+        Returns true if the point is contained within the sphere, otherwise false
+        '''
         ray = point - self.center
         if np.dot(ray, ray) > self.radius**2:
             return False
