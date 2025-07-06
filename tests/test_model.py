@@ -170,7 +170,7 @@ class TestSphericalSource():
     # Source is 1 Bq of 1 MeV photons
     #
     # Microshield dose (unknown quadrature method) result is 3.875e-07 mR/hr.
-    # Matlab dose result is 3.868745387518610e-07 mR/hr.
+    # Matlab dose result is 3.868745387518610e-07 mR/hr (see testSphereDose1.m).
     def test_Case0(self):
         myModel = model.Model()
         mySource = source.SphereSource("air", sphere_radius=10,

@@ -537,7 +537,8 @@ class TestSphericalSource():
         # test _rquad static function
         # ---------------------------------
         r, w = source._rquad(8, 2)
-        # the reference values were generated with matlab
+        # the reference values were generated with the matlab
+        # script "testRquad.m"
         r_reference = [0.0714910350400932,
                        0.184228296416716,
                        0.330447728175639,
@@ -558,7 +559,8 @@ class TestSphericalSource():
         np.testing.assert_allclose(w, w_reference)
 
         r, w = source._rquad(8, 0)
-        # the reference values were generated with matlab
+        # the reference values were generated with the matlab
+        # script "testRquad.m"
         r_reference = [0.0198550717512318,
                        0.101666761293187,
                        0.237233795041835,
@@ -579,14 +581,16 @@ class TestSphericalSource():
         np.testing.assert_allclose(w, w_reference)
 
         r, w = source._rquad(1, 2)
-        # the reference values were generated with matlab
+        # the reference values were generated with the matlab
+        # script "testRquad.m"
         r_reference = [0.750000000000000]
         w_reference = [0.333333333333333]
         np.testing.assert_allclose(r, r_reference)
         np.testing.assert_allclose(w, w_reference)
 
         r, w = source._rquad(1, 0)
-        # the reference values were generated with matlab
+        # the reference values were generated with the matlab
+        # script "testRquad.m"
         r_reference = [0.500000000000000]
         w_reference = [1.000000000000000]
         np.testing.assert_allclose(r, r_reference)
@@ -595,6 +599,8 @@ class TestSphericalSource():
         # ---------------------------------
         # test _spherequad static function
         # ---------------------------------
+        # the reference values were generated with the matlab
+        # script "testSphereQuadrature.m"
         r, t, p, w = source._spherequad(4, 5, 6, 10)
         # the reference values were generated with matlab
         r_reference = [2.04148582103227]*5 + [4.82952704895633]*5 \
@@ -620,7 +626,8 @@ class TestSphericalSource():
         np.testing.assert_allclose(w, w_reference)
 
         r, t, p, w = source._spherequad(1, 1, 1, 10)
-        # the reference values were generated with matlab
+        # the reference values were generated with the matlab
+        # script "testSphereQuadrature.m"
         r_reference = [7.500000000000000]
         t_reference = [1.570796326794897]
         p_reference = [0]
@@ -635,7 +642,8 @@ class TestSphericalSource():
     # reference: manual calculation and isotope library
     def test_getSourcePoints(self, create_source):
         create_source.points_per_dimension = [4, 5, 6]
-        # the reference values were generated with matlab
+        # the reference values were generated with the matlab
+        # script "testSphereQuadrature.m"
         r_reference = [2.04148582103227]*5 + [4.82952704895633]*5 \
             + [7.61399262448138]*5 + [9.51499450553003]*5
         r_reference = r_reference*6
@@ -651,7 +659,6 @@ class TestSphericalSource():
             np.sin(p_reference)
         z = r_reference*np.cos(t_reference)
         bigly = np.array([x, y, z]).transpose()
-        # print(bigly)
         # now let's relocate the center from (0,0,0) to (4,5,6)
         bigly = bigly + [4, 5, 6]
         np.testing.assert_allclose(create_source._get_source_points(),
@@ -670,7 +677,8 @@ class TestSphericalSource():
 
     def test_getSourcePointWeights(self, create_source):
         create_source.points_per_dimension = [4, 5, 6]
-        # the reference values were generated with matlab
+        # the reference values were generated with the matlab
+        # script "testSphereQuadrature.m"
         w_reference = [2.56848672807022, 5.18873739280356, 6.16723408367606,
                        5.18873739280357, 2.56848672807022, 17.0287025348515,
                        34.4005926243964, 40.8878868346816, 34.4005926243964,

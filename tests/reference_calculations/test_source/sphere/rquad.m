@@ -1,3 +1,5 @@
+% Called from spherequad.m, testRquad.m, and testSphereQuadrature.m
+
 function [x,w]=rquad(N,k)
 
 k1=k+1; k2=k+2; n=1:N;  nnk=2*n+k;
