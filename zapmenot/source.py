@@ -329,6 +329,11 @@ class LineSource(Source, shield.Shield):
         """Returns true if any dimension is infinite, false otherwise
         """
         return False
+    
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
+        """
+        return False
 
     def _get_source_point_weights(self):
         '''
@@ -457,6 +462,11 @@ class PointSource(Source, shield.Shield):
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
+        """
+        return False
+    
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 

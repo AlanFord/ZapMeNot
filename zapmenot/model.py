@@ -270,6 +270,9 @@ class Model:
         shieldColor = 'blue'
         sourceColor = 'red'
         for thisShield in self.shield_list:
+            opacity = 1.0
+            if thisShield.is_hollow():
+                opacity = 0.5
             if thisShield.is_infinite():
                 clipped = thisShield.draw()
                 clipped = clipped.clip_closed_surface(
@@ -284,7 +287,7 @@ class Model:
                     normal='-y', origin=[0, bounds[3], 0])
                 clipped = clipped.clip_closed_surface(
                     normal='-z', origin=[0, 0, bounds[5]])
-                pl.add_mesh(clipped, color=shieldColor)
+                pl.add_mesh(clipped, color=shieldColor, opacity=opacity)
             else:
                 if isinstance(thisShield, source.Source):
                     # point sources are handled later
@@ -292,7 +295,7 @@ class Model:
                         pl.add_mesh(thisShield.draw(),
                                     sourceColor, label='source', line_width=3)
                 else:
-                    pl.add_mesh(thisShield.draw(), shieldColor)
+                    pl.add_mesh(thisShield.draw(), shieldColor, opacity=opacity)
         # now add the "bounds" as a transparent block to for a display size
         mesh = pyvista.Box(bounds)
         pl.add_mesh(mesh, opacity=0)

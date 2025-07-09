@@ -50,6 +50,11 @@ class Shield(abc.ABC):
         """
 
     @abc.abstractmethod
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
+        """
+
+    @abc.abstractmethod
     def _get_crossing_length(self, a_ray):
         """Calculates the linear intersection length of a ray and the shield
 
@@ -180,6 +185,11 @@ class SemiInfiniteXSlab(Shield):
         """Returns true if any dimension is infinite, false otherwise
         """
         return True
+    
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
+        """
+        return False
 
     def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
@@ -300,6 +310,11 @@ class Sphere(Shield):
         '''Returns true if any dimension is infinite, false otherwise
         '''
         return False
+    
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
+        """
+        return False
 
     def get_crossing_mfp(self, ray, photon_energy):
         '''returns the crossing mfp'''
@@ -352,6 +367,11 @@ class Shell(Shield):
         '''Returns true if any dimension is infinite, false otherwise
         '''
         return False
+
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
+        """
+        return True
 
     def get_crossing_mfp(self, ray, photon_energy):
         '''returns the crossing mfp'''
@@ -429,6 +449,11 @@ class Box(Shield):
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
+        """
+        return False
+    
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
@@ -623,6 +648,11 @@ class InfiniteAnnulus(Shield):
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
+        """
+        return True
+
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
         """
         return True
 
@@ -987,6 +1017,11 @@ class CappedCylinder(Shield):
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
+        """
+        return False
+
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
