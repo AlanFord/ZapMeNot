@@ -270,6 +270,9 @@ class Model:
         shieldColor = 'blue'
         sourceColor = 'red'
         for thisShield in self.shield_list:
+            opacity = 1.0
+            if thisShield.is_hollow():
+                opacity = 0.5
             if thisShield.is_infinite():
                 clipped = thisShield.draw()
                 clipped = clipped.clip_closed_surface(
@@ -284,24 +287,15 @@ class Model:
                     normal='-y', origin=[0, bounds[3], 0])
                 clipped = clipped.clip_closed_surface(
                     normal='-z', origin=[0, 0, bounds[5]])
-                pl.add_mesh(clipped, color=shieldColor)
+                pl.add_mesh(clipped, color=shieldColor, opacity=opacity)
             else:
                 if isinstance(thisShield, source.Source):
                     # point sources are handled later
                     if len(self.source._get_source_points()) != 1:
-                        items = thisShield.draw()
-                        if not isinstance(items, list):
-                            pl.add_mesh(items, sourceColor, label='source', line_width=3)
-                        else:
-                            pl.add_mesh(items[0], sourceColor, label='source', line_width=3)
-                            pl.add_mesh(items[1], shieldColor, line_width=3, opacity=0.5)
+                        pl.add_mesh(thisShield.draw(),
+                                    sourceColor, label='source', line_width=3)
                 else:
-                    items = thisShield.draw()
-                    if not isinstance(items, list):
-                        pl.add_mesh(items, shieldColor)
-                    else:
-                        pl.add_mesh(items[0], shieldColor)
-                        pl.add_mesh(items[1], shieldColor, opacity=0.5)
+                    pl.add_mesh(thisShield.draw(), shieldColor, opacity=opacity)
         # now add the "bounds" as a transparent block to for a display size
         mesh = pyvista.Box(bounds)
         pl.add_mesh(mesh, opacity=0)
@@ -314,11 +308,7 @@ class Model:
         for thisShield in self.shield_list:
             if not thisShield.is_infinite():
                 # add finite shields to the MultiBlock composite
-                items = thisShield.draw()
-                if not isinstance(items, list):
-                    items = [items]
-                for item in items: 
-                    blocks.append(item)
+                blocks.append(thisShield.draw())
             else:
                 # for infinete shield bodies,
                 # project the detector location onto the infinite surface

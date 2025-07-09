@@ -1,6 +1,7 @@
 import abc
 import math
 import numbers
+import copy
 
 import numpy as np
 
@@ -46,6 +47,11 @@ class Shield(abc.ABC):
     @abc.abstractmethod
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
+        """
+
+    @abc.abstractmethod
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
         """
 
     @abc.abstractmethod
@@ -108,6 +114,39 @@ class Shield(abc.ABC):
         w = plane_point - ray_origin
         t = w.dot(plane_normal)/ndotu
         return t
+    
+    @staticmethod
+    def _ray_sphere_intersection(ray, sphere):
+        # based on
+        # https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection
+        a = np.dot(ray._dir, ray._dir)
+        b = 2 * np.dot(ray._dir, ray._origin - sphere.center)
+        c = np.dot(ray._origin-sphere.center, ray._origin -
+                   sphere.center) - sphere.radius**2
+        discriminant = b**2 - 4*a*c
+        if discriminant <= 0:
+            # sphere is missed or tangent
+            return 0
+        root = np.sqrt(discriminant)
+        t0 = (-b - root)/(2*a)
+        t1 = (-b + root)/(2*a)
+        big_list = []
+        for a_length in [t0, t1]:
+            if (a_length >= 0) and (a_length <= ray._length):
+                big_list.append(a_length)
+        if len(big_list) != 2:
+            # if not 2 intersections, look for ray endpoints inside the sphere
+            if sphere.contains(ray._origin):
+                big_list.append(0)
+            if sphere.contains(ray._end):
+                big_list.append(ray._length)
+        if len(big_list) == 0:
+            # ray misses the sphere
+            return 0
+        if len(big_list) != 2:
+            # this shouldn't occur
+            raise ValueError("Sphere doesn't have 2 crossings")
+        return abs(big_list[1]-big_list[0])
 
 # -----------------------------------------------------------
 
@@ -146,6 +185,11 @@ class SemiInfiniteXSlab(Shield):
         """Returns true if any dimension is infinite, false otherwise
         """
         return True
+    
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
+        """
+        return False
 
     def _get_crossing_length(self, ray):
         """Calculates the linear intersection length of a ray and the shield
@@ -232,7 +276,7 @@ class SemiInfiniteXSlab(Shield):
 
 
 class Sphere(Shield):
-    """A spherical shield with an optional shell.
+    """A spherical shield.
 
     Parameters
     ----------
@@ -257,79 +301,29 @@ class Sphere(Shield):
     '''
     def __init__(self, material_name, sphere_center, sphere_radius,
                  density=None, **kwargs):
-        '''Initialize material composition and location of the slab shield'''
+        '''Initialize material composition and location of the spherical shield'''
         super().__init__(material_name=material_name, density=density)
         self.center = np.array(sphere_center)
         self.radius = np.array(sphere_radius)
-        self.shell = None
-        self.outer = self
-
-    def add_shell(self, material_name, thickness, density=None):
-        '''instantiates a Sphere object representing a spherical shell'''
-        if thickness > 0:
-            shell_radius = self.radius + thickness
-            self.shell = Sphere(material_name,self.center, shell_radius, density)
-            self.outer = self.shell
-        else:
-            self.shell = None
 
     def is_infinite(self):
         '''Returns true if any dimension is infinite, false otherwise
         '''
         return False
+    
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
+        """
+        return False
 
     def get_crossing_mfp(self, ray, photon_energy):
         '''returns the crossing mfp'''
         super().get_crossing_mfp(ray, photon_energy)  # validate the arguments
-        central_distance = self._get_primitive_crossing_length(ray)
-        central_mfp = self.material.get_mfp(photon_energy, central_distance)
-        shell_mfp = 0
-        if self.shell:
-            outer_distance = self.shell._get_primitive_crossing_length(ray)
-            shell_distance = outer_distance - central_distance
-            shell_mfp = self.shell.material.get_mfp(photon_energy, shell_distance)
-        return shell_mfp + central_mfp
+        distance = self._get_crossing_length(ray)
+        return self.material.get_mfp(photon_energy, distance)
     
     def _get_crossing_length(self, ray):
-        '''returns the crossing length of the spherical shield, including the shell, if any'''
-        return self.outer._get_primitive_crossing_length(ray)
-
-    def _get_primitive_crossing_length(self, ray):
-        '''
-        returns the crossing length of only the spherical primitive being addressed.
-        If the primitive has an associated shell, the shell is not included
-        Based on
-        # https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection
-        '''
-        super()._get_crossing_length(ray)  # validate the arguments
-        a = np.dot(ray._dir, ray._dir)
-        b = 2 * np.dot(ray._dir, ray._origin - self.center)
-        c = np.dot(ray._origin-self.center, ray._origin -
-                   self.center) - self.radius**2
-        discriminant = b**2 - 4*a*c
-        if discriminant <= 0:
-            # sphere is missed or tangent
-            return 0
-        root = np.sqrt(discriminant)
-        t0 = (-b - root)/(2*a)
-        t1 = (-b + root)/(2*a)
-        big_list = []
-        for a_length in [t0, t1]:
-            if (a_length >= 0) and (a_length <= ray._length):
-                big_list.append(a_length)
-        if len(big_list) != 2:
-            # if not 2 intersections, look for ray endpoints inside the sphere
-            if self.contains(ray._origin):
-                big_list.append(0)
-            if self.contains(ray._end):
-                big_list.append(ray._length)
-        if len(big_list) == 0:
-            # ray misses the sphere
-            return 0
-        if len(big_list) != 2:
-            # this shouldn't occur
-            raise ValueError("Shield doesn't have 2 crossings")
-        return abs(big_list[1]-big_list[0])
+        return self._ray_sphere_intersection(ray, self)
 
     def contains(self, point):
         '''
@@ -349,12 +343,74 @@ class Sphere(Shield):
             A Sphere object representing the sphere shield.
         """
         if pyvista_found:
-            if self.shell:
-                return [pyvista.Sphere(radius=self.radius, center=self.center),
-                        pyvista.Sphere(radius=self.shell.radius, center=self.shell.center)]
-            else:
                 return pyvista.Sphere(radius=self.radius, center=self.center)
 
+# -----------------------------------------------------------
+
+
+class Shell(Shield):
+    """A shell that surrounds a spherical shield or source"""
+
+    def __init__(self, material_name, sphere, thickness,
+                 density=None, **kwargs):
+        '''Initialize material composition and location of the shell'''
+        super().__init__(material_name=material_name, density=density)
+        if thickness <= 0: 
+            raise ValueError("Shell has zero or negative thickness")
+        if not isinstance(sphere, Sphere):
+            raise ValueError("Shell must contain a spherical shield or source")
+
+        self.inner_sphere = copy.deepcopy(sphere)
+        self.outer_sphere = Sphere(material_name, sphere.center, sphere.radius + thickness, density)
+
+    def is_infinite(self):
+        '''Returns true if any dimension is infinite, false otherwise
+        '''
+        return False
+
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
+        """
+        return True
+
+    def get_crossing_mfp(self, ray, photon_energy):
+        '''returns the crossing mfp'''
+        super().get_crossing_mfp(ray, photon_energy)  # validate the arguments
+        distance = self._get_crossing_length(ray)
+        return self.outer_sphere.material.get_mfp(photon_energy, distance)
+    
+    def _get_crossing_length(self, ray):
+        outer_surface_crossing = self._ray_sphere_intersection(ray, self.outer_sphere)
+        inner_surface_crossing = self._ray_sphere_intersection(ray, self.inner_sphere)
+        crossing_length = outer_surface_crossing - inner_surface_crossing
+        if crossing_length < 0:
+            crossing_length = 0
+        return crossing_length
+
+    def contains(self, point):
+        '''
+        Returns true if the point is contained within the shell, otherwise false
+        '''
+        if self.outer_sphere.contains(point) and not self.inner_sphere.contains(point):
+            return True
+        else:
+            return False
+
+    def draw(self):
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A Sphere object representing the sphere shield.
+        """
+        if pyvista_found:
+                sphere_a = pyvista.Sphere(radius= self.outer_sphere.radius, center=self.outer_sphere.center)
+                sphere_b = pyvista.Sphere(radius= self.inner_sphere.radius, center=self.inner_sphere.center)
+                sphere_b.flip_normals()
+                sphere_b.flip_faces(inplace=True)
+                shell = sphere_a.merge(sphere_b)
+                return shell
 # -----------------------------------------------------------
 
 
@@ -393,6 +449,11 @@ class Box(Shield):
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
+        """
+        return False
+    
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
@@ -587,6 +648,11 @@ class InfiniteAnnulus(Shield):
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
+        """
+        return True
+
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
         """
         return True
 
@@ -951,6 +1017,11 @@ class CappedCylinder(Shield):
 
     def is_infinite(self):
         """Returns true if any dimension is infinite, false otherwise
+        """
+        return False
+
+    def is_hollow(self):
+        """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
