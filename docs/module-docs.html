@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module Contents &mdash; Zapmenot 0.1 documentation</title>
+  <title>Module Contents &mdash; Zapmenot 0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/documentation_options.js?v=10f1778b"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -95,71 +95,92 @@
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.Box"><code class="docutils literal notranslate"><span class="pre">Box</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Box.draw"><code class="docutils literal notranslate"><span class="pre">Box.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Box.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">Box.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Box.is_hollow"><code class="docutils literal notranslate"><span class="pre">Box.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Box.is_infinite"><code class="docutils literal notranslate"><span class="pre">Box.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.CappedCylinder"><code class="docutils literal notranslate"><span class="pre">CappedCylinder</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.CappedCylinder.draw"><code class="docutils literal notranslate"><span class="pre">CappedCylinder.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.CappedCylinder.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">CappedCylinder.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.CappedCylinder.is_hollow"><code class="docutils literal notranslate"><span class="pre">CappedCylinder.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.CappedCylinder.is_infinite"><code class="docutils literal notranslate"><span class="pre">CappedCylinder.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.InfiniteAnnulus"><code class="docutils literal notranslate"><span class="pre">InfiniteAnnulus</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.InfiniteAnnulus.draw"><code class="docutils literal notranslate"><span class="pre">InfiniteAnnulus.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.InfiniteAnnulus.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">InfiniteAnnulus.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.InfiniteAnnulus.is_hollow"><code class="docutils literal notranslate"><span class="pre">InfiniteAnnulus.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.InfiniteAnnulus.is_infinite"><code class="docutils literal notranslate"><span class="pre">InfiniteAnnulus.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.SemiInfiniteXSlab"><code class="docutils literal notranslate"><span class="pre">SemiInfiniteXSlab</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.SemiInfiniteXSlab.draw"><code class="docutils literal notranslate"><span class="pre">SemiInfiniteXSlab.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.SemiInfiniteXSlab.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">SemiInfiniteXSlab.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.SemiInfiniteXSlab.is_hollow"><code class="docutils literal notranslate"><span class="pre">SemiInfiniteXSlab.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.SemiInfiniteXSlab.is_infinite"><code class="docutils literal notranslate"><span class="pre">SemiInfiniteXSlab.is_infinite()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.Shell"><code class="docutils literal notranslate"><span class="pre">Shell</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Shell.contains"><code class="docutils literal notranslate"><span class="pre">Shell.contains()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Shell.draw"><code class="docutils literal notranslate"><span class="pre">Shell.draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Shell.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">Shell.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Shell.is_hollow"><code class="docutils literal notranslate"><span class="pre">Shell.is_hollow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Shell.is_infinite"><code class="docutils literal notranslate"><span class="pre">Shell.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.Shield"><code class="docutils literal notranslate"><span class="pre">Shield</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Shield.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">Shield.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Shield.is_hollow"><code class="docutils literal notranslate"><span class="pre">Shield.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Shield.is_infinite"><code class="docutils literal notranslate"><span class="pre">Shield.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.Sphere"><code class="docutils literal notranslate"><span class="pre">Sphere</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Sphere.contains"><code class="docutils literal notranslate"><span class="pre">Sphere.contains()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Sphere.draw"><code class="docutils literal notranslate"><span class="pre">Sphere.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Sphere.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">Sphere.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Sphere.is_hollow"><code class="docutils literal notranslate"><span class="pre">Sphere.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.Sphere.is_infinite"><code class="docutils literal notranslate"><span class="pre">Sphere.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.XAlignedCylinder"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinder</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.XAlignedCylinder.draw"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinder.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.XAlignedCylinder.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinder.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.XAlignedCylinder.is_hollow"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinder.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.XAlignedCylinder.is_infinite"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinder.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.XAlignedInfiniteAnnulus"><code class="docutils literal notranslate"><span class="pre">XAlignedInfiniteAnnulus</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.XAlignedInfiniteAnnulus.draw"><code class="docutils literal notranslate"><span class="pre">XAlignedInfiniteAnnulus.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.XAlignedInfiniteAnnulus.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">XAlignedInfiniteAnnulus.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.XAlignedInfiniteAnnulus.is_hollow"><code class="docutils literal notranslate"><span class="pre">XAlignedInfiniteAnnulus.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.XAlignedInfiniteAnnulus.is_infinite"><code class="docutils literal notranslate"><span class="pre">XAlignedInfiniteAnnulus.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.YAlignedCylinder"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinder</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.YAlignedCylinder.draw"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinder.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.YAlignedCylinder.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinder.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.YAlignedCylinder.is_hollow"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinder.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.YAlignedCylinder.is_infinite"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinder.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.YAlignedInfiniteAnnulus"><code class="docutils literal notranslate"><span class="pre">YAlignedInfiniteAnnulus</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.YAlignedInfiniteAnnulus.draw"><code class="docutils literal notranslate"><span class="pre">YAlignedInfiniteAnnulus.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.YAlignedInfiniteAnnulus.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">YAlignedInfiniteAnnulus.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.YAlignedInfiniteAnnulus.is_hollow"><code class="docutils literal notranslate"><span class="pre">YAlignedInfiniteAnnulus.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.YAlignedInfiniteAnnulus.is_infinite"><code class="docutils literal notranslate"><span class="pre">YAlignedInfiniteAnnulus.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.ZAlignedCylinder"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinder</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.ZAlignedCylinder.draw"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinder.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.ZAlignedCylinder.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinder.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.ZAlignedCylinder.is_hollow"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinder.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.ZAlignedCylinder.is_infinite"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinder.is_infinite()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.shield.ZAlignedInfiniteAnnulus"><code class="docutils literal notranslate"><span class="pre">ZAlignedInfiniteAnnulus</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.ZAlignedInfiniteAnnulus.draw"><code class="docutils literal notranslate"><span class="pre">ZAlignedInfiniteAnnulus.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.ZAlignedInfiniteAnnulus.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">ZAlignedInfiniteAnnulus.get_crossing_mfp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.ZAlignedInfiniteAnnulus.is_hollow"><code class="docutils literal notranslate"><span class="pre">ZAlignedInfiniteAnnulus.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.shield.ZAlignedInfiniteAnnulus.is_infinite"><code class="docutils literal notranslate"><span class="pre">ZAlignedInfiniteAnnulus.is_infinite()</span></code></a></li>
 </ul>
 </li>
@@ -175,6 +196,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.BoxSource.get_photon_source_list"><code class="docutils literal notranslate"><span class="pre">BoxSource.get_photon_source_list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.BoxSource.grouping"><code class="docutils literal notranslate"><span class="pre">BoxSource.grouping</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.BoxSource.include_key_progeny"><code class="docutils literal notranslate"><span class="pre">BoxSource.include_key_progeny</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.BoxSource.is_hollow"><code class="docutils literal notranslate"><span class="pre">BoxSource.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.BoxSource.is_infinite"><code class="docutils literal notranslate"><span class="pre">BoxSource.is_infinite()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.BoxSource.list_discrete_photons"><code class="docutils literal notranslate"><span class="pre">BoxSource.list_discrete_photons()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.BoxSource.list_isotopes"><code class="docutils literal notranslate"><span class="pre">BoxSource.list_isotopes()</span></code></a></li>
@@ -191,6 +213,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.get_photon_source_list"><code class="docutils literal notranslate"><span class="pre">LineSource.get_photon_source_list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.grouping"><code class="docutils literal notranslate"><span class="pre">LineSource.grouping</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.include_key_progeny"><code class="docutils literal notranslate"><span class="pre">LineSource.include_key_progeny</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.is_hollow"><code class="docutils literal notranslate"><span class="pre">LineSource.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.is_infinite"><code class="docutils literal notranslate"><span class="pre">LineSource.is_infinite()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.list_discrete_photons"><code class="docutils literal notranslate"><span class="pre">LineSource.list_discrete_photons()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.list_isotopes"><code class="docutils literal notranslate"><span class="pre">LineSource.list_isotopes()</span></code></a></li>
@@ -206,6 +229,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.get_photon_source_list"><code class="docutils literal notranslate"><span class="pre">PointSource.get_photon_source_list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.grouping"><code class="docutils literal notranslate"><span class="pre">PointSource.grouping</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.include_key_progeny"><code class="docutils literal notranslate"><span class="pre">PointSource.include_key_progeny</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.is_hollow"><code class="docutils literal notranslate"><span class="pre">PointSource.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.is_infinite"><code class="docutils literal notranslate"><span class="pre">PointSource.is_infinite()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.list_discrete_photons"><code class="docutils literal notranslate"><span class="pre">PointSource.list_discrete_photons()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.list_isotopes"><code class="docutils literal notranslate"><span class="pre">PointSource.list_isotopes()</span></code></a></li>
@@ -228,11 +252,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.add_isotope_bq"><code class="docutils literal notranslate"><span class="pre">SphereSource.add_isotope_bq()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.add_isotope_curies"><code class="docutils literal notranslate"><span class="pre">SphereSource.add_isotope_curies()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.add_photon"><code class="docutils literal notranslate"><span class="pre">SphereSource.add_photon()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.contains"><code class="docutils literal notranslate"><span class="pre">SphereSource.contains()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.draw"><code class="docutils literal notranslate"><span class="pre">SphereSource.draw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">SphereSource.get_crossing_mfp()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.get_photon_source_list"><code class="docutils literal notranslate"><span class="pre">SphereSource.get_photon_source_list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.grouping"><code class="docutils literal notranslate"><span class="pre">SphereSource.grouping</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.include_key_progeny"><code class="docutils literal notranslate"><span class="pre">SphereSource.include_key_progeny</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.is_hollow"><code class="docutils literal notranslate"><span class="pre">SphereSource.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.is_infinite"><code class="docutils literal notranslate"><span class="pre">SphereSource.is_infinite()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.list_discrete_photons"><code class="docutils literal notranslate"><span class="pre">SphereSource.list_discrete_photons()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.SphereSource.list_isotopes"><code class="docutils literal notranslate"><span class="pre">SphereSource.list_isotopes()</span></code></a></li>
@@ -248,6 +274,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.XAlignedCylinderSource.get_photon_source_list"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinderSource.get_photon_source_list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.XAlignedCylinderSource.grouping"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinderSource.grouping</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.XAlignedCylinderSource.include_key_progeny"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinderSource.include_key_progeny</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.XAlignedCylinderSource.is_hollow"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinderSource.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.XAlignedCylinderSource.is_infinite"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinderSource.is_infinite()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.XAlignedCylinderSource.list_discrete_photons"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinderSource.list_discrete_photons()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.XAlignedCylinderSource.list_isotopes"><code class="docutils literal notranslate"><span class="pre">XAlignedCylinderSource.list_isotopes()</span></code></a></li>
@@ -263,6 +290,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.YAlignedCylinderSource.get_photon_source_list"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinderSource.get_photon_source_list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.YAlignedCylinderSource.grouping"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinderSource.grouping</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.YAlignedCylinderSource.include_key_progeny"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinderSource.include_key_progeny</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.YAlignedCylinderSource.is_hollow"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinderSource.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.YAlignedCylinderSource.is_infinite"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinderSource.is_infinite()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.YAlignedCylinderSource.list_discrete_photons"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinderSource.list_discrete_photons()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.YAlignedCylinderSource.list_isotopes"><code class="docutils literal notranslate"><span class="pre">YAlignedCylinderSource.list_isotopes()</span></code></a></li>
@@ -278,6 +306,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.ZAlignedCylinderSource.get_photon_source_list"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinderSource.get_photon_source_list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.ZAlignedCylinderSource.grouping"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinderSource.grouping</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.ZAlignedCylinderSource.include_key_progeny"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinderSource.include_key_progeny</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.ZAlignedCylinderSource.is_hollow"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinderSource.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.ZAlignedCylinderSource.is_infinite"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinderSource.is_infinite()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.ZAlignedCylinderSource.list_discrete_photons"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinderSource.list_discrete_photons()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.ZAlignedCylinderSource.list_isotopes"><code class="docutils literal notranslate"><span class="pre">ZAlignedCylinderSource.list_isotopes()</span></code></a></li>
@@ -671,6 +700,12 @@ the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.Box.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Box.is_hollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Box.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.Box.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Box.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Box.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
@@ -721,6 +756,12 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.CappedCylinder.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#CappedCylinder.is_hollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.CappedCylinder.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -778,6 +819,12 @@ with the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.InfiniteAnnulus.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#InfiniteAnnulus.is_hollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.InfiniteAnnulus.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.InfiniteAnnulus.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#InfiniteAnnulus.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.InfiniteAnnulus.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
@@ -830,8 +877,59 @@ the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.SemiInfiniteXSlab.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#SemiInfiniteXSlab.is_hollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.SemiInfiniteXSlab.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.SemiInfiniteXSlab.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#SemiInfiniteXSlab.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.SemiInfiniteXSlab.is_infinite" title="Link to this definition"></a></dt>
+<dd><p>Returns true if any dimension is infinite, false otherwise</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="zapmenot.shield.Shell">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zapmenot.shield.</span></span><span class="sig-name descname"><span class="pre">Shell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shell" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zapmenot.shield.Shield" title="zapmenot.shield.Shield"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shield</span></code></a></p>
+<p>A shell that surrounds a spherical shield or source</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.Shell.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shell.contains"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shell.contains" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the point is contained within the shell, otherwise false</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.Shell.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shell.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shell.draw" title="Link to this definition"></a></dt>
+<dd><p>Creates a display object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A Sphere object representing the sphere shield.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="(in PyVista v0.45.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.Shell.get_crossing_mfp">
+<span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shell.get_crossing_mfp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shell.get_crossing_mfp" title="Link to this definition"></a></dt>
+<dd><p>returns the crossing mfp</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.Shell.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shell.is_hollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shell.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.Shell.is_infinite">
+<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shell.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shell.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
 </dd></dl>
 
@@ -867,6 +965,12 @@ with the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.Shield.is_hollow">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shield.is_hollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shield.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.Shield.is_infinite">
 <em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shield.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shield.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
@@ -890,6 +994,12 @@ with the shield.</p></li>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.Sphere.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Sphere.contains"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Sphere.contains" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the point is contained within the sphere, otherwise false</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.Sphere.draw">
 <span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Sphere.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Sphere.draw" title="Link to this definition"></a></dt>
 <dd><p>Creates a display object</p>
@@ -907,6 +1017,12 @@ with the shield.</p></li>
 <dt class="sig sig-object py" id="zapmenot.shield.Sphere.get_crossing_mfp">
 <span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Sphere.get_crossing_mfp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Sphere.get_crossing_mfp" title="Link to this definition"></a></dt>
 <dd><p>returns the crossing mfp</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.Sphere.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Sphere.is_hollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Sphere.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -963,6 +1079,12 @@ with the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.XAlignedCylinder.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.XAlignedCylinder.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.XAlignedCylinder.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.XAlignedCylinder.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
@@ -1013,6 +1135,12 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.XAlignedInfiniteAnnulus.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.XAlignedInfiniteAnnulus.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1069,6 +1197,12 @@ with the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.YAlignedCylinder.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.YAlignedCylinder.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.YAlignedCylinder.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.YAlignedCylinder.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
@@ -1119,6 +1253,12 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.YAlignedInfiniteAnnulus.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.YAlignedInfiniteAnnulus.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1175,6 +1315,12 @@ with the shield.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.ZAlignedCylinder.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.ZAlignedCylinder.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.ZAlignedCylinder.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.ZAlignedCylinder.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
@@ -1225,6 +1371,12 @@ with the shield.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.shield.ZAlignedInfiniteAnnulus.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.ZAlignedInfiniteAnnulus.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1364,6 +1516,12 @@ option.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.source.BoxSource.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.BoxSource.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1561,6 +1719,12 @@ option.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.source.LineSource.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#LineSource.is_hollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.LineSource.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.LineSource.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#LineSource.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.LineSource.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
@@ -1744,6 +1908,12 @@ option.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.source.PointSource.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#PointSource.is_hollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.PointSource.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2005,6 +2175,12 @@ Isotope object and an activity in Bq.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.source.SphereSource.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.SphereSource.contains" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the point is contained within the sphere, otherwise false</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.SphereSource.draw">
 <span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.SphereSource.draw" title="Link to this definition"></a></dt>
 <dd><p>Creates a display object</p>
@@ -2064,6 +2240,12 @@ option.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.source.SphereSource.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.SphereSource.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2248,6 +2430,12 @@ option.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.source.XAlignedCylinderSource.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.XAlignedCylinderSource.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.XAlignedCylinderSource.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.XAlignedCylinderSource.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
@@ -2426,6 +2614,12 @@ option.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.source.YAlignedCylinderSource.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.YAlignedCylinderSource.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2610,6 +2804,12 @@ option.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="zapmenot.source.ZAlignedCylinderSource.is_hollow">
+<span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.ZAlignedCylinderSource.is_hollow" title="Link to this definition"></a></dt>
+<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.ZAlignedCylinderSource.is_infinite">
 <span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.ZAlignedCylinderSource.is_infinite" title="Link to this definition"></a></dt>
 <dd><p>Returns true if any dimension is infinite, false otherwise</p>
@@ -2789,8 +2989,8 @@ uncollided energy flux, uncollided exposure, and total exposure</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Jun 22, 2025.
+    <p>&#169; Copyright 2019 - 2025, Alan Ford..
+      <span class="lastupdated">Last updated on Jul 11, 2025.
       </span></p>
   </div>
 

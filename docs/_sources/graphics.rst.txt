@@ -19,8 +19,9 @@ shields, the following command can be used to display the model:
     # display a model
     myModel.display()
 
-Provided you are using a an operating system with graphics capability (i.e. not just a console)
-ZapMeNot will display something similar to the following graphic.  In this example the source
+Provided you are using a computer and an operating system with a reasonably-modern graphics capability 
+(i.e. not just a console) ZapMeNot will display something similar to the following graphic.  
+In this example the source
 is a point source shown in red, the detector is shown in yellow, and two shields are shown
 in blue.
 
@@ -33,39 +34,57 @@ The display can be rotated, moved, zoomed, and more by using a mouse or `keyboar
 Graphics in a JupyterLab Notebook
 --------------------------------------
 
-A convenient way to document a ZapMeNot analysis is to use a `JupyterLab notebook`_.
-Jupyterlab introduces just one additional wrinkle - optionally selecting a `graphics backend`_
-for displaying graphics.  The `panel` backend tends to be compatible with the
-ZapMeNot feature set.
+A convenient way to document a ZapMeNot analysis is to use a `JupyterLab notebook`_.  Embed
+your python script in a notebook, choose the appropriate python environment, and everything
+runs just as if you were executing a python script from the command line.
 
 .. _JupyterLab notebook: https://jupyter.org
-
-.. _graphics backend: https://docs.pyvista.org/user-guide/jupyter/index.html
 
 Here's a screenshot of a JupyterLab notebook.  Your display may look different, depending
 on your workstation configuration.
 
 .. image:: jupyterlab.png
 
+An interesting factoid is that you can work with a JupyterLab notebook in a JupyterLab server (the
+usual way) but also in the Visual Studio Code editor!  Visual Studio Code (aka VSCode) will
+display a notebook page, let you choose an appropriate python environment, run the analysis, and finally
+display the graphics.
+
 Going Headless For Fun and Profit
 ---------------------------------
 
-It is possible to display the model on a headless linux server (one with no graphics card)
-by building your ZapMeNot model in a `JupyterLab notebook`_.  Beyond selecting a suitable
-backend, it's also usually necessary to use `xvfb`_.  This requires a couple of steps, so follow along!
+It is possible to display the model on a headless linux server (one with no graphics card) or on a server
+that just has a really terrible graphics chip.  Two approaches have been used: a Jupyterlab notebook in
+VSCode and a Jupyterlab server displayed on a local computer display.
 
-First, it's necessary to ensure that xvfb has been installed.  Here's the command for Ubuntu (your system may be different):
+It's a bird, it's a plane, it's VSCode!
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:code:`sudo apt install libgl1-mesa-glx xvfb`
-
-Next, add the following lines after the other import statements at the beginning of your JupyterLab notebook:
+It's not uncommon to use XWindows to display locally a session running on a remote headless server.
+VSCode can be used to display a Jupyterlab notebook in a manner similar to that described in the previous
+section, but with one simple change.  You need to add the following line to your python script:
 
 .. code-block:: python
 
-    from pyvista.utilities import xvfb
-    xvfb.start_xvfb()
-    pyvista.set_jupyter_backend('panel')
+    pyvista.set_jupyter_backend('client')
 
+This line tells Jupyterlab (and pyVista) to display graphics using the graphics capability of the "client"
+(the local computer).  That's all it takes!
 
-.. _xvfb: https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml
+Going Full Jupyter
+^^^^^^^^^^^^^^^^^^
 
+For those who dislike VSCode, a headless server can be used to display a Jupyterlab session in your desktop
+brower.  Start a Jupyterlab session on the server and connect with your desktop brower in the usual fashion.
+Modify your ZapMeNot python script to start with the following lines:
+
+.. code-block:: python
+
+    import os
+    pyvista.set_jupyter_backend('client')
+    pyvista.global_theme.trame.server_proxy_enabled = True
+    os.environ['TRAME_DEFAULT_HOST'] = 'YOUR_SERVER_NAME_HERE'
+    pyvista.global_theme.trame.server_proxy_prefix = ' http://YOUR_SERVER_NAME_HERE:'
+
+This tells Jupyterlab to use the local client for graphics and also tells the local browser the path
+back to the server for additional graphics details.

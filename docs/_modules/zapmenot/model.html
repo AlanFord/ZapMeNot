@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>zapmenot.model &mdash; Zapmenot 0.1 documentation</title>
+  <title>zapmenot.model &mdash; Zapmenot 0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/documentation_options.js?v=10f1778b"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -377,6 +377,9 @@
         <span class="n">shieldColor</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
         <span class="n">sourceColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
         <span class="k">for</span> <span class="n">thisShield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+            <span class="n">opacity</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="k">if</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">is_hollow</span><span class="p">():</span>
+                <span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.5</span>
             <span class="k">if</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">():</span>
                 <span class="n">clipped</span> <span class="o">=</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
                 <span class="n">clipped</span> <span class="o">=</span> <span class="n">clipped</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
@@ -391,7 +394,7 @@
                     <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-y&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
                 <span class="n">clipped</span> <span class="o">=</span> <span class="n">clipped</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>
                     <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-z&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]])</span>
-                <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clipped</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">)</span>
+                <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clipped</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">thisShield</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">):</span>
                     <span class="c1"># point sources are handled later</span>
@@ -399,7 +402,7 @@
                         <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span>
                                     <span class="n">sourceColor</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span> <span class="n">shieldColor</span><span class="p">)</span>
+                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span> <span class="n">shieldColor</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
         <span class="c1"># now add the &quot;bounds&quot; as a transparent block to for a display size</span>
         <span class="n">mesh</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span>
         <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -510,8 +513,8 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Jun 22, 2025.
+    <p>&#169; Copyright 2019 - 2025, Alan Ford..
+      <span class="lastupdated">Last updated on Jul 11, 2025.
       </span></p>
   </div>
 

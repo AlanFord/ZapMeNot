@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>zapmenot.source &mdash; Zapmenot 0.1 documentation</title>
+  <title>zapmenot.source &mdash; Zapmenot 0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/documentation_options.js?v=10f1778b"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -439,6 +439,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
+    
+<div class="viewcode-block" id="LineSource.is_hollow">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource.is_hollow">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_hollow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if the body is annular or hollow, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
@@ -578,6 +586,14 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.is_infinite">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if any dimension is infinite, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+    
+<div class="viewcode-block" id="PointSource.is_hollow">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.is_hollow">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_hollow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns true if the body is annular or hollow, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
@@ -727,11 +743,16 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Returns a list of quadrature weights for the quadrature locations</span>
+<span class="sd">        Generates a list of quadrature weights for the quadrature locations</span>
 <span class="sd">        within the source volume.  Note that the weights should sum to 1.0,</span>
 <span class="sd">        each weight representing the fraction of the source associated with</span>
 <span class="sd">        a particular quadrature point.  When a uniform weighting is required,</span>
 <span class="sd">        the weights should have constant values that sum to 1.0.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`list` </span>
+<span class="sd">            A list of quadrature weights.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span>
 
@@ -740,7 +761,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`list` of :class:`numpy.adarray`</span>
+<span class="sd">        :class:`list` of :class:`numpy.ndarray`</span>
 <span class="sd">            A list of vector locations within the Source body.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rLocations</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thetaLocations</span><span class="p">)</span> <span class="o">*</span> \
@@ -1146,8 +1167,8 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019 - 2023, Alan Ford..
-      <span class="lastupdated">Last updated on Jun 22, 2025.
+    <p>&#169; Copyright 2019 - 2025, Alan Ford..
+      <span class="lastupdated">Last updated on Jul 11, 2025.
       </span></p>
   </div>
 

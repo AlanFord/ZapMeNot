@@ -88,6 +88,19 @@ on the quadrature used (more on that later).
 For user convenience the "aligned" cylinders and annuli have been included to simplify the input
 required to build a model.
 
+There is one more specialized shield - the Shell.  This shield can only be used to surround either a SphereSource 
+spherical source or a Sphere shield.  When creating a Shell you will need to specify the object (SphereSource or Sphere) 
+it is surrounding as well as the thickness of the Shell.
+
+.. code-block:: python
+
+    # create a model, adding a source and a shell
+    myModel = model.Model()
+    a_source = source.SphereSource('air', sphere_center=[0,0,10], sphere_radius=40)
+    a_shield = shield.Shell('copper', a_source, thickness=10)
+    myModel.add_source(a_source)
+    myModel.add_shield(a_shield)
+
 Each shield requires a material type and, optionally, a density.  Shields will alter
 the calculated doses only when the shields completely or partially interrupt the line-of-sight between the source and
 the detector.  The following
