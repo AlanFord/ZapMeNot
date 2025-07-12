@@ -407,7 +407,6 @@ class Shell(Shield):
         if pyvista_found:
                 sphere_a = pyvista.Sphere(radius= self.outer_sphere.radius, center=self.outer_sphere.center)
                 sphere_b = pyvista.Sphere(radius= self.inner_sphere.radius, center=self.inner_sphere.center)
-                sphere_b.flip_normals()
                 sphere_b.flip_faces(inplace=True)
                 shell = sphere_a.merge(sphere_b)
                 return shell
