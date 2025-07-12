@@ -51,34 +51,31 @@ where the zapmenot.yml file contains the following:
 
     name: zapmenot
     channels:
-    - defaults
     - conda-forge
+    - defaults
     dependencies:
-    - python>=3.9
-    - scipy>=0.14
-    - numpy>=1.18.1
-    - pyyaml>=5.3
+    - python>=3.13
+    - scipy>=1.15
+    - pyyaml>=6.0
     - pip
     - git
     # optional for graphics capability
-    - pyvista
+    - pyvista>=0.45
     - vtk>=9.3
-    - trame=2.5.2
+    - trame>=3.10
+    - trame-vtk>=2.8.17
+    - trame-vuetify>=3.0
     # optional for jupyterlab capability
-    - jupyterlab
-    - matplotlib
-    - panel
-    - pythreejs
-    - pooch>=1.6.0
-    - ipyvtklink
+    - jupyterlab>=4.4
+    - ipywidgets>=8.1.7
     # required for testing
-    - pytest
-    - pandas
+    - pytest>=8.4
+    - pandas>=2.3
     # required for developers
-    - sphinx-rtd-theme
-    - sphinx
+    - sphinx-rtd-theme>=3.0
+    - sphinx>=8.2
     - flake8
-    - build
+    - python-build>=1.2
 
 Finally, install the ZapMeNot package from Github:
 
