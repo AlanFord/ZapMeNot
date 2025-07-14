@@ -56,8 +56,10 @@ exclude = [
   "/profile",
   "/references",
   "/samples",
+  "/tutorial",
   "/docs",
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/zapmenot"]
+packages = ["src/zapmenot", "tests", "benchmarks", "docs"]
+exclude = ["/dist"]
