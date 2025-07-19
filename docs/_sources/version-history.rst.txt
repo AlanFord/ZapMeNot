@@ -3,6 +3,11 @@ Version History
 ===============
 
 
+* v0.2   - 2025 / 07 / 19
+
+  Corrected buildup factor extrapolation
+  
+  Added spherical sources and shield shells
 * v0.1   - 2023 / 02 / 12
 
   Completed benchmarking and corrected cylindrical quadrature
