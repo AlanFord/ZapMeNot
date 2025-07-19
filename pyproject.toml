@@ -23,6 +23,7 @@ dependencies = [
   "scipy >=1.15",
   "pyyaml>=6.0",
   "pyvista>=0.45",
+  "pytest>=8.4",
   # jupyterlab, including headless
   "jupyterlab >=4.4",
   "trame >=3.10",
@@ -34,7 +35,6 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "hatch",
-    "pytest>=8.4",
     "pandas>=2.3",
     "sphinx >=8.2",
     "sphinx-rtd-theme >=3.0",
@@ -53,10 +53,7 @@ exclude = [
   "/.github",
   "/benchmarks",
   "/dist",
-  "/notebooks",
-  "/profile",
   "/references",
-  "/samples",
   "/tutorial",
   "/docs",
 ]
