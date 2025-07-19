@@ -51,10 +51,8 @@ path = "src/zapmenot/__about__.py"
 [tool.hatch.build.targets.sdist]
 exclude = [
   "/.github",
-  "/benchmarks",
   "/dist",
   "/references",
-  "/tutorial",
   "/docs",
 ]
 
