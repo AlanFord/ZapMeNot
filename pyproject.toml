@@ -19,26 +19,27 @@ classifiers = [
 license-files = ["LICEN[CS]E*", "vendored/licenses/*.txt", "AUTHORS.md"]
 requires-python = ">=3.13"
 dependencies = [
-  "pyvista>=0.45",
+  # basic functionality
   "scipy >=1.15",
   "pyyaml>=6.0",
-  "pytest>=8.4",
-  "pandas>=2.3",
+  "pyvista>=0.45",
+  # jupyterlab, including headless
+  "jupyterlab >=4.4",
+  "trame >=3.10",
+  "trame-vtk >=2.8.17",
+  "trame-vuetify >=3.0",
+  "ipywidgets >=8.1.7",
 ]
 
 [project.optional-dependencies]
-notebook = [
-    "jupyterlab >=4.4",
-    "trame >=3.10",
-    "trame-vtk >=2.8.17",
-    "trame-vuetify >=3.0",
-    "ipywidgets >=8.1.7",
-]
 dev = [
+    "hatch",
+    "pytest>=8.4",
+    "pandas>=2.3",
     "sphinx >=8.2",
     "sphinx-rtd-theme >=3.0",
     "flake8 >=7.2",
-    "python-build >=1.2",
+    "build >=1.2",
 ]
 
 [project.urls]

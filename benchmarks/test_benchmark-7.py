@@ -16,6 +16,7 @@ pytestmark = pytest.mark.benchmark
 # Benchmark 5: ESIS Problem #2 - Dose Point D6 - Concrete Buildup
 # Benchmark 6: User manual case for resin liner source inference
 # Benchmark 7: User manual case for resin liner source inference, iron shield
+# Benchmark 8: Large spherical source of air with a concrete shell 
 
 # Benchmark 6 models a steel container of solidifed resin
 # (modeled as a mixture of water and cement).
