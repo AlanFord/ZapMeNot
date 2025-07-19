@@ -8,7 +8,7 @@ Test cases packaged with ZapMeNot fall into three categories;
 unit tests, graphics tests, and benchmarks.
 
 Unit Tests
-----------
+^^^^^^^^^^
 
 These tests are verify that code blocks are functioning as 
 intended.  To execute the unit tests, use the following code:
@@ -19,7 +19,7 @@ intended.  To execute the unit tests, use the following code:
    pytest -m basic
 
 Benchmark Tests
----------------
+^^^^^^^^^^^^^^^
 
 The benchmarks are not designed to identify errors in ZapMeNot, but
 rather to examine the accuracy of the calculations.  The following
@@ -33,7 +33,7 @@ the testing routines.
    pytest -s -m benchmark
 
 Graphics Tests
---------------
+^^^^^^^^^^^^^^
 
 The graphics tests can be used to verify that the ZapMeNot display
 functions are performing as expected.  Some of these test cases will
@@ -65,7 +65,7 @@ Following successful testing, the following steps are used to generate a new ver
 * Update the version number in ZapMeNot/zapmenot/__about__.py
 * Optionally update the interSphinx input by executing :code:`update.sh` from the ZapMeNot/docsrc/interSphinx folder
 * Rebuild the documentation by executing :code:`make html` from the ZapMeNot/docsrc folder
-* Build the distribution packages by executing :code:`python -m build` from the ZapMeNot folder
+* Build the distribution packages by executing :code:`hatch build` from the ZapMeNot folder
 
 Updating Copyright
 ------------------
@@ -75,3 +75,4 @@ Update the year in the following files:
 * `ZapMeNot/docsrc/source/license.rst`
 * `ZapMeNot/zapmenot/__about__.py`
 
+Update the year in the header of each python source file.

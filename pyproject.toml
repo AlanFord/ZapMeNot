@@ -1,3 +1,66 @@
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "zapmenot"
+dynamic = ["version"]
+description = "Library of routines for performing point kernel photon shielding calculations."
+readme = "README.rst"
+license = "GPL-3.0-or-later"
+authors = [
+    {name = "Alan Ford"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering"
+]
+license-files = ["LICEN[CS]E*", "vendored/licenses/*.txt", "AUTHORS.md"]
+requires-python = ">=3.13"
+dependencies = [
+  # basic functionality
+  "scipy >=1.15",
+  "pyyaml>=6.0",
+  "pyvista>=0.45",
+  # jupyterlab, including headless
+  "jupyterlab >=4.4",
+  "trame >=3.10",
+  "trame-vtk >=2.8.17",
+  "trame-vuetify >=3.0",
+  "ipywidgets >=8.1.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "hatch",
+    "pytest>=8.4",
+    "pandas>=2.3",
+    "sphinx >=8.2",
+    "sphinx-rtd-theme >=3.0",
+    "flake8 >=7.2",
+    "build >=1.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/AlanFord/ZapMeNot"
+
+[tool.hatch.version]
+path = "src/zapmenot/__about__.py"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/.github",
+  "/benchmarks",
+  "/dist",
+  "/notebooks",
+  "/profile",
+  "/references",
+  "/samples",
+  "/tutorial",
+  "/docs",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/zapmenot", "tests", "benchmarks", "docs"]
+exclude = ["/dist"]

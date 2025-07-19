@@ -25,8 +25,12 @@ Installation
 ------------
 
 There are as many ways to install ZapMeNot as there are ways to install and run Python.  First
-up is installing ZapMeNot using pip.
+up is installing ZapMeNot using pip, followed by using Anaconda.
 
+Installing with Pip
+^^^^^^^^^^^^^^^^^^^
+
+You must start with a copy of Python Version 3.13.  
 ZapMeNot can be installed directly from Github using pip:
 
 :code:`pip install git+git://github.com/AlanFord/ZapMeNot.git`
@@ -37,11 +41,14 @@ ZapMeNot can be installing from a local source tree using pip once the source ha
 
 You can also install in Development Mode:
 
-:code:`pip install -e ./ZapMeNot`
+:code:`pip install -e "./ZapMeNot[dev]"`
 
-At present most ZapMeNot users are running ZapMeNot using either Anaconda or Miniconda.  Both use conda
+Working with Conda
+^^^^^^^^^^^^^^^^^^^
+
+At present most ZapMeNot users are running ZapMeNot using either Anaconda, Miniconda, or conda-forge.  All use conda
 to create specialized python environment tailored to the work at hand.  After installing either
-Anaconda or Miniconda, create a ZapMeNot environment using the following command:
+Anaconda, Miniconda, or conda-forge, create a ZapMeNot environment using the following command:
 
 :code:`conda env create -f zapmenot.yml`
 
@@ -57,24 +64,23 @@ where the zapmenot.yml file contains the following:
     - python>=3.13
     - scipy>=1.15
     - pyyaml>=6.0
-    - pip
-    - git
     # optional for graphics capability
     - pyvista>=0.45
-    - vtk>=9.3
+    # optional for jupyterlab capability
+    - jupyterlab>=4.4
     - trame>=3.10
     - trame-vtk>=2.8.17
     - trame-vuetify>=3.0
-    # optional for jupyterlab capability
-    - jupyterlab>=4.4
     - ipywidgets>=8.1.7
     # required for testing
     - pytest>=8.4
     - pandas>=2.3
     # required for developers
+    - hatch
     - sphinx-rtd-theme>=3.0
     - sphinx>=8.2
-    - flake8
+    - flake8>=7.2
+    # replace python-build with "build" if not using the conda-forge channel
     - python-build>=1.2
 
 Finally, install the ZapMeNot package from Github:

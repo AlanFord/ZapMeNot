@@ -84,7 +84,7 @@ Problem 1 is a cylindrical water-filled steel tank
 surrounded by a concrete wall.  It will be modeled in ZapMeNot
 as a cylindrical water source, an annular steel shield, and
 an slab concrete shield.  The material densities are
-0.00122 g/cm3, 1.0 g/cm3, 7.8 g/cm3, and 2.4 g/cm3 for air, 
+0.00122 g/cm\ :sup:`3`, 1.0 g/cm\ :sup:`3`, 7.8 g/cm\ :sup:`3`, and 2.4 g/cm\ :sup:`3` for air, 
 water, steel, and concrete, respectively.
 
 The source cylinder is 108.3 cm tall with a diameter of 308 cm.
@@ -145,7 +145,7 @@ The thickness of the wall is 91.4.
 It will be modeled in ZapMeNot
 as a box water source, a slab steel shield, and
 an slab concrete shield.  The material densities continue to be
-0.00122 g/cm3, 1.0 g/cm3, 7.8 g/cm3, and 2.4 g/cm3 for air, 
+0.00122 g/cm\ :sup:`3`, 1.0 g/cm\ :sup:`3`, 7.8 g/cm\ :sup:`3`, and 2.4 g/cm\ :sup:`3` for air, 
 water, steel, and concrete, respectively.
 
 The dose rates are calculated on
@@ -163,6 +163,49 @@ Results are provided in the following table.
    +--------------+----------------+-----------------+-----------+
    | Outside Wall |   3.15E+00     | 3.01E+00        | 2.91E+00  |
    +--------------+----------------+-----------------+-----------+
+
+Sphere Benchmark Problem
+---------------------------
+
+This is an analytic benchmark designed to evaluate a the ability to
+model a spherical source inside a shell acting as a shield.
+
+The spherical source is an air medium with a radius of 70 ft and a 
+density of 0.00122 g/cm\ :sup:`3`.  The shell surrounding the spherical source
+region has a thickness of 30 inches and is composed of concrete with
+a density of 2.3 g/cm\ :sup:`3`.  The dose point is located 302 ft, 7 in from the 
+center of the sphere.  The source is uniformly distributed within the 
+air sphere with an energy of 1 MeV and a total activity of 1E17 photons/sec.
+The region surrounding the spherical shell is air with a density of 0.00122 g/cm\ :sup:`3`.
+The buildup material is concrete.
+
+The following table contains the resulting dose rates calculated
+using ZapMeNot and Microshield7.  ZapMeNot and Microshield7 were
+compared with both (10, 10, 10) and (30, 30, 30) intervals for the
+R, Theta, Phi quadrature and the dose point on the X axis (i.e. coplanar with the
+"equator" of the sphere).  The results agree well, with ZapMeNot showing
+slightly more sensitvity to the quadrature used.  An additional case was 
+run using a (10, 10, 10) quadrature, but rotating the dose point such that It
+is on the Z axis of the sphere.  This configuration eleminates the quadrature 
+sensitivity.  The results demonstrate that the quadrature used by ZapMeNot results 
+in a non-uniform source quadrature.  However, the impact of the quadrature
+is slight compared to the uncertainties introduced by the point-kernel model
+and can be compensated by increasing the quadrature used.
+
+
+   +---------------+-----------------+-----------+
+   | | Case        | | Microshield 7 | | ZapMeNot|
+   | | Description | | (mR/hr)       | | (mR/hr) |
+   +===============+=================+===========+
+   | (10,10,10)    | 7.331           | 7.384     |
+   | Quadrature    |                 |           |
+   +---------------+-----------------+-----------+
+   | (30,30,30)    | 7.331           | 7.333     |
+   | Quadrature    |                 |           |
+   +---------------+-----------------+-----------+
+   | Dose Point on | N/A             | 7.333     |
+   | the Z Axis    |                 |           |
+   +---------------+-----------------+-----------+
 
 Synthetic Benchmark Problem
 ---------------------------
@@ -198,7 +241,7 @@ The point source is centered in an annular iron shield with an inner
 radius of 3 feet and a thickness of 3 inches.  A concentric annular 
 concrete shield has an inner radius of 4 feet and a thickness of
 18 inches.  The material densities are
-0.00122 g/cm3, 7.874 g/cm3, and 2.34 g/cm3 for air, 
+0.00122 g/cm\ :sup:`3`, 7.874 g/cm\ :sup:`3`, and 2.34 g/cm\ :sup:`3` for air, 
 steel, and concrete, respectively. 
 
 The following tables contain the resulting dose rates calculated

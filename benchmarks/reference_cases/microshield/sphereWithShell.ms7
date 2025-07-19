@@ -1,0 +1,347 @@
+MicroShield 7.02
+Licensed To: Dominion
+With Serial: 07-MSD-7.02-1318
+Case 10
+The execution time was: 00:00:00
+This case was run on Thursday, July 17, 2025 at 10:14:09 AM
+air sphere shielded by concrete
+ 1 
+ 6  GEOMETRY
+9222.6384 X
+0 Y
+0 Z
+0 Length
+2133.6 Radius
+0 Width
+0 Height
+0 Angle
+SHIELD ARRAY:
+76.2 Shield No:  1 thickness
+6949.44 Shield No:  2 thickness
+0 Shield No:  3 thickness
+0 Shield No:  4 thickness
+0 Shield No:  5 thickness
+0 Shield No:  6 thickness
+0 Shield No:  7 thickness
+0 Shield No:  8 thickness
+0 Shield No:  9 thickness
+0 Shield No:  10 thickness
+63.3984 Air gap thickness
+0 Wall Cladding thickness
+0 Top Cladding thickness
+2 Transition Shield #
+Sensitivity variable index (or 0):
+0 SenseVar
+1 # saved results or 1
+# sensitivity cycles or 1 if none:
+0 CURIESCONSTANT
+1 NCycles
+12 Number of Materials
+15 shields for material #1:
+0.00122
+0
+0.00122
+0
+0
+0
+0
+0
+0
+0
+0
+0.00122
+0
+0
+0
+15 shields for material #2:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #3:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #4:
+0
+2.3
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #5:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #6:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #7:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #8:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #9:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #10:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #11:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15 shields for material #12:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+BUILDUP MATERIAL INFORMATION
+2, Case Buildup Material
+6, GROUPING METHOD
+1, DEFAULT GROUPS
+0.015, LOWER MEV CUTOFF
+0, PHOTONS BELOW
+0, NUMBER OF ISOTOPES
+25 energies:
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+25 activities:
+1E+17
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+End of source inputs.
+10 Numerical Quadrature Order - Level  1
+10 Numerical Quadrature Order - Level  2
+0 Numerical Quadrature Order - Level  3
+1, 1 = RESULTS EXIST  0 = NO
+25 Results - reference (or single) case:
+137.444864389409
+133.669361198208
+278.725370274493
+1.39336645850307E-03
+3.99307298986629E-02
+0.178796107364715
+0.441082800345672
+2.21909882194741
+3.63561810897335
+10.3998784411473
+15.0123311525771
+42.1004375360312
+120.259439050744
+58.9370732043556
+11.6008178173675
+1.98269229731345
+3.3977169637358
+12.4060373870491
+3.10227282894341
+1.95196670532797E-02
+9.16199272786958
+0.451482169076552
+0
+0
+12.2511164314192
+3977.11505193121
+2973.96588754509
+5078.02454545363
+0.216043101508745
+3.68410396383834
+10.2622367048601
+18.4132442568017
+71.6928105688544
+97.2089198990775
+230.585242386559
+281.815780020256
+694.841011162675
+1771.33205529758
+786.206293745752
+144.324535102341
+21.5930886023447
+34.787301713008
+120.028236912437
+28.3152580877712
+0.170023703248776
+73.142555397271
+3.44915777322111
+0
+0
+79.6422000787829
+End of MicroShield 7 Case File: F:\zap sphere\sphereWithShell.ms7

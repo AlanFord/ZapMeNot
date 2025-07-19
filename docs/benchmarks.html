@@ -56,6 +56,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#ansi-ans-6-6-1-benchmark-ii-1">ANSI/ANS 6.6.1 Benchmark II.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#esis-benchmark-problem-1">ESIS Benchmark Problem 1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#esis-benchmark-problem-2">ESIS Benchmark Problem 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sphere-benchmark-problem">Sphere Benchmark Problem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#synthetic-benchmark-problem">Synthetic Benchmark Problem</a></li>
 </ul>
 </li>
@@ -302,7 +303,7 @@ The benchmarks have been use in evaluations of both Microshield and VISIPLAN.</p
 surrounded by a concrete wall.  It will be modeled in ZapMeNot
 as a cylindrical water source, an annular steel shield, and
 an slab concrete shield.  The material densities are
-0.00122 g/cm3, 1.0 g/cm3, 7.8 g/cm3, and 2.4 g/cm3 for air,
+0.00122 g/cm<sup>3</sup>, 1.0 g/cm<sup>3</sup>, 7.8 g/cm<sup>3</sup>, and 2.4 g/cm<sup>3</sup> for air,
 water, steel, and concrete, respectively.</p>
 <p>The source cylinder is 108.3 cm tall with a diameter of 308 cm.
 The steel shield has a radial thickness of 2.54 cm.  The concrete
@@ -408,7 +409,7 @@ The thickness of the wall is 91.4.
 It will be modeled in ZapMeNot
 as a box water source, a slab steel shield, and
 an slab concrete shield.  The material densities continue to be
-0.00122 g/cm3, 1.0 g/cm3, 7.8 g/cm3, and 2.4 g/cm3 for air,
+0.00122 g/cm<sup>3</sup>, 1.0 g/cm<sup>3</sup>, 7.8 g/cm<sup>3</sup>, and 2.4 g/cm<sup>3</sup> for air,
 water, steel, and concrete, respectively.</p>
 <p>The dose rates are calculated on
 the inside and outside of the concrete wall at a height of 240.0 cm.
@@ -452,6 +453,70 @@ Results are provided in the following table.</p>
 </tbody>
 </table>
 </section>
+<section id="sphere-benchmark-problem">
+<h2>Sphere Benchmark Problem<a class="headerlink" href="#sphere-benchmark-problem" title="Link to this heading"></a></h2>
+<p>This is an analytic benchmark designed to evaluate a the ability to
+model a spherical source inside a shell acting as a shield.</p>
+<p>The spherical source is an air medium with a radius of 70 ft and a
+density of 0.00122 g/cm<sup>3</sup>.  The shell surrounding the spherical source
+region has a thickness of 30 inches and is composed of concrete with
+a density of 2.3 g/cm<sup>3</sup>.  The dose point is located 302 ft, 7 in from the
+center of the sphere.  The source is uniformly distributed within the
+air sphere with an energy of 1 MeV and a total activity of 1E17 photons/sec.
+The region surrounding the spherical shell is air with a density of 0.00122 g/cm<sup>3</sup>.
+The buildup material is concrete.</p>
+<p>The following table contains the resulting dose rates calculated
+using ZapMeNot and Microshield7.  ZapMeNot and Microshield7 were
+compared with both (10, 10, 10) and (30, 30, 30) intervals for the
+R, Theta, Phi quadrature and the dose point on the X axis (i.e. coplanar with the
+“equator” of the sphere).  The results agree well, with ZapMeNot showing
+slightly more sensitvity to the quadrature used.  An additional case was
+run using a (10, 10, 10) quadrature, but rotating the dose point such that It
+is on the Z axis of the sphere.  This configuration eleminates the quadrature
+sensitivity.  The results demonstrate that the quadrature used by ZapMeNot results
+in a non-uniform source quadrature.  However, the impact of the quadrature
+is slight compared to the uncertainties introduced by the point-kernel model
+and can be compensated by increasing the quadrature used.</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><div class="line-block">
+<div class="line">Case</div>
+<div class="line">Description</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line">Microshield 7</div>
+<div class="line">(mR/hr)</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line">ZapMeNot</div>
+<div class="line">(mR/hr)</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>(10,10,10)
+Quadrature</p></td>
+<td><p>7.331</p></td>
+<td><p>7.384</p></td>
+</tr>
+<tr class="row-odd"><td><p>(30,30,30)
+Quadrature</p></td>
+<td><p>7.331</p></td>
+<td><p>7.333</p></td>
+</tr>
+<tr class="row-even"><td><p>Dose Point on
+the Z Axis</p></td>
+<td><p>N/A</p></td>
+<td><p>7.333</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
 <section id="synthetic-benchmark-problem">
 <h2>Synthetic Benchmark Problem<a class="headerlink" href="#synthetic-benchmark-problem" title="Link to this heading"></a></h2>
 <p>This is an analytic benchmark designed to evaluate a number of features:</p>
@@ -492,7 +557,7 @@ is assumed to be in secular equilibrium with Cs-137.</p>
 radius of 3 feet and a thickness of 3 inches.  A concentric annular
 concrete shield has an inner radius of 4 feet and a thickness of
 18 inches.  The material densities are
-0.00122 g/cm3, 7.874 g/cm3, and 2.34 g/cm3 for air,
+0.00122 g/cm<sup>3</sup>, 7.874 g/cm<sup>3</sup>, and 2.34 g/cm<sup>3</sup> for air,
 steel, and concrete, respectively.</p>
 <p>The following tables contain the resulting dose rates calculated
 using ZapMeNot, Microshield7, and MCNP5.  Note that the Microshield
@@ -634,7 +699,7 @@ of the iron shield at varying axial distances above the point source.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Jul 11, 2025.
+      <span class="lastupdated">Last updated on Jul 18, 2025.
       </span></p>
   </div>
 
