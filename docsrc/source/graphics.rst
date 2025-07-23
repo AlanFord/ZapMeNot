@@ -66,6 +66,7 @@ section, but with one simple change.  You need to add the following line to your
 
 .. code-block:: python
 
+    import pyvista
     pyvista.set_jupyter_backend('client')
 
 This line tells Jupyterlab (and pyVista) to display graphics using the graphics capability of the "client"
@@ -81,6 +82,7 @@ Modify your ZapMeNot python script to start with the following lines:
 .. code-block:: python
 
     import os
+    import pyvista
     pyvista.set_jupyter_backend('client')
     pyvista.global_theme.trame.server_proxy_enabled = True
     os.environ['TRAME_DEFAULT_HOST'] = 'YOUR_SERVER_NAME_HERE'

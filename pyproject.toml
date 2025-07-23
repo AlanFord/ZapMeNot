@@ -57,5 +57,6 @@ exclude = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/zapmenot", "tests", "benchmarks", "docs"]
+packages = ["src/zapmenot", "tests", "benchmarks", "docs",
+  "LICENSE", "pytest.ini", "README.rst"]
 exclude = ["/dist"]

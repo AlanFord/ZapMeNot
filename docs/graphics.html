@@ -135,7 +135,8 @@ VSCode and a Jupyterlab server displayed on a local computer display.</p>
 <p>It’s not uncommon to use XWindows to display locally a session running on a remote headless server.
 VSCode can be used to display a Jupyterlab notebook in a manner similar to that described in the previous
 section, but with one simple change.  You need to add the following line to your python script:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pyvista</span><span class="o">.</span><span class="n">set_jupyter_backend</span><span class="p">(</span><span class="s1">&#39;client&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
+<span class="n">pyvista</span><span class="o">.</span><span class="n">set_jupyter_backend</span><span class="p">(</span><span class="s1">&#39;client&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This line tells Jupyterlab (and pyVista) to display graphics using the graphics capability of the “client”
@@ -147,6 +148,7 @@ section, but with one simple change.  You need to add the following line to your
 brower.  Start a Jupyterlab session on the server and connect with your desktop brower in the usual fashion.
 Modify your ZapMeNot python script to start with the following lines:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
 <span class="n">pyvista</span><span class="o">.</span><span class="n">set_jupyter_backend</span><span class="p">(</span><span class="s1">&#39;client&#39;</span><span class="p">)</span>
 <span class="n">pyvista</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">trame</span><span class="o">.</span><span class="n">server_proxy_enabled</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TRAME_DEFAULT_HOST&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;YOUR_SERVER_NAME_HERE&#39;</span>
@@ -171,7 +173,7 @@ back to the server for additional graphics details.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Jul 11, 2025.
+      <span class="lastupdated">Last updated on Jul 23, 2025.
       </span></p>
   </div>
 
