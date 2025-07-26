@@ -229,3 +229,22 @@ class TestDisplay():
         myModel.add_detector(detector.Detector(100, 0, 0))
         myModel.display()
 
+    def test_Missing_Source_and_Detector(self):
+        # test of model display with missing source and detector
+        myModel = model.Model()
+        myModel.add_shield(shield.Box(
+            "iron", box_center=[15, 0, 0], box_dimensions=[10, 30, 30]))
+        myModel.display()
+
+    def test_Missing_Detector(self):
+        # test of model display and a point source and finite shield
+        myModel = model.Model()
+        mySource = source.PointSource(0, 0, 10)
+        photonEnergy = 1.0  # MeV
+        photonIntensity = 3E10  # photons/sec
+        mySource.add_photon(photonEnergy, photonIntensity)
+        myModel.add_source(mySource)
+        with pytest.raises(ValueError):
+            myModel.display()
+
+

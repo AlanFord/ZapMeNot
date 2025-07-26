@@ -277,7 +277,8 @@ class Model:
             self._trimBlocks(pl, bounds)
             self._addPoints(pl)
             pl.show_bounds(grid='front', location='outer', all_edges=True)
-            pl.add_legend(face=None, size=(0.1, 0.1))
+            if self.source is not None or self.detector is not None:
+                pl.add_legend(face=None, size=(0.1, 0.1))
             pl.show()
 
     def _trimBlocks(self, pl, bounds):
@@ -344,7 +345,8 @@ class Model:
         # blocks.append(self.source.draw())
 
         # include the detector geometry in the MultiBlock composite
-        blocks.append(self.detector.draw())
+        if self.detector is not None:
+            blocks.append(self.detector.draw())
 
         # check for a zero width bounding box in any direction
         xmin, xmax, ymin, ymax, zmin, zmax = blocks.bounds
@@ -394,11 +396,11 @@ class Model:
             if width > 0:
                 good_widths.append(width)
         if len(good_widths) == 0:
-            raise ValueError("detector and source are coincident")
+            raise ValueError("detector and source are coincident or missing")
         # determine a good radius for the points
         point_radius = min(good_widths) * point_ratio
         # check if the source is a point source
-        if len(self.source._get_source_points()) == 1:
+        if self.source is not None and len(self.source._get_source_points()) == 1:
             body = pyvista.Sphere(center=(self.source._x,
                                           self.source._y,
                                           self.source._z),
@@ -406,11 +408,12 @@ class Model:
             pl.add_mesh(
                 body, line_width=5, color=sourceColor,
                 label='source')
-        body = pyvista.Sphere(center=(self.detector.x,
-                                      self.detector.y,
-                                      self.detector.z),
-                              radius=point_radius)
-        pl.add_mesh(
-            body, line_width=5, color=detectorColor,
-            label='detector')
+        if self.detector is not None:
+            body = pyvista.Sphere(center=(self.detector.x,
+                                        self.detector.y,
+                                        self.detector.z),
+                                radius=point_radius)
+            pl.add_mesh(
+                body, line_width=5, color=detectorColor,
+                label='detector')
         # pl.set_background(color='white')
