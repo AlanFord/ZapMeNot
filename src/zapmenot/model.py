@@ -385,7 +385,7 @@ class Model:
         is ignored and the next largest dimension is used to size the
         point representation.
         """
-        point_ratio = 0.05
+        point_ratio = 0.025
         sourceColor = 'red'
         detectorColor = 'green'
         widths = [abs(pl.bounds[1] - pl.bounds[0]),
