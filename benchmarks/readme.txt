@@ -20,6 +20,10 @@ test_benchmark-synth.py     synthConcrete.ms7       synth.inp
                             synthIron.ms7           synth.inp
 
 
+Additionally, the benchmarks are repeated in the folder "workbooks"
+using the commands that support a headless server.  This permits
+the benchmarks to be run manually on such a server.
+
 
 
 
