@@ -383,7 +383,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_trimBlocks</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_addPoints</span><span class="p">(</span><span class="n">pl</span><span class="p">)</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">show_bounds</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="s1">&#39;front&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span> <span class="n">all_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">add_legend</span><span class="p">(</span><span class="n">face</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">pl</span><span class="o">.</span><span class="n">add_legend</span><span class="p">(</span><span class="n">face</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
@@ -451,7 +452,8 @@
         <span class="c1"># blocks.append(self.source.draw())</span>
 
         <span class="c1"># include the detector geometry in the MultiBlock composite</span>
-        <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
 
         <span class="c1"># check for a zero width bounding box in any direction</span>
         <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">zmin</span><span class="p">,</span> <span class="n">zmax</span> <span class="o">=</span> <span class="n">blocks</span><span class="o">.</span><span class="n">bounds</span>
@@ -490,7 +492,7 @@
 <span class="sd">        is ignored and the next largest dimension is used to size the</span>
 <span class="sd">        point representation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">point_ratio</span> <span class="o">=</span> <span class="mf">0.05</span>
+        <span class="n">point_ratio</span> <span class="o">=</span> <span class="mf">0.025</span>
         <span class="n">sourceColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
         <span class="n">detectorColor</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
         <span class="n">widths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pl</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
@@ -501,11 +503,11 @@
             <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">good_widths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">good_widths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;detector and source are coincident&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;detector and source are coincident or missing&quot;</span><span class="p">)</span>
         <span class="c1"># determine a good radius for the points</span>
         <span class="n">point_radius</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">good_widths</span><span class="p">)</span> <span class="o">*</span> <span class="n">point_ratio</span>
         <span class="c1"># check if the source is a point source</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span>
                                           <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span>
                                           <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_z</span><span class="p">),</span>
@@ -513,13 +515,14 @@
             <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
                 <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">sourceColor</span><span class="p">,</span>
                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">)</span>
-        <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
-                                      <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
-                                      <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">z</span><span class="p">),</span>
-                              <span class="n">radius</span><span class="o">=</span><span class="n">point_radius</span><span class="p">)</span>
-        <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
-            <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">detectorColor</span><span class="p">,</span>
-            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;detector&#39;</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">z</span><span class="p">),</span>
+                                <span class="n">radius</span><span class="o">=</span><span class="n">point_radius</span><span class="p">)</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
+                <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">detectorColor</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;detector&#39;</span><span class="p">)</span></div>
 
         <span class="c1"># pl.set_background(color=&#39;white&#39;)</span>
 </pre></div>
@@ -532,7 +535,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Jul 19, 2025.
+      <span class="lastupdated">Last updated on Jul 27, 2025.
       </span></p>
   </div>
 
