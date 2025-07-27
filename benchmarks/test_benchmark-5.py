@@ -56,7 +56,7 @@ def test_benchmark_5():
 	my_model.add_shield(shield.SemiInfiniteXSlab("iron", x_start=273, \
 		       x_end=275.54, density=7.8))
 	my_model.add_shield(shield.SemiInfiniteXSlab("concrete", x_start=365.1, \
-		       x_end=465.5, density=2.4))
+		       x_end=456.5, density=2.4))
 	my_model.set_filler_material('air',density=0.00129)
 	my_model.set_buildup_factor_material(material.Material('concrete'))
 	my_model.add_detector(detector.Detector(456.5,0,239.95))
