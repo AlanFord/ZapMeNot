@@ -159,9 +159,9 @@ Results are provided in the following table.
    | | Radial     | | ESIS Results | | Microshield 7 | | ZapMeNot|
    | | Location   | | (mR/hr)      | | (mR/hr)       | | (mR/hr) |
    +==============+================+=================+===========+
-   | Inside Wall  |   1.49E+05     | 1.33E+05        | 1.27E+05  |
+   | Inside Wall  |   1.49E+05     | 1.33E+05        | 1.32E+05  |
    +--------------+----------------+-----------------+-----------+
-   | Outside Wall |   3.15E+00     | 3.01E+00        | 2.91E+00  |
+   | Outside Wall |   3.15E+00     | 3.01E+00        | 3.00E+00  |
    +--------------+----------------+-----------------+-----------+
 
 Sphere Benchmark Problem

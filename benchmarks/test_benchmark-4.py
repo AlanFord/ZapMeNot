@@ -49,13 +49,13 @@ def test_benchmark_4():
 	my_source.add_photon(2.2,1.4307e+012)
 	my_source.add_photon(2.5,1.0730e+012)
 	my_source.add_photon(3.5,4.2920e+008)
-	my_source.points_per_dimension = [16,16,16]
+	my_source.points_per_dimension = [40,20,30]
 	my_model.add_source(my_source)
 	my_model.add_shield(shield.SemiInfiniteXSlab("iron", x_start=273, \
 		       x_end=275.54, density=7.8))
-	my_model.set_filler_material('air',density=0.00129)
+	my_model.set_filler_material('air',density=0.00122)
 	my_model.set_buildup_factor_material(material.Material('iron'))
-	my_model.add_detector(detector.Detector(365.1,0,239.95))
+	my_model.add_detector(detector.Detector(365.1,0,240))
 	result = my_model.calculate_exposure()
 	expected_dose_rate = 1.331e+05
 	diff = (result - expected_dose_rate)/expected_dose_rate * 100

@@ -35,7 +35,7 @@ pytestmark = pytest.mark.benchmark
 # at the vertical centerline of the tank.
 # A concrete shield wall between tank and detector starts at
 # x = 228.6 cm and ends at x=320 cm.
-# The water density is 1 g/cm3 and the air density is 0.00129 g/cm3.
+# The water density is 1 g/cm3 and the air density is 0.00122 g/cm3.
 # The the steel density is 7.8 g/cm3.
 # The buildup material is iron.
 # Benchmark result is 3.15E-3 R/hr.
@@ -51,13 +51,13 @@ def test_benchmark_5():
 	my_source.add_photon(2.2,1.4307e+012)
 	my_source.add_photon(2.5,1.0730e+012)
 	my_source.add_photon(3.5,4.2920e+008)
-	my_source.points_per_dimension = [16,16,16]
+	my_source.points_per_dimension = [40,20,30]
 	my_model.add_source(my_source)
 	my_model.add_shield(shield.SemiInfiniteXSlab("iron", x_start=273, \
 		       x_end=275.54, density=7.8))
 	my_model.add_shield(shield.SemiInfiniteXSlab("concrete", x_start=365.1, \
 		       x_end=456.5, density=2.4))
-	my_model.set_filler_material('air',density=0.00129)
+	my_model.set_filler_material('air',density=0.00122)
 	my_model.set_buildup_factor_material(material.Material('concrete'))
 	my_model.add_detector(detector.Detector(456.5,0,239.95))
 	result = my_model.calculate_exposure()
