@@ -20,6 +20,7 @@ from scipy.interpolate import Akima1DInterpolator
 import numpy as np
 import numbers
 import yaml
+from typing import Optional, Union, Dict, Any, ClassVar
 
 try:
     from yaml import CLoader as MyLoader, CDumper as MyDumper
@@ -54,9 +55,9 @@ class Material:
         Density of the material in g/cm\ :sup:`3`
     '''
 
-    _library = None
+    _library: ClassVar[Optional[Dict[str, Any]]] = None
 
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         if not isinstance(name, str):
             raise ValueError(f"Material name is not a string: {name}")
 
@@ -78,25 +79,30 @@ class Material:
             raise ValueError("Material not found in the Material Library")
 
         # initialize the object
-        self._name = name
-        properties = Material._library.get(self._name)
-        self._density = properties.get("density")
-        self._atten_energy_bins = np.array(
+        self._name: str = name
+        properties: Dict[str, Any] = Material._library.get(self._name)
+        self._density: float = properties.get("density")
+        self._atten_energy_bins: np.ndarray = np.array(
             properties.get("mass-atten-coff-energy"))
-        self._mass_atten_coff = np.array(properties.get("mass-atten-coff"))
+        self._mass_atten_coff: np.ndarray = np.array(properties.get("mass-atten-coff"))
         # the mass energy absorption coefficient is optional for a material
-        self._en_abs_energy_bins = np.array(
+        self._en_abs_energy_bins: np.ndarray = np.array(
             properties.get("mass-en-abs-coff-energy"))
-        self._mass_en_abs_coff = np.array(properties.get("mass-en-abs-coff"))
+        self._mass_en_abs_coff: np.ndarray = np.array(properties.get("mass-en-abs-coff"))
         # the buildup factor data is optional for a material
-        self._gp_energy_bins = np.array(properties.get("gp-coff-energy"))
+        self._gp_energy_bins: np.ndarray = np.array(properties.get("gp-coff-energy"))
         gp_data = properties.get("gp-coeff")
         if gp_data is None:
-            self._gp_b = None
-            self._gp_c = None
-            self._gp_a = None
-            self._gp_X = None
-            self._gp_d = None
+            self._gp_b: Optional[np.ndarray] = None
+            self._gp_c: Optional[np.ndarray] = None
+            self._gp_a: Optional[np.ndarray] = None
+            self._gp_X: Optional[np.ndarray] = None
+            self._gp_d: Optional[np.ndarray] = None
+            self._bi: Optional[Akima1DInterpolator] = None
+            self._ci: Optional[Akima1DInterpolator] = None
+            self._ai: Optional[Akima1DInterpolator] = None
+            self._Xi: Optional[Akima1DInterpolator] = None
+            self._di: Optional[Akima1DInterpolator] = None
         else:
             gp_array = np.array(gp_data)
             self._gp_b = gp_array[:, 0]
@@ -116,24 +122,24 @@ class Material:
             self._di = Akima1DInterpolator(logE, self._gp_d)
 
     @property
-    def name(self):
+    def name(self) -> str:
         """:class:`str` : The name of the material"""
         return self._name
 
     @property
-    def density(self):
+    def density(self) -> float:
         r""":class:`float` : The density of the material in g/cm\ :sup:`3` """
         return self._density
 
     @density.setter
-    def density(self, value):
+    def density(self, value: float) -> None:
         if not isinstance(value, numbers.Number):
             raise ValueError("Invalid density")
         if value < 0:
             raise ValueError("Invalid density")
         self._density = value
 
-    def get_mfp(self, energy, distance):
+    def get_mfp(self, energy: float, distance: float) -> float:
         """Calculates the mean free path for a given distance and photon energy
 
         Parameters
@@ -158,7 +164,7 @@ class Material:
         else:
             return distance * self._density * self.get_mass_atten_coeff(energy)
 
-    def get_mass_atten_coeff(self, energy):
+    def get_mass_atten_coeff(self, energy: float) -> float:
         r"""Calculates the mass attenuation coefficient at the given energy
 
         Parameters
@@ -187,7 +193,7 @@ class Material:
                                         np.log10(self._atten_energy_bins),
                                         np.log10(self._mass_atten_coff)))
 
-    def get_mass_energy_abs_coeff(self, energy):
+    def get_mass_energy_abs_coeff(self, energy: float) -> float:
         r"""Calculates the mass energy absorption coefficient at the given energy
 
         Parameters
@@ -216,7 +222,7 @@ class Material:
                                         np.log10(self._en_abs_energy_bins),
                                         np.log10(self._mass_en_abs_coff)))
 
-    def get_buildup_factor(self, energy, mfps, formula="GP"):
+    def get_buildup_factor(self, energy: float, mfps: Union[float, np.ndarray], formula: str = "GP") -> Union[float, np.ndarray]:
         """Calculates the photon buildup factor at the given energy and mfp
 
         Parameters
@@ -273,7 +279,7 @@ class Material:
         return bf
 
     @staticmethod
-    def _GP(a, b, c, d, X, mfp):
+    def _GP(a: float, b: float, c: float, d: float, X: float, mfp: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Calculates the photon buildup factor using Geometric Progression
 
         Parameters

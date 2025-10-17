@@ -20,6 +20,7 @@ import abc
 import math
 import numbers
 import copy
+from typing import Optional, List, Sequence, Tuple, Any
 
 import numpy as np
 
@@ -53,9 +54,10 @@ class Shield(abc.ABC):
         Material properties of the shield
     '''
 
-    def __init__(self, material_name=None, density=None, **kwargs):
+    def __init__(self, material_name: Optional[str] = None,
+                 density: Optional[float] = None, **kwargs: Any) -> None:
         # the material name is validated by the Material class
-        self.material = material.Material(material_name)
+        self.material: material.Material = material.Material(material_name)
         if density is not None:
             if not isinstance(density, numbers.Number):
                 raise ValueError(f"Invalid density: {density}")
@@ -63,17 +65,17 @@ class Shield(abc.ABC):
         super().__init__(**kwargs)
 
     @abc.abstractmethod
-    def is_infinite(self):
+    def is_infinite(self) -> bool:
         """Returns true if any dimension is infinite, false otherwise
         """
 
     @abc.abstractmethod
-    def is_hollow(self):
+    def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
 
     @abc.abstractmethod
-    def _get_crossing_length(self, a_ray):
+    def _get_crossing_length(self, a_ray: ray.FiniteLengthRay) -> float:
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -86,7 +88,8 @@ class Shield(abc.ABC):
             raise ValueError("Invalid ray object")
 
     @abc.abstractmethod
-    def get_crossing_mfp(self, a_ray, photon_energy):
+    def get_crossing_mfp(self, a_ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> float:
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -103,8 +106,11 @@ class Shield(abc.ABC):
             raise ValueError("Invalid photon energy")
 
     @staticmethod
-    def _line_plane_collision(plane_normal, plane_point, ray_origin,
-                              ray_normal, epsilon=1e-6):
+    def _line_plane_collision(plane_normal: np.ndarray,
+                              plane_point: np.ndarray,
+                              ray_origin: np.ndarray,
+                              ray_normal: np.ndarray,
+                              epsilon: float = 1e-6) -> Optional[float]:
         """Calculates the distance from the ray origin to the intersection
            with a plane
 
@@ -132,9 +138,10 @@ class Shield(abc.ABC):
         w = plane_point - ray_origin
         t = w.dot(plane_normal)/ndotu
         return t
-    
+
     @staticmethod
-    def _ray_sphere_intersection(ray, sphere):
+    def _ray_sphere_intersection(ray: ray.FiniteLengthRay,
+                                 sphere: "Sphere") -> float:
         # based on
         # https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection
         a = np.dot(ray._dir, ray._dir)
@@ -194,22 +201,23 @@ class SemiInfiniteXSlab(Shield):
         X axis location of the outer edge of the shield.
     '''
 
-    def __init__(self, material_name, x_start, x_end, density=None):
+    def __init__(self, material_name: str, x_start: float, x_end: float,
+                 density: Optional[float] = None) -> None:
         super().__init__(material_name=material_name, density=density)
-        self.x_start = x_start
-        self.x_end = x_end
+        self.x_start: float = x_start
+        self.x_end: float = x_end
 
-    def is_infinite(self):
+    def is_infinite(self) -> bool:
         """Returns true if any dimension is infinite, false otherwise
         """
         return True
-    
-    def is_hollow(self):
+
+    def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
-    def _get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> float:
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -257,7 +265,8 @@ class SemiInfiniteXSlab(Shield):
         # we are left with a full crossing
         return t1 - t0
 
-    def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> float:
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -273,7 +282,7 @@ class SemiInfiniteXSlab(Shield):
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
-    def draw(self):
+    def draw(self) -> Optional[Any]:
         """Creates a display object
 
         Returns
@@ -285,7 +294,8 @@ class SemiInfiniteXSlab(Shield):
             return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000,
                                        -1000, 1000))
 
-    def _projection(self, x, y, z):
+    def _projection(self, x: float, y: float,
+                    z: float) -> List[Tuple[float, float, float]]:
         # project a point onto the surface of the infinite shield
         # this is a semi-infinite slab, with a finite X width,
         # so return two x values at the specified y and z
@@ -317,42 +327,46 @@ class Sphere(Shield):
     radius : float
         radius of the sphere.
     '''
-    def __init__(self, material_name, sphere_center, sphere_radius,
-                 density=None, **kwargs):
-        '''Initialize material composition and location of the spherical shield'''
+    def __init__(self, material_name: str, sphere_center: Sequence[float],
+                 sphere_radius: float,
+                 density: Optional[float] = None, **kwargs: Any) -> None:
+        '''Initialize material composition and location of the
+            spherical shield'''
         super().__init__(material_name=material_name, density=density)
-        self.center = np.array(sphere_center)
-        self.radius = np.array(sphere_radius)
+        self.center: np.ndarray = np.array(sphere_center)
+        self.radius: np.ndarray = np.array(sphere_radius)
 
-    def is_infinite(self):
+    def is_infinite(self) -> bool:
         '''Returns true if any dimension is infinite, false otherwise
         '''
         return False
-    
-    def is_hollow(self):
+
+    def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
-    def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> float:
         '''returns the crossing mfp'''
         super().get_crossing_mfp(ray, photon_energy)  # validate the arguments
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
-    
-    def _get_crossing_length(self, ray):
+
+    def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> float:
         return self._ray_sphere_intersection(ray, self)
 
-    def contains(self, point):
+    def contains(self, point: np.ndarray) -> bool:
         '''
-        Returns true if the point is contained within the sphere, otherwise false
+        Returns true if the point is contained within the sphere,
+        otherwise false
         '''
         ray = point - self.center
         if np.dot(ray, ray) > self.radius**2:
             return False
         return True
 
-    def draw(self):
+    def draw(self) -> Optional[Any]:
         """Creates a display object
 
         Returns
@@ -361,7 +375,7 @@ class Sphere(Shield):
             A Sphere object representing the sphere shield.
         """
         if pyvista_found:
-                return pyvista.Sphere(radius=self.radius, center=self.center)
+            return pyvista.Sphere(radius=self.radius, center=self.center)
 
 # -----------------------------------------------------------
 
@@ -369,52 +383,58 @@ class Sphere(Shield):
 class Shell(Shield):
     """A shell that surrounds a spherical shield or source"""
 
-    def __init__(self, material_name, sphere, thickness,
-                 density=None, **kwargs):
+    def __init__(self, material_name: str, sphere: Sphere, thickness: float,
+                 density: Optional[float] = None, **kwargs: Any) -> None:
         '''Initialize material composition and location of the shell'''
         super().__init__(material_name=material_name, density=density)
-        if thickness <= 0: 
+        if thickness <= 0:
             raise ValueError("Shell has zero or negative thickness")
         if not isinstance(sphere, Sphere):
             raise ValueError("Shell must contain a spherical shield or source")
 
-        self.inner_sphere = copy.deepcopy(sphere)
-        self.outer_sphere = Sphere(material_name, sphere.center, sphere.radius + thickness, density)
+        self.inner_sphere: Sphere = copy.deepcopy(sphere)
+        self.outer_sphere: Sphere = Sphere(material_name, sphere.center,
+                                           sphere.radius + thickness, density)
 
-    def is_infinite(self):
+    def is_infinite(self) -> bool:
         '''Returns true if any dimension is infinite, false otherwise
         '''
         return False
 
-    def is_hollow(self):
+    def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
         return True
 
-    def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> float:
         '''returns the crossing mfp'''
         super().get_crossing_mfp(ray, photon_energy)  # validate the arguments
         distance = self._get_crossing_length(ray)
         return self.outer_sphere.material.get_mfp(photon_energy, distance)
-    
-    def _get_crossing_length(self, ray):
-        outer_surface_crossing = self._ray_sphere_intersection(ray, self.outer_sphere)
-        inner_surface_crossing = self._ray_sphere_intersection(ray, self.inner_sphere)
+
+    def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> float:
+        outer_surface_crossing = \
+            self._ray_sphere_intersection(ray, self.outer_sphere)
+        inner_surface_crossing = \
+            self._ray_sphere_intersection(ray, self.inner_sphere)
         crossing_length = outer_surface_crossing - inner_surface_crossing
         if crossing_length < 0:
             crossing_length = 0
         return crossing_length
 
-    def contains(self, point):
+    def contains(self, point: np.ndarray) -> bool:
         '''
-        Returns true if the point is contained within the shell, otherwise false
+        Returns true if the point is contained within the shell,
+        otherwise false
         '''
-        if self.outer_sphere.contains(point) and not self.inner_sphere.contains(point):
+        if self.outer_sphere.contains(point) and \
+                not self.inner_sphere.contains(point):
             return True
         else:
             return False
 
-    def draw(self):
+    def draw(self) -> Optional[Any]:
         """Creates a display object
 
         Returns
@@ -423,11 +443,13 @@ class Shell(Shield):
             A Sphere object representing the sphere shield.
         """
         if pyvista_found:
-                sphere_a = pyvista.Sphere(radius= self.outer_sphere.radius, center=self.outer_sphere.center)
-                sphere_b = pyvista.Sphere(radius= self.inner_sphere.radius, center=self.inner_sphere.center)
-                sphere_b.flip_faces(inplace=True)
-                shell = sphere_a.merge(sphere_b)
-                return shell
+            sphere_a = pyvista.Sphere(radius=self.outer_sphere.radius,
+                                      center=self.outer_sphere.center)
+            sphere_b = pyvista.Sphere(radius=self.inner_sphere.radius,
+                                      center=self.inner_sphere.center)
+            sphere_b.flip_faces(inplace=True)
+            shell = sphere_a.merge(sphere_b)
+            return shell
 # -----------------------------------------------------------
 
 
@@ -458,23 +480,25 @@ class Box(Shield):
         Vector holding the dimensions of the box.
     '''
 
-    def __init__(self, material_name, box_center, box_dimensions,
-                 density=None):
+    def __init__(self, material_name: str, box_center: Sequence[float],
+                 box_dimensions: Sequence[float],
+                 density: Optional[float] = None) -> None:
         super().__init__(material_name=material_name, density=density)
-        self.box_center = np.array(box_center)
-        self.box_dimensions = np.array(box_dimensions)
+        self.box_center: np.ndarray = np.array(box_center)
+        self.box_dimensions: np.ndarray = np.array(box_dimensions)
 
-    def is_infinite(self):
+    def is_infinite(self) -> bool:
         """Returns true if any dimension is infinite, false otherwise
         """
         return False
-    
-    def is_hollow(self):
+
+    def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
-    def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> float:
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -490,7 +514,7 @@ class Box(Shield):
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
-    def _get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> float:
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -523,7 +547,7 @@ class Box(Shield):
         # let numpy do the heavy lifting
         return np.linalg.norm(crossings[0]-crossings[1])
 
-    def _contains(self, point):
+    def _contains(self, point: np.ndarray) -> bool:
         """Determines if the shield contains a point
 
         Parameters
@@ -550,7 +574,8 @@ class Box(Shield):
             return True
         return False
 
-    def _intersect_axis_aligned_box(self, ray):
+    def _intersect_axis_aligned_box(self, ray: ray.FiniteLengthRay) \
+            -> List[np.ndarray]:
         """Calculates a list of point where a ray intersects the
            axis-aligned box
 
@@ -601,7 +626,7 @@ class Box(Shield):
 
         return results
 
-    def draw(self):
+    def draw(self) -> Optional[Any]:
         """Creates a display object
 
         Returns
@@ -654,26 +679,30 @@ class InfiniteAnnulus(Shield):
         Vector normal of the annulus centerline.
     '''
 
-    def __init__(self, material_name, cylinder_origin, cylinder_axis,
-                 cylinder_inner_radius, cylinder_outer_radius, density=None):
+    def __init__(self, material_name: str, cylinder_origin: Sequence[float],
+                 cylinder_axis: Sequence[float],
+                 cylinder_inner_radius: float,
+                 cylinder_outer_radius: float,
+                 density: Optional[float] = None) -> None:
         super().__init__(material_name=material_name, density=density)
-        self.inner_radius = cylinder_inner_radius
-        self.outer_radius = cylinder_outer_radius
-        self.origin = np.array(cylinder_origin)
+        self.inner_radius: float = cylinder_inner_radius
+        self.outer_radius: float = cylinder_outer_radius
+        self.origin: np.ndarray = np.array(cylinder_origin)
         axis = np.array(cylinder_axis)
-        self.dir = axis/np.linalg.norm(axis)
+        self.dir: np.ndarray = axis/np.linalg.norm(axis)
 
-    def is_infinite(self):
+    def is_infinite(self) -> bool:
         """Returns true if any dimension is infinite, false otherwise
         """
         return True
 
-    def is_hollow(self):
+    def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
         return True
 
-    def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> float:
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -689,7 +718,7 @@ class InfiniteAnnulus(Shield):
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
-    def _get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> float:
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -724,7 +753,7 @@ class InfiniteAnnulus(Shield):
         # let numpy do the heavy lifting
         return (crossings[1]-crossings[0]) + (crossings[3] - crossings[2])
 
-    def _contains(self, point):
+    def _contains(self, point: np.ndarray) -> bool:
         """Determines if the shield contains a point
 
         Parameters
@@ -746,7 +775,7 @@ class InfiniteAnnulus(Shield):
             return False
         return True
 
-    def _intersect(self, ray):
+    def _intersect(self, ray: ray.FiniteLengthRay) -> List[float]:
         """Calculates a list of points where a ray intersects the shield
 
         Parameters
@@ -791,7 +820,7 @@ class InfiniteAnnulus(Shield):
                         results.append(t)
         return results
 
-    def draw(self):
+    def draw(self) -> Optional[Any]:
         """Creates a display object
 
         Returns
@@ -810,7 +839,7 @@ class InfiniteAnnulus(Shield):
             cyl1 = disc.extrude(self.dir*4000, capping=True)
             return cyl1
 
-    def _projection(self, x, y, z):
+    def _projection(self, x: float, y: float, z: float) -> List[np.ndarray]:
         # TODO: generalize this by using a degenerate cylinder
         #
         # project a point onto the surface of the infinite shield
@@ -896,8 +925,10 @@ class YAlignedInfiniteAnnulus(InfiniteAnnulus):
         Vector normal of the annulus centerline.
     '''
 
-    def __init__(self, material_name, cylinder_center, cylinder_inner_radius,
-                 cylinder_outer_radius, density=None):
+    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+                 cylinder_inner_radius: float,
+                 cylinder_outer_radius: float,
+                 density: Optional[float] = None) -> None:
         super().__init__(material_name=material_name, density=density,
                          cylinder_origin=cylinder_center,
                          cylinder_inner_radius=cylinder_inner_radius,
@@ -937,8 +968,10 @@ class XAlignedInfiniteAnnulus(InfiniteAnnulus):
     dir : :class:`numpy.ndarray`
         Vector normal of the annulus centerline.
     '''
-    def __init__(self, material_name, cylinder_center, cylinder_inner_radius,
-                 cylinder_outer_radius, density=None):
+    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+                 cylinder_inner_radius: float,
+                 cylinder_outer_radius: float,
+                 density: Optional[float] = None) -> None:
         super().__init__(material_name=material_name, density=density,
                          cylinder_origin=cylinder_center,
                          cylinder_inner_radius=cylinder_inner_radius,
@@ -979,8 +1012,10 @@ class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
         Vector normal of the annulus centerline.
     '''
 
-    def __init__(self, material_name, cylinder_center, cylinder_inner_radius,
-                 cylinder_outer_radius, density=None):
+    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+                 cylinder_inner_radius: float,
+                 cylinder_outer_radius: float,
+                 density: Optional[float] = None) -> None:
         super().__init__(material_name=material_name, density=density,
                          cylinder_origin=cylinder_center,
                          cylinder_inner_radius=cylinder_inner_radius,
@@ -1023,26 +1058,29 @@ class CappedCylinder(Shield):
         Vector normal of the cylinder centerline.
     '''
 
-    def __init__(self, material_name, cylinder_start, cylinder_end,
-                 cylinder_radius, density=None):
+    def __init__(self, material_name: str, cylinder_start: Sequence[float],
+                 cylinder_end: Sequence[float],
+                 cylinder_radius: float,
+                 density: Optional[float] = None) -> None:
         super().__init__(material_name=material_name, density=density)
-        self.radius = cylinder_radius
-        self.origin = np.array(cylinder_start)
-        self.end = np.array(cylinder_end)
-        self.length = np.linalg.norm(self.end - self.origin)
-        self.dir = (self.end - self.origin)/self.length
+        self.radius: float = cylinder_radius
+        self.origin: np.ndarray = np.array(cylinder_start)
+        self.end: np.ndarray = np.array(cylinder_end)
+        self.length: float = np.linalg.norm(self.end - self.origin)
+        self.dir: np.ndarray = (self.end - self.origin)/self.length
 
-    def is_infinite(self):
+    def is_infinite(self) -> bool:
         """Returns true if any dimension is infinite, false otherwise
         """
         return False
 
-    def is_hollow(self):
+    def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
-    def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> float:
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -1058,7 +1096,7 @@ class CappedCylinder(Shield):
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
-    def _get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> float:
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -1092,7 +1130,7 @@ class CappedCylinder(Shield):
         # let numpy do the heavy lifting
         return np.linalg.norm(crossings[0]-crossings[1])
 
-    def _contains(self, point):
+    def _contains(self, point: np.ndarray) -> bool:
         """Determines if the shield contains a point
 
         Parameters
@@ -1115,7 +1153,7 @@ class CappedCylinder(Shield):
             return False
         return True
 
-    def _intersect(self, ray):
+    def _intersect(self, ray: ray.FiniteLengthRay) -> List[np.ndarray]:
         """Calculates a list of points where a ray intersects the shield
 
         Parameters
@@ -1174,7 +1212,7 @@ class CappedCylinder(Shield):
                     results.append(point)
         return results
 
-    def draw(self):
+    def draw(self) -> Optional[Any]:
         """Creates a display object
 
         Returns
@@ -1224,8 +1262,9 @@ class YAlignedCylinder(CappedCylinder):
         Vector normal of the cylinder centerline.
     '''
 
-    def __init__(self, material_name, cylinder_center, cylinder_length,
-                 cylinder_radius, density=None):
+    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+                 cylinder_length: float, cylinder_radius: float,
+                 density: Optional[float] = None) -> None:
         cylinder_start = [cylinder_center[0],
                           cylinder_center[1]-cylinder_length/2,
                           cylinder_center[2]]
@@ -1272,8 +1311,9 @@ class XAlignedCylinder(CappedCylinder):
         Vector normal of the cylinder centerline.
     '''
 
-    def __init__(self, material_name, cylinder_center, cylinder_length,
-                 cylinder_radius, density=None):
+    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+                 cylinder_length: float, cylinder_radius: float,
+                 density: Optional[float] = None) -> None:
         cylinder_start = [cylinder_center[0]-cylinder_length / 2,
                           cylinder_center[1],
                           cylinder_center[2]]
@@ -1321,8 +1361,10 @@ class ZAlignedCylinder(CappedCylinder):
         Vector normal of the cylinder centerline.
     '''
 
-    def __init__(self, material_name, cylinder_center, cylinder_length,
-                 cylinder_radius, density=None):
+    def __init__(self, material_name: str,
+                 cylinder_center: Sequence[float],
+                 cylinder_length: float, cylinder_radius: float,
+                 density: Optional[float] = None) -> None:
         cylinder_start = [cylinder_center[0],
                           cylinder_center[1],
                           cylinder_center[2]-cylinder_length/2]

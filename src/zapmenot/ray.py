@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import numpy as np
 import numbers
 from collections.abc import Iterable
+from typing import List, Sequence
 
 
 class FiniteLengthRay:
@@ -52,42 +53,47 @@ class FiniteLengthRay:
         Indicates the signs of the components of :py:obj:`dir`.
     '''
 
-    def __init__(self, start, end):
+    def __init__(self, start: Sequence[float], end: Sequence[float]) -> None:
         if not FiniteLengthRay._is_validate_vector(start):
             raise ValueError("Invalid ray start")
         if not FiniteLengthRay._is_validate_vector(end):
             raise ValueError("Invalid ray end")
-        self._start = start
-        self._end = end
+        self._start: Sequence[float] = start
+        self._end: Sequence[float] = end
+        self._origin: np.ndarray
+        self._length: float
+        self._dir: np.ndarray
+        self._invdir: np.ndarray
+        self._sign: List[int]
         self._regularize()
 
     @property
-    def start(self):
+    def start(self) -> Sequence[float]:
         """:class:`list` : A list defining the starting point of the ray in
         cartesian coordinates."""
         return self._start
 
     @start.setter
-    def start(self, value):
+    def start(self, value: Sequence[float]) -> None:
         if not FiniteLengthRay._is_validate_vector(value):
             raise ValueError("Invalid ray start")
         self._start = value
         self._regularize()
 
     @property
-    def end(self):
+    def end(self) -> Sequence[float]:
         """:class:`list` : A list defining the ending point of the ray in
         cartesian coordinates."""
         return self._end
 
     @end.setter
-    def end(self, value):
+    def end(self, value: Sequence[float]) -> None:
         if not FiniteLengthRay._is_validate_vector(value):
             raise ValueError("Invalid ray end")
         self._end = value
         self._regularize()
 
-    def _regularize(self):
+    def _regularize(self) -> None:
         """Calculates the mean free path for a given distance and photon energy
 
         Parameters
@@ -114,7 +120,7 @@ class FiniteLengthRay:
         self._sign[2] = int((self._invdir[2] < 0))
 
     @staticmethod
-    def _is_validate_vector(vector):
+    def _is_validate_vector(vector: Sequence[float]) -> bool:
         # vector should be a list
         if not (isinstance(vector, Iterable)):
             return False
