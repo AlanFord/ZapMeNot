@@ -58,7 +58,7 @@ class Material:
 
     def __init__(self, name):
         if not isinstance(name, str):
-            raise ValueError("Material name is not a string: " + str(name))
+            raise ValueError(f"Material name is not a string: {name}")
 
         # initialize the class library if it has not already been done
         if Material._library is None:
@@ -149,10 +149,10 @@ class Material:
             The mean free path in the material
         """
         if not isinstance(energy, numbers.Number):
-            raise ValueError("Invalid energy: " + str(energy))
+            raise ValueError(f"Invalid energy: {energy}")
         if not isinstance(distance, numbers.Number) or \
            distance < 0:
-            raise ValueError("Invalid distance: " + str(distance))
+            raise ValueError(f"Invalid distance: {distance}")
         if distance == 0:
             return 0
         else:
@@ -177,7 +177,7 @@ class Material:
             The mass attenuation coefficient in cm\ :sup:`2`/g
         """
         if not isinstance(energy, numbers.Number):
-            raise ValueError("Invalid energy: " + str(energy))
+            raise ValueError(f"Invalid energy: {energy}")
 
         if (energy < self._atten_energy_bins[0]) or \
                 (energy > self._atten_energy_bins[-1]):
@@ -206,7 +206,7 @@ class Material:
             The mass energy absorption coefficient in cm\ :sup:`2`/g
         """
         if not isinstance(energy, numbers.Number):
-            raise ValueError("Invalid energy: " + str(energy))
+            raise ValueError(f"Invalid energy: {energy}")
 
         if (energy < self._en_abs_energy_bins[0]) or \
                 (energy > self._en_abs_energy_bins[-1]):
@@ -244,12 +244,11 @@ class Material:
         if self._gp_b is None:
             raise ValueError("Material has no buildup factor data available")
         if not isinstance(formula, str):
-            raise ValueError("Buildup factor type is not a string: " +
-                             str(formula))
+            raise ValueError(f"Buildup factor type is not a string: {formula}")
         if formula.upper() != "GP":
             raise ValueError("Only GP Buildup Factors are currently supported")
         if not isinstance(energy, numbers.Number):
-            raise ValueError("Invalid energy: " + str(energy))
+            raise ValueError(f"Invalid energy: {energy}")
 
         try:
             mfp = np.array(mfps, dtype=float)

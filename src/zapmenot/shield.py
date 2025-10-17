@@ -58,7 +58,7 @@ class Shield(abc.ABC):
         self.material = material.Material(material_name)
         if density is not None:
             if not isinstance(density, numbers.Number):
-                raise ValueError("Invalid density: " + str(density))
+                raise ValueError(f"Invalid density: {density}")
             self.material.density = density
         super().__init__(**kwargs)
 

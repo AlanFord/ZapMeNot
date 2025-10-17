@@ -52,8 +52,7 @@ class Detector:
             self.z = z
             self._location = (x, y, z)
         else:
-            raise ValueError("Invalid coordinates:" + str(x) + ", " + str(y) +
-                             ", " + str(z))
+            raise ValueError(f"Invalid coordinates: {x}, {y}, {z}")
 
     @property
     def location(self):

@@ -92,7 +92,7 @@ class Source(abc.ABC):
         elif value == GroupOption.DISCRETE.value:
             self._grouping_option = GroupOption.DISCRETE
         else:
-            raise ValueError("Invalid grouping option " + str(value))
+            raise ValueError(f"Invalid grouping option {value}")
 
     @property
     def include_key_progeny(self):

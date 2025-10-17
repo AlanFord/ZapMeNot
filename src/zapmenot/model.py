@@ -85,7 +85,7 @@ class Model:
         self.filler_material = material.Material(filler_material)
         if density is not None:
             if not isinstance(density, numbers.Number):
-                raise ValueError("Invalid density: " + str(density))
+                raise ValueError(f"Invalid density: {density}")
             self.filler_material.density = density
 
     def add_source(self, new_source):
