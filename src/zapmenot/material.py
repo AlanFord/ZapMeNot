@@ -33,6 +33,7 @@ except ImportError:
     # Try backported to PY<37 `importlib_resources`.
     import importlib_resources as impresources
 
+
 class Material:
     r"""Encapsulates the data in the MaterialLibrary.yml file.
 
@@ -66,7 +67,7 @@ class Material:
             path = 'materialLibrary.yml'
             try:
                 inp_file = (impresources.files(__package__) / path)
-                stream = inp_file.open("rt") # or "rt" as text file with universal newlines
+                stream = inp_file.open("rt")  # or "rt" as text file with universal newlines
             except AttributeError:
                 # Python < PY3.9, fall back to method deprecated in PY3.11.
                 stream = impresources.open_text(__package__, path)
@@ -84,13 +85,16 @@ class Material:
         self._density: float = properties.get("density")
         self._atten_energy_bins: np.ndarray = np.array(
             properties.get("mass-atten-coff-energy"))
-        self._mass_atten_coff: np.ndarray = np.array(properties.get("mass-atten-coff"))
+        self._mass_atten_coff: np.ndarray = \
+            np.array(properties.get("mass-atten-coff"))
         # the mass energy absorption coefficient is optional for a material
         self._en_abs_energy_bins: np.ndarray = np.array(
             properties.get("mass-en-abs-coff-energy"))
-        self._mass_en_abs_coff: np.ndarray = np.array(properties.get("mass-en-abs-coff"))
+        self._mass_en_abs_coff: np.ndarray = \
+            np.array(properties.get("mass-en-abs-coff"))
         # the buildup factor data is optional for a material
-        self._gp_energy_bins: np.ndarray = np.array(properties.get("gp-coff-energy"))
+        self._gp_energy_bins: np.ndarray = \
+            np.array(properties.get("gp-coff-energy"))
         gp_data = properties.get("gp-coeff")
         if gp_data is None:
             self._gp_b: Optional[np.ndarray] = None
@@ -222,7 +226,9 @@ class Material:
                                         np.log10(self._en_abs_energy_bins),
                                         np.log10(self._mass_en_abs_coff)))
 
-    def get_buildup_factor(self, energy: float, mfps: Union[float, np.ndarray], formula: str = "GP") -> Union[float, np.ndarray]:
+    def get_buildup_factor(self, energy: float,
+                           mfps: Union[float, np.ndarray],
+                           formula: str = "GP") -> Union[float, np.ndarray]:
         """Calculates the photon buildup factor at the given energy and mfp
 
         Parameters
@@ -279,7 +285,8 @@ class Material:
         return bf
 
     @staticmethod
-    def _GP(a: float, b: float, c: float, d: float, X: float, mfp: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+    def _GP(a: float, b: float, c: float, d: float, X: float,
+            mfp: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Calculates the photon buildup factor using Geometric Progression
 
         Parameters
@@ -321,15 +328,16 @@ class Material:
             mfps = np.asarray([mfp])
         else:
             mfps = mfp
-        #ensure all values in the mpfs array are limited to a range of 0 to 80
+        # ensure all values in the mpfs array are limited to a range of 0 to 80
         mfps[mfps > 80] = 80
         mfps[mfps < 0] = 0
         # initialize the array of K values to 0
         K = np.zeros(mfps.size)  # default values for mfps = 0 -> buildup factor = 1
         # cases that do not need extrapolation in fmp
-        K[np.logical_and(mfps > 0, mfps <= 40)] = (c * (mfps[np.logical_and(mfps > 0, mfps <= 40)]**a)) + \
-            (d * (np.tanh(mfps[np.logical_and(mfps > 0, mfps <= 40)]/X - 2) - np.tanh(-2))) / \
-            (1 - np.tanh(-2))
+        K[np.logical_and(mfps > 0, mfps <= 40)] = \
+            (c * (mfps[np.logical_and(mfps > 0, mfps <= 40)]**a)) + \
+            (d * (np.tanh(mfps[np.logical_and(mfps > 0, mfps <= 40)]/X - 2)
+                  - np.tanh(-2))) / (1 - np.tanh(-2))
         # cases that do need extrapolation ( i.e. mfp > 40)
         if np.any(mfps > 40):
             K35 = (c * (35**a)) + (d * (np.tanh(35/X - 2) - np.tanh(-2))) / \
@@ -340,8 +348,9 @@ class Material:
                 K[mfps > 40] = K40
             else:
                 Xi = np.zeros(mfps.size)
-                Xi[mfps > 40] = (np.float_power(mfps[mfps > 40]/35., 0.1) -1) / \
-                                (np.float_power(40./35., 0.1) -1)
+                Xi[mfps > 40] = \
+                    (np.float_power(mfps[mfps > 40]/35., 0.1) - 1) / \
+                    (np.float_power(40./35., 0.1) - 1)
                 fm = 0.8
                 exponent = np.zeros(mfps.size)
                 exponent[mfps > 40] = np.float_power(Xi[mfps > 40], fm)
@@ -350,9 +359,11 @@ class Material:
                 else:
                     ratio = (K40-1)/(K35-1)
                 if ratio >= 0 and ratio <= 1:
-                    K[mfps > 40] = 1 + (K35-1) * np.float_power(ratio, Xi[mfps > 40])
+                    K[mfps > 40] = 1 + (K35-1) * \
+                        np.float_power(ratio, Xi[mfps > 40])
                 else:
-                    K[mfps > 40] = K35 * np.float_power(K40/K35, exponent[mfps > 40])
+                    K[mfps > 40] = K35 * np.float_power(K40/K35,
+                                                        exponent[mfps > 40])
 
         answers = np.ones(mfps.size)  # set default values to 1
         answers[K == 1] = 1 + (b-1) * mfps[K == 1]

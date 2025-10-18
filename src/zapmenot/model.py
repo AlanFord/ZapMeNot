@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import math
 import numpy as np
 import numbers
+from typing import Optional, List, Any
 from . import ray, material, source, shield, detector
 
 import importlib
@@ -54,12 +55,12 @@ class Model:
         The material used to calculate the exposure buildup factor.
     '''
 
-    def __init__(self):
-        self.source = None
-        self.shield_list = []
-        self.detector = None
-        self.filler_material = None
-        self.buildup_factor_material = None
+    def __init__(self) -> None:
+        self.source: Optional[source.Source] = None
+        self.shield_list: List[shield.Shield] = []
+        self.detector: Optional[detector.Detector] = None
+        self.filler_material: Optional[material.Material] = None
+        self.buildup_factor_material: Optional[material.Material] = None
         # used to calculate exposure (R/sec) from flux (photon/cm2 sec),
         # photon energy (MeV),
         # and linear energy absorption coeff (cm2/g)
@@ -68,9 +69,10 @@ class Model:
         #  and R.E. Faw, 2000, page 141.
         # This value is based on a value of energy deposition
         # per ion in air of 33.85 [ICRU Report 39, 1979].
-        self._conversion_factor = 1.835E-8
+        self._conversion_factor: float = 1.835E-8
 
-    def set_filler_material(self, filler_material, density=None):
+    def set_filler_material(self, filler_material: str,
+                            density: Optional[float] = None) -> None:
         r"""Set the filler material used by the model
 
         Parameters
@@ -88,7 +90,7 @@ class Model:
                 raise ValueError(f"Invalid density: {density}")
             self.filler_material.density = density
 
-    def add_source(self, new_source):
+    def add_source(self, new_source: source.Source) -> None:
         """Set the source used by the model.
 
         Parameters
@@ -103,7 +105,7 @@ class Model:
         # don't forget that sources are shields too!
         self.shield_list.append(new_source)
 
-    def add_shield(self, new_shield):
+    def add_shield(self, new_shield: shield.Shield) -> None:
         """Add a shield to the collection of shields used by the model.
 
         Parameters
@@ -115,7 +117,7 @@ class Model:
             raise ValueError("Invalid shield")
         self.shield_list.append(new_shield)
 
-    def add_detector(self, new_detector):
+    def add_detector(self, new_detector: detector.Detector) -> None:
         """Set the detector used by the model.
 
         Parameters
@@ -127,7 +129,8 @@ class Model:
             raise ValueError("Invalid detector")
         self.detector = new_detector
 
-    def set_buildup_factor_material(self, new_material):
+    def set_buildup_factor_material(self, new_material: material.Material) \
+            -> None:
         """Set the material used to calculation exposure buildup factors.
 
         Parameters
@@ -139,7 +142,7 @@ class Model:
             raise ValueError("Invalid buildup factor material")
         self.buildup_factor_material = new_material
 
-    def calculate_exposure(self):
+    def calculate_exposure(self) -> float:
         """Calculates the exposure at the detector location.
 
         Note:  Significant use of Numpy arrays to speed up evaluating the
@@ -163,7 +166,7 @@ class Model:
             integral_results = np.sum(an_array[:, 4])
             return integral_results  # mR/hr
 
-    def generate_summary(self):
+    def generate_summary(self) -> List[List[float]]:
         """Calculates the energy flux and exposure at the detector location.
 
         Note:  Significant use of Numpy arrays to speed up evaluating the
@@ -266,7 +269,7 @@ class Model:
 
         return results_by_photon_energy
 
-    def display(self):
+    def display(self) -> None:
         """
         Produces a graphic display of the model.
         """
@@ -281,7 +284,7 @@ class Model:
                 pl.add_legend(face=None, size=(0.1, 0.1))
             pl.show()
 
-    def _trimBlocks(self, pl, bounds):
+    def _trimBlocks(self, pl: Any, bounds: List[float]) -> None:
         """
         Adds shields to a Plotter instance after trimming any
         infinite shields to a predefined bounding box.
@@ -314,12 +317,13 @@ class Model:
                         pl.add_mesh(thisShield.draw(),
                                     sourceColor, label='source', line_width=3)
                 else:
-                    pl.add_mesh(thisShield.draw(), shieldColor, opacity=opacity)
+                    pl.add_mesh(thisShield.draw(), shieldColor,
+                                opacity=opacity)
         # now add the "bounds" as a transparent block to for a display size
         mesh = pyvista.Box(bounds)
         pl.add_mesh(mesh, opacity=0)
 
-    def _findBoundingBox(self):
+    def _findBoundingBox(self) -> List[float]:
         """Calculates a bounding box is X, Y, Z geometry that
         includes the volumes of all shields, the source, and the detector
         """
@@ -372,7 +376,7 @@ class Model:
         boundingBox = [x * 1.01 for x in bounds]
         return boundingBox
 
-    def _addPoints(self, pl):
+    def _addPoints(self, pl: Any) -> None:
         """
         the goal here is to add 'points' to the display, but they
         must be represented as spheres to have some physical
@@ -400,7 +404,8 @@ class Model:
         # determine a good radius for the points
         point_radius = min(good_widths) * point_ratio
         # check if the source is a point source
-        if self.source is not None and len(self.source._get_source_points()) == 1:
+        if self.source is not None and \
+                len(self.source._get_source_points()) == 1:
             body = pyvista.Sphere(center=(self.source._x,
                                           self.source._y,
                                           self.source._z),
@@ -410,9 +415,9 @@ class Model:
                 label='source')
         if self.detector is not None:
             body = pyvista.Sphere(center=(self.detector.x,
-                                        self.detector.y,
-                                        self.detector.z),
-                                radius=point_radius)
+                                          self.detector.y,
+                                          self.detector.z),
+                                  radius=point_radius)
             pl.add_mesh(
                 body, line_width=5, color=detectorColor,
                 label='detector')
