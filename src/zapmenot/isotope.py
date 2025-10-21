@@ -93,8 +93,8 @@ class Isotope:
 
     @property
     def photons(self) -> Optional[List[List[float]]]:
-        """:class:`list` of :class:`list` : A list of photon energies (in MeV) and
-        intensities per decay."""
+        """:class:`list` of :class:`list` : A list of photon energies (in MeV)
+        and intensities per decay."""
         return self._photons
 
     @property
