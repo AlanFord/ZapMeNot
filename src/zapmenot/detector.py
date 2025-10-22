@@ -73,3 +73,4 @@ class Detector:
             # this returns a degenerate line, equivalent to a point
             return pyvista.Line((self.x, self.y, self.z),
                                 (self.x, self.y, self.z))
+        return None

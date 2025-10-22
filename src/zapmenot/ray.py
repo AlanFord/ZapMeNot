@@ -19,7 +19,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import numpy as np
 import numbers
 from collections.abc import Iterable
-from typing import List, Sequence
+from typing import List, Sequence, Any
+import numpy.typing as npt
 
 
 class FiniteLengthRay:
@@ -61,7 +62,7 @@ class FiniteLengthRay:
         self._start: Sequence[float] = start
         self._end: Sequence[float] = end
         self._origin: np.ndarray
-        self._length: float
+        self._length: npt.floating[Any]
         self._dir: np.ndarray
         self._invdir: np.ndarray
         self._sign: List[int]

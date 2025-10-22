@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 import yaml
-from typing import Optional, List, Dict, Any, ClassVar
+from typing import Optional, List, Dict, TypedDict
 
 try:
     from yaml import CLoader as MyLoader, CDumper as MyDumper
@@ -53,7 +53,13 @@ class Isotope:
     _library
     '''
 
-    _library: ClassVar[Optional[Dict[str, Any]]] = None
+    Atom = TypedDict('Atom', {'half-life': float,
+                              'half-life-units': str,
+                              'key_progeny': Optional[Dict[str, float]],
+                              'photon-energy-units': str,
+                              'photon-intensity': List[List[float]],
+                              }, total=True)
+    _library: Optional[Dict[str, Atom]] = None
 
     def __init__(self, name: str) -> None:
         # initialize the class library if it has not already been done
@@ -61,7 +67,7 @@ class Isotope:
             path = 'isotopeLibrary.yml'
             try:
                 inp_file = (impresources.files(__package__) / path)
-                stream = inp_file.open("rt")  # or "rt" as text file with universal newlines
+                stream = inp_file.open("r")
             except AttributeError:
                 # Python < PY3.9, fall back to method deprecated in PY3.11.
                 stream = impresources.open_text(__package__, path)
@@ -77,10 +83,12 @@ class Isotope:
 
         # initialize the object
         self._name: str = name
-        properties: Dict[str, Any] = Isotope._library.get(self._name)  # dict() of properties
+        temp1 = Isotope._library.get(self._name)
+        if temp1:
+            properties: Isotope.Atom = temp1
         # convert the half-life to units of seconds
-        half_life: float = properties.get("half-life")
-        half_life_units: str = properties.get("half-life-units")
+        half_life: float = properties["half-life"]
+        half_life_units: str = properties["half-life-units"]
         self._half_life: float = Isotope._convert_half_life(
             half_life, half_life_units)
         self._key_progeny: Optional[Dict[str, float]] = \
