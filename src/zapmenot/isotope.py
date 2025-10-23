@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 import yaml
-from typing import Optional, List, Dict, TypedDict
+from typing import Optional, List, Dict, TypedDict, ClassVar
 
 try:
     from yaml import CLoader as MyLoader, CDumper as MyDumper
@@ -59,7 +59,7 @@ class Isotope:
                               'photon-energy-units': str,
                               'photon-intensity': List[List[float]],
                               }, total=True)
-    _library: Optional[Dict[str, Atom]] = None
+    _library: ClassVar[Optional[Dict[str, Atom]]] = None
 
     def __init__(self, name: str) -> None:
         # initialize the class library if it has not already been done
@@ -83,6 +83,7 @@ class Isotope:
 
         # initialize the object
         self._name: str = name
+        # verify a valid dictionary was returned, not a None
         temp1 = Isotope._library.get(self._name)
         if temp1:
             properties: Isotope.Atom = temp1

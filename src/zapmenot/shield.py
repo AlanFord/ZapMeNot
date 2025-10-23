@@ -86,6 +86,7 @@ class Shield(abc.ABC):
         """
         if not isinstance(a_ray, ray.FiniteLengthRay):
             raise ValueError("Invalid ray object")
+        return 0.0
 
     @abc.abstractmethod
     def get_crossing_mfp(self, a_ray: ray.FiniteLengthRay,
@@ -104,6 +105,7 @@ class Shield(abc.ABC):
             raise ValueError("Invalid ray object")
         if not isinstance(photon_energy, numbers.Number):
             raise ValueError("Invalid photon energy")
+        return 0.0
 
     @staticmethod
     def _line_plane_collision(plane_normal: np.ndarray,
@@ -293,6 +295,7 @@ class SemiInfiniteXSlab(Shield):
         if pyvista_found:
             return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000,
                                        -1000, 1000))
+        return None
 
     def _projection(self, x: float, y: float,
                     z: float) -> List[Tuple[float, float, float]]:
@@ -375,7 +378,9 @@ class Sphere(Shield):
             A Sphere object representing the sphere shield.
         """
         if pyvista_found:
-            return pyvista.Sphere(radius=self.radius, center=self.center)
+            return pyvista.Sphere(radius=float(self.radius),
+                                  center=self.center)
+        return None
 
 # -----------------------------------------------------------
 
@@ -394,7 +399,8 @@ class Shell(Shield):
 
         self.inner_sphere: Sphere = copy.deepcopy(sphere)
         self.outer_sphere: Sphere = Sphere(material_name, sphere.center,
-                                           sphere.radius + thickness, density)
+                                           float(sphere.radius) + thickness,
+                                           density)
 
     def is_infinite(self) -> bool:
         '''Returns true if any dimension is infinite, false otherwise
@@ -443,13 +449,14 @@ class Shell(Shield):
             A Sphere object representing the sphere shield.
         """
         if pyvista_found:
-            sphere_a = pyvista.Sphere(radius=self.outer_sphere.radius,
+            sphere_a = pyvista.Sphere(radius=float(self.outer_sphere.radius),
                                       center=self.outer_sphere.center)
-            sphere_b = pyvista.Sphere(radius=self.inner_sphere.radius,
+            sphere_b = pyvista.Sphere(radius=float(self.inner_sphere.radius),
                                       center=self.inner_sphere.center)
             sphere_b.flip_faces(inplace=True)
             shell = sphere_a.merge(sphere_b)
             return shell
+        return None
 # -----------------------------------------------------------
 
 
@@ -545,7 +552,7 @@ class Box(Shield):
             # shouldn't ever get here
             raise ValueError("Shield doesn't have 2 crossings")
         # let numpy do the heavy lifting
-        return np.linalg.norm(crossings[0]-crossings[1])
+        return float(np.linalg.norm(crossings[0]-crossings[1]))
 
     def _contains(self, point: np.ndarray) -> bool:
         """Determines if the shield contains a point
@@ -591,7 +598,7 @@ class Box(Shield):
             include the ray endpoints if they are located within the shield.
         """
         'returns 0, 1, or 2 points of intersection'
-        results = []
+        results: List[np.ndarray] = []
         bounds = [self.box_center - (self.box_dimensions/2),
                   self.box_center + (self.box_dimensions/2)]
         tmin = (bounds[ray._sign[0]][0] - ray._origin[0]) * ray._invdir[0]
@@ -642,6 +649,7 @@ class Box(Shield):
             zmin = self.box_center[2]-self.box_dimensions[2]/2
             zmax = self.box_center[2]+self.box_dimensions[2]/2
             return pyvista.Box(bounds=(xmin, xmax, ymin, ymax, zmin, zmax))
+        return None
 
 # -----------------------------------------------------------
 
@@ -838,6 +846,7 @@ class InfiniteAnnulus(Shield):
                                 outer=self.outer_radius, c_res=50)
             cyl1 = disc.extrude(self.dir*4000, capping=True)
             return cyl1
+        return None
 
     def _projection(self, x: float, y: float, z: float) -> List[np.ndarray]:
         # TODO: generalize this by using a degenerate cylinder
@@ -1066,7 +1075,7 @@ class CappedCylinder(Shield):
         self.radius: float = cylinder_radius
         self.origin: np.ndarray = np.array(cylinder_start)
         self.end: np.ndarray = np.array(cylinder_end)
-        self.length: float = np.linalg.norm(self.end - self.origin)
+        self.length: float = float(np.linalg.norm(self.end - self.origin))
         self.dir: np.ndarray = (self.end - self.origin)/self.length
 
     def is_infinite(self) -> bool:
@@ -1128,7 +1137,7 @@ class CappedCylinder(Shield):
             # shouldn't ever get here
             raise ValueError("Shield doesn't have 2 crossings")
         # let numpy do the heavy lifting
-        return np.linalg.norm(crossings[0]-crossings[1])
+        return float(np.linalg.norm(crossings[0]-crossings[1]))
 
     def _contains(self, point: np.ndarray) -> bool:
         """Determines if the shield contains a point
@@ -1225,6 +1234,7 @@ class CappedCylinder(Shield):
             return pyvista.Cylinder(center=(center[0], center[1], center[2]),
                                     direction=self.dir, height=self.length,
                                     radius=self.radius)
+        return None
 
 # -----------------------------------------------------------
 

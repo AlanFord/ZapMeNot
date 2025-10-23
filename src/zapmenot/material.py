@@ -20,7 +20,7 @@ from scipy.interpolate import Akima1DInterpolator
 import numpy as np
 import numbers
 import yaml
-from typing import Optional, Union, Dict, Any, ClassVar
+from typing import List, Optional, Union, Dict, ClassVar, TypedDict
 
 try:
     from yaml import CLoader as MyLoader, CDumper as MyDumper
@@ -55,11 +55,23 @@ class Material:
     _density : float
         Density of the material in g/cm\ :sup:`3`
     '''
+    Dirt = TypedDict('Dirt', {'density': float,
+                              'density-units': str,
+                              'energy-units': str,
+                              'mass-atten-coff-units': str,
+                              'mass-atten-coff-energy': List[float],
+                              'mass-atten-coff': List[float],
+                              'gp-coeff': Optional[List[List[float]]],
+                              'gp-coff-energy': Optional[List[float]],
+                              'mass-en-abs-coff-units': Optional[str],
+                              'mass-en-abs-coff-energy': Optional[List[float]],
+                              }, total=True)
+    _library: ClassVar[Optional[Dict[str, Dirt]]] = None
 
-    _library: ClassVar[Optional[Dict[str, Any]]] = None
+    # _library: ClassVar[Optional[Dict[str, Any]]] = None
 
-    def __init__(self, name: str) -> None:
-        if not isinstance(name, str):
+    def __init__(self, name: Optional[str]) -> None:
+        if name is None or not isinstance(name, str):
             raise ValueError(f"Material name is not a string: {name}")
 
         # initialize the class library if it has not already been done
@@ -67,7 +79,7 @@ class Material:
             path = 'materialLibrary.yml'
             try:
                 inp_file = (impresources.files(__package__) / path)
-                stream = inp_file.open("rt")  # or "rt" as text file with universal newlines
+                stream = inp_file.open("r")  # or "rt" as text file with universal newlines
             except AttributeError:
                 # Python < PY3.9, fall back to method deprecated in PY3.11.
                 stream = impresources.open_text(__package__, path)
@@ -81,12 +93,14 @@ class Material:
 
         # initialize the object
         self._name: str = name
-        properties: Dict[str, Any] = Material._library.get(self._name)
-        self._density: float = properties.get("density")
+        temp1 = Material._library.get(self._name)
+        if temp1:
+            properties: Material.Dirt = temp1
+        self._density: float = properties["density"]
         self._atten_energy_bins: np.ndarray = np.array(
-            properties.get("mass-atten-coff-energy"))
+            properties["mass-atten-coff-energy"])
         self._mass_atten_coff: np.ndarray = \
-            np.array(properties.get("mass-atten-coff"))
+            np.array(properties["mass-atten-coff"])
         # the mass energy absorption coefficient is optional for a material
         self._en_abs_energy_bins: np.ndarray = np.array(
             properties.get("mass-en-abs-coff-energy"))
@@ -97,33 +111,40 @@ class Material:
             np.array(properties.get("gp-coff-energy"))
         gp_data = properties.get("gp-coeff")
         if gp_data is None:
-            self._gp_b: Optional[np.ndarray] = None
-            self._gp_c: Optional[np.ndarray] = None
-            self._gp_a: Optional[np.ndarray] = None
-            self._gp_X: Optional[np.ndarray] = None
-            self._gp_d: Optional[np.ndarray] = None
-            self._bi: Optional[Akima1DInterpolator] = None
-            self._ci: Optional[Akima1DInterpolator] = None
-            self._ai: Optional[Akima1DInterpolator] = None
-            self._Xi: Optional[Akima1DInterpolator] = None
-            self._di: Optional[Akima1DInterpolator] = None
+            self.gp_data_available: bool = False
+            # self._gp_b: Optional[np.ndarray] = None
+            # self._gp_c: Optional[np.ndarray] = None
+            # self._gp_a: Optional[np.ndarray] = None
+            # self._gp_X: Optional[np.ndarray] = None
+            # self._gp_d: Optional[np.ndarray] = None
+            # self._bi: Optional[Akima1DInterpolator] = None
+            # self._ci: Optional[Akima1DInterpolator] = None
+            # self._ai: Optional[Akima1DInterpolator] = None
+            # self._Xi: Optional[Akima1DInterpolator] = None
+            # self._di: Optional[Akima1DInterpolator] = None
         else:
+            self.gp_data_available = True
             gp_array = np.array(gp_data)
-            self._gp_b = gp_array[:, 0]
-            self._gp_c = gp_array[:, 1]
-            self._gp_a = gp_array[:, 2]
-            self._gp_X = gp_array[:, 3]
-            self._gp_d = gp_array[:, 4]
+            self._gp_b: np.ndarray = gp_array[:, 0]
+            self._gp_c: np.ndarray = gp_array[:, 1]
+            self._gp_a: np.ndarray = gp_array[:, 2]
+            self._gp_X: np.ndarray = gp_array[:, 3]
+            self._gp_d: np.ndarray = gp_array[:, 4]
             # here we are building interpolators based on the Akima method.
             # For more information on the use of Akima method on G-P coefficients,
             # see https://www.nrc.gov/docs/ML1905/ML19059A414.pdf
             # "QAD-CGGP2 and G33-GP2: Revised Version of QAD-CGGP and G33-GP"
             logE = np.log(self._gp_energy_bins)
-            self._bi = Akima1DInterpolator(logE, self._gp_b)
-            self._ci = Akima1DInterpolator(logE, self._gp_c)
-            self._ai = Akima1DInterpolator(logE, self._gp_a)
-            self._Xi = Akima1DInterpolator(logE, self._gp_X)
-            self._di = Akima1DInterpolator(logE, self._gp_d)
+            self._bi: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_b)
+            self._ci: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_c)
+            self._ai: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_a)
+            self._Xi: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_X)
+            self._di: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_d)
 
     @property
     def name(self) -> str:
@@ -198,7 +219,8 @@ class Material:
                                         np.log10(self._mass_atten_coff)))
 
     def get_mass_energy_abs_coeff(self, energy: float) -> float:
-        r"""Calculates the mass energy absorption coefficient at the given energy
+        r"""Calculates the mass energy absorption coefficient at the
+        given energy
 
         Parameters
         ----------
@@ -253,7 +275,7 @@ class Material:
             A vector of photon exposure buildup factors in air, one for
             each specified mfp
         """
-        if self._gp_b is None:
+        if self.gp_data_available is False:
             raise ValueError("Material has no buildup factor data available")
         if not isinstance(formula, str):
             raise ValueError(f"Buildup factor type is not a string: {formula}")
@@ -324,11 +346,10 @@ class Material:
         should be used.
         """
         # if called with a single value of mfp, convert it to a numpy array
-        if np.shape(mfp) == ():
-            mfps = np.asarray([mfp])
+        if isinstance(mfp, float) or np.shape(mfp) == ():
+            mfps: np.ndarray = np.asarray([mfp])
         else:
             mfps = mfp
-        # ensure all values in the mpfs array are limited to a range of 0 to 80
         mfps[mfps > 80] = 80
         mfps[mfps < 0] = 0
         # initialize the array of K values to 0
