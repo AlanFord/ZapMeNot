@@ -333,16 +333,17 @@ class Model:
                 # add finite shields to the MultiBlock composite
                 blocks.append(thisShield.draw())
             else:
-                # for infinete shield bodies,
+                # for infinite shield bodies,
                 # project the detector location onto the infinite surface
                 # to get points to add to the geometry
-                points = thisShield._projection(self.detector.x,
-                                                self.detector.y,
-                                                self.detector.z)
-                for point in points:
-                    # we are appending a degenerate line as a representation
-                    # of a point
-                    blocks.append(pyvista.Line(point, point))
+                if isinstance(self.detector, detector.Detector):
+                    points = thisShield._projection(self.detector.x,
+                                                    self.detector.y,
+                                                    self.detector.z)
+                    for point in points:
+                        # we are appending a degenerate line as a representation
+                        # of a point
+                        blocks.append(pyvista.Line(point, point))
 
         # >>>aren't all sources also shields?  Then the next line is redundant
         # TODO: figure out if the next line is necessary

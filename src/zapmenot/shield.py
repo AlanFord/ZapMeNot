@@ -165,7 +165,7 @@ class Shield(abc.ABC):
             # if not 2 intersections, look for ray endpoints inside the sphere
             if sphere.contains(ray._origin):
                 big_list.append(0)
-            if sphere.contains(ray._end):
+            if sphere.contains(np.array(ray._end)):
                 big_list.append(ray._length)
         if len(big_list) == 0:
             # ray misses the sphere
@@ -330,14 +330,14 @@ class Sphere(Shield):
     radius : float
         radius of the sphere.
     '''
-    def __init__(self, material_name: str, sphere_center: Sequence[float],
+    def __init__(self, material_name: str, sphere_center: List[float],
                  sphere_radius: float,
                  density: Optional[float] = None, **kwargs: Any) -> None:
         '''Initialize material composition and location of the
             spherical shield'''
         super().__init__(material_name=material_name, density=density)
-        self.center: np.ndarray = np.array(sphere_center)
-        self.radius: np.ndarray = np.array(sphere_radius)
+        self.center: List[float] = sphere_center
+        self.radius: float = sphere_radius
 
     def is_infinite(self) -> bool:
         '''Returns true if any dimension is infinite, false otherwise
@@ -399,7 +399,7 @@ class Shell(Shield):
 
         self.inner_sphere: Sphere = copy.deepcopy(sphere)
         self.outer_sphere: Sphere = Sphere(material_name, sphere.center,
-                                           float(sphere.radius) + thickness,
+                                           sphere.radius + thickness,
                                            density)
 
     def is_infinite(self) -> bool:

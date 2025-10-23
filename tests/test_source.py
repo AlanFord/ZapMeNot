@@ -524,7 +524,7 @@ class TestSphericalSource():
 
     def test_init(self, create_source):
         # test attribute of shield class
-        assert all(create_source.center == [4, 5, 6])
+        assert create_source.center == [4, 5, 6]
         assert create_source.radius == 10
         assert create_source.material.name == "air"
         assert create_source.material.density == 1.2

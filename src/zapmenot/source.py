@@ -379,19 +379,9 @@ class LineSource(Source, shield.Shield):
 
         Returns
         -------
-        :class:`list` of :class:`numpy.adarray`
+        :class:`list` of :class:`numpy.ndarray`
             A list of vector locations within the Source body
         """
-        #
-        # Note: the Line source is unique in that it only has one dimension
-        # (i.e. not three).  Hence it is possible that the user will set the
-        # "points_er_dimension" to be a non-iterable numerical value.
-        try:
-            iter(self._points_per_dimension)
-        except TypeError:
-            # not iterable; make it so
-            self._points_per_dimension = [self._points_per_dimension]
-
         spacings = np.linspace(1, self._points_per_dimension[0],
                                self._points_per_dimension[0])
         mesh_width = self._length/self._points_per_dimension[0]
@@ -508,8 +498,8 @@ class PointSource(Source, shield.Shield):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.prod(self._points_per_dimension)] * \
-            np.prod(self._points_per_dimension)
+        return np.array([1.0 / np.prod(self._points_per_dimension)] *
+                        np.prod(self._points_per_dimension))
 
     def _get_source_points(self) -> List[np.ndarray]:
         """Generates a list of point sources within the Source geometry.
@@ -612,7 +602,7 @@ class SphereSource(Source, shield.Sphere):
     @property
     def points_per_dimension(self) -> List[int]:
         """list of integers : Number of source points per dimension."""
-        return Source.points_per_dimension.fget(self)
+        return Source.points_per_dimension.fget(self)  # type: ignore
 
     @points_per_dimension.setter
     def points_per_dimension(self, value: List[int]) -> None:
@@ -621,7 +611,7 @@ class SphereSource(Source, shield.Sphere):
         if len(value) != 3:
             raise ValueError(
                 "Source Points per Dimension needs three entries")
-        Source.points_per_dimension.fset(self, value)
+        Source.points_per_dimension.fset(self, value)  # type: ignore
         # update the quadrature and weights
         nR = self._points_per_dimension[0]
         nTheta = self._points_per_dimension[1]
@@ -785,7 +775,8 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         # no rotation is needed
         # shift the point set to the specified cylinder center
         source_points += (self.origin + self.end)/2
-        return source_points
+        # convert to list of np.ndarrays
+        return [np.array(point) for point in source_points]
 
 # -----------------------------------------------------------
 
@@ -847,7 +838,8 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         source_points[:, 2] = -some_points[:, 1]
         # shift the point set to the specified cylinder center
         source_points += (self.origin + self.end)/2
-        return source_points
+        # convert to list of np.ndarrays
+        return [np.array(point) for point in source_points]
 
 # -----------------------------------------------------------
 
@@ -909,7 +901,8 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         source_points[:, 2] = -some_points[:, 0]
         # shift the point set to the specified cylinder center
         source_points += (self.origin + self.end)/2
-        return source_points
+        # convert to list of np.ndarrays
+        return [np.array(point) for point in source_points]
 
 
 def _generic_cylinder_source_points(points_per_dimension: List[int],

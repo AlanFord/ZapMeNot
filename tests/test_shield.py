@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from zapmenot import shield, ray, material, source
+from zapmenot import shield, ray, source
 
 pytestmark = pytest.mark.basic
 
@@ -130,23 +130,23 @@ class TestShell():
         myShield = shield.Sphere("iron", sphere_radius=10,
                                  sphere_center=[0, 0, 0])
         return myShield
-    
-    def test_create_shell(self,create_shield):
+
+    def test_create_shell(self, create_shield):
         shell = shield.Shell('concrete', create_shield, 4, 5)
         assert shell.inner_sphere.radius == 10
         assert shell.outer_sphere.radius == 14
         assert shell.material.name == 'concrete'
         assert shell.material.density == 5
 
-    def test_add_shell_zero_thickness(self,create_shield):
+    def test_add_shell_zero_thickness(self, create_shield):
         with pytest.raises(ValueError):
             shield.Shell('concrete', create_shield, 0, 5)
 
-    def test_add_shell_negative_thickness(self,create_shield):
+    def test_add_shell_negative_thickness(self, create_shield):
         with pytest.raises(ValueError):
             shield.Shell('concrete', create_shield, -1, 5)
 
-    def test_shell_crossing1(self,create_shield):
+    def test_shell_crossing1(self, create_shield):
         start = [-100, 0, 10]
         end = [100, 0, 10]
         aRay = ray.FiniteLengthRay(start, end)
@@ -159,7 +159,7 @@ class TestShell():
         calculated_mfp = shell_xsec*shell_density*shell_crossing_length
         assert mfp == pytest.approx(calculated_mfp)
 
-    def test_shell_crossing2(self,create_shield):
+    def test_shell_crossing2(self, create_shield):
         start = [-100, 0, 12]
         end = [100, 0, 12]
         aRay = ray.FiniteLengthRay(start, end)
@@ -172,7 +172,7 @@ class TestShell():
         calculated_mfp = shell_xsec*shell_density*shell_crossing_length
         assert mfp == pytest.approx(calculated_mfp)
 
-    def test_shell_crossing3(self,create_shield):
+    def test_shell_crossing3(self, create_shield):
         start = [-100, 0, 8]
         end = [100, 0, 8]
         aRay = ray.FiniteLengthRay(start, end)
@@ -203,7 +203,7 @@ class TestShell():
     def test_shell_on_invalid_source_type(self):
         my_source = source.LineSource([1, 2, 3], [11, 12, 13])
         with pytest.raises(ValueError):
-            shell = shield.Shell('carbon', my_source, 5)
+            shield.Shell('carbon', my_source, 5)
 
 
 # =============================================================
@@ -217,7 +217,7 @@ class TestSphere():
 
     def test_init(self, create_shield):
         assert create_shield.radius == 10
-        assert all(create_shield.center == [0, 0, 0])
+        assert create_shield.center == [0, 0, 0]
 
     def test_crossing_length0(self, create_shield):
         # basic ray crossing
@@ -269,6 +269,7 @@ class TestSphere():
 
     def test_infinite(self, create_shield):
         assert create_shield.is_infinite() is False
+
 
 # =============================================================
 class TestBox():
