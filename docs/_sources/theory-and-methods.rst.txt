@@ -102,8 +102,8 @@ and Buildup Factors for Engineering Materials."
 Frequently the number of discrete photon energies can be in the 100's.  However, many of these photons energies
 are low enough that the photon contribution to dose is small.  Many of the photon energies may also have a very low 
 intensity due to a small decay branching fraction.  The evaluation is therefore simplified by limiting the number
-of discrete photon energies to 40.  A 40 photon energy-group structure is used in the event that a source has more than 
-40 discrete photon energies.  The energy-group structure is linearly distributed between the highest and lowest photon energies
+of discrete photon energies to 30.  A 30 photon energy-group structure is used in the event that a source has more than 
+30 discrete photon energies.  The energy-group structure is linearly distributed between the highest and lowest photon energies
 in the source.  The photon intensity of each energy group is determined such that the energy flux
 of photons within the group is preserved.
 

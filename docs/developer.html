@@ -145,7 +145,10 @@ when run on a “headless” server, i.e. a server without graphics hardware.</p
 <h2>Updating A Version<a class="headerlink" href="#updating-a-version" title="Link to this heading"></a></h2>
 <p>Following successful testing, the following steps are used to generate a new version of ZapMeNot:</p>
 <ul class="simple">
-<li><p>Update the version number in ZapMeNot/zapmenot/__about__.py</p></li>
+<li><p>Update the version number in ZapMeNot/source/zapmenot/__about__.py</p></li>
+<li><p>Update the ZapMeNot/docsrc/source/getting-started.rst file with any new features or changes</p></li>
+<li><p>Update the ZapMeNot/README.rst file with any new features or changes</p></li>
+<li><p>Update the pyproject.toml file with the new version number</p></li>
 <li><p>Optionally update the interSphinx input by executing <code class="code docutils literal notranslate"><span class="pre">update.sh</span></code> from the ZapMeNot/docsrc/interSphinx folder</p></li>
 <li><p>Rebuild the documentation by executing <code class="code docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> from the ZapMeNot/docsrc folder</p></li>
 <li><p>Build the distribution packages by executing <code class="code docutils literal notranslate"><span class="pre">hatch</span> <span class="pre">build</span></code> from the ZapMeNot folder</p></li>
@@ -156,7 +159,7 @@ when run on a “headless” server, i.e. a server without graphics hardware.</p
 <p>Update the year in the following files:</p>
 <ul class="simple">
 <li><p><cite>ZapMeNot/docsrc/source/license.rst</cite></p></li>
-<li><p><cite>ZapMeNot/zapmenot/__about__.py</cite></p></li>
+<li><p><cite>ZapMeNot/src/zapmenot/__about__.py</cite></p></li>
 </ul>
 <p>Update the year in the header of each python source file.</p>
 </section>
@@ -174,7 +177,7 @@ when run on a “headless” server, i.e. a server without graphics hardware.</p
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Jul 19, 2025.
+      <span class="lastupdated">Last updated on Oct 24, 2025.
       </span></p>
   </div>
 

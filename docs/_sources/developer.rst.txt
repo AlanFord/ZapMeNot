@@ -62,7 +62,10 @@ Updating A Version
 
 Following successful testing, the following steps are used to generate a new version of ZapMeNot:
 
-* Update the version number in ZapMeNot/zapmenot/__about__.py
+* Update the version number in ZapMeNot/source/zapmenot/__about__.py
+* Update the ZapMeNot/docsrc/source/getting-started.rst file with any new features or changes
+* Update the ZapMeNot/README.rst file with any new features or changes
+* Update the pyproject.toml file with the new version number
 * Optionally update the interSphinx input by executing :code:`update.sh` from the ZapMeNot/docsrc/interSphinx folder
 * Rebuild the documentation by executing :code:`make html` from the ZapMeNot/docsrc folder
 * Build the distribution packages by executing :code:`hatch build` from the ZapMeNot folder
@@ -73,6 +76,6 @@ Updating Copyright
 Update the year in the following files:
 
 * `ZapMeNot/docsrc/source/license.rst`
-* `ZapMeNot/zapmenot/__about__.py`
+* `ZapMeNot/src/zapmenot/__about__.py`
 
 Update the year in the header of each python source file.

@@ -48,7 +48,8 @@ on your workstation configuration.
 An interesting factoid is that you can work with a JupyterLab notebook in a JupyterLab server (the
 usual way) but also in the Visual Studio Code editor!  Visual Studio Code (aka VSCode) will
 display a notebook page, let you choose an appropriate python environment, run the analysis, and finally
-display the graphics.
+display the graphics.  The only prerequisite is the installation of the Jupyter extension pack 
+for VSCode (https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter).
 
 Going Headless For Fun and Profit
 ---------------------------------
