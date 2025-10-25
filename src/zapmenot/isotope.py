@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 import yaml
+from typing import Optional, List, Dict, TypedDict, ClassVar
 
 try:
     from yaml import CLoader as MyLoader, CDumper as MyDumper
@@ -28,6 +29,7 @@ try:
 except ImportError:
     # Try backported to PY<37 `importlib_resources`.
     import importlib_resources as impresources
+
 
 class Isotope:
     """Encapsulates isotope data from the IsotopeLibrary.yml file.
@@ -51,15 +53,21 @@ class Isotope:
     _library
     '''
 
-    _library = None
+    Atom = TypedDict('Atom', {'half-life': float,
+                              'half-life-units': str,
+                              'key_progeny': Optional[Dict[str, float]],
+                              'photon-energy-units': str,
+                              'photon-intensity': List[List[float]],
+                              }, total=True)
+    _library: ClassVar[Optional[Dict[str, Atom]]] = None
 
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         # initialize the class library if it has not already been done
         if Isotope._library is None:
             path = 'isotopeLibrary.yml'
             try:
                 inp_file = (impresources.files(__package__) / path)
-                stream = inp_file.open("rt") # or "rt" as text file with universal newlines
+                stream = inp_file.open("r")
             except AttributeError:
                 # Python < PY3.9, fall back to method deprecated in PY3.11.
                 stream = impresources.open_text(__package__, path)
@@ -68,49 +76,54 @@ class Isotope:
 
         # check to see if the name is in the library
         if not isinstance(name, str):
-            raise ValueError("Isotope name is not a string: " + str(name))
+            raise ValueError(f"Isotope name is not a string: {name}")
         name = name.lower().capitalize()
         if name not in Isotope._library.keys():
             raise ValueError("Isotope not found in the Isotope Library")
 
         # initialize the object
-        self._name = name
-        properties = Isotope._library.get(self._name)  # dict() of properties
+        self._name: str = name
+        # verify a valid dictionary was returned, not a None
+        temp1 = Isotope._library.get(self._name)
+        if temp1:
+            properties: Isotope.Atom = temp1
         # convert the half-life to units of seconds
-        half_life = properties.get("half-life")
-        half_life_units = properties.get("half-life-units")
-        self._half_life = Isotope._convert_half_life(
+        half_life: float = properties["half-life"]
+        half_life_units: str = properties["half-life-units"]
+        self._half_life: float = Isotope._convert_half_life(
             half_life, half_life_units)
-        self._key_progeny = properties.get("key_progeny")
+        self._key_progeny: Optional[Dict[str, float]] = \
+            properties.get("key_progeny")
 
         # photon energies and intensities are stored as a list of tuples
         # 2D list of photon energies and intensities
-        self._photons = properties.get("photon-intensity")
+        self._photons: Optional[List[List[float]]] = \
+            properties.get("photon-intensity")
 
     @property
-    def photons(self):
-        """:class:`list` of :class:`list` : A list of photon energies (in MeV) and
-        intensities per decay."""
+    def photons(self) -> Optional[List[List[float]]]:
+        """:class:`list` of :class:`list` : A list of photon energies (in MeV)
+        and intensities per decay."""
         return self._photons
 
     @property
-    def name(self):
+    def name(self) -> str:
         """:class:`str` : The name of the isotope."""
         return self._name
 
     @property
-    def half_life(self):
+    def half_life(self) -> float:
         """:class:`str` : The half life of the isotope in seconds."""
         return self._half_life
 
     @property
-    def key_progeny(self):
+    def key_progeny(self) -> Optional[Dict[str, float]]:
         """:class:`dict` : The list of progeny that can be in secular or
         transient equilibrium."""
         return self._key_progeny
 
     @staticmethod
-    def _convert_half_life(value, units):
+    def _convert_half_life(value: float, units: str) -> float:
         """Converts a half life to units of seconds.
 
         Input units can be microseconds, milliseconds, seconds,

@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>zapmenot.material &mdash; Zapmenot 0.2 documentation</title>
+  <title>zapmenot.material &mdash; Zapmenot 0.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=10f1778b"></script>
+      <script src="../../_static/documentation_options.js?v=37f418d5"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -101,6 +101,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">TypedDict</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">yaml</span><span class="w"> </span><span class="kn">import</span> <span class="n">CLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">CDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
@@ -112,6 +113,7 @@
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="c1"># Try backported to PY&lt;37 `importlib_resources`.</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">importlib_resources</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">impresources</span>
+
 
 <div class="viewcode-block" id="Material">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.material.Material">[docs]</a>
@@ -136,19 +138,31 @@
 <span class="sd">    _density : float</span>
 <span class="sd">        Density of the material in g/cm\ :sup:`3`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Dirt</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s1">&#39;Dirt&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;density&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                              <span class="s1">&#39;density-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="s1">&#39;energy-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="s1">&#39;mass-atten-coff-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="s1">&#39;mass-atten-coff-energy&#39;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                              <span class="s1">&#39;mass-atten-coff&#39;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                              <span class="s1">&#39;gp-coeff&#39;</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]],</span>
+                              <span class="s1">&#39;gp-coff-energy&#39;</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+                              <span class="s1">&#39;mass-en-abs-coff-units&#39;</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                              <span class="s1">&#39;mass-en-abs-coff-energy&#39;</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+                              <span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_library</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dirt</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">_library</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># _library: ClassVar[Optional[Dict[str, Any]]] = None</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Material name is not a string: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Material name is not a string: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># initialize the class library if it has not already been done</span>
         <span class="k">if</span> <span class="n">Material</span><span class="o">.</span><span class="n">_library</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;materialLibrary.yml&#39;</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">inp_file</span> <span class="o">=</span> <span class="p">(</span><span class="n">impresources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span> <span class="o">/</span> <span class="n">path</span><span class="p">)</span>
-                <span class="n">stream</span> <span class="o">=</span> <span class="n">inp_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="c1"># or &quot;rt&quot; as text file with universal newlines</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="n">inp_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>  <span class="c1"># or &quot;rt&quot; as text file with universal newlines</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="c1"># Python &lt; PY3.9, fall back to method deprecated in PY3.11.</span>
                 <span class="n">stream</span> <span class="o">=</span> <span class="n">impresources</span><span class="o">.</span><span class="n">open_text</span><span class="p">(</span><span class="n">__package__</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
@@ -161,55 +175,72 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Material not found in the Material Library&quot;</span><span class="p">)</span>
 
         <span class="c1"># initialize the object</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="n">properties</span> <span class="o">=</span> <span class="n">Material</span><span class="o">.</span><span class="n">_library</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;density&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_atten_energy_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mass-atten-coff-energy&quot;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mass_atten_coff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mass-atten-coff&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">temp1</span> <span class="o">=</span> <span class="n">Material</span><span class="o">.</span><span class="n">_library</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">temp1</span><span class="p">:</span>
+            <span class="n">properties</span><span class="p">:</span> <span class="n">Material</span><span class="o">.</span><span class="n">Dirt</span> <span class="o">=</span> <span class="n">temp1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_density</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">properties</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_atten_energy_bins</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="n">properties</span><span class="p">[</span><span class="s2">&quot;mass-atten-coff-energy&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mass_atten_coff</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;mass-atten-coff&quot;</span><span class="p">])</span>
         <span class="c1"># the mass energy absorption coefficient is optional for a material</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_en_abs_energy_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_en_abs_energy_bins</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
             <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mass-en-abs-coff-energy&quot;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mass_en_abs_coff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mass-en-abs-coff&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mass_en_abs_coff</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mass-en-abs-coff&quot;</span><span class="p">))</span>
         <span class="c1"># the buildup factor data is optional for a material</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;gp-coff-energy&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;gp-coff-energy&quot;</span><span class="p">))</span>
         <span class="n">gp_data</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;gp-coeff&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">gp_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_b</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_c</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_a</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_X</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gp_data_available</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># self._gp_b: Optional[np.ndarray] = None</span>
+            <span class="c1"># self._gp_c: Optional[np.ndarray] = None</span>
+            <span class="c1"># self._gp_a: Optional[np.ndarray] = None</span>
+            <span class="c1"># self._gp_X: Optional[np.ndarray] = None</span>
+            <span class="c1"># self._gp_d: Optional[np.ndarray] = None</span>
+            <span class="c1"># self._bi: Optional[Akima1DInterpolator] = None</span>
+            <span class="c1"># self._ci: Optional[Akima1DInterpolator] = None</span>
+            <span class="c1"># self._ai: Optional[Akima1DInterpolator] = None</span>
+            <span class="c1"># self._Xi: Optional[Akima1DInterpolator] = None</span>
+            <span class="c1"># self._di: Optional[Akima1DInterpolator] = None</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gp_data_available</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">gp_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gp_data</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_b</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_c</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_a</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_X</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_c</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">gp_array</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
             <span class="c1"># here we are building interpolators based on the Akima method.</span>
             <span class="c1"># For more information on the use of Akima method on G-P coefficients,</span>
             <span class="c1"># see https://www.nrc.gov/docs/ML1905/ML19059A414.pdf</span>
             <span class="c1"># &quot;QAD-CGGP2 and G33-GP2: Revised Version of QAD-CGGP and G33-GP&quot;</span>
             <span class="n">logE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gp_energy_bins</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bi</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_b</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_ci</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_c</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_ai</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_a</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_X</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_di</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bi</span><span class="p">:</span> <span class="n">Akima1DInterpolator</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span>
+                                                                <span class="bp">self</span><span class="o">.</span><span class="n">_gp_b</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ci</span><span class="p">:</span> <span class="n">Akima1DInterpolator</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span>
+                                                                <span class="bp">self</span><span class="o">.</span><span class="n">_gp_c</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ai</span><span class="p">:</span> <span class="n">Akima1DInterpolator</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span>
+                                                                <span class="bp">self</span><span class="o">.</span><span class="n">_gp_a</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span><span class="p">:</span> <span class="n">Akima1DInterpolator</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span>
+                                                                <span class="bp">self</span><span class="o">.</span><span class="n">_gp_X</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_di</span><span class="p">:</span> <span class="n">Akima1DInterpolator</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span>
+                                                                <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`str` : The name of the material&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;:class:`float` : The density of the material in g/cm\ :sup:`3` &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span>
 
     <span class="nd">@density</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid density&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -218,7 +249,7 @@
 
 <div class="viewcode-block" id="Material.get_mfp">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.material.Material.get_mfp">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mean free path for a given distance and photon energy</span>
 
 <span class="sd">        Parameters</span>
@@ -234,10 +265,10 @@
 <span class="sd">            The mean free path in the material</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid energy: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">energy</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid energy: </span><span class="si">{</span><span class="n">energy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span> <span class="ow">or</span> \
            <span class="n">distance</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid distance: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">distance</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid distance: </span><span class="si">{</span><span class="n">distance</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
@@ -246,7 +277,7 @@
 
 <div class="viewcode-block" id="Material.get_mass_atten_coeff">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.material.Material.get_mass_atten_coeff">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_mass_atten_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_mass_atten_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculates the mass attenuation coefficient at the given energy</span>
 
 <span class="sd">        Parameters</span>
@@ -265,7 +296,7 @@
 <span class="sd">            The mass attenuation coefficient in cm\ :sup:`2`/g</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid energy: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">energy</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid energy: </span><span class="si">{</span><span class="n">energy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">energy</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atten_energy_bins</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> \
                 <span class="p">(</span><span class="n">energy</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atten_energy_bins</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
@@ -278,8 +309,9 @@
 
 <div class="viewcode-block" id="Material.get_mass_energy_abs_coeff">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.material.Material.get_mass_energy_abs_coeff">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_mass_energy_abs_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculates the mass energy absorption coefficient at the given energy</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_mass_energy_abs_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculates the mass energy absorption coefficient at the</span>
+<span class="sd">        given energy</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -297,7 +329,7 @@
 <span class="sd">            The mass energy absorption coefficient in cm\ :sup:`2`/g</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid energy: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">energy</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid energy: </span><span class="si">{</span><span class="n">energy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">energy</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_en_abs_energy_bins</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> \
                 <span class="p">(</span><span class="n">energy</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_en_abs_energy_bins</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
@@ -310,7 +342,9 @@
 
 <div class="viewcode-block" id="Material.get_buildup_factor">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.material.Material.get_buildup_factor">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_buildup_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">mfps</span><span class="p">,</span> <span class="n">formula</span><span class="o">=</span><span class="s2">&quot;GP&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_buildup_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                           <span class="n">mfps</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+                           <span class="n">formula</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;GP&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the photon buildup factor at the given energy and mfp</span>
 
 <span class="sd">        Parameters</span>
@@ -335,15 +369,14 @@
 <span class="sd">            A vector of photon exposure buildup factors in air, one for</span>
 <span class="sd">            each specified mfp</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gp_b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gp_data_available</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Material has no buildup factor data available&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Buildup factor type is not a string: &quot;</span> <span class="o">+</span>
-                             <span class="nb">str</span><span class="p">(</span><span class="n">formula</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Buildup factor type is not a string: </span><span class="si">{</span><span class="n">formula</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">formula</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;GP&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only GP Buildup Factors are currently supported&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid energy: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">energy</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid energy: </span><span class="si">{</span><span class="n">energy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">mfp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mfps</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -369,7 +402,8 @@
 
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_GP</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">mfp</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_GP</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">mfp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the photon buildup factor using Geometric Progression</span>
 
 <span class="sd">        Parameters</span>
@@ -407,19 +441,19 @@
 <span class="sd">        should be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># if called with a single value of mfp, convert it to a numpy array</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">mfp</span><span class="p">)</span> <span class="o">==</span> <span class="p">():</span>
-            <span class="n">mfps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">mfp</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mfp</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">mfp</span><span class="p">)</span> <span class="o">==</span> <span class="p">():</span>
+            <span class="n">mfps</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">mfp</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">mfps</span> <span class="o">=</span> <span class="n">mfp</span>
-        <span class="c1">#ensure all values in the mpfs array are limited to a range of 0 to 80</span>
         <span class="n">mfps</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">80</span><span class="p">]</span> <span class="o">=</span> <span class="mi">80</span>
         <span class="n">mfps</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="c1"># initialize the array of K values to 0</span>
         <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">mfps</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># default values for mfps = 0 -&gt; buildup factor = 1</span>
         <span class="c1"># cases that do not need extrapolation in fmp</span>
-        <span class="n">K</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mfps</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="p">(</span><span class="n">mfps</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mfps</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">)]</span><span class="o">**</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> \
-            <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">mfps</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mfps</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">)]</span><span class="o">/</span><span class="n">X</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span> <span class="o">/</span> \
-            <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">K</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mfps</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">)]</span> <span class="o">=</span> \
+            <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="p">(</span><span class="n">mfps</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mfps</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">)]</span><span class="o">**</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> \
+            <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">mfps</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mfps</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">)]</span><span class="o">/</span><span class="n">X</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+                  <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
         <span class="c1"># cases that do need extrapolation ( i.e. mfp &gt; 40)</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">):</span>
             <span class="n">K35</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="p">(</span><span class="mi">35</span><span class="o">**</span><span class="n">a</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="mi">35</span><span class="o">/</span><span class="n">X</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)))</span> <span class="o">/</span> \
@@ -430,8 +464,9 @@
                 <span class="n">K</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="n">K40</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">Xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">mfps</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-                <span class="n">Xi</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float_power</span><span class="p">(</span><span class="n">mfps</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span><span class="o">/</span><span class="mf">35.</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> \
-                                <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float_power</span><span class="p">(</span><span class="mf">40.</span><span class="o">/</span><span class="mf">35.</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">Xi</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> \
+                    <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float_power</span><span class="p">(</span><span class="n">mfps</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span><span class="o">/</span><span class="mf">35.</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> \
+                    <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float_power</span><span class="p">(</span><span class="mf">40.</span><span class="o">/</span><span class="mf">35.</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="n">fm</span> <span class="o">=</span> <span class="mf">0.8</span>
                 <span class="n">exponent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">mfps</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
                 <span class="n">exponent</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float_power</span><span class="p">(</span><span class="n">Xi</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">],</span> <span class="n">fm</span><span class="p">)</span>
@@ -440,9 +475,11 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">K40</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K35</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ratio</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="n">K</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">K35</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">float_power</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">Xi</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">])</span>
+                    <span class="n">K</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">K35</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> \
+                        <span class="n">np</span><span class="o">.</span><span class="n">float_power</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">Xi</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">])</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">K</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="n">K35</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">float_power</span><span class="p">(</span><span class="n">K40</span><span class="o">/</span><span class="n">K35</span><span class="p">,</span> <span class="n">exponent</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">])</span>
+                    <span class="n">K</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="n">K35</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">float_power</span><span class="p">(</span><span class="n">K40</span><span class="o">/</span><span class="n">K35</span><span class="p">,</span>
+                                                        <span class="n">exponent</span><span class="p">[</span><span class="n">mfps</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">])</span>
 
         <span class="n">answers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">mfps</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># set default values to 1</span>
         <span class="n">answers</span><span class="p">[</span><span class="n">K</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">mfps</span><span class="p">[</span><span class="n">K</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
@@ -464,7 +501,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Oct 24, 2025.
+      <span class="lastupdated">Last updated on Oct 25, 2025.
       </span></p>
   </div>
 

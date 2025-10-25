@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>zapmenot.isotope &mdash; Zapmenot 0.2 documentation</title>
+  <title>zapmenot.isotope &mdash; Zapmenot 0.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=10f1778b"></script>
+      <script src="../../_static/documentation_options.js?v=37f418d5"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -98,6 +98,7 @@
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">ClassVar</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">yaml</span><span class="w"> </span><span class="kn">import</span> <span class="n">CLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">CDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
@@ -109,6 +110,7 @@
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="c1"># Try backported to PY&lt;37 `importlib_resources`.</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">importlib_resources</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">impresources</span>
+
 
 <div class="viewcode-block" id="Isotope">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.isotope.Isotope">[docs]</a>
@@ -134,15 +136,21 @@
 <span class="sd">    _library</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">_library</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">Atom</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s1">&#39;Atom&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;half-life&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                              <span class="s1">&#39;half-life-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="s1">&#39;key_progeny&#39;</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+                              <span class="s1">&#39;photon-energy-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="s1">&#39;photon-intensity&#39;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+                              <span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_library</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Atom</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># initialize the class library if it has not already been done</span>
         <span class="k">if</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">_library</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;isotopeLibrary.yml&#39;</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">inp_file</span> <span class="o">=</span> <span class="p">(</span><span class="n">impresources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span> <span class="o">/</span> <span class="n">path</span><span class="p">)</span>
-                <span class="n">stream</span> <span class="o">=</span> <span class="n">inp_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="c1"># or &quot;rt&quot; as text file with universal newlines</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="n">inp_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="c1"># Python &lt; PY3.9, fall back to method deprecated in PY3.11.</span>
                 <span class="n">stream</span> <span class="o">=</span> <span class="n">impresources</span><span class="o">.</span><span class="n">open_text</span><span class="p">(</span><span class="n">__package__</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
@@ -151,49 +159,54 @@
 
         <span class="c1"># check to see if the name is in the library</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Isotope name is not a string: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Isotope name is not a string: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">_library</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Isotope not found in the Isotope Library&quot;</span><span class="p">)</span>
 
         <span class="c1"># initialize the object</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="n">properties</span> <span class="o">=</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">_library</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>  <span class="c1"># dict() of properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="c1"># verify a valid dictionary was returned, not a None</span>
+        <span class="n">temp1</span> <span class="o">=</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">_library</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">temp1</span><span class="p">:</span>
+            <span class="n">properties</span><span class="p">:</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">Atom</span> <span class="o">=</span> <span class="n">temp1</span>
         <span class="c1"># convert the half-life to units of seconds</span>
-        <span class="n">half_life</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;half-life&quot;</span><span class="p">)</span>
-        <span class="n">half_life_units</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;half-life-units&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_half_life</span> <span class="o">=</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">_convert_half_life</span><span class="p">(</span>
+        <span class="n">half_life</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">properties</span><span class="p">[</span><span class="s2">&quot;half-life&quot;</span><span class="p">]</span>
+        <span class="n">half_life_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">properties</span><span class="p">[</span><span class="s2">&quot;half-life-units&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_half_life</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">_convert_half_life</span><span class="p">(</span>
             <span class="n">half_life</span><span class="p">,</span> <span class="n">half_life_units</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_key_progeny</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key_progeny&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_key_progeny</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> \
+            <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;key_progeny&quot;</span><span class="p">)</span>
 
         <span class="c1"># photon energies and intensities are stored as a list of tuples</span>
         <span class="c1"># 2D list of photon energies and intensities</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_photons</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;photon-intensity&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_photons</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]</span> <span class="o">=</span> \
+            <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;photon-intensity&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">photons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`list` of :class:`list` : A list of photon energies (in MeV) and</span>
-<span class="sd">        intensities per decay.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">photons</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`list` of :class:`list` : A list of photon energies (in MeV)</span>
+<span class="sd">        and intensities per decay.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_photons</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`str` : The name of the isotope.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">half_life</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">half_life</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`str` : The half life of the isotope in seconds.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_half_life</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">key_progeny</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">key_progeny</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`dict` : The list of progeny that can be in secular or</span>
 <span class="sd">        transient equilibrium.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key_progeny</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_half_life</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_half_life</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">units</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts a half life to units of seconds.</span>
 
 <span class="sd">        Input units can be microseconds, milliseconds, seconds,</span>
@@ -245,7 +258,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Oct 24, 2025.
+      <span class="lastupdated">Last updated on Oct 25, 2025.
       </span></p>
   </div>
 

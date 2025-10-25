@@ -2,7 +2,9 @@
 Version History
 ===============
 
+* v0.2.1   - in development
 
+  Added type hints and improved documentation
 * v0.2   - 2025 / 07 / 19
 
   Corrected buildup factor extrapolation

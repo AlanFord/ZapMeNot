@@ -282,8 +282,8 @@ class TestBoxSource():
                                     (1.677, 5.15632e-04 * 3.7e10 * 3.14)])
 
     def test_getSourcePointWeights(self, create_source):
-        the_list = [1.0 / 1000] * 1000
-        assert create_source._get_source_point_weights() == the_list
+        the_list = np.array([1.0 / 1000] * 1000)
+        np.testing.assert_allclose(create_source._get_source_point_weights(), the_list)
 
     # test invalid number of entries in source points per dimension
     def test_getSourcePoints2(self, create_source):
@@ -355,8 +355,8 @@ class TestXAlignedCylinderSource():
              [2.333333333333334,  -1.932830462427466,   0.729379273840342]])
 
     def test_getSourcePointWeights(self, create_source):
-        the_list = [1.0 / 27] * 27
-        assert create_source._get_source_point_weights() == the_list
+        the_list = np.array([1.0 / 27] * 27)
+        np.testing.assert_allclose(create_source._get_source_point_weights(), the_list)
 
     # test invalid number of entries in source points per dimension
     def test_getSourcePoints2(self, create_source):
@@ -428,8 +428,8 @@ class TestYAlignedCylinderSource():
              [1.270620726159658,   5.333333333333334,   6.932830462427466]])
 
     def test_getSourcePointWeights(self, create_source):
-        the_list = [1.0 / 27] * 27
-        assert create_source._get_source_point_weights() == the_list
+        the_list = np.array([1.0 / 27] * 27)
+        np.testing.assert_allclose(create_source._get_source_point_weights(), the_list)
 
     # test invalid number of entries in source points per dimension
     def test_getSourcePoints2(self, create_source):
@@ -501,8 +501,8 @@ class TestZAlignedCylinderSource():
              [1.270620726159658,  -1.932830462427466,   6.333333333333334]])
 
     def test_getSourcePointWeights(self, create_source):
-        the_list = [1.0 / 27] * 27
-        assert create_source._get_source_point_weights() == the_list
+        the_list = np.array([1.0 / 27] * 27)
+        np.testing.assert_allclose(create_source._get_source_point_weights(), the_list)
 
     # test invalid number of entries in source points per dimension
     def test_getSourcePoints2(self, create_source):
@@ -524,7 +524,7 @@ class TestSphericalSource():
 
     def test_init(self, create_source):
         # test attribute of shield class
-        assert all(create_source.center == [4, 5, 6])
+        assert create_source.center == [4, 5, 6]
         assert create_source.radius == 10
         assert create_source.material.name == "air"
         assert create_source.material.density == 1.2

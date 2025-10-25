@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>zapmenot.model &mdash; Zapmenot 0.2 documentation</title>
+  <title>zapmenot.model &mdash; Zapmenot 0.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=10f1778b"></script>
+      <script src="../../_static/documentation_options.js?v=37f418d5"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -100,6 +100,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">ray</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">shield</span><span class="p">,</span> <span class="n">detector</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
@@ -137,12 +138,12 @@
 <span class="sd">        The material used to calculate the exposure buildup factor.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># used to calculate exposure (R/sec) from flux (photon/cm2 sec),</span>
         <span class="c1"># photon energy (MeV),</span>
         <span class="c1"># and linear energy absorption coeff (cm2/g)</span>
@@ -151,11 +152,12 @@
         <span class="c1">#  and R.E. Faw, 2000, page 141.</span>
         <span class="c1"># This value is based on a value of energy deposition</span>
         <span class="c1"># per ion in air of 33.85 [ICRU Report 39, 1979].</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
 
 <div class="viewcode-block" id="Model.set_filler_material">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_filler_material">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_filler_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler_material</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_filler_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filler_material</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                            <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Set the filler material used by the model</span>
 
 <span class="sd">        Parameters</span>
@@ -170,13 +172,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="n">filler_material</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">density</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid density: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">density</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid density: </span><span class="si">{</span><span class="n">density</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span></div>
 
 
 <div class="viewcode-block" id="Model.add_source">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_source">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">:</span> <span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the source used by the model.</span>
 
 <span class="sd">        Parameters</span>
@@ -194,7 +196,7 @@
 
 <div class="viewcode-block" id="Model.add_shield">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_shield">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_shield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shield</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_shield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shield</span><span class="p">:</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a shield to the collection of shields used by the model.</span>
 
 <span class="sd">        Parameters</span>
@@ -209,7 +211,7 @@
 
 <div class="viewcode-block" id="Model.add_detector">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_detector">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">:</span> <span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the detector used by the model.</span>
 
 <span class="sd">        Parameters</span>
@@ -224,7 +226,8 @@
 
 <div class="viewcode-block" id="Model.set_buildup_factor_material">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_buildup_factor_material">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_buildup_factor_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_material</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_buildup_factor_material</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_material</span><span class="p">:</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the material used to calculation exposure buildup factors.</span>
 
 <span class="sd">        Parameters</span>
@@ -239,7 +242,7 @@
 
 <div class="viewcode-block" id="Model.calculate_exposure">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.calculate_exposure">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the exposure at the detector location.</span>
 
 <span class="sd">        Note:  Significant use of Numpy arrays to speed up evaluating the</span>
@@ -266,7 +269,7 @@
 
 <div class="viewcode-block" id="Model.generate_summary">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.generate_summary">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the energy flux and exposure at the detector location.</span>
 
 <span class="sd">        Note:  Significant use of Numpy arrays to speed up evaluating the</span>
@@ -372,7 +375,7 @@
 
 <div class="viewcode-block" id="Model.display">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.display">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Produces a graphic display of the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -388,7 +391,7 @@
             <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_trimBlocks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_trimBlocks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds shields to a Plotter instance after trimming any</span>
 <span class="sd">        infinite shields to a predefined bounding box.</span>
@@ -421,12 +424,13 @@
                         <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span>
                                     <span class="n">sourceColor</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span> <span class="n">shieldColor</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
+                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span> <span class="n">shieldColor</span><span class="p">,</span>
+                                <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
         <span class="c1"># now add the &quot;bounds&quot; as a transparent block to for a display size</span>
         <span class="n">mesh</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span>
         <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_findBoundingBox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_findBoundingBox</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates a bounding box is X, Y, Z geometry that</span>
 <span class="sd">        includes the volumes of all shields, the source, and the detector</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -436,16 +440,17 @@
                 <span class="c1"># add finite shields to the MultiBlock composite</span>
                 <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thisShield</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># for infinete shield bodies,</span>
+                <span class="c1"># for infinite shield bodies,</span>
                 <span class="c1"># project the detector location onto the infinite surface</span>
                 <span class="c1"># to get points to add to the geometry</span>
-                <span class="n">points</span> <span class="o">=</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">_projection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
-                                                <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
-                                                <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
-                    <span class="c1"># we are appending a degenerate line as a representation</span>
-                    <span class="c1"># of a point</span>
-                    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyvista</span><span class="o">.</span><span class="n">Line</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">point</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="p">,</span> <span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">):</span>
+                    <span class="n">points</span> <span class="o">=</span> <span class="n">thisShield</span><span class="o">.</span><span class="n">_projection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
+                        <span class="c1"># we are appending a degenerate line as a representation</span>
+                        <span class="c1"># of a point</span>
+                        <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyvista</span><span class="o">.</span><span class="n">Line</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">point</span><span class="p">))</span>
 
         <span class="c1"># &gt;&gt;&gt;aren&#39;t all sources also shields?  Then the next line is redundant</span>
         <span class="c1"># TODO: figure out if the next line is necessary</span>
@@ -479,7 +484,7 @@
         <span class="n">boundingBox</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="mf">1.01</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bounds</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">boundingBox</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_addPoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_addPoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pl</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        the goal here is to add &#39;points&#39; to the display, but they</span>
 <span class="sd">        must be represented as spheres to have some physical</span>
@@ -507,7 +512,8 @@
         <span class="c1"># determine a good radius for the points</span>
         <span class="n">point_radius</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">good_widths</span><span class="p">)</span> <span class="o">*</span> <span class="n">point_ratio</span>
         <span class="c1"># check if the source is a point source</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_get_source_points</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span>
                                           <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span>
                                           <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_z</span><span class="p">),</span>
@@ -517,9 +523,9 @@
                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
-                                        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
-                                        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">z</span><span class="p">),</span>
-                                <span class="n">radius</span><span class="o">=</span><span class="n">point_radius</span><span class="p">)</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">z</span><span class="p">),</span>
+                                  <span class="n">radius</span><span class="o">=</span><span class="n">point_radius</span><span class="p">)</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
                 <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">detectorColor</span><span class="p">,</span>
                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;detector&#39;</span><span class="p">)</span></div>
@@ -535,7 +541,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Oct 24, 2025.
+      <span class="lastupdated">Last updated on Oct 25, 2025.
       </span></p>
   </div>
 

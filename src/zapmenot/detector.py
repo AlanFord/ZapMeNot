@@ -18,6 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numbers
 import importlib
+from typing import Tuple, Optional, Any
+
 pyvista_spec = importlib.util.find_spec("pyvista")
 pyvista_found = pyvista_spec is not None
 if pyvista_found:
@@ -43,24 +45,23 @@ class Detector:
     _location
     '''
 
-    def __init__(self, x, y, z):
+    def __init__(self, x: float, y: float, z: float) -> None:
         if isinstance(x, numbers.Number) and \
             isinstance(y, numbers.Number) and \
                 isinstance(z, numbers.Number):
-            self.x = x
-            self.y = y
-            self.z = z
-            self._location = (x, y, z)
+            self.x: float = x
+            self.y: float = y
+            self.z: float = z
+            self._location: Tuple[float, float, float] = (x, y, z)
         else:
-            raise ValueError("Invalid coordinates:" + str(x) + ", " + str(y) +
-                             ", " + str(z))
+            raise ValueError(f"Invalid coordinates: {x}, {y}, {z}")
 
     @property
-    def location(self):
+    def location(self) -> Tuple[float, float, float]:
         """:class:`tuple` : The detector location in cartesian coordinates"""
         return self._location
 
-    def draw(self):
+    def draw(self) -> Optional[Any]:
         """Creates a display object
 
         Returns
@@ -72,3 +73,4 @@ class Detector:
             # this returns a degenerate line, equivalent to a point
             return pyvista.Line((self.x, self.y, self.z),
                                 (self.x, self.y, self.z))
+        return None

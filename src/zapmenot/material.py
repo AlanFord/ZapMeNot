@@ -20,6 +20,7 @@ from scipy.interpolate import Akima1DInterpolator
 import numpy as np
 import numbers
 import yaml
+from typing import List, Optional, Union, Dict, ClassVar, TypedDict
 
 try:
     from yaml import CLoader as MyLoader, CDumper as MyDumper
@@ -31,6 +32,7 @@ try:
 except ImportError:
     # Try backported to PY<37 `importlib_resources`.
     import importlib_resources as impresources
+
 
 class Material:
     r"""Encapsulates the data in the MaterialLibrary.yml file.
@@ -53,19 +55,31 @@ class Material:
     _density : float
         Density of the material in g/cm\ :sup:`3`
     '''
+    Dirt = TypedDict('Dirt', {'density': float,
+                              'density-units': str,
+                              'energy-units': str,
+                              'mass-atten-coff-units': str,
+                              'mass-atten-coff-energy': List[float],
+                              'mass-atten-coff': List[float],
+                              'gp-coeff': Optional[List[List[float]]],
+                              'gp-coff-energy': Optional[List[float]],
+                              'mass-en-abs-coff-units': Optional[str],
+                              'mass-en-abs-coff-energy': Optional[List[float]],
+                              }, total=True)
+    _library: ClassVar[Optional[Dict[str, Dirt]]] = None
 
-    _library = None
+    # _library: ClassVar[Optional[Dict[str, Any]]] = None
 
-    def __init__(self, name):
-        if not isinstance(name, str):
-            raise ValueError("Material name is not a string: " + str(name))
+    def __init__(self, name: Optional[str]) -> None:
+        if name is None or not isinstance(name, str):
+            raise ValueError(f"Material name is not a string: {name}")
 
         # initialize the class library if it has not already been done
         if Material._library is None:
             path = 'materialLibrary.yml'
             try:
                 inp_file = (impresources.files(__package__) / path)
-                stream = inp_file.open("rt") # or "rt" as text file with universal newlines
+                stream = inp_file.open("r")  # or "rt" as text file with universal newlines
             except AttributeError:
                 # Python < PY3.9, fall back to method deprecated in PY3.11.
                 stream = impresources.open_text(__package__, path)
@@ -78,62 +92,79 @@ class Material:
             raise ValueError("Material not found in the Material Library")
 
         # initialize the object
-        self._name = name
-        properties = Material._library.get(self._name)
-        self._density = properties.get("density")
-        self._atten_energy_bins = np.array(
-            properties.get("mass-atten-coff-energy"))
-        self._mass_atten_coff = np.array(properties.get("mass-atten-coff"))
+        self._name: str = name
+        temp1 = Material._library.get(self._name)
+        if temp1:
+            properties: Material.Dirt = temp1
+        self._density: float = properties["density"]
+        self._atten_energy_bins: np.ndarray = np.array(
+            properties["mass-atten-coff-energy"])
+        self._mass_atten_coff: np.ndarray = \
+            np.array(properties["mass-atten-coff"])
         # the mass energy absorption coefficient is optional for a material
-        self._en_abs_energy_bins = np.array(
+        self._en_abs_energy_bins: np.ndarray = np.array(
             properties.get("mass-en-abs-coff-energy"))
-        self._mass_en_abs_coff = np.array(properties.get("mass-en-abs-coff"))
+        self._mass_en_abs_coff: np.ndarray = \
+            np.array(properties.get("mass-en-abs-coff"))
         # the buildup factor data is optional for a material
-        self._gp_energy_bins = np.array(properties.get("gp-coff-energy"))
+        self._gp_energy_bins: np.ndarray = \
+            np.array(properties.get("gp-coff-energy"))
         gp_data = properties.get("gp-coeff")
         if gp_data is None:
-            self._gp_b = None
-            self._gp_c = None
-            self._gp_a = None
-            self._gp_X = None
-            self._gp_d = None
+            self.gp_data_available: bool = False
+            # self._gp_b: Optional[np.ndarray] = None
+            # self._gp_c: Optional[np.ndarray] = None
+            # self._gp_a: Optional[np.ndarray] = None
+            # self._gp_X: Optional[np.ndarray] = None
+            # self._gp_d: Optional[np.ndarray] = None
+            # self._bi: Optional[Akima1DInterpolator] = None
+            # self._ci: Optional[Akima1DInterpolator] = None
+            # self._ai: Optional[Akima1DInterpolator] = None
+            # self._Xi: Optional[Akima1DInterpolator] = None
+            # self._di: Optional[Akima1DInterpolator] = None
         else:
+            self.gp_data_available = True
             gp_array = np.array(gp_data)
-            self._gp_b = gp_array[:, 0]
-            self._gp_c = gp_array[:, 1]
-            self._gp_a = gp_array[:, 2]
-            self._gp_X = gp_array[:, 3]
-            self._gp_d = gp_array[:, 4]
+            self._gp_b: np.ndarray = gp_array[:, 0]
+            self._gp_c: np.ndarray = gp_array[:, 1]
+            self._gp_a: np.ndarray = gp_array[:, 2]
+            self._gp_X: np.ndarray = gp_array[:, 3]
+            self._gp_d: np.ndarray = gp_array[:, 4]
             # here we are building interpolators based on the Akima method.
             # For more information on the use of Akima method on G-P coefficients,
             # see https://www.nrc.gov/docs/ML1905/ML19059A414.pdf
             # "QAD-CGGP2 and G33-GP2: Revised Version of QAD-CGGP and G33-GP"
             logE = np.log(self._gp_energy_bins)
-            self._bi = Akima1DInterpolator(logE, self._gp_b)
-            self._ci = Akima1DInterpolator(logE, self._gp_c)
-            self._ai = Akima1DInterpolator(logE, self._gp_a)
-            self._Xi = Akima1DInterpolator(logE, self._gp_X)
-            self._di = Akima1DInterpolator(logE, self._gp_d)
+            self._bi: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_b)
+            self._ci: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_c)
+            self._ai: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_a)
+            self._Xi: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_X)
+            self._di: Akima1DInterpolator = Akima1DInterpolator(logE,
+                                                                self._gp_d)
 
     @property
-    def name(self):
+    def name(self) -> str:
         """:class:`str` : The name of the material"""
         return self._name
 
     @property
-    def density(self):
+    def density(self) -> float:
         r""":class:`float` : The density of the material in g/cm\ :sup:`3` """
         return self._density
 
     @density.setter
-    def density(self, value):
+    def density(self, value: float) -> None:
         if not isinstance(value, numbers.Number):
             raise ValueError("Invalid density")
         if value < 0:
             raise ValueError("Invalid density")
         self._density = value
 
-    def get_mfp(self, energy, distance):
+    def get_mfp(self, energy: float, distance: float) -> float:
         """Calculates the mean free path for a given distance and photon energy
 
         Parameters
@@ -149,16 +180,16 @@ class Material:
             The mean free path in the material
         """
         if not isinstance(energy, numbers.Number):
-            raise ValueError("Invalid energy: " + str(energy))
+            raise ValueError(f"Invalid energy: {energy}")
         if not isinstance(distance, numbers.Number) or \
            distance < 0:
-            raise ValueError("Invalid distance: " + str(distance))
+            raise ValueError(f"Invalid distance: {distance}")
         if distance == 0:
             return 0
         else:
             return distance * self._density * self.get_mass_atten_coeff(energy)
 
-    def get_mass_atten_coeff(self, energy):
+    def get_mass_atten_coeff(self, energy: float) -> float:
         r"""Calculates the mass attenuation coefficient at the given energy
 
         Parameters
@@ -177,7 +208,7 @@ class Material:
             The mass attenuation coefficient in cm\ :sup:`2`/g
         """
         if not isinstance(energy, numbers.Number):
-            raise ValueError("Invalid energy: " + str(energy))
+            raise ValueError(f"Invalid energy: {energy}")
 
         if (energy < self._atten_energy_bins[0]) or \
                 (energy > self._atten_energy_bins[-1]):
@@ -187,8 +218,9 @@ class Material:
                                         np.log10(self._atten_energy_bins),
                                         np.log10(self._mass_atten_coff)))
 
-    def get_mass_energy_abs_coeff(self, energy):
-        r"""Calculates the mass energy absorption coefficient at the given energy
+    def get_mass_energy_abs_coeff(self, energy: float) -> float:
+        r"""Calculates the mass energy absorption coefficient at the
+        given energy
 
         Parameters
         ----------
@@ -206,7 +238,7 @@ class Material:
             The mass energy absorption coefficient in cm\ :sup:`2`/g
         """
         if not isinstance(energy, numbers.Number):
-            raise ValueError("Invalid energy: " + str(energy))
+            raise ValueError(f"Invalid energy: {energy}")
 
         if (energy < self._en_abs_energy_bins[0]) or \
                 (energy > self._en_abs_energy_bins[-1]):
@@ -216,7 +248,9 @@ class Material:
                                         np.log10(self._en_abs_energy_bins),
                                         np.log10(self._mass_en_abs_coff)))
 
-    def get_buildup_factor(self, energy, mfps, formula="GP"):
+    def get_buildup_factor(self, energy: float,
+                           mfps: Union[float, np.ndarray],
+                           formula: str = "GP") -> Union[float, np.ndarray]:
         """Calculates the photon buildup factor at the given energy and mfp
 
         Parameters
@@ -241,15 +275,14 @@ class Material:
             A vector of photon exposure buildup factors in air, one for
             each specified mfp
         """
-        if self._gp_b is None:
+        if self.gp_data_available is False:
             raise ValueError("Material has no buildup factor data available")
         if not isinstance(formula, str):
-            raise ValueError("Buildup factor type is not a string: " +
-                             str(formula))
+            raise ValueError(f"Buildup factor type is not a string: {formula}")
         if formula.upper() != "GP":
             raise ValueError("Only GP Buildup Factors are currently supported")
         if not isinstance(energy, numbers.Number):
-            raise ValueError("Invalid energy: " + str(energy))
+            raise ValueError(f"Invalid energy: {energy}")
 
         try:
             mfp = np.array(mfps, dtype=float)
@@ -274,7 +307,8 @@ class Material:
         return bf
 
     @staticmethod
-    def _GP(a, b, c, d, X, mfp):
+    def _GP(a: float, b: float, c: float, d: float, X: float,
+            mfp: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Calculates the photon buildup factor using Geometric Progression
 
         Parameters
@@ -312,19 +346,19 @@ class Material:
         should be used.
         """
         # if called with a single value of mfp, convert it to a numpy array
-        if np.shape(mfp) == ():
-            mfps = np.asarray([mfp])
+        if isinstance(mfp, float) or np.shape(mfp) == ():
+            mfps: np.ndarray = np.asarray([mfp])
         else:
             mfps = mfp
-        #ensure all values in the mpfs array are limited to a range of 0 to 80
         mfps[mfps > 80] = 80
         mfps[mfps < 0] = 0
         # initialize the array of K values to 0
         K = np.zeros(mfps.size)  # default values for mfps = 0 -> buildup factor = 1
         # cases that do not need extrapolation in fmp
-        K[np.logical_and(mfps > 0, mfps <= 40)] = (c * (mfps[np.logical_and(mfps > 0, mfps <= 40)]**a)) + \
-            (d * (np.tanh(mfps[np.logical_and(mfps > 0, mfps <= 40)]/X - 2) - np.tanh(-2))) / \
-            (1 - np.tanh(-2))
+        K[np.logical_and(mfps > 0, mfps <= 40)] = \
+            (c * (mfps[np.logical_and(mfps > 0, mfps <= 40)]**a)) + \
+            (d * (np.tanh(mfps[np.logical_and(mfps > 0, mfps <= 40)]/X - 2)
+                  - np.tanh(-2))) / (1 - np.tanh(-2))
         # cases that do need extrapolation ( i.e. mfp > 40)
         if np.any(mfps > 40):
             K35 = (c * (35**a)) + (d * (np.tanh(35/X - 2) - np.tanh(-2))) / \
@@ -335,8 +369,9 @@ class Material:
                 K[mfps > 40] = K40
             else:
                 Xi = np.zeros(mfps.size)
-                Xi[mfps > 40] = (np.float_power(mfps[mfps > 40]/35., 0.1) -1) / \
-                                (np.float_power(40./35., 0.1) -1)
+                Xi[mfps > 40] = \
+                    (np.float_power(mfps[mfps > 40]/35., 0.1) - 1) / \
+                    (np.float_power(40./35., 0.1) - 1)
                 fm = 0.8
                 exponent = np.zeros(mfps.size)
                 exponent[mfps > 40] = np.float_power(Xi[mfps > 40], fm)
@@ -345,9 +380,11 @@ class Material:
                 else:
                     ratio = (K40-1)/(K35-1)
                 if ratio >= 0 and ratio <= 1:
-                    K[mfps > 40] = 1 + (K35-1) * np.float_power(ratio, Xi[mfps > 40])
+                    K[mfps > 40] = 1 + (K35-1) * \
+                        np.float_power(ratio, Xi[mfps > 40])
                 else:
-                    K[mfps > 40] = K35 * np.float_power(K40/K35, exponent[mfps > 40])
+                    K[mfps > 40] = K35 * np.float_power(K40/K35,
+                                                        exponent[mfps > 40])
 
         answers = np.ones(mfps.size)  # set default values to 1
         answers[K == 1] = 1 + (b-1) * mfps[K == 1]

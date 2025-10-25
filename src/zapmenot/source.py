@@ -20,8 +20,10 @@ import abc
 import math
 import numpy as np
 from enum import Enum
+from typing import List, Tuple, Union, Sequence, Any, Optional
+from collections.abc import KeysView
 
-from . import shield, isotope
+from . import shield, isotope, ray
 
 import importlib
 pyvista_spec = importlib.util.find_spec("pyvista")
@@ -64,25 +66,27 @@ class Source(abc.ABC):
         integer for one dimensional sources, and not significant for point
         sources.
     '''
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         '''Initialize the Source with empty strings for the isotope list
         and photon list'''
-        self._isotope_list = []   # LIST of isotopes and activities (Bq)
-        self._unique_photons = []  # LIST of unique photons and activities (Bq)
-        self._points_per_dimension = [10, 10, 10]
-        self._include_key_progeny = False
-        self._max_photon_energies = 30
-        self._grouping_option = GroupOption.HYBRID
+        # list of isotopes and activities (Bq)
+        self._isotope_list: List[Tuple[str, float]] = []
+        # list of unique photons and activities (Bq)
+        self._unique_photons: List[Tuple[float, float]] = []
+        self._points_per_dimension: List[int] = [10, 10, 10]
+        self._include_key_progeny: bool = False
+        self._max_photon_energies: int = 30
+        self._grouping_option: GroupOption = GroupOption.HYBRID
         super().__init__(**kwargs)
 
     @property
-    def grouping(self):
+    def grouping(self) -> GroupOption:
         """:class:`GroupOption` : State defining the photon energy group
         option."""
         return self._grouping_option
 
     @grouping.setter
-    def grouping(self, value):
+    def grouping(self, value: str) -> None:
         """:class:`GroupOption` : State defining the photon energy group
         option."""
         if value == GroupOption.HYBRID.value:
@@ -92,19 +96,19 @@ class Source(abc.ABC):
         elif value == GroupOption.DISCRETE.value:
             self._grouping_option = GroupOption.DISCRETE
         else:
-            raise ValueError("Invalid grouping option " + str(value))
+            raise ValueError(f"Invalid grouping option {value}")
 
     @property
-    def include_key_progeny(self):
+    def include_key_progeny(self) -> bool:
         """bool : State defining if key progeny should be included."""
         return self._include_key_progeny
 
     @include_key_progeny.setter
-    def include_key_progeny(self, value):
+    def include_key_progeny(self, value: bool) -> None:
         """bool : State defining if key progeny should be included."""
         self._include_key_progeny = value
 
-    def add_isotope_curies(self, new_isotope, curies):
+    def add_isotope_curies(self, new_isotope: str, curies: float) -> None:
         """Adds an isotope and activity in curies to the isotope list
 
         Parameters
@@ -116,7 +120,7 @@ class Source(abc.ABC):
         """
         self._isotope_list.append((new_isotope, curies*3.7E10))
 
-    def add_isotope_bq(self, new_isotope, becquerels):
+    def add_isotope_bq(self, new_isotope: str, becquerels: float) -> None:
         """Adds an isotope and activity in becquerels to the isotope list
 
         Parameters
@@ -128,7 +132,7 @@ class Source(abc.ABC):
         """
         self._isotope_list.append((new_isotope, becquerels))
 
-    def add_photon(self, energy, intensity):
+    def add_photon(self, energy: float, intensity: float) -> None:
         """Adds a photon and intensity to the photon list
 
         Parameters
@@ -140,7 +144,7 @@ class Source(abc.ABC):
         """
         self._unique_photons.append((energy, intensity))
 
-    def list_isotopes(self):
+    def list_isotopes(self) -> List[Tuple[str, float]]:
         """Returns a list of isotopes in the source
 
         Returns
@@ -151,7 +155,7 @@ class Source(abc.ABC):
         """
         return self._isotope_list
 
-    def list_discrete_photons(self):
+    def list_discrete_photons(self) -> List[Tuple[float, float]]:
         """Returns a list of individual photons in the source.
 
         The list includes only those photons that have been added
@@ -182,7 +186,7 @@ class Source(abc.ABC):
     #     list = self.get_photon_source_list()
     #     scaling_factor = np.prod(self._points_per_dimension)
 
-    def get_photon_source_list(self):
+    def get_photon_source_list(self) -> List[Tuple[float, float]]:
         """Returns a list of photons in the source
 
         This list of photons combines the Isotopes and the
@@ -196,8 +200,8 @@ class Source(abc.ABC):
             List of photon tuples, each tuple containing a
             photon energy in MeV and an activity in **Bq**.
         """
-        photon_dict = dict()
-        keys = photon_dict.keys()
+        photon_dict: dict[float, float] = dict()
+        keys: KeysView[float] = photon_dict.keys()
 
         temporary_isotope_list = self._isotope_list[:]
         # add key progeny if required
@@ -214,6 +218,7 @@ class Source(abc.ABC):
         for next_isotope in temporary_isotope_list:
             isotope_detail = isotope.Isotope(next_isotope[0])
             if isotope_detail.photons is not None:
+                photon: List[float]
                 for photon in isotope_detail.photons:
                     # test to see if photon energy is already on the list
                     # and then add photon emission rate (intensity*Bq).
@@ -222,24 +227,27 @@ class Source(abc.ABC):
                             photon[1]*next_isotope[1]
                     else:
                         photon_dict[photon[0]] = photon[1]*next_isotope[1]
-        for photon in self._unique_photons:
+        photonA: Tuple[float, float]
+        for photonA in self._unique_photons:
             # test to see if photon energy is already on the list
             # and then add photon emission rate.
-            if photon[0] in keys:
-                photon_dict[photon[0]] = photon_dict[photon[0]] + photon[1]
+            if photonA[0] in keys:
+                photon_dict[photonA[0]] = photon_dict[photonA[0]] + photonA[1]
             else:
-                photon_dict[photon[0]] = photon[1]
-        photon_list = []
+                photon_dict[photonA[0]] = photonA[1]
+        photon_list: List[Tuple[float, float]] = []
         # scaling_factor = np.prod(self._points_per_dimension)
-        for key, value in photon_dict.items():
-            photon_list.append((key, value))
+        keyA: float
+        valueA: float
+        for keyA, valueA in photon_dict.items():
+            photon_list.append((keyA, valueA))
         photon_list = sorted(photon_list)
         if self._grouping_option == GroupOption.GROUP or \
                 ((self._grouping_option == GroupOption.HYBRID) and
                     (len(photon_list) > self._max_photon_energies)):
             # group the photons
-            minEnergy = photon_list[0][0]
-            maxEnergy = photon_list[-1][0]
+            minEnergy: float = photon_list[0][0]
+            maxEnergy: float = photon_list[-1][0]
             (groupEnergies, stepSize) = np.linspace(
                 minEnergy, maxEnergy, self._max_photon_energies, retstep=True)
             binBoundaries = groupEnergies + (stepSize/2)
@@ -254,24 +262,26 @@ class Source(abc.ABC):
             for i in range(1, self._max_photon_energies+1):
                 # determine which photons are in each bin
                 subset = photonArray[np.where(binplace == i)]
-                csum = np.sum(subset[:, 1])  # total emission rate
+                csum: float = np.sum(subset[:, 1])  # total emission rate
                 if (csum != 0):
                     returnValue[i-1, 0] = \
                         np.sum(subset[:, 0]*subset[:, 1])/csum
                     returnValue[i-1, 1] = csum
             # keep only groups with non-zero intensity
             returnValue = returnValue[np.all(returnValue, axis=1)]
-            photon_list = returnValue.tolist()
+            photon_list = \
+                [tuple(sublist) for sublist in   # type: ignore
+                 returnValue.tolist()]
         return photon_list
 
     @abc.abstractmethod
-    def _get_source_points(self):
+    def _get_source_points(self) -> List[np.ndarray]:
         """Generates a list of point sources within the Source geometry.
         """
         pass
 
     @abc.abstractmethod
-    def _get_source_point_weights(self):
+    def _get_source_point_weights(self) -> np.ndarray:
         '''
         Returns a list of quadrature weights for the quadrature locations
         within the source volume.  Note that the weights should sum to 1.0,
@@ -282,26 +292,25 @@ class Source(abc.ABC):
         pass
 
     @property
-    def points_per_dimension(self):
+    def points_per_dimension(self) -> List[int]:
         """list of integers : Number of source points per dimension."""
         return self._points_per_dimension
 
     @points_per_dimension.setter
-    def points_per_dimension(self, value):
+    def points_per_dimension(self, value: Union[int, List[int]]) -> None:
         """list of integers : Number of source points per dimension."""
-        try:
-            iter(value)
-        except TypeError:
-            # not iterable; make it so
-            value = [value]
+        if isinstance(value, int):
+            listOfValues: List[int] = [value]
+        else:
+            listOfValues = value
         # verify the list includes only integers
-        if not all(isinstance(item, int) for item in value):
+        if not all(isinstance(item, int) for item in listOfValues):
             raise ValueError(
                 "Number of Source Points per Dimension is/are non-integer")
-        if not all(item > 0 for item in value):
+        if not all(item > 0 for item in listOfValues):
             raise ValueError(
                 "Source Points per Dimension must be positive integers")
-        self._points_per_dimension = value
+        self._points_per_dimension = listOfValues
 
 
 # -----------------------------------------------------------
@@ -329,12 +338,13 @@ class LineSource(Source, shield.Shield):
     end : :class:`numpy.ndarray`
         Vector location of one end of the line source.
     '''
-    def __init__(self, start, end, **kwargs):
+    def __init__(self, start: Sequence[float], end: Sequence[float],
+                 **kwargs: Any) -> None:
         "Initialize"
-        self.origin = np.array(start)
-        self.end = np.array(end)
-        self._length = np.linalg.norm(self.end - self.origin)
-        self._dir = (self.end - self.origin)/self._length
+        self.origin: np.ndarray = np.array(start)
+        self.end: np.ndarray = np.array(end)
+        self._length: np.floating[Any] = np.linalg.norm(self.end - self.origin)
+        self._dir: np.ndarray = (self.end - self.origin)/self._length
         # let the point source have a dummy material of air at a zero density
         kwargs['material_name'] = 'air'
         kwargs['density'] = 0
@@ -343,17 +353,17 @@ class LineSource(Source, shield.Shield):
         # single dimension
         self._points_per_dimension = [10]
 
-    def is_infinite(self):
+    def is_infinite(self) -> bool:
         """Returns true if any dimension is infinite, false otherwise
         """
         return False
-    
-    def is_hollow(self):
+
+    def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
-    def _get_source_point_weights(self):
+    def _get_source_point_weights(self) -> np.ndarray:
         '''
         Returns a list of quadrature weights for the quadrature locations
         within the source volume.  Note that the weights should sum to 1.0,
@@ -362,26 +372,16 @@ class LineSource(Source, shield.Shield):
         the weights should have constant values that sum to 1.0.
         '''
         return [1.0 / np.prod(self._points_per_dimension)] * \
-            np.prod(self._points_per_dimension)
+            np.prod(self._points_per_dimension)  # type: ignore
 
-    def _get_source_points(self):
+    def _get_source_points(self) -> List[np.ndarray]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
         -------
-        :class:`list` of :class:`numpy.adarray`
+        :class:`list` of :class:`numpy.ndarray`
             A list of vector locations within the Source body
         """
-        #
-        # Note: the Line source is unique in that it only has one dimension
-        # (i.e. not three).  Hence it is possible that the user will set the
-        # "points_er_dimension" to be a non-iterable numerical value.
-        try:
-            iter(self._points_per_dimension)
-        except TypeError:
-            # not iterable; make it so
-            self._points_per_dimension = [self._points_per_dimension]
-
         spacings = np.linspace(1, self._points_per_dimension[0],
                                self._points_per_dimension[0])
         mesh_width = self._length/self._points_per_dimension[0]
@@ -393,7 +393,7 @@ class LineSource(Source, shield.Shield):
             source_points.append(location)
         return source_points
 
-    def _get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> int:
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -409,7 +409,8 @@ class LineSource(Source, shield.Shield):
         """
         return 0
 
-    def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> int:
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -427,7 +428,7 @@ class LineSource(Source, shield.Shield):
         """
         return 0
 
-    def draw(self):
+    def draw(self) -> Optional[Any]:
         """Creates a display object
 
         Returns
@@ -437,6 +438,7 @@ class LineSource(Source, shield.Shield):
         """
         if pyvista_found:
             return pyvista.Line(pointa=self.origin, pointb=self.end)
+        return None
 
 # -----------------------------------------------------------
 
@@ -467,28 +469,28 @@ class PointSource(Source, shield.Shield):
     dir : :class:`numpy.ndarray`
         Vector normal of the annulus centerline.
     '''
-    def __init__(self, x, y, z, **kwargs):
+    def __init__(self, x: float, y: float, z: float, **kwargs: Any) -> None:
         '''Initialize with an x,y,z location in space'''
-        self._x = x
-        self._y = y
-        self._z = z
+        self._x: float = x
+        self._y: float = y
+        self._z: float = z
         # let the point source have a dummy material of air at a zero density
         kwargs['material_name'] = 'air'
         kwargs['density'] = 0
         super().__init__(**kwargs)
         self._points_per_dimension = [1]
 
-    def is_infinite(self):
+    def is_infinite(self) -> bool:
         """Returns true if any dimension is infinite, false otherwise
         """
         return False
-    
-    def is_hollow(self):
+
+    def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
         return False
 
-    def _get_source_point_weights(self):
+    def _get_source_point_weights(self) -> np.ndarray:
         '''
         Returns a list of quadrature weights for the quadrature locations
         within the source volume.  Note that the weights should sum to 1.0,
@@ -496,21 +498,21 @@ class PointSource(Source, shield.Shield):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.prod(self._points_per_dimension)] * \
-            np.prod(self._points_per_dimension)
+        return np.array([1.0 / np.prod(self._points_per_dimension)] *
+                        np.prod(self._points_per_dimension))
 
-    def _get_source_points(self):
+    def _get_source_points(self) -> List[np.ndarray]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
         -------
-        :class:`list` of :class:`numpy.adarray`
+        :class:`list` of :class:`numpy.ndarray`
             A list of vector locations within the Source body.  In this class
             the list is only a single entry.
         """
-        return [(self._x, self._y, self._z)]
+        return [np.array([self._x, self._y, self._z])]
 
-    def _get_crossing_length(self, ray):
+    def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> int:
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
@@ -526,7 +528,8 @@ class PointSource(Source, shield.Shield):
         """
         return 0
 
-    def get_crossing_mfp(self, ray, photon_energy):
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> int:
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -545,7 +548,7 @@ class PointSource(Source, shield.Shield):
         """
         return 0
 
-    def draw(self):
+    def draw(self) -> Optional[Any]:
         """Creates a display object
 
         Returns
@@ -557,6 +560,7 @@ class PointSource(Source, shield.Shield):
             # this returns a degenerate line, equivalent to a point
             return pyvista.Line((self._x, self._y, self._z),
                                 (self._x, self._y, self._z))
+        return None
 
 
 # -----------------------------------------------------------
@@ -585,8 +589,9 @@ class SphereSource(Source, shield.Sphere):
         radius of the sphere.
     '''
 
-    def __init__(self, material_name, sphere_center, sphere_radius,
-                 density=None, **kwargs):
+    def __init__(self, material_name: str, sphere_center: Sequence[float],
+                 sphere_radius: float, density: Optional[float] = None,
+                 **kwargs: Any) -> None:
         kwargs['material_name'] = material_name
         kwargs['sphere_center'] = sphere_center
         kwargs['sphere_radius'] = sphere_radius
@@ -595,18 +600,18 @@ class SphereSource(Source, shield.Sphere):
         self.points_per_dimension = [10, 10, 10]  # triggers quadrature calcs
 
     @property
-    def points_per_dimension(self):
+    def points_per_dimension(self) -> List[int]:
         """list of integers : Number of source points per dimension."""
-        return Source.points_per_dimension.fget(self)
+        return Source.points_per_dimension.fget(self)  # type: ignore
 
     @points_per_dimension.setter
-    def points_per_dimension(self, value):
+    def points_per_dimension(self, value: List[int]) -> None:
         """list of integers : Number of source points per dimension."""
         # verify there are three values in the list
         if len(value) != 3:
             raise ValueError(
                 "Source Points per Dimension needs three entries")
-        Source.points_per_dimension.fset(self, value)
+        Source.points_per_dimension.fset(self, value)  # type: ignore
         # update the quadrature and weights
         nR = self._points_per_dimension[0]
         nTheta = self._points_per_dimension[1]
@@ -622,7 +627,7 @@ class SphereSource(Source, shield.Sphere):
         self.thetaLocations = t
         self.phiLocations = p
 
-    def _get_source_point_weights(self):
+    def _get_source_point_weights(self) -> np.ndarray:
         '''
         Generates a list of quadrature weights for the quadrature locations
         within the source volume.  Note that the weights should sum to 1.0,
@@ -632,12 +637,12 @@ class SphereSource(Source, shield.Sphere):
 
         Returns
         -------
-        :class:`list` 
+        :class:`list`
             A list of quadrature weights.
         '''
         return self.weights
 
-    def _get_source_points(self):
+    def _get_source_points(self) -> List[np.ndarray]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -677,10 +682,10 @@ class BoxSource(Source, shield.Box):
     material : :class: `material.Material`
         Material properties of the shield
     '''
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-    def _get_source_point_weights(self):
+    def _get_source_point_weights(self) -> np.ndarray:
         '''
         Returns a list of quadrature weights for the quadrature locations
         within the source volume.  Note that the weights should sum to 1.0,
@@ -688,15 +693,15 @@ class BoxSource(Source, shield.Box):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.prod(self._points_per_dimension)] * \
-            np.prod(self._points_per_dimension)
+        return np.array([1.0 / np.prod(self._points_per_dimension)] *
+                        np.prod(self._points_per_dimension))
 
-    def _get_source_points(self):
+    def _get_source_points(self) -> List[np.ndarray]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
         -------
-        :class:`list` of :class:`numpy.adarray`
+        :class:`list` of :class:`numpy.ndarray`
             A list of vector locations within the Source body.
         """
         source_points = []
@@ -712,7 +717,7 @@ class BoxSource(Source, shield.Box):
                 y = start_point[1]+mesh_width[1]*j
                 for k in range(self._points_per_dimension[2]):
                     z = start_point[2]+mesh_width[2]*k
-                    source_points.append([x, y, z])
+                    source_points.append(np.array([x, y, z]))
         return source_points
 
 # -----------------------------------------------------------
@@ -738,10 +743,10 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
     # initialize with cylinderCenter, cylinderLength, cylinderRadius,
     # material(optional), density(optional)
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-    def _get_source_point_weights(self):
+    def _get_source_point_weights(self) -> np.ndarray:
         '''
         Returns a list of quadrature weights for the quadrature locations
         within the source volume.  Note that the weights should sum to 1.0,
@@ -749,15 +754,15 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.prod(self._points_per_dimension)] * \
-            np.prod(self._points_per_dimension)
+        return np.array([1.0 / np.prod(self._points_per_dimension)] *
+                        np.prod(self._points_per_dimension))
 
-    def _get_source_points(self):
+    def _get_source_points(self) -> List[np.ndarray]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
         -------
-        :class:`list` of :class:`numpy.adarray`
+        :class:`list` of :class:`numpy.ndarray`
             A list of vector locations within the Source body.
         """
         # verify there are three values in the list
@@ -770,7 +775,8 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         # no rotation is needed
         # shift the point set to the specified cylinder center
         source_points += (self.origin + self.end)/2
-        return source_points
+        # convert to list of np.ndarrays
+        return [np.array(point) for point in source_points]
 
 # -----------------------------------------------------------
 
@@ -795,10 +801,10 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
     # initialize with cylinderCenter, cylinderLength, cylinderRadius,
     # material(optional), density(optional)
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-    def _get_source_point_weights(self):
+    def _get_source_point_weights(self) -> np.ndarray:
         '''
         Returns a list of quadrature weights for the quadrature locations
         within the source volume.  Note that the weights should sum to 1.0,
@@ -806,15 +812,15 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.prod(self._points_per_dimension)] * \
-            np.prod(self._points_per_dimension)
+        return np.array([1.0 / np.prod(self._points_per_dimension)] *
+                        np.prod(self._points_per_dimension))
 
-    def _get_source_points(self):
+    def _get_source_points(self) -> List[np.ndarray]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
         -------
-        :class:`list` of :class:`numpy.adarray`
+        :class:`list` of :class:`numpy.ndarray`
             A list of vector locations within the Source body.
         """
         # verify there are three values in the list
@@ -832,7 +838,8 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         source_points[:, 2] = -some_points[:, 1]
         # shift the point set to the specified cylinder center
         source_points += (self.origin + self.end)/2
-        return source_points
+        # convert to list of np.ndarrays
+        return [np.array(point) for point in source_points]
 
 # -----------------------------------------------------------
 
@@ -857,10 +864,10 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
     # initialize with cylinderCenter, cylinderLength, cylinderRadius,
     # material(optional), density(optional)
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-    def _get_source_point_weights(self):
+    def _get_source_point_weights(self) -> np.ndarray:
         '''
         Returns a list of quadrature weights for the quadrature locations
         within the source volume.  Note that the weights should sum to 1.0,
@@ -868,15 +875,15 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         a particular quadrature point.  When a uniform weighting is required,
         the weights should have constant values that sum to 1.0.
         '''
-        return [1.0 / np.prod(self._points_per_dimension)] * \
-            np.prod(self._points_per_dimension)
+        return np.array([1.0 / np.prod(self._points_per_dimension)] *
+                        np.prod(self._points_per_dimension))
 
-    def _get_source_points(self):
+    def _get_source_points(self) -> List[np.ndarray]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
         -------
-        :class:`list` of :class:`numpy.adarray`
+        :class:`list` of :class:`numpy.ndarray`
             A list of vector locations within the Source body.
         """
         # verify there are three values in the list
@@ -894,10 +901,13 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         source_points[:, 2] = -some_points[:, 0]
         # shift the point set to the specified cylinder center
         source_points += (self.origin + self.end)/2
-        return source_points
+        # convert to list of np.ndarrays
+        return [np.array(point) for point in source_points]
 
 
-def _generic_cylinder_source_points(points_per_dimension, length, radius):
+def _generic_cylinder_source_points(points_per_dimension: List[int],
+                                    length: float, radius: float) \
+                                        -> List[List[float]]:
     """Generates a list of point sources within a Z-aligned
     cylinder centered on the origin.
 
@@ -916,10 +926,10 @@ def _generic_cylinder_source_points(points_per_dimension, length, radius):
         The radius of the cylinder.
     """
     # calculate the radius of each "equal area" annular region
-    total_area = math.pi*radius**2
-    annular_area = total_area/points_per_dimension[0]
-    old_radius = 0
-    running_area = 0
+    total_area: float = math.pi*radius**2
+    annular_area: float = total_area/points_per_dimension[0]
+    old_radius: float = 0
+    running_area: float = 0
     annular_locations = []
     for i in range(points_per_dimension[0]):
         new_radius = math.sqrt((running_area+annular_area)/math.pi)
@@ -954,7 +964,8 @@ def _generic_cylinder_source_points(points_per_dimension, length, radius):
     return source_points
 
 
-def _spherequad(nr, nTheta, nPhi, rad):
+def _spherequad(nr: int, nTheta: int, nPhi: int, rad: float) -> \
+        Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     '''
     R,T,P,W =_spherequad(NR,NT,NP,RAD) computes the product grid nodes in
     r, theta, and phi in spherical and the corresponding quadrature weights
@@ -1002,7 +1013,7 @@ def _spherequad(nr, nTheta, nPhi, rad):
     return r, t, p, w
 
 
-def _rquad(N, k):
+def _rquad(N: int, k: int) -> Tuple[np.ndarray, np.ndarray]:
     '''
     Functional routine used by _spherequad
     '''
