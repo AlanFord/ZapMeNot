@@ -65,11 +65,6 @@ class Shield(abc.ABC):
         super().__init__(**kwargs)
 
     @abc.abstractmethod
-    def is_infinite(self) -> bool:
-        """Returns true if any dimension is infinite, false otherwise
-        """
-
-    @abc.abstractmethod
     def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
@@ -106,6 +101,17 @@ class Shield(abc.ABC):
         if not isinstance(photon_energy, numbers.Number):
             raise ValueError("Invalid photon energy")
         return 0.0
+
+    @abc.abstractmethod
+    def draw(self) -> pyvista.PolyData | None:
+        """Creates a display object
+
+        Returns
+        -------
+        :class:`pyvista.PolyData`
+            A box object representing the slab shield.
+        """
+        pass
 
     @staticmethod
     def _line_plane_collision(plane_normal: np.ndarray,
@@ -178,7 +184,19 @@ class Shield(abc.ABC):
 # -----------------------------------------------------------
 
 
-class SemiInfiniteXSlab(Shield):
+class SemiInfiniteShield(Shield):
+    """Abtract class to model a photon shield.
+    """
+    @abc.abstractmethod
+    def _projection(self, x: float, y: float,
+                    z: float) -> List[Tuple[float, float, float]]:
+        # project a point onto the surface of the infinite shield
+        # this is a semi-infinite slab, with a finite X width,
+        # so return two x values at the specified y and z
+        pass
+
+
+class SemiInfiniteXSlab(SemiInfiniteShield):
     """A semi-infinite slab shield perpendicular to the X axis.
 
     Parameters
@@ -208,11 +226,6 @@ class SemiInfiniteXSlab(Shield):
         super().__init__(material_name=material_name, density=density)
         self.x_start: float = x_start
         self.x_end: float = x_end
-
-    def is_infinite(self) -> bool:
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return True
 
     def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
@@ -284,7 +297,7 @@ class SemiInfiniteXSlab(Shield):
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
-    def draw(self) -> Optional[Any]:
+    def draw(self) -> pyvista.PolyData | None:
         """Creates a display object
 
         Returns
@@ -339,11 +352,6 @@ class Sphere(Shield):
         self.center: List[float] = sphere_center
         self.radius: float = sphere_radius
 
-    def is_infinite(self) -> bool:
-        '''Returns true if any dimension is infinite, false otherwise
-        '''
-        return False
-
     def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
@@ -369,7 +377,7 @@ class Sphere(Shield):
             return False
         return True
 
-    def draw(self) -> Optional[Any]:
+    def draw(self) -> pyvista.PolyData | None:
         """Creates a display object
 
         Returns
@@ -401,11 +409,6 @@ class Shell(Shield):
         self.outer_sphere: Sphere = Sphere(material_name, sphere.center,
                                            sphere.radius + thickness,
                                            density)
-
-    def is_infinite(self) -> bool:
-        '''Returns true if any dimension is infinite, false otherwise
-        '''
-        return False
 
     def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
@@ -440,7 +443,7 @@ class Shell(Shield):
         else:
             return False
 
-    def draw(self) -> Optional[Any]:
+    def draw(self) -> pyvista.PolyData | None:
         """Creates a display object
 
         Returns
@@ -493,11 +496,6 @@ class Box(Shield):
         super().__init__(material_name=material_name, density=density)
         self.box_center: np.ndarray = np.array(box_center)
         self.box_dimensions: np.ndarray = np.array(box_dimensions)
-
-    def is_infinite(self) -> bool:
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return False
 
     def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
@@ -633,7 +631,7 @@ class Box(Shield):
 
         return results
 
-    def draw(self) -> Optional[Any]:
+    def draw(self) -> pyvista.PolyData | None:
         """Creates a display object
 
         Returns
@@ -654,7 +652,7 @@ class Box(Shield):
 # -----------------------------------------------------------
 
 
-class InfiniteAnnulus(Shield):
+class InfiniteAnnulus(SemiInfiniteShield):
     """An annular shield of infinite length
 
     Parameters
@@ -698,11 +696,6 @@ class InfiniteAnnulus(Shield):
         self.origin: np.ndarray = np.array(cylinder_origin)
         axis = np.array(cylinder_axis)
         self.dir: np.ndarray = axis/np.linalg.norm(axis)
-
-    def is_infinite(self) -> bool:
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return True
 
     def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
@@ -828,7 +821,7 @@ class InfiniteAnnulus(Shield):
                         results.append(t)
         return results
 
-    def draw(self) -> Optional[Any]:
+    def draw(self) -> pyvista.PolyData | None:
         """Creates a display object
 
         Returns
@@ -848,7 +841,8 @@ class InfiniteAnnulus(Shield):
             return cyl1
         return None
 
-    def _projection(self, x: float, y: float, z: float) -> List[np.ndarray]:
+    def _projection(self, x: float, y: float, z: float) -> \
+            List[Tuple[float, float, float]]:
         # TODO: generalize this by using a degenerate cylinder
         #
         # project a point onto the surface of the infinite shield
@@ -893,12 +887,15 @@ class InfiniteAnnulus(Shield):
         fakeElipsisRadius = 2 * self.outer_radius
         # generate a bounding box centered at "center" and
         # a width of 2*outer_radius
-        return [collision_point - [fakeElipsisRadius, 0, 0],
-                collision_point + [fakeElipsisRadius, 0, 0],
-                collision_point - [0, fakeElipsisRadius, 0],
-                collision_point + [0, fakeElipsisRadius, 0],
-                collision_point - [0, 0, fakeElipsisRadius],
-                collision_point + [0, 0, fakeElipsisRadius]]
+        box = [(collision_point - [fakeElipsisRadius, 0, 0]).astype(float),
+               (collision_point + [fakeElipsisRadius, 0, 0]).astype(float),
+               (collision_point - [0, fakeElipsisRadius, 0]).astype(float),
+               (collision_point + [0, fakeElipsisRadius, 0]).astype(float),
+               (collision_point - [0, 0, fakeElipsisRadius]).astype(float),
+               (collision_point + [0, 0, fakeElipsisRadius]).astype(float)]
+        tuple_list = \
+            [tuple(sublist) for sublist in box]
+        return tuple_list
 
 # -----------------------------------------------------------
 
@@ -1078,11 +1075,6 @@ class CappedCylinder(Shield):
         self.length: float = float(np.linalg.norm(self.end - self.origin))
         self.dir: np.ndarray = (self.end - self.origin)/self.length
 
-    def is_infinite(self) -> bool:
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return False
-
     def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
         """
@@ -1221,7 +1213,7 @@ class CappedCylinder(Shield):
                     results.append(point)
         return results
 
-    def draw(self) -> Optional[Any]:
+    def draw(self) -> pyvista.PolyData | None:
         """Creates a display object
 
         Returns

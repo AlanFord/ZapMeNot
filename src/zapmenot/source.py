@@ -45,7 +45,7 @@ class GroupOption(Enum):
 # -----------------------------------------------------------
 
 
-class Source(abc.ABC):
+class Source(shield.Shield):
     """Abtract class to model a radiation source.
 
     Maintains a list of isotopes and can return a list of point source
@@ -316,7 +316,7 @@ class Source(abc.ABC):
 # -----------------------------------------------------------
 
 
-class LineSource(Source, shield.Shield):
+class LineSource(Source):
     """Models a line radiation source
 
     Parameters
@@ -443,7 +443,7 @@ class LineSource(Source, shield.Shield):
 # -----------------------------------------------------------
 
 
-class PointSource(Source, shield.Shield):
+class PointSource(Source):
     """Models a point radiation source
 
     Parameters

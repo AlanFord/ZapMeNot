@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import math
 import numpy as np
 import numbers
-from typing import Optional, List, Any
+from typing import Optional, List
 from . import ray, material, source, shield, detector
 
 import importlib
@@ -196,14 +196,15 @@ class Model:
                                        len(self.shield_list)))
         total_distance = np.zeros((len(source_points)))
         for index, nextPoint in enumerate(source_points):
-            vector = ray.FiniteLengthRay(nextPoint, self.detector.location)
+            vector = ray.FiniteLengthRay(nextPoint,
+                                         self.detector.location)
             total_distance[index] = vector._length
             # check to see if source point and detector are coincident
             if total_distance[index] == 0.0:
                 raise ValueError("detector and source are coincident")
-            for index2, thisShield in enumerate(self.shield_list):
+            for index2, currentShield in enumerate(self.shield_list):
                 crossing_distances[index, index2] = \
-                    thisShield._get_crossing_length(vector)
+                    currentShield._get_crossing_length(vector)
         gaps = total_distance - np.sum(crossing_distances, axis=1)
         if np.amin(gaps) < 0:
             raise ValueError("Looks like shields and/or sources overlap")
@@ -224,9 +225,9 @@ class Model:
 
             # determine the xsecs
             xsecs = np.zeros((len(self.shield_list)))
-            for index, thisShield in enumerate(self.shield_list):
-                xsecs[index] = thisShield.material.density * \
-                    thisShield.material.get_mass_atten_coeff(photon_energy)
+            for index, currentShield in enumerate(self.shield_list):
+                xsecs[index] = currentShield.material.density * \
+                    currentShield.material.get_mass_atten_coeff(photon_energy)
             # determine an array of mean free paths, one per source point
             total_mfp = crossing_distances * xsecs
             total_mfp = np.sum(total_mfp, axis=1)
@@ -276,7 +277,7 @@ class Model:
         if pyvista_found:
             # find the bounding box for all objects
             bounds = self._findBoundingBox()
-            pl = pyvista.Plotter()
+            pl: pyvista.Plotter = pyvista.Plotter()
             self._trimBlocks(pl, bounds)
             self._addPoints(pl)
             pl.show_bounds(grid='front', location='outer', all_edges=True)
@@ -284,40 +285,45 @@ class Model:
                 pl.add_legend(face=None, size=(0.1, 0.1))
             pl.show()
 
-    def _trimBlocks(self, pl: Any, bounds: List[float]) -> None:
+    def _trimBlocks(self, pl: pyvista.Plotter, bounds: List[float]) -> None:
         """
         Adds shields to a Plotter instance after trimming any
         infinite shields to a predefined bounding box.
         """
         shieldColor = 'blue'
         sourceColor = 'red'
-        for thisShield in self.shield_list:
+        for currentShield in self.shield_list:
             opacity = 1.0
-            if thisShield.is_hollow():
+            if currentShield.is_hollow():
                 opacity = 0.5
-            if thisShield.is_infinite():
-                clipped = thisShield.draw()
-                clipped = clipped.clip_closed_surface(
-                    normal='x', origin=[bounds[0], 0, 0])
-                clipped = clipped.clip_closed_surface(
-                    normal='y', origin=[0, bounds[2], 0])
-                clipped = clipped.clip_closed_surface(
-                    normal='z', origin=[0, 0, bounds[4]])
-                clipped = clipped.clip_closed_surface(
-                    normal='-x', origin=[bounds[1], 0, 0])
-                clipped = clipped.clip_closed_surface(
-                    normal='-y', origin=[0, bounds[3], 0])
-                clipped = clipped.clip_closed_surface(
-                    normal='-z', origin=[0, 0, bounds[5]])
-                pl.add_mesh(clipped, color=shieldColor, opacity=opacity)
+            # first handle infinite shields
+            if isinstance(currentShield, shield.SemiInfiniteShield):
+                clipped = currentShield.draw()
+                if isinstance(clipped, pyvista.PolyData):
+                    clipped = clipped.clip_closed_surface(
+                        normal='x', origin=[bounds[0], 0, 0])
+                    clipped = clipped.clip_closed_surface(    # type: ignore
+                        normal='y', origin=[0, bounds[2], 0])
+                    clipped = clipped.clip_closed_surface(    # type: ignore
+                        normal='z', origin=[0, 0, bounds[4]])
+                    clipped = clipped.clip_closed_surface(    # type: ignore
+                        normal='-x', origin=[bounds[1], 0, 0])
+                    clipped = clipped.clip_closed_surface(    # type: ignore
+                        normal='-y', origin=[0, bounds[3], 0])
+                    clipped = clipped.clip_closed_surface(    # type: ignore
+                        normal='-z', origin=[0, 0, bounds[5]])
+                    pl.add_mesh(clipped, color=shieldColor, opacity=opacity)
+            # now handle the sources and non-infinite shields
             else:
-                if isinstance(thisShield, source.Source):
-                    # point sources are handled later
-                    if len(self.source._get_source_points()) != 1:
-                        pl.add_mesh(thisShield.draw(),
+                if isinstance(currentShield, source.Source):
+                    if isinstance(self.source, source.PointSource):
+                        # point sources are handled later
+                        pass
+                    else:
+                        pl.add_mesh(currentShield.draw(),
                                     sourceColor, label='source', line_width=3)
                 else:
-                    pl.add_mesh(thisShield.draw(), shieldColor,
+                    pl.add_mesh(currentShield.draw(), shieldColor,
                                 opacity=opacity)
         # now add the "bounds" as a transparent block to for a display size
         mesh = pyvista.Box(bounds)
@@ -328,26 +334,22 @@ class Model:
         includes the volumes of all shields, the source, and the detector
         """
         blocks = pyvista.MultiBlock()
-        for thisShield in self.shield_list:
-            if not thisShield.is_infinite():
-                # add finite shields to the MultiBlock composite
-                blocks.append(thisShield.draw())
-            else:
+        for currentShield in self.shield_list:
+            if isinstance(currentShield, shield.SemiInfiniteShield):
                 # for infinite shield bodies,
                 # project the detector location onto the infinite surface
                 # to get points to add to the geometry
                 if isinstance(self.detector, detector.Detector):
-                    points = thisShield._projection(self.detector.x,
-                                                    self.detector.y,
-                                                    self.detector.z)
+                    points = currentShield._projection(self.detector.x,
+                                                       self.detector.y,
+                                                       self.detector.z)
                     for point in points:
-                        # we are appending a degenerate line as a representation
-                        # of a point
+                        # we are appending a degenerate line as a
+                        # representation of a point
                         blocks.append(pyvista.Line(point, point))
-
-        # >>>aren't all sources also shields?  Then the next line is redundant
-        # TODO: figure out if the next line is necessary
-        # blocks.append(self.source.draw())
+            else:
+                # add finite shields to the MultiBlock composite
+                blocks.append(currentShield.draw())
 
         # include the detector geometry in the MultiBlock composite
         if self.detector is not None:
@@ -377,7 +379,7 @@ class Model:
         boundingBox = [x * 1.01 for x in bounds]
         return boundingBox
 
-    def _addPoints(self, pl: Any) -> None:
+    def _addPoints(self, pl: pyvista.Plotter) -> None:
         """
         the goal here is to add 'points' to the display, but they
         must be represented as spheres to have some physical
@@ -405,8 +407,7 @@ class Model:
         # determine a good radius for the points
         point_radius = min(good_widths) * point_ratio
         # check if the source is a point source
-        if self.source is not None and \
-                len(self.source._get_source_points()) == 1:
+        if isinstance(self.source, source.PointSource):
             body = pyvista.Sphere(center=(self.source._x,
                                           self.source._y,
                                           self.source._z),
