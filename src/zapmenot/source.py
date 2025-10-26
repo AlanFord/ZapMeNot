@@ -45,7 +45,7 @@ class GroupOption(Enum):
 # -----------------------------------------------------------
 
 
-class Source(abc.ABC):
+class Source(shield.Shield):
     """Abtract class to model a radiation source.
 
     Maintains a list of isotopes and can return a list of point source
@@ -275,7 +275,7 @@ class Source(abc.ABC):
         return photon_list
 
     @abc.abstractmethod
-    def _get_source_points(self) -> List[np.ndarray]:
+    def _get_source_points(self) -> List[Tuple[float, float, float]]:
         """Generates a list of point sources within the Source geometry.
         """
         pass
@@ -316,7 +316,7 @@ class Source(abc.ABC):
 # -----------------------------------------------------------
 
 
-class LineSource(Source, shield.Shield):
+class LineSource(Source):
     """Models a line radiation source
 
     Parameters
@@ -374,7 +374,7 @@ class LineSource(Source, shield.Shield):
         return [1.0 / np.prod(self._points_per_dimension)] * \
             np.prod(self._points_per_dimension)  # type: ignore
 
-    def _get_source_points(self) -> List[np.ndarray]:
+    def _get_source_points(self) -> List[Tuple[float, float, float]]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -389,8 +389,8 @@ class LineSource(Source, shield.Shield):
         spacings = spacings-(mesh_width/2)
         source_points = []
         for dist in spacings:
-            location = self.origin+self._dir*dist
-            source_points.append(location)
+            location = (self.origin+self._dir*dist).astype(float)
+            source_points.append(tuple(location))
         return source_points
 
     def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> int:
@@ -443,7 +443,7 @@ class LineSource(Source, shield.Shield):
 # -----------------------------------------------------------
 
 
-class PointSource(Source, shield.Shield):
+class PointSource(Source):
     """Models a point radiation source
 
     Parameters
@@ -501,7 +501,7 @@ class PointSource(Source, shield.Shield):
         return np.array([1.0 / np.prod(self._points_per_dimension)] *
                         np.prod(self._points_per_dimension))
 
-    def _get_source_points(self) -> List[np.ndarray]:
+    def _get_source_points(self) -> List[Tuple[float, float, float]]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -510,7 +510,7 @@ class PointSource(Source, shield.Shield):
             A list of vector locations within the Source body.  In this class
             the list is only a single entry.
         """
-        return [np.array([self._x, self._y, self._z])]
+        return [(self._x, self._y, self._z)]
 
     def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> int:
         """Calculates the linear intersection length of a ray and the shield
@@ -642,7 +642,7 @@ class SphereSource(Source, shield.Sphere):
         '''
         return self.weights
 
-    def _get_source_points(self) -> List[np.ndarray]:
+    def _get_source_points(self) -> List[Tuple[float, float, float]]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -696,7 +696,7 @@ class BoxSource(Source, shield.Box):
         return np.array([1.0 / np.prod(self._points_per_dimension)] *
                         np.prod(self._points_per_dimension))
 
-    def _get_source_points(self) -> List[np.ndarray]:
+    def _get_source_points(self) -> List[Tuple[float, float, float]]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -717,7 +717,7 @@ class BoxSource(Source, shield.Box):
                 y = start_point[1]+mesh_width[1]*j
                 for k in range(self._points_per_dimension[2]):
                     z = start_point[2]+mesh_width[2]*k
-                    source_points.append(np.array([x, y, z]))
+                    source_points.append((x, y, z))
         return source_points
 
 # -----------------------------------------------------------
@@ -757,7 +757,7 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         return np.array([1.0 / np.prod(self._points_per_dimension)] *
                         np.prod(self._points_per_dimension))
 
-    def _get_source_points(self) -> List[np.ndarray]:
+    def _get_source_points(self) -> List[Tuple[float, float, float]]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -775,8 +775,7 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
         # no rotation is needed
         # shift the point set to the specified cylinder center
         source_points += (self.origin + self.end)/2
-        # convert to list of np.ndarrays
-        return [np.array(point) for point in source_points]
+        return source_points
 
 # -----------------------------------------------------------
 
@@ -815,7 +814,7 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         return np.array([1.0 / np.prod(self._points_per_dimension)] *
                         np.prod(self._points_per_dimension))
 
-    def _get_source_points(self) -> List[np.ndarray]:
+    def _get_source_points(self) -> List[Tuple[float, float, float]]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -838,8 +837,7 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
         source_points[:, 2] = -some_points[:, 1]
         # shift the point set to the specified cylinder center
         source_points += (self.origin + self.end)/2
-        # convert to list of np.ndarrays
-        return [np.array(point) for point in source_points]
+        return [tuple(i) for i in source_points]
 
 # -----------------------------------------------------------
 
@@ -878,7 +876,7 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         return np.array([1.0 / np.prod(self._points_per_dimension)] *
                         np.prod(self._points_per_dimension))
 
-    def _get_source_points(self) -> List[np.ndarray]:
+    def _get_source_points(self) -> List[Tuple[float, float, float]]:
         """Generates a list of point sources within the Source geometry.
 
         Returns
@@ -901,13 +899,12 @@ class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
         source_points[:, 2] = -some_points[:, 0]
         # shift the point set to the specified cylinder center
         source_points += (self.origin + self.end)/2
-        # convert to list of np.ndarrays
-        return [np.array(point) for point in source_points]
+        return [tuple(i) for i in source_points]
 
 
 def _generic_cylinder_source_points(points_per_dimension: List[int],
                                     length: float, radius: float) \
-                                        -> List[List[float]]:
+                                        -> List[Tuple[float, float, float]]:
     """Generates a list of point sources within a Z-aligned
     cylinder centered on the origin.
 
@@ -960,7 +957,7 @@ def _generic_cylinder_source_points(points_per_dimension: List[int],
                 # convert cylindrical to rectangular coordinates
                 x = r * math.cos(theta)
                 y = r * math.sin(theta)
-                source_points.append([x, y, z])
+                source_points.append((x, y, z))
     return source_points
 
 

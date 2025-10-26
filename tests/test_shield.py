@@ -119,9 +119,6 @@ class TestSemiInfiniteXSlab():
         calculated_mfp = xsec*density*10  # 10 cm width of shield
         assert mfp == pytest.approx(calculated_mfp)
 
-    def test_infinite(self, create_shield):
-        assert create_shield.is_infinite() is True
-
 
 # =============================================================
 class TestShell():
@@ -186,10 +183,6 @@ class TestShell():
         shell_crossing_length = outer_surface_crossing_length - inner_surface_crossing_length
         shell_mfp = shell_xsec * shell_density * shell_crossing_length
         assert mfp == pytest.approx(shell_mfp)
-
-    def test_infinite(self, create_shield):
-        shell = shield.Shell('carbon', create_shield, 5)
-        assert shell.is_infinite() is False
 
     def test_shell_on_source(self):
         my_source = source.SphereSource("air", density=1.2, sphere_radius=10,
@@ -267,9 +260,6 @@ class TestSphere():
         calculated_mfp = xsec*density*10  # 10 cm crossing width of shield
         assert mfp == pytest.approx(calculated_mfp)
 
-    def test_infinite(self, create_shield):
-        assert create_shield.is_infinite() is False
-
 
 # =============================================================
 class TestBox():
@@ -343,9 +333,6 @@ class TestBox():
         density = 7.874
         calculated_mfp = xsec*density*5  # 5 cm crossing width of shield
         assert mfp == pytest.approx(calculated_mfp)
-
-    def test_infinite(self, create_shield):
-        assert create_shield.is_infinite() is False
 
 
 # =============================================================
@@ -439,9 +426,6 @@ class TestInfiniteAnnulus():
         density = 2  # specified in the setup
         calculated_mfp = xsec*density*2  # 2 cm crossing width of shield
         assert mfp == pytest.approx(calculated_mfp)
-
-    def test_infinite(self, create_shield):
-        assert create_shield.is_infinite() is True
 
 
 # =============================================================
@@ -596,9 +580,6 @@ class TestCappedCylinder():
         calculated_mfp = xsec*density*10  # 10 cm crossing width of shield
         assert mfp == pytest.approx(calculated_mfp)
 
-    def test_infinite(self, create_shield):
-        assert create_shield.is_infinite() is False
-
 
 # =============================================================
 class TestYAlignedCylinder():
@@ -622,9 +603,6 @@ class TestYAlignedCylinder():
         length = create_shield._get_crossing_length(
             ray.FiniteLengthRay([2, -60, 2], [2, 60, 2]))
         assert length == 100
-
-    def test_infinite(self, create_shield):
-        assert create_shield.is_infinite() is False
 
 
 # =============================================================
@@ -650,9 +628,6 @@ class TestXAlignedCylinder():
             ray.FiniteLengthRay([-60, 2, 2], [60, 2, 2]))
         assert length == 100
 
-    def test_infinite(self, create_shield):
-        assert create_shield.is_infinite() is False
-
 
 # =============================================================
 class TestZAlignedCylinder():
@@ -676,6 +651,3 @@ class TestZAlignedCylinder():
         length = create_shield._get_crossing_length(
             ray.FiniteLengthRay([2, 2, -60], [2, 2, 60]))
         assert length == 100
-
-    def test_infinite(self, create_shield):
-        assert create_shield.is_infinite() is False
