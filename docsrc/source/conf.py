@@ -36,9 +36,10 @@ release = metadata.__version__
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.napoleon',
-	'sphinx.ext.todo',
 	'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx_autodoc_typehints',
+	'sphinx.ext.todo',
 	'sphinx.ext.viewcode',
 	'sphinx.ext.doctest',
 	'sphinx.ext.mathjax',
@@ -197,3 +198,7 @@ intersphinx_timeout = 10
 
 linkcheck_retries = 3
 linkcheck_timeout = 500
+
+autodoc_member_order = 'bysource'
+# napoleon_use_param = True
+# always_document_param_types = True

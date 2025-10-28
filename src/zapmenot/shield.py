@@ -502,29 +502,49 @@ class Box(Shield):
         """
         return False
 
-    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
-                         photon_energy: float) -> float:
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay, photon_energy: float) -> float:
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
+        ray
             The finite length ray that is checked for intersections with
             the shield.
-        photon_energy : float
+        photon_energy
             The photon energy in MeV
+
+        Returns
+        -------
+            Mean free path in centimeters.
         """
         # validate the arguments
         super().get_crossing_mfp(ray, photon_energy)
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
 
+    def draw(self) -> pyvista.PolyData | None:
+        """Creates a display object
+
+        Returns
+        -------
+            A box object representing the box shield.
+        """
+        if pyvista_found:
+            xmin = self.box_center[0]-self.box_dimensions[0]/2
+            xmax = self.box_center[0]+self.box_dimensions[0]/2
+            ymin = self.box_center[1]-self.box_dimensions[1]/2
+            ymax = self.box_center[1]+self.box_dimensions[1]/2
+            zmin = self.box_center[2]-self.box_dimensions[2]/2
+            zmax = self.box_center[2]+self.box_dimensions[2]/2
+            return pyvista.Box(bounds=(xmin, xmax, ymin, ymax, zmin, zmax))
+        return None
+
     def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> float:
         """Calculates the linear intersection length of a ray and the shield
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
+        ray
             The finite length ray that is checked for intersections with
             the shield.
         """
@@ -557,7 +577,7 @@ class Box(Shield):
 
         Parameters
         ----------
-        point : :obj:`list`
+        point
             The X, Y, and Z cartesian coordinates of a point.
 
         Returns
@@ -586,12 +606,11 @@ class Box(Shield):
 
         Parameters
         ----------
-        ray : :obj:`ray.Ray`
+        ray
             A ray object that may intersect the box.
 
         Returns
         -------
-        :obj:`list`
             List of vector locations of intersection points.  These will
             include the ray endpoints if they are located within the shield.
         """
@@ -630,24 +649,6 @@ class Box(Shield):
             results.append(ray._origin + ray._dir*tmax)
 
         return results
-
-    def draw(self) -> pyvista.PolyData | None:
-        """Creates a display object
-
-        Returns
-        -------
-        :class:`pyvista.PolyData`
-            A box object representing the box shield.
-        """
-        if pyvista_found:
-            xmin = self.box_center[0]-self.box_dimensions[0]/2
-            xmax = self.box_center[0]+self.box_dimensions[0]/2
-            ymin = self.box_center[1]-self.box_dimensions[1]/2
-            ymax = self.box_center[1]+self.box_dimensions[1]/2
-            zmin = self.box_center[2]-self.box_dimensions[2]/2
-            zmax = self.box_center[2]+self.box_dimensions[2]/2
-            return pyvista.Box(bounds=(xmin, xmax, ymin, ymax, zmin, zmax))
-        return None
 
 # -----------------------------------------------------------
 
@@ -708,11 +709,9 @@ class InfiniteAnnulus(SemiInfiniteShield):
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections
+        ray : The finite length ray that is checked for intersections
             with the shield.
-        photon_energy : float
-            The photon energy in MeV
+        photon_energy : The photon energy in MeV
         """
         # validate the arguments
         super().get_crossing_mfp(ray, photon_energy)
