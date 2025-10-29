@@ -79,7 +79,19 @@
            <div itemprop="articleBody">
              
   <h1>Source code for zapmenot.model</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">ray</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">shield</span><span class="p">,</span> <span class="n">detector</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
+<span class="n">pyvista_found</span> <span class="o">=</span> <span class="n">pyvista_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
+<span class="sd">&#39;&#39;&#39; &#39;&#39;&#39;</span>
+<span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">ZapMeNot - a point kernel photon shielding library</span>
 <span class="sd">Copyright (C) 2019-2025  C. Alan Ford</span>
 
@@ -96,18 +108,6 @@
 <span class="sd">You should have received a copy of the GNU General Public License</span>
 <span class="sd">along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&#39;&#39;&#39;</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">ray</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">shield</span><span class="p">,</span> <span class="n">detector</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
-<span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
-<span class="n">pyvista_found</span> <span class="o">=</span> <span class="n">pyvista_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
 
 
 <div class="viewcode-block" id="Model">
@@ -138,6 +138,8 @@
 <span class="sd">        The material used to calculate the exposure buildup factor.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+<div class="viewcode-block" id="Model.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
@@ -152,7 +154,8 @@
         <span class="c1">#  and R.E. Faw, 2000, page 141.</span>
         <span class="c1"># This value is based on a value of energy deposition</span>
         <span class="c1"># per ion in air of 33.85 [ICRU Report 39, 1979].</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.835E-8</span></div>
+
 
 <div class="viewcode-block" id="Model.set_filler_material">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_filler_material">[docs]</a>

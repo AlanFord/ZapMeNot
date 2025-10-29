@@ -79,7 +79,22 @@
            <div itemprop="articleBody">
              
   <h1>Source code for zapmenot.source</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">KeysView</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">shield</span><span class="p">,</span> <span class="n">isotope</span><span class="p">,</span> <span class="n">ray</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
+<span class="n">pyvista_found</span> <span class="o">=</span> <span class="n">pyvista_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
+<span class="sd">&#39;&#39;&#39; &#39;&#39;&#39;</span>
+<span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">ZapMeNot - a point kernel photon shielding library</span>
 <span class="sd">Copyright (C) 2019-2025  C. Alan Ford</span>
 
@@ -97,20 +112,6 @@
 <span class="sd">along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">KeysView</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">shield</span><span class="p">,</span> <span class="n">isotope</span><span class="p">,</span> <span class="n">ray</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
-<span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
-<span class="n">pyvista_found</span> <span class="o">=</span> <span class="n">pyvista_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
 
 <span class="c1"># -----------------------------------------------------------</span>
 
@@ -152,6 +153,8 @@
 <span class="sd">        integer for one dimensional sources, and not significant for point</span>
 <span class="sd">        sources.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="Source.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Initialize the Source with empty strings for the isotope list</span>
 <span class="sd">        and photon list&#39;&#39;&#39;</span>
@@ -163,7 +166,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_include_key_progeny</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_max_photon_energies</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span><span class="p">:</span> <span class="n">GroupOption</span> <span class="o">=</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">HYBRID</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">grouping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GroupOption</span><span class="p">:</span>
@@ -445,7 +449,9 @@
 <span class="sd">    end : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector location of one end of the line source.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">end</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="LineSource.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">end</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="s2">&quot;Initialize&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
@@ -458,7 +464,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># initialize points_per_dimension after super() to force a</span>
         <span class="c1"># single dimension</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span></div>
+
 
 <div class="viewcode-block" id="LineSource.is_infinite">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource.is_infinite">[docs]</a>
@@ -591,6 +598,8 @@
 <span class="sd">    dir : :class:`numpy.ndarray`</span>
 <span class="sd">        Vector normal of the annulus centerline.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="PointSource.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Initialize with an x,y,z location in space&#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">x</span>
@@ -600,7 +609,8 @@
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;material_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;air&#39;</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
 
 <div class="viewcode-block" id="PointSource.is_infinite">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource.is_infinite">[docs]</a>
@@ -726,7 +736,9 @@
 <span class="sd">        radius of the sphere.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sphere_center</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="SphereSource.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.SphereSource.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sphere_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">sphere_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;material_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">material_name</span>
@@ -734,7 +746,8 @@
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sphere_radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sphere_radius</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">density</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>  <span class="c1"># triggers quadrature calcs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_per_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>  <span class="c1"># triggers quadrature calcs</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">points_per_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
@@ -822,8 +835,11 @@
 <span class="sd">    material : :class: `material.Material`</span>
 <span class="sd">        Material properties of the shield</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="BoxSource.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.BoxSource.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
@@ -886,8 +902,11 @@
     <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
     <span class="c1"># material(optional), density(optional)</span>
 
+<div class="viewcode-block" id="ZAlignedCylinderSource.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.ZAlignedCylinderSource.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
@@ -946,8 +965,11 @@
     <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
     <span class="c1"># material(optional), density(optional)</span>
 
+<div class="viewcode-block" id="YAlignedCylinderSource.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.YAlignedCylinderSource.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
@@ -1011,8 +1033,11 @@
     <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
     <span class="c1"># material(optional), density(optional)</span>
 
+<div class="viewcode-block" id="XAlignedCylinderSource.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.source.XAlignedCylinderSource.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>

@@ -79,7 +79,23 @@
            <div itemprop="articleBody">
              
   <h1>Source code for zapmenot.shield</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">material</span><span class="p">,</span> <span class="n">ray</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
+<span class="n">pyvista_found</span> <span class="o">=</span> <span class="n">pyvista_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
+<span class="sd">&#39;&#39;&#39; &#39;&#39;&#39;</span>
+<span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">ZapMeNot - a point kernel photon shielding library</span>
 <span class="sd">Copyright (C) 2019-2025  C. Alan Ford</span>
 
@@ -97,21 +113,6 @@
 <span class="sd">along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">material</span><span class="p">,</span> <span class="n">ray</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
-<span class="n">pyvista_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pyvista&quot;</span><span class="p">)</span>
-<span class="n">pyvista_found</span> <span class="o">=</span> <span class="n">pyvista_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
 
 <span class="c1"># -----------------------------------------------------------</span>
 
@@ -120,32 +121,31 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Shield</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abtract class to model a photon shield.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`, optional</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3</span>
-<span class="sd">    **kwargs</span>
-<span class="sd">        Arbitrary keyword arguments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
+<div class="viewcode-block" id="Shield.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a photon shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Arbitrary keyword arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># the material name is validated by the Material class</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">:</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="n">material_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">density</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid density: </span><span class="si">{</span><span class="n">density</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">=</span> <span class="n">density</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="Shield.is_hollow">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield.is_hollow">[docs]</a>
@@ -161,7 +161,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        a_ray : :class:`ray.FiniteLengthRay`</span>
+<span class="sd">        a_ray</span>
 <span class="sd">            The finite length ray that is checked for intersections</span>
 <span class="sd">            with the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -178,10 +178,10 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        a_ray : :class:`ray.FiniteLengthRay`</span>
+<span class="sd">        a_ray</span>
 <span class="sd">            The finite length ray that is checked for intersections</span>
 <span class="sd">            with the shield.</span>
-<span class="sd">        photon_energy : float</span>
+<span class="sd">        photon_energy</span>
 <span class="sd">            The photon energy in MeV</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a_ray</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">):</span>
@@ -199,8 +199,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`pyvista.PolyData`</span>
-<span class="sd">            A box object representing the slab shield.</span>
+<span class="sd">            A display object representing the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
@@ -216,15 +215,15 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        plane_normal : :class:`numpy.ndarray`</span>
+<span class="sd">        plane_normal</span>
 <span class="sd">            A vector normal to the plane</span>
-<span class="sd">        plane_point : :class:`numpy.ndarray`</span>
+<span class="sd">        plane_point</span>
 <span class="sd">            Vector location of an arbitrary point on the plane</span>
-<span class="sd">        ray_origin : :class:`numpy.ndarray`</span>
+<span class="sd">        ray_origin</span>
 <span class="sd">            The vector location of the ray origin</span>
-<span class="sd">        ray_normal : :class:`numpy.ndarray`</span>
+<span class="sd">        ray_normal</span>
 <span class="sd">            The vector normal of the ray</span>
-<span class="sd">        photon_energy : float</span>
+<span class="sd">        photon_energy</span>
 <span class="sd">            The photon energy in MeV</span>
 
 <span class="sd">        Notes</span>
@@ -261,9 +260,9 @@
                 <span class="n">big_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_length</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">big_list</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
             <span class="c1"># if not 2 intersections, look for ray endpoints inside the sphere</span>
-            <span class="k">if</span> <span class="n">sphere</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_origin</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">sphere</span><span class="o">.</span><span class="n">_contains</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_origin</span><span class="p">):</span>
                 <span class="n">big_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">sphere</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_end</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">sphere</span><span class="o">.</span><span class="n">_contains</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_end</span><span class="p">)):</span>
                 <span class="n">big_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_length</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">big_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># ray misses the sphere</span>
@@ -296,34 +295,29 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SemiInfiniteXSlab</span><span class="p">(</span><span class="n">SemiInfiniteShield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A semi-infinite slab shield perpendicular to the X axis.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    x_start : float</span>
-<span class="sd">        X axis location of the inner edge of the shield.</span>
-<span class="sd">    x_end : float</span>
-<span class="sd">        X axis location of the outer edge of the shield.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    x_start : float</span>
-<span class="sd">        X axis location of the inner edge of the shield.</span>
-<span class="sd">    x_end : float</span>
-<span class="sd">        X axis location of the outer edge of the shield.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
+<div class="viewcode-block" id="SemiInfiniteXSlab.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x_start</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x_end</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a SemiInfiniteXSlab shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        x_start</span>
+<span class="sd">            X axis location of the inner edge of the shield.</span>
+<span class="sd">        x_end</span>
+<span class="sd">            X axis location of the outer edge of the shield.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_start</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">x_start</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x_end</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">x_end</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_end</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">x_end</span></div>
+
 
 <div class="viewcode-block" id="SemiInfiniteXSlab.is_hollow">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.SemiInfiniteXSlab.is_hollow">[docs]</a>
@@ -338,9 +332,9 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ray : :class:`ray.FiniteLengthRay`</span>
-<span class="sd">            The finite length ray that is checked for intersections with</span>
-<span class="sd">            the shield.</span>
+<span class="sd">        a_ray</span>
+<span class="sd">            The finite length ray that is checked for intersections</span>
+<span class="sd">            with the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>  <span class="c1"># validate the arguments</span>
         <span class="n">ray_origin</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">_origin</span>
@@ -389,10 +383,10 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ray : :class:`ray.FiniteLengthRay`</span>
-<span class="sd">            The finite length ray that is checked for intersections with</span>
-<span class="sd">            the shield.</span>
-<span class="sd">        photon_energy : float</span>
+<span class="sd">        a_ray</span>
+<span class="sd">            The finite length ray that is checked for intersections</span>
+<span class="sd">            with the shield.</span>
+<span class="sd">        photon_energy</span>
 <span class="sd">            The photon energy in MeV</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># validate the arguments</span>
@@ -408,8 +402,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`pyvista.PolyData`</span>
-<span class="sd">            A box object representing the slab shield.</span>
+<span class="sd">            A display object representing the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_end</span><span class="p">,</span> <span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span>
@@ -431,17 +424,6 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Sphere</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A spherical shield.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    sphere_center : list</span>
-<span class="sd">        list of floats (x, y, and z coordinates).</span>
-<span class="sd">    sphere_radius : float</span>
-<span class="sd">        radius of the shield.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Attributes</span>
@@ -453,14 +435,28 @@
 <span class="sd">    radius : float</span>
 <span class="sd">        radius of the sphere.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="Sphere.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sphere_center</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">sphere_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Initialize material composition and location of the</span>
-<span class="sd">            spherical shield&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Create a spherical shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        sphere_center</span>
+<span class="sd">            Vector location of the center of the sphere in cartesian coordiantes.</span>
+<span class="sd">        sphere_radius</span>
+<span class="sd">            Radius of the shield.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">sphere_center</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">sphere_radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">sphere_radius</span></div>
+
 
 <div class="viewcode-block" id="Sphere.is_hollow">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere.is_hollow">[docs]</a>
@@ -474,7 +470,20 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere.get_crossing_mfp">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">:</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">,</span>
                          <span class="n">photon_energy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;returns the crossing mfp&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ray</span>
+<span class="sd">            The finite length ray that is checked for intersections with</span>
+<span class="sd">            the shield.</span>
+<span class="sd">        photon_energy</span>
+<span class="sd">            The photon energy in MeV</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            Mean free path in centimeters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>  <span class="c1"># validate the arguments</span>
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
@@ -483,18 +492,22 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">:</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ray_sphere_intersection</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Sphere.contains">
-<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere.contains">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Returns true if the point is contained within the sphere,</span>
-<span class="sd">        otherwise false</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Determines if the shield contains a point</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        point</span>
+<span class="sd">            The X, Y, and Z cartesian coordinates of a point.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            True if the box contains the point, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ray</span> <span class="o">=</span> <span class="n">point</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">ray</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
+        <span class="k">return</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="Sphere.draw">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Sphere.draw">[docs]</a>
@@ -503,8 +516,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`pyvista.PolyData`</span>
-<span class="sd">            A Sphere object representing the sphere shield.</span>
+<span class="sd">            A display object representing the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">),</span>
@@ -519,11 +531,25 @@
 <div class="viewcode-block" id="Shell">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shell">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Shell</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A shell that surrounds a spherical shield or source&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A shell that surrounds a spherical shield or source.&quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="Shell.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shell.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sphere</span><span class="p">:</span> <span class="n">Sphere</span><span class="p">,</span> <span class="n">thickness</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Initialize material composition and location of the shell&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Shell shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        sphere</span>
+<span class="sd">            The spherical shield or source that defines the inner boundary of the shell.</span>
+<span class="sd">        thickness</span>
+<span class="sd">            The thickness of the shell.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">thickness</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Shell has zero or negative thickness&quot;</span><span class="p">)</span>
@@ -533,7 +559,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">inner_sphere</span><span class="p">:</span> <span class="n">Sphere</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">sphere</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outer_sphere</span><span class="p">:</span> <span class="n">Sphere</span> <span class="o">=</span> <span class="n">Sphere</span><span class="p">(</span><span class="n">material_name</span><span class="p">,</span> <span class="n">sphere</span><span class="o">.</span><span class="n">center</span><span class="p">,</span>
                                            <span class="n">sphere</span><span class="o">.</span><span class="n">radius</span> <span class="o">+</span> <span class="n">thickness</span><span class="p">,</span>
-                                           <span class="n">density</span><span class="p">)</span>
+                                           <span class="n">density</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="Shell.is_hollow">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shell.is_hollow">[docs]</a>
@@ -547,7 +574,20 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shell.get_crossing_mfp">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">:</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">,</span>
                          <span class="n">photon_energy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;returns the crossing mfp&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ray</span>
+<span class="sd">            The finite length ray that is checked for intersections with</span>
+<span class="sd">            the shield.</span>
+<span class="sd">        photon_energy</span>
+<span class="sd">            The photon energy in MeV</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            Mean free path in centimeters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>  <span class="c1"># validate the arguments</span>
         <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crossing_length</span><span class="p">(</span><span class="n">ray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer_sphere</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">get_mfp</span><span class="p">(</span><span class="n">photon_energy</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span></div>
@@ -563,19 +603,16 @@
             <span class="n">crossing_length</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="n">crossing_length</span>
 
-<div class="viewcode-block" id="Shell.contains">
-<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shell.contains">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Returns true if the point is contained within the shell,</span>
 <span class="sd">        otherwise false</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer_sphere</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="ow">and</span> \
-                <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_sphere</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer_sphere</span><span class="o">.</span><span class="n">_contains</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_sphere</span><span class="o">.</span><span class="n">_contains</span><span class="p">(</span><span class="n">point</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span></div>
-
+            <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="Shell.draw">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shell.draw">[docs]</a>
@@ -584,8 +621,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`pyvista.PolyData`</span>
-<span class="sd">            A Sphere object representing the sphere shield.</span>
+<span class="sd">            A display object representing the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
             <span class="n">sphere_a</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outer_sphere</span><span class="o">.</span><span class="n">radius</span><span class="p">),</span>
@@ -605,37 +641,31 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Box</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A rectangular polyhedron shield.</span>
-
-<span class="sd">    All sides of the box shield must be axis-aligned.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    box_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the box center.</span>
-<span class="sd">    box_dimensions : :obj:`list`</span>
-<span class="sd">        X, Y, and Z dimensions of the box.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
+<span class="sd">       All sides of the box shield must be axis-aligned.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class:material.Material</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    box_center : :class:numpy.ndarray</span>
-<span class="sd">        Vector location of the center of the box in cartesian coordiantes.</span>
-<span class="sd">    box_dimensions :  :class:numpy.ndarray</span>
-<span class="sd">        Vector holding the dimensions of the box.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">box_center</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
-                 <span class="n">box_dimensions</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="Box.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">box_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                 <span class="n">box_dimensions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Box shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        box_center</span>
+<span class="sd">            Vector location of the center of the box in cartesian coordiantes.</span>
+<span class="sd">        box_dimensions</span>
+<span class="sd">            Vector holding the dimensions of the box.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">box_center</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">box_dimensions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">box_dimensions</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="Box.is_hollow">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box.is_hollow">[docs]</a>
@@ -647,7 +677,8 @@
 
 <div class="viewcode-block" id="Box.get_crossing_mfp">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Box.get_crossing_mfp">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">:</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_crossing_mfp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">:</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">,</span>
+                         <span class="n">photon_energy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the mfp equivalent if a ray intersects the shield</span>
 
 <span class="sd">        Parameters</span>
@@ -675,7 +706,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">            A box object representing the box shield.</span>
+<span class="sd">            A display object representing the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
             <span class="n">xmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
@@ -731,7 +762,6 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        boolean</span>
 <span class="sd">            True if the box contains the point, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -807,48 +837,39 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">InfiniteAnnulus</span><span class="p">(</span><span class="n">SemiInfiniteShield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An annular shield of infinite length</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_origin : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the point on the cylinder centerline.</span>
-<span class="sd">    cylinder_axis : :obj:`list`</span>
-<span class="sd">        X, Y, and Z vector components of the cylinder axis.</span>
-<span class="sd">    cylinder_inner_radius : float</span>
-<span class="sd">        Radius of the annulus inner surface.</span>
-<span class="sd">    cylinder_outer_radius : float</span>
-<span class="sd">        Radius of the annulus outer surface.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    inner_radius : float</span>
-<span class="sd">        Radius of the annulus inner surface.</span>
-<span class="sd">    outer_radius : float</span>
-<span class="sd">        Radius of the annulus outer surface.</span>
-<span class="sd">    origin : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location of a point on the annulus centerline.</span>
-<span class="sd">    dir : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector normal of the annulus centerline.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_origin</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
-                 <span class="n">cylinder_axis</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="InfiniteAnnulus.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_origin</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                 <span class="n">cylinder_axis</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">cylinder_inner_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">cylinder_outer_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an InfiniteAnnulus shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        cylinder_origin</span>
+<span class="sd">            X, Y, and Z coordinates of the point on the cylinder centerline.</span>
+<span class="sd">        cylinder_axis</span>
+<span class="sd">            X, Y, and Z vector components of the cylinder axis.</span>
+<span class="sd">        cylinder_inner_radius</span>
+<span class="sd">            Radius of the annulus inner surface.</span>
+<span class="sd">        cylinder_outer_radius</span>
+<span class="sd">            Radius of the annulus outer surface.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inner_radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">cylinder_inner_radius</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outer_radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">cylinder_outer_radius</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cylinder_origin</span><span class="p">)</span>
         <span class="n">axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cylinder_axis</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">axis</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">axis</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="InfiniteAnnulus.is_hollow">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.InfiniteAnnulus.is_hollow">[docs]</a>
@@ -866,9 +887,15 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ray : The finite length ray that is checked for intersections</span>
-<span class="sd">            with the shield.</span>
-<span class="sd">        photon_energy : The photon energy in MeV</span>
+<span class="sd">        ray</span>
+<span class="sd">            The finite length ray that is checked for intersections with</span>
+<span class="sd">            the shield.</span>
+<span class="sd">        photon_energy</span>
+<span class="sd">            The photon energy in MeV</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            Mean free path in centimeters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># validate the arguments</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
@@ -881,7 +908,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ray : :class:`ray.FiniteLengthRay`</span>
+<span class="sd">        ray</span>
 <span class="sd">            The finite length ray that is checked for intersections</span>
 <span class="sd">            with the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -916,7 +943,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        point : :obj:`list`</span>
+<span class="sd">        point</span>
 <span class="sd">            The X, Y, and Z cartesian coordinates of a point.</span>
 
 <span class="sd">        Returns</span>
@@ -943,7 +970,6 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :obj:`list`</span>
 <span class="sd">            List of distances along the ray, measured from the ray origin,</span>
 <span class="sd">            where the ray intersects the annulus.  Will include the ray</span>
 <span class="sd">            endpoints if they are within the annular shield.</span>
@@ -985,8 +1011,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`pyvista.PolyData`</span>
-<span class="sd">            A boolean object representing the annular cylinder shield.</span>
+<span class="sd">            A display object representing the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
             <span class="c1"># define an imaginary bottom of the shield at a distance</span>
@@ -1065,44 +1090,35 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.YAlignedInfiniteAnnulus">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">YAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An annular shield of infinite length aligned with the Y axis</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the point on the cylinder centerline.</span>
-<span class="sd">    cylinder_inner_radius : float</span>
-<span class="sd">        Radius of the annulus inner surface.</span>
-<span class="sd">    cylinder_outer_radius : float</span>
-<span class="sd">        Radius of the annulus outer surface.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    inner_radius : float</span>
-<span class="sd">        Radius of the annulus inner surface.</span>
-<span class="sd">    outer_radius : float</span>
-<span class="sd">        Radius of the annulus outer surface.</span>
-<span class="sd">    origin : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location of a point on the annulus centerline.</span>
-<span class="sd">    dir : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector normal of the annulus centerline.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="YAlignedInfiniteAnnulus.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.YAlignedInfiniteAnnulus.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">cylinder_inner_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">cylinder_outer_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an YAlignedInfiniteAnnulus shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        cylinder_center</span>
+<span class="sd">            X, Y, and Z coordinates of the point on the cylinder centerline.</span>
+<span class="sd">        cylinder_inner_radius</span>
+<span class="sd">            Radius of the annulus inner surface.</span>
+<span class="sd">        cylinder_outer_radius</span>
+<span class="sd">            Radius of the annulus outer surface.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span>
                          <span class="n">cylinder_origin</span><span class="o">=</span><span class="n">cylinder_center</span><span class="p">,</span>
                          <span class="n">cylinder_inner_radius</span><span class="o">=</span><span class="n">cylinder_inner_radius</span><span class="p">,</span>
                          <span class="n">cylinder_outer_radius</span><span class="o">=</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
                          <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+</div>
 
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -1112,43 +1128,34 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.XAlignedInfiniteAnnulus">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">XAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An annular shield of infinite length aligned with the X axis</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the point on the cylinder centerline.</span>
-<span class="sd">    cylinder_inner_radius : float</span>
-<span class="sd">        Radius of the annulus inner surface.</span>
-<span class="sd">    cylinder_outer_radius : float</span>
-<span class="sd">        Radius of the annulus outer surface.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    inner_radius : float</span>
-<span class="sd">        Radius of the annulus inner surface.</span>
-<span class="sd">    outer_radius : float</span>
-<span class="sd">        Radius of the annulus outer surface.</span>
-<span class="sd">    origin : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location of a point on the annulus centerline.</span>
-<span class="sd">    dir : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector normal of the annulus centerline.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="XAlignedInfiniteAnnulus.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.XAlignedInfiniteAnnulus.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">cylinder_inner_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">cylinder_outer_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an XAlignedInfiniteAnnulus shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        cylinder_center</span>
+<span class="sd">            X, Y, and Z coordinates of the point on the cylinder centerline.</span>
+<span class="sd">        cylinder_inner_radius</span>
+<span class="sd">            Radius of the annulus inner surface.</span>
+<span class="sd">        cylinder_outer_radius</span>
+<span class="sd">            Radius of the annulus outer surface.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span>
                          <span class="n">cylinder_origin</span><span class="o">=</span><span class="n">cylinder_center</span><span class="p">,</span>
                          <span class="n">cylinder_inner_radius</span><span class="o">=</span><span class="n">cylinder_inner_radius</span><span class="p">,</span>
                          <span class="n">cylinder_outer_radius</span><span class="o">=</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
                          <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+</div>
 
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -1158,44 +1165,35 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.ZAlignedInfiniteAnnulus">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ZAlignedInfiniteAnnulus</span><span class="p">(</span><span class="n">InfiniteAnnulus</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An annular shield of infinite length aligned with the Z axis</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the point on the cylinder centerline.</span>
-<span class="sd">    cylinder_inner_radius : float</span>
-<span class="sd">        Radius of the annulus inner surface.</span>
-<span class="sd">    cylinder_outer_radius : float</span>
-<span class="sd">        Radius of the annulus outer surface.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    inner_radius : float</span>
-<span class="sd">        Radius of the annulus inner surface.</span>
-<span class="sd">    outer_radius : float</span>
-<span class="sd">        Radius of the annulus outer surface.</span>
-<span class="sd">    origin : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location of a point on the annulus centerline.</span>
-<span class="sd">    dir : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector normal of the annulus centerline.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="ZAlignedInfiniteAnnulus.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.ZAlignedInfiniteAnnulus.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">cylinder_inner_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">cylinder_outer_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an ZAlignedInfiniteAnnulus shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        cylinder_center</span>
+<span class="sd">            X, Y, and Z coordinates of the point on the cylinder centerline.</span>
+<span class="sd">        cylinder_inner_radius</span>
+<span class="sd">            Radius of the annulus inner surface.</span>
+<span class="sd">        cylinder_outer_radius</span>
+<span class="sd">            Radius of the annulus outer surface.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span>
                          <span class="n">cylinder_origin</span><span class="o">=</span><span class="n">cylinder_center</span><span class="p">,</span>
                          <span class="n">cylinder_inner_radius</span><span class="o">=</span><span class="n">cylinder_inner_radius</span><span class="p">,</span>
                          <span class="n">cylinder_outer_radius</span><span class="o">=</span><span class="n">cylinder_outer_radius</span><span class="p">,</span>
                          <span class="n">cylinder_axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
+</div>
 
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -1205,47 +1203,36 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">CappedCylinder</span><span class="p">(</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_start : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the center of one cylinder end.</span>
-<span class="sd">    cylinder_end : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the center of another cylinder end.</span>
-<span class="sd">    cylinder_radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    origin : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location corresponding to `cylinder_start`.</span>
-<span class="sd">    end : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location corresponding to `cylinder_end`.</span>
-<span class="sd">    length : float</span>
-<span class="sd">        Length of the cylinder.</span>
-<span class="sd">    dir : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector normal of the cylinder centerline.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_start</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
-                 <span class="n">cylinder_end</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="CappedCylinder.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_start</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                 <span class="n">cylinder_end</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">cylinder_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an CappedCylinder shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        cylinder_start</span>
+<span class="sd">            X, Y, and Z coordinates of the center of one cylinder end.</span>
+<span class="sd">        cylinder_end</span>
+<span class="sd">            X, Y, and Z coordinates of the center of another cylinder end.</span>
+<span class="sd">        cylinder_radius</span>
+<span class="sd">            Radius of the cylinder.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">cylinder_radius</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cylinder_start</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cylinder_end</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span></div>
+
 
 <div class="viewcode-block" id="CappedCylinder.is_hollow">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.CappedCylinder.is_hollow">[docs]</a>
@@ -1263,11 +1250,15 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ray : :class:`ray.FiniteLengthRay`</span>
-<span class="sd">            The finite length ray that is checked for intersections</span>
-<span class="sd">            with the shield.</span>
-<span class="sd">        photon_energy : float</span>
+<span class="sd">        ray</span>
+<span class="sd">            The finite length ray that is checked for intersections with</span>
+<span class="sd">            the shield.</span>
+<span class="sd">        photon_energy</span>
 <span class="sd">            The photon energy in MeV</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            Mean free path in centimeters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># validate the arguments</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_crossing_mfp</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="n">photon_energy</span><span class="p">)</span>
@@ -1319,7 +1310,6 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        boolean</span>
 <span class="sd">            True if the shield contains the point, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># determine scalar projection of point on cylinder centerline</span>
@@ -1342,7 +1332,6 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :obj:`list`</span>
 <span class="sd">            List of points along the ray</span>
 <span class="sd">            where the ray intersects the annulus.  Will include the ray</span>
 <span class="sd">            endpoints if they are within the annular shield.</span>
@@ -1398,8 +1387,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`pyvista.PolyData`</span>
-<span class="sd">            A cylinder object representing the capped cylinder shield.</span>
+<span class="sd">            A display object representing the shield.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pyvista_found</span><span class="p">:</span>
             <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
@@ -1417,40 +1405,28 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.YAlignedCylinder">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">YAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length aligned with the Y axis</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the center of the cylinder.</span>
-<span class="sd">    cylinder_length : float</span>
-<span class="sd">        The length of the cylinder.</span>
-<span class="sd">    cylinder_radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    origin : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location corresponding to `cylinder_start`.</span>
-<span class="sd">    end : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location corresponding to `cylinder_end`.</span>
-<span class="sd">    length : float</span>
-<span class="sd">        Length of the cylinder.</span>
-<span class="sd">    dir : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector normal of the cylinder centerline.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="YAlignedCylinder.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.YAlignedCylinder.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">cylinder_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cylinder_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an YAlignedCylinder shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        cylinder_center</span>
+<span class="sd">            X, Y, and Z coordinates of the center of the cylinder.</span>
+<span class="sd">        cylinder_length</span>
+<span class="sd">            The length of the cylinder.</span>
+<span class="sd">        cylinder_radius</span>
+<span class="sd">            The radius of the cylinder.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cylinder_start</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                           <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">cylinder_length</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
                           <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
@@ -1460,6 +1436,7 @@
                          <span class="n">cylinder_start</span><span class="o">=</span><span class="n">cylinder_start</span><span class="p">,</span>
                          <span class="n">cylinder_end</span><span class="o">=</span><span class="n">cylinder_end</span><span class="p">,</span>
                          <span class="n">cylinder_radius</span><span class="o">=</span><span class="n">cylinder_radius</span><span class="p">)</span></div>
+</div>
 
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -1469,40 +1446,28 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.XAlignedCylinder">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">XAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length aligned with the X axis</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the center of the cylinder.</span>
-<span class="sd">    cylinder_length : float</span>
-<span class="sd">        The length of the cylinder.</span>
-<span class="sd">    cylinder_radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    origin : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location corresponding to `cylinder_start`.</span>
-<span class="sd">    end : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location corresponding to `cylinder_end`.</span>
-<span class="sd">    length : float</span>
-<span class="sd">        Length of the cylinder.</span>
-<span class="sd">    dir : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector normal of the cylinder centerline.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+<div class="viewcode-block" id="XAlignedCylinder.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.XAlignedCylinder.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">cylinder_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cylinder_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an XAlignedCylinder shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        cylinder_center</span>
+<span class="sd">            X, Y, and Z coordinates of the center of the cylinder.</span>
+<span class="sd">        cylinder_length</span>
+<span class="sd">            The length of the cylinder.</span>
+<span class="sd">        cylinder_radius</span>
+<span class="sd">            The radius of the cylinder.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cylinder_start</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">cylinder_length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
                           <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                           <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
@@ -1513,6 +1478,7 @@
                          <span class="n">cylinder_start</span><span class="o">=</span><span class="n">cylinder_start</span><span class="p">,</span>
                          <span class="n">cylinder_end</span><span class="o">=</span><span class="n">cylinder_end</span><span class="p">,</span>
                          <span class="n">cylinder_radius</span><span class="o">=</span><span class="n">cylinder_radius</span><span class="p">)</span></div>
+</div>
 
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -1522,41 +1488,29 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.ZAlignedCylinder">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ZAlignedCylinder</span><span class="p">(</span><span class="n">CappedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A cylindrical shield of finite length aligned with the Z axis</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the center of the cylinder.</span>
-<span class="sd">    cylinder_length : float</span>
-<span class="sd">        The length of the cylinder.</span>
-<span class="sd">    cylinder_radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material : :class: `material.Material`</span>
-<span class="sd">        Material properties of the shield</span>
-<span class="sd">    radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    origin : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location corresponding to `cylinder_start`.</span>
-<span class="sd">    end : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector location corresponding to `cylinder_end`.</span>
-<span class="sd">    length : float</span>
-<span class="sd">        Length of the cylinder.</span>
-<span class="sd">    dir : :class:`numpy.ndarray`</span>
-<span class="sd">        Vector normal of the cylinder centerline.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
+<div class="viewcode-block" id="ZAlignedCylinder.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.ZAlignedCylinder.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                 <span class="n">cylinder_center</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                 <span class="n">cylinder_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
                  <span class="n">cylinder_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cylinder_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an ZAlignedCylinder shield.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the shield.</span>
+<span class="sd">        cylinder_center</span>
+<span class="sd">            X, Y, and Z coordinates of the center of the cylinder.</span>
+<span class="sd">        cylinder_length</span>
+<span class="sd">            The length of the cylinder.</span>
+<span class="sd">        cylinder_radius</span>
+<span class="sd">            The radius of the cylinder.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cylinder_start</span> <span class="o">=</span> <span class="p">[</span><span class="n">cylinder_center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                           <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                           <span class="n">cylinder_center</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">cylinder_length</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
@@ -1567,6 +1521,7 @@
                          <span class="n">cylinder_start</span><span class="o">=</span><span class="n">cylinder_start</span><span class="p">,</span>
                          <span class="n">cylinder_end</span><span class="o">=</span><span class="n">cylinder_end</span><span class="p">,</span>
                          <span class="n">cylinder_radius</span><span class="o">=</span><span class="n">cylinder_radius</span><span class="p">)</span></div>
+</div>
 
 </pre></div>
 

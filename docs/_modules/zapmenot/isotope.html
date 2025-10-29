@@ -144,6 +144,8 @@
                               <span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">_library</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Atom</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>
 
+<div class="viewcode-block" id="Isotope.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.isotope.Isotope.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># initialize the class library if it has not already been done</span>
         <span class="k">if</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">_library</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -181,7 +183,8 @@
         <span class="c1"># photon energies and intensities are stored as a list of tuples</span>
         <span class="c1"># 2D list of photon energies and intensities</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_photons</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]</span> <span class="o">=</span> \
-            <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;photon-intensity&quot;</span><span class="p">)</span>
+            <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;photon-intensity&quot;</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">photons</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]:</span>

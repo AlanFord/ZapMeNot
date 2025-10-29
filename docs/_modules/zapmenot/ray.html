@@ -137,6 +137,8 @@
 <span class="sd">        Indicates the signs of the components of :py:obj:`dir`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+<div class="viewcode-block" id="FiniteLengthRay.__init__">
+<a class="viewcode-back" href="../../module-docs.html#zapmenot.ray.FiniteLengthRay.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">end</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">FiniteLengthRay</span><span class="o">.</span><span class="n">_is_validate_vector</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid ray start&quot;</span><span class="p">)</span>
@@ -149,7 +151,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dir</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_invdir</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sign</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_regularize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_regularize</span><span class="p">()</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>

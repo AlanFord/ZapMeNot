@@ -200,5 +200,9 @@ linkcheck_retries = 3
 linkcheck_timeout = 500
 
 autodoc_member_order = 'bysource'
+napoleon_numpy_docstring = True
+napoleon_include_init_with_doc = True
+autodoc_typehints = "description"
+autodoc_class_signature = "separated"
 # napoleon_use_param = True
 # always_document_param_types = True

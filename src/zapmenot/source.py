@@ -1,3 +1,18 @@
+import abc
+import math
+import numpy as np
+from enum import Enum
+from typing import List, Tuple, Union, Any, Optional
+from collections.abc import KeysView
+
+from . import shield, isotope, ray
+
+import importlib
+pyvista_spec = importlib.util.find_spec("pyvista")
+pyvista_found = pyvista_spec is not None
+if pyvista_found:
+    import pyvista
+''' '''
 '''
 ZapMeNot - a point kernel photon shielding library
 Copyright (C) 2019-2025  C. Alan Ford
@@ -16,20 +31,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-import abc
-import math
-import numpy as np
-from enum import Enum
-from typing import List, Tuple, Union, Sequence, Any, Optional
-from collections.abc import KeysView
-
-from . import shield, isotope, ray
-
-import importlib
-pyvista_spec = importlib.util.find_spec("pyvista")
-pyvista_found = pyvista_spec is not None
-if pyvista_found:
-    import pyvista
 
 # -----------------------------------------------------------
 
@@ -338,7 +339,7 @@ class LineSource(Source):
     end : :class:`numpy.ndarray`
         Vector location of one end of the line source.
     '''
-    def __init__(self, start: Sequence[float], end: Sequence[float],
+    def __init__(self, start: list[float], end: list[float],
                  **kwargs: Any) -> None:
         "Initialize"
         self.origin: np.ndarray = np.array(start)
@@ -589,7 +590,7 @@ class SphereSource(Source, shield.Sphere):
         radius of the sphere.
     '''
 
-    def __init__(self, material_name: str, sphere_center: Sequence[float],
+    def __init__(self, material_name: str, sphere_center: list[float],
                  sphere_radius: float, density: Optional[float] = None,
                  **kwargs: Any) -> None:
         kwargs['material_name'] = material_name

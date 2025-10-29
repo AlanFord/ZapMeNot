@@ -1,3 +1,19 @@
+import abc
+import math
+import numbers
+import copy
+from typing import Optional, List, Tuple, Any
+
+import numpy as np
+
+from . import material, ray
+
+import importlib
+pyvista_spec = importlib.util.find_spec("pyvista")
+pyvista_found = pyvista_spec is not None
+if pyvista_found:
+    import pyvista
+''' '''
 '''
 ZapMeNot - a point kernel photon shielding library
 Copyright (C) 2019-2025  C. Alan Ford
@@ -16,46 +32,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-import abc
-import math
-import numbers
-import copy
-from typing import Optional, List, Sequence, Tuple, Any
-
-import numpy as np
-
-from . import material, ray
-
-import importlib
-pyvista_spec = importlib.util.find_spec("pyvista")
-pyvista_found = pyvista_spec is not None
-if pyvista_found:
-    import pyvista
 
 # -----------------------------------------------------------
 
 
 class Shield(abc.ABC):
     """Abtract class to model a photon shield.
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`, optional
-        Shield material type
-    density : float, optional
-        Material density in g/cm3
-    **kwargs
-        Arbitrary keyword arguments.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    '''
 
     def __init__(self, material_name: Optional[str] = None,
                  density: Optional[float] = None, **kwargs: Any) -> None:
+        """Create a photon shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        density
+            Material density in g/cm3.
+        **kwargs
+            Arbitrary keyword arguments.
+        """
         # the material name is validated by the Material class
         self.material: material.Material = material.Material(material_name)
         if density is not None:
@@ -75,7 +72,7 @@ class Shield(abc.ABC):
 
         Parameters
         ----------
-        a_ray : :class:`ray.FiniteLengthRay`
+        a_ray
             The finite length ray that is checked for intersections
             with the shield.
         """
@@ -90,10 +87,10 @@ class Shield(abc.ABC):
 
         Parameters
         ----------
-        a_ray : :class:`ray.FiniteLengthRay`
+        a_ray
             The finite length ray that is checked for intersections
             with the shield.
-        photon_energy : float
+        photon_energy
             The photon energy in MeV
         """
         if not isinstance(a_ray, ray.FiniteLengthRay):
@@ -108,8 +105,7 @@ class Shield(abc.ABC):
 
         Returns
         -------
-        :class:`pyvista.PolyData`
-            A box object representing the slab shield.
+            A display object representing the shield.
         """
         pass
 
@@ -124,15 +120,15 @@ class Shield(abc.ABC):
 
         Parameters
         ----------
-        plane_normal : :class:`numpy.ndarray`
+        plane_normal
             A vector normal to the plane
-        plane_point : :class:`numpy.ndarray`
+        plane_point
             Vector location of an arbitrary point on the plane
-        ray_origin : :class:`numpy.ndarray`
+        ray_origin
             The vector location of the ray origin
-        ray_normal : :class:`numpy.ndarray`
+        ray_normal
             The vector normal of the ray
-        photon_energy : float
+        photon_energy
             The photon energy in MeV
 
         Notes
@@ -169,9 +165,9 @@ class Shield(abc.ABC):
                 big_list.append(a_length)
         if len(big_list) != 2:
             # if not 2 intersections, look for ray endpoints inside the sphere
-            if sphere.contains(ray._origin):
+            if sphere._contains(ray._origin):
                 big_list.append(0)
-            if sphere.contains(np.array(ray._end)):
+            if sphere._contains(np.array(ray._end)):
                 big_list.append(ray._length)
         if len(big_list) == 0:
             # ray misses the sphere
@@ -198,31 +194,23 @@ class SemiInfiniteShield(Shield):
 
 class SemiInfiniteXSlab(SemiInfiniteShield):
     """A semi-infinite slab shield perpendicular to the X axis.
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    x_start : float
-        X axis location of the inner edge of the shield.
-    x_end : float
-        X axis location of the outer edge of the shield.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    x_start : float
-        X axis location of the inner edge of the shield.
-    x_end : float
-        X axis location of the outer edge of the shield.
-    '''
 
     def __init__(self, material_name: str, x_start: float, x_end: float,
                  density: Optional[float] = None) -> None:
+        """Create a SemiInfiniteXSlab shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        x_start
+            X axis location of the inner edge of the shield.
+        x_end
+            X axis location of the outer edge of the shield.
+        density
+            Material density in g/cm3.
+        """
         super().__init__(material_name=material_name, density=density)
         self.x_start: float = x_start
         self.x_end: float = x_end
@@ -237,9 +225,9 @@ class SemiInfiniteXSlab(SemiInfiniteShield):
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with
-            the shield.
+        a_ray
+            The finite length ray that is checked for intersections
+            with the shield.
         """
         super()._get_crossing_length(ray)  # validate the arguments
         ray_origin = ray._origin
@@ -286,10 +274,10 @@ class SemiInfiniteXSlab(SemiInfiniteShield):
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections with
-            the shield.
-        photon_energy : float
+        a_ray
+            The finite length ray that is checked for intersections
+            with the shield.
+        photon_energy
             The photon energy in MeV
         """
         # validate the arguments
@@ -302,8 +290,7 @@ class SemiInfiniteXSlab(SemiInfiniteShield):
 
         Returns
         -------
-        :class:`pyvista.PolyData`
-            A box object representing the slab shield.
+            A display object representing the shield.
         """
         if pyvista_found:
             return pyvista.Box(bounds=(self.x_start, self.x_end, -1000, 1000,
@@ -321,17 +308,6 @@ class SemiInfiniteXSlab(SemiInfiniteShield):
 
 class Sphere(Shield):
     """A spherical shield.
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    sphere_center : list
-        list of floats (x, y, and z coordinates).
-    sphere_radius : float
-        radius of the shield.
-    density : float, optional
-        Material density in g/cm3.
     """
     '''
     Attributes
@@ -346,8 +322,19 @@ class Sphere(Shield):
     def __init__(self, material_name: str, sphere_center: List[float],
                  sphere_radius: float,
                  density: Optional[float] = None, **kwargs: Any) -> None:
-        '''Initialize material composition and location of the
-            spherical shield'''
+        '''Create a spherical shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        sphere_center
+            Vector location of the center of the sphere in cartesian coordiantes.
+        sphere_radius
+            Radius of the shield.
+        density
+            Material density in g/cm3.
+        '''
         super().__init__(material_name=material_name, density=density)
         self.center: List[float] = sphere_center
         self.radius: float = sphere_radius
@@ -359,7 +346,20 @@ class Sphere(Shield):
 
     def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
                          photon_energy: float) -> float:
-        '''returns the crossing mfp'''
+        """Calculates the mfp equivalent if a ray intersects the shield
+
+        Parameters
+        ----------
+        ray
+            The finite length ray that is checked for intersections with
+            the shield.
+        photon_energy
+            The photon energy in MeV
+
+        Returns
+        -------
+            Mean free path in centimeters.
+        """
         super().get_crossing_mfp(ray, photon_energy)  # validate the arguments
         distance = self._get_crossing_length(ray)
         return self.material.get_mfp(photon_energy, distance)
@@ -367,11 +367,18 @@ class Sphere(Shield):
     def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> float:
         return self._ray_sphere_intersection(ray, self)
 
-    def contains(self, point: np.ndarray) -> bool:
-        '''
-        Returns true if the point is contained within the sphere,
-        otherwise false
-        '''
+    def _contains(self, point: np.ndarray) -> bool:
+        """Determines if the shield contains a point
+
+        Parameters
+        ----------
+        point
+            The X, Y, and Z cartesian coordinates of a point.
+
+        Returns
+        -------
+            True if the box contains the point, false otherwise
+        """
         ray = point - self.center
         if np.dot(ray, ray) > self.radius**2:
             return False
@@ -382,8 +389,7 @@ class Sphere(Shield):
 
         Returns
         -------
-        :class:`pyvista.PolyData`
-            A Sphere object representing the sphere shield.
+            A display object representing the shield.
         """
         if pyvista_found:
             return pyvista.Sphere(radius=float(self.radius),
@@ -394,11 +400,23 @@ class Sphere(Shield):
 
 
 class Shell(Shield):
-    """A shell that surrounds a spherical shield or source"""
+    """A shell that surrounds a spherical shield or source."""
 
     def __init__(self, material_name: str, sphere: Sphere, thickness: float,
                  density: Optional[float] = None, **kwargs: Any) -> None:
-        '''Initialize material composition and location of the shell'''
+        """Create a Shell shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        sphere
+            The spherical shield or source that defines the inner boundary of the shell.
+        thickness
+            The thickness of the shell.
+        density
+            Material density in g/cm3.
+        """
         super().__init__(material_name=material_name, density=density)
         if thickness <= 0:
             raise ValueError("Shell has zero or negative thickness")
@@ -417,7 +435,20 @@ class Shell(Shield):
 
     def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
                          photon_energy: float) -> float:
-        '''returns the crossing mfp'''
+        """Calculates the mfp equivalent if a ray intersects the shield
+
+        Parameters
+        ----------
+        ray
+            The finite length ray that is checked for intersections with
+            the shield.
+        photon_energy
+            The photon energy in MeV
+
+        Returns
+        -------
+            Mean free path in centimeters.
+        """
         super().get_crossing_mfp(ray, photon_energy)  # validate the arguments
         distance = self._get_crossing_length(ray)
         return self.outer_sphere.material.get_mfp(photon_energy, distance)
@@ -432,13 +463,13 @@ class Shell(Shield):
             crossing_length = 0
         return crossing_length
 
-    def contains(self, point: np.ndarray) -> bool:
+    def _contains(self, point: np.ndarray) -> bool:
         '''
         Returns true if the point is contained within the shell,
         otherwise false
         '''
-        if self.outer_sphere.contains(point) and \
-                not self.inner_sphere.contains(point):
+        if self.outer_sphere._contains(point) and \
+                not self.inner_sphere._contains(point):
             return True
         else:
             return False
@@ -448,8 +479,7 @@ class Shell(Shield):
 
         Returns
         -------
-        :class:`pyvista.PolyData`
-            A Sphere object representing the sphere shield.
+            A display object representing the shield.
         """
         if pyvista_found:
             sphere_a = pyvista.Sphere(radius=float(self.outer_sphere.radius),
@@ -465,34 +495,25 @@ class Shell(Shield):
 
 class Box(Shield):
     """A rectangular polyhedron shield.
-
-    All sides of the box shield must be axis-aligned.
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    box_center : :obj:`list`
-        X, Y, and Z coordinates of the box center.
-    box_dimensions : :obj:`list`
-        X, Y, and Z dimensions of the box.
-    density : float, optional
-        Material density in g/cm3.
+       All sides of the box shield must be axis-aligned.
     """
-    '''
-    Attributes
-    ----------
-    material : :class:material.Material
-        Material properties of the shield
-    box_center : :class:numpy.ndarray
-        Vector location of the center of the box in cartesian coordiantes.
-    box_dimensions :  :class:numpy.ndarray
-        Vector holding the dimensions of the box.
-    '''
 
-    def __init__(self, material_name: str, box_center: Sequence[float],
-                 box_dimensions: Sequence[float],
+    def __init__(self, material_name: str, box_center: list[float],
+                 box_dimensions: list[float],
                  density: Optional[float] = None) -> None:
+        """Create a Box shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        box_center
+            Vector location of the center of the box in cartesian coordiantes.
+        box_dimensions
+            Vector holding the dimensions of the box.
+        density
+            Material density in g/cm3.
+        """
         super().__init__(material_name=material_name, density=density)
         self.box_center: np.ndarray = np.array(box_center)
         self.box_dimensions: np.ndarray = np.array(box_dimensions)
@@ -502,7 +523,8 @@ class Box(Shield):
         """
         return False
 
-    def get_crossing_mfp(self, ray: ray.FiniteLengthRay, photon_energy: float) -> float:
+    def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
+                         photon_energy: float) -> float:
         """Calculates the mfp equivalent if a ray intersects the shield
 
         Parameters
@@ -527,7 +549,7 @@ class Box(Shield):
 
         Returns
         -------
-            A box object representing the box shield.
+            A display object representing the shield.
         """
         if pyvista_found:
             xmin = self.box_center[0]-self.box_dimensions[0]/2
@@ -582,7 +604,6 @@ class Box(Shield):
 
         Returns
         -------
-        boolean
             True if the box contains the point, false otherwise
         """
         x = point[0]
@@ -655,42 +676,30 @@ class Box(Shield):
 
 class InfiniteAnnulus(SemiInfiniteShield):
     """An annular shield of infinite length
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_origin : :obj:`list`
-        X, Y, and Z coordinates of the point on the cylinder centerline.
-    cylinder_axis : :obj:`list`
-        X, Y, and Z vector components of the cylinder axis.
-    cylinder_inner_radius : float
-        Radius of the annulus inner surface.
-    cylinder_outer_radius : float
-        Radius of the annulus outer surface.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    inner_radius : float
-        Radius of the annulus inner surface.
-    outer_radius : float
-        Radius of the annulus outer surface.
-    origin : :class:`numpy.ndarray`
-        Vector location of a point on the annulus centerline.
-    dir : :class:`numpy.ndarray`
-        Vector normal of the annulus centerline.
-    '''
 
-    def __init__(self, material_name: str, cylinder_origin: Sequence[float],
-                 cylinder_axis: Sequence[float],
+    def __init__(self, material_name: str, cylinder_origin: list[float],
+                 cylinder_axis: list[float],
                  cylinder_inner_radius: float,
                  cylinder_outer_radius: float,
                  density: Optional[float] = None) -> None:
+        """Create an InfiniteAnnulus shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        cylinder_origin
+            X, Y, and Z coordinates of the point on the cylinder centerline.
+        cylinder_axis
+            X, Y, and Z vector components of the cylinder axis.
+        cylinder_inner_radius
+            Radius of the annulus inner surface.
+        cylinder_outer_radius
+            Radius of the annulus outer surface.
+        density
+            Material density in g/cm3.
+        """
         super().__init__(material_name=material_name, density=density)
         self.inner_radius: float = cylinder_inner_radius
         self.outer_radius: float = cylinder_outer_radius
@@ -709,9 +718,15 @@ class InfiniteAnnulus(SemiInfiniteShield):
 
         Parameters
         ----------
-        ray : The finite length ray that is checked for intersections
-            with the shield.
-        photon_energy : The photon energy in MeV
+        ray
+            The finite length ray that is checked for intersections with
+            the shield.
+        photon_energy
+            The photon energy in MeV
+
+        Returns
+        -------
+            Mean free path in centimeters.
         """
         # validate the arguments
         super().get_crossing_mfp(ray, photon_energy)
@@ -723,7 +738,7 @@ class InfiniteAnnulus(SemiInfiniteShield):
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
+        ray
             The finite length ray that is checked for intersections
             with the shield.
         """
@@ -758,7 +773,7 @@ class InfiniteAnnulus(SemiInfiniteShield):
 
         Parameters
         ----------
-        point : :obj:`list`
+        point
             The X, Y, and Z cartesian coordinates of a point.
 
         Returns
@@ -785,7 +800,6 @@ class InfiniteAnnulus(SemiInfiniteShield):
 
         Returns
         -------
-        :obj:`list`
             List of distances along the ray, measured from the ray origin,
             where the ray intersects the annulus.  Will include the ray
             endpoints if they are within the annular shield.
@@ -825,8 +839,7 @@ class InfiniteAnnulus(SemiInfiniteShield):
 
         Returns
         -------
-        :class:`pyvista.PolyData`
-            A boolean object representing the annular cylinder shield.
+            A display object representing the shield.
         """
         if pyvista_found:
             # define an imaginary bottom of the shield at a distance
@@ -901,39 +914,27 @@ class InfiniteAnnulus(SemiInfiniteShield):
 
 class YAlignedInfiniteAnnulus(InfiniteAnnulus):
     """An annular shield of infinite length aligned with the Y axis
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_center : :obj:`list`
-        X, Y, and Z coordinates of the point on the cylinder centerline.
-    cylinder_inner_radius : float
-        Radius of the annulus inner surface.
-    cylinder_outer_radius : float
-        Radius of the annulus outer surface.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    inner_radius : float
-        Radius of the annulus inner surface.
-    outer_radius : float
-        Radius of the annulus outer surface.
-    origin : :class:`numpy.ndarray`
-        Vector location of a point on the annulus centerline.
-    dir : :class:`numpy.ndarray`
-        Vector normal of the annulus centerline.
-    '''
 
-    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+    def __init__(self, material_name: str, cylinder_center: list[float],
                  cylinder_inner_radius: float,
                  cylinder_outer_radius: float,
                  density: Optional[float] = None) -> None:
+        """Create an YAlignedInfiniteAnnulus shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        cylinder_center
+            X, Y, and Z coordinates of the point on the cylinder centerline.
+        cylinder_inner_radius
+            Radius of the annulus inner surface.
+        cylinder_outer_radius
+            Radius of the annulus outer surface.
+        density
+            Material density in g/cm3.
+        """
         super().__init__(material_name=material_name, density=density,
                          cylinder_origin=cylinder_center,
                          cylinder_inner_radius=cylinder_inner_radius,
@@ -945,38 +946,26 @@ class YAlignedInfiniteAnnulus(InfiniteAnnulus):
 
 class XAlignedInfiniteAnnulus(InfiniteAnnulus):
     """An annular shield of infinite length aligned with the X axis
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_center : :obj:`list`
-        X, Y, and Z coordinates of the point on the cylinder centerline.
-    cylinder_inner_radius : float
-        Radius of the annulus inner surface.
-    cylinder_outer_radius : float
-        Radius of the annulus outer surface.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    inner_radius : float
-        Radius of the annulus inner surface.
-    outer_radius : float
-        Radius of the annulus outer surface.
-    origin : :class:`numpy.ndarray`
-        Vector location of a point on the annulus centerline.
-    dir : :class:`numpy.ndarray`
-        Vector normal of the annulus centerline.
-    '''
-    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+    def __init__(self, material_name: str, cylinder_center: list[float],
                  cylinder_inner_radius: float,
                  cylinder_outer_radius: float,
                  density: Optional[float] = None) -> None:
+        """Create an XAlignedInfiniteAnnulus shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        cylinder_center
+            X, Y, and Z coordinates of the point on the cylinder centerline.
+        cylinder_inner_radius
+            Radius of the annulus inner surface.
+        cylinder_outer_radius
+            Radius of the annulus outer surface.
+        density
+            Material density in g/cm3.
+        """
         super().__init__(material_name=material_name, density=density,
                          cylinder_origin=cylinder_center,
                          cylinder_inner_radius=cylinder_inner_radius,
@@ -988,39 +977,27 @@ class XAlignedInfiniteAnnulus(InfiniteAnnulus):
 
 class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
     """An annular shield of infinite length aligned with the Z axis
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_center : :obj:`list`
-        X, Y, and Z coordinates of the point on the cylinder centerline.
-    cylinder_inner_radius : float
-        Radius of the annulus inner surface.
-    cylinder_outer_radius : float
-        Radius of the annulus outer surface.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    inner_radius : float
-        Radius of the annulus inner surface.
-    outer_radius : float
-        Radius of the annulus outer surface.
-    origin : :class:`numpy.ndarray`
-        Vector location of a point on the annulus centerline.
-    dir : :class:`numpy.ndarray`
-        Vector normal of the annulus centerline.
-    '''
 
-    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+    def __init__(self, material_name: str, cylinder_center: list[float],
                  cylinder_inner_radius: float,
                  cylinder_outer_radius: float,
                  density: Optional[float] = None) -> None:
+        """Create an ZAlignedInfiniteAnnulus shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        cylinder_center
+            X, Y, and Z coordinates of the point on the cylinder centerline.
+        cylinder_inner_radius
+            Radius of the annulus inner surface.
+        cylinder_outer_radius
+            Radius of the annulus outer surface.
+        density
+            Material density in g/cm3.
+        """
         super().__init__(material_name=material_name, density=density,
                          cylinder_origin=cylinder_center,
                          cylinder_inner_radius=cylinder_inner_radius,
@@ -1032,41 +1009,27 @@ class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
 
 class CappedCylinder(Shield):
     """A cylindrical shield of finite length
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_start : :obj:`list`
-        X, Y, and Z coordinates of the center of one cylinder end.
-    cylinder_end : :obj:`list`
-        X, Y, and Z coordinates of the center of another cylinder end.
-    cylinder_radius : float
-        Radius of the cylinder.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    radius : float
-        Radius of the cylinder.
-    origin : :class:`numpy.ndarray`
-        Vector location corresponding to `cylinder_start`.
-    end : :class:`numpy.ndarray`
-        Vector location corresponding to `cylinder_end`.
-    length : float
-        Length of the cylinder.
-    dir : :class:`numpy.ndarray`
-        Vector normal of the cylinder centerline.
-    '''
 
-    def __init__(self, material_name: str, cylinder_start: Sequence[float],
-                 cylinder_end: Sequence[float],
+    def __init__(self, material_name: str, cylinder_start: list[float],
+                 cylinder_end: list[float],
                  cylinder_radius: float,
                  density: Optional[float] = None) -> None:
+        """Create an CappedCylinder shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        cylinder_start
+            X, Y, and Z coordinates of the center of one cylinder end.
+        cylinder_end
+            X, Y, and Z coordinates of the center of another cylinder end.
+        cylinder_radius
+            Radius of the cylinder.
+        density
+            Material density in g/cm3.
+        """
         super().__init__(material_name=material_name, density=density)
         self.radius: float = cylinder_radius
         self.origin: np.ndarray = np.array(cylinder_start)
@@ -1085,11 +1048,15 @@ class CappedCylinder(Shield):
 
         Parameters
         ----------
-        ray : :class:`ray.FiniteLengthRay`
-            The finite length ray that is checked for intersections
-            with the shield.
-        photon_energy : float
+        ray
+            The finite length ray that is checked for intersections with
+            the shield.
+        photon_energy
             The photon energy in MeV
+
+        Returns
+        -------
+            Mean free path in centimeters.
         """
         # validate the arguments
         super().get_crossing_mfp(ray, photon_energy)
@@ -1140,7 +1107,6 @@ class CappedCylinder(Shield):
 
         Returns
         -------
-        boolean
             True if the shield contains the point, false otherwise
         """
         # determine scalar projection of point on cylinder centerline
@@ -1163,7 +1129,6 @@ class CappedCylinder(Shield):
 
         Returns
         -------
-        :obj:`list`
             List of points along the ray
             where the ray intersects the annulus.  Will include the ray
             endpoints if they are within the annular shield.
@@ -1217,8 +1182,7 @@ class CappedCylinder(Shield):
 
         Returns
         -------
-        :class:`pyvista.PolyData`
-            A cylinder object representing the capped cylinder shield.
+            A display object representing the shield.
         """
         if pyvista_found:
             center = (self.origin + self.end) / 2
@@ -1232,40 +1196,26 @@ class CappedCylinder(Shield):
 
 class YAlignedCylinder(CappedCylinder):
     """A cylindrical shield of finite length aligned with the Y axis
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_center : :obj:`list`
-        X, Y, and Z coordinates of the center of the cylinder.
-    cylinder_length : float
-        The length of the cylinder.
-    cylinder_radius : float
-        Radius of the cylinder.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    radius : float
-        Radius of the cylinder.
-    origin : :class:`numpy.ndarray`
-        Vector location corresponding to `cylinder_start`.
-    end : :class:`numpy.ndarray`
-        Vector location corresponding to `cylinder_end`.
-    length : float
-        Length of the cylinder.
-    dir : :class:`numpy.ndarray`
-        Vector normal of the cylinder centerline.
-    '''
 
-    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+    def __init__(self, material_name: str, cylinder_center: list[float],
                  cylinder_length: float, cylinder_radius: float,
                  density: Optional[float] = None) -> None:
+        """Create an YAlignedCylinder shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        cylinder_center
+            X, Y, and Z coordinates of the center of the cylinder.
+        cylinder_length
+            The length of the cylinder.
+        cylinder_radius
+            The radius of the cylinder.
+        density
+            Material density in g/cm3.
+        """
         cylinder_start = [cylinder_center[0],
                           cylinder_center[1]-cylinder_length/2,
                           cylinder_center[2]]
@@ -1281,40 +1231,26 @@ class YAlignedCylinder(CappedCylinder):
 
 class XAlignedCylinder(CappedCylinder):
     """A cylindrical shield of finite length aligned with the X axis
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_center : :obj:`list`
-        X, Y, and Z coordinates of the center of the cylinder.
-    cylinder_length : float
-        The length of the cylinder.
-    cylinder_radius : float
-        Radius of the cylinder.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    radius : float
-        Radius of the cylinder.
-    origin : :class:`numpy.ndarray`
-        Vector location corresponding to `cylinder_start`.
-    end : :class:`numpy.ndarray`
-        Vector location corresponding to `cylinder_end`.
-    length : float
-        Length of the cylinder.
-    dir : :class:`numpy.ndarray`
-        Vector normal of the cylinder centerline.
-    '''
 
-    def __init__(self, material_name: str, cylinder_center: Sequence[float],
+    def __init__(self, material_name: str, cylinder_center: list[float],
                  cylinder_length: float, cylinder_radius: float,
                  density: Optional[float] = None) -> None:
+        """Create an XAlignedCylinder shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        cylinder_center
+            X, Y, and Z coordinates of the center of the cylinder.
+        cylinder_length
+            The length of the cylinder.
+        cylinder_radius
+            The radius of the cylinder.
+        density
+            Material density in g/cm3.
+        """
         cylinder_start = [cylinder_center[0]-cylinder_length / 2,
                           cylinder_center[1],
                           cylinder_center[2]]
@@ -1331,41 +1267,27 @@ class XAlignedCylinder(CappedCylinder):
 
 class ZAlignedCylinder(CappedCylinder):
     """A cylindrical shield of finite length aligned with the Z axis
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_center : :obj:`list`
-        X, Y, and Z coordinates of the center of the cylinder.
-    cylinder_length : float
-        The length of the cylinder.
-    cylinder_radius : float
-        Radius of the cylinder.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    radius : float
-        Radius of the cylinder.
-    origin : :class:`numpy.ndarray`
-        Vector location corresponding to `cylinder_start`.
-    end : :class:`numpy.ndarray`
-        Vector location corresponding to `cylinder_end`.
-    length : float
-        Length of the cylinder.
-    dir : :class:`numpy.ndarray`
-        Vector normal of the cylinder centerline.
-    '''
 
     def __init__(self, material_name: str,
-                 cylinder_center: Sequence[float],
+                 cylinder_center: list[float],
                  cylinder_length: float, cylinder_radius: float,
                  density: Optional[float] = None) -> None:
+        """Create an ZAlignedCylinder shield.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the shield.
+        cylinder_center
+            X, Y, and Z coordinates of the center of the cylinder.
+        cylinder_length
+            The length of the cylinder.
+        cylinder_radius
+            The radius of the cylinder.
+        density
+            Material density in g/cm3.
+        """
         cylinder_start = [cylinder_center[0],
                           cylinder_center[1],
                           cylinder_center[2]-cylinder_length/2]
