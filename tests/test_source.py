@@ -277,13 +277,28 @@ class TestBoxSource():
 
     def test_getSourcePointWeights(self, create_source):
         the_list = np.array([1.0 / 1000] * 1000)
-        np.testing.assert_allclose(create_source._get_source_point_weights(), the_list)
+        np.testing.assert_allclose(create_source._get_source_point_weights(),
+                                   the_list)
 
     # test invalid number of entries in source points per dimension
     def test_getSourcePoints2(self, create_source):
         create_source.points_per_dimension = [1, 1]
         with pytest.raises(ValueError):
             create_source._get_source_points()
+
+    def test_position_init(self):
+        # test the use of position argument in init
+        create_source = source.BoxSource('iron',
+                                         [4, 5, 6],
+                                         box_dimensions=[10, 10, 10],
+                                         density=1.2)
+        assert all(create_source.box_center == [4, 5, 6])
+        assert all(create_source.box_dimensions == [10, 10, 10])
+        assert create_source.material.name == "iron"
+        assert create_source.material.density == 1.2
+        # test attribute of source class
+        assert create_source._include_key_progeny is False
+        assert create_source.points_per_dimension == [10, 10, 10]
 
 # =============================================================
 
@@ -350,7 +365,8 @@ class TestXAlignedCylinderSource():
 
     def test_getSourcePointWeights(self, create_source):
         the_list = np.array([1.0 / 27] * 27)
-        np.testing.assert_allclose(create_source._get_source_point_weights(), the_list)
+        np.testing.assert_allclose(create_source._get_source_point_weights(),
+                                   the_list)
 
     # test invalid number of entries in source points per dimension
     def test_getSourcePoints2(self, create_source):
@@ -423,7 +439,8 @@ class TestYAlignedCylinderSource():
 
     def test_getSourcePointWeights(self, create_source):
         the_list = np.array([1.0 / 27] * 27)
-        np.testing.assert_allclose(create_source._get_source_point_weights(), the_list)
+        np.testing.assert_allclose(create_source._get_source_point_weights(),
+                                   the_list)
 
     # test invalid number of entries in source points per dimension
     def test_getSourcePoints2(self, create_source):
@@ -496,7 +513,8 @@ class TestZAlignedCylinderSource():
 
     def test_getSourcePointWeights(self, create_source):
         the_list = np.array([1.0 / 27] * 27)
-        np.testing.assert_allclose(create_source._get_source_point_weights(), the_list)
+        np.testing.assert_allclose(create_source._get_source_point_weights(),
+                                   the_list)
 
     # test invalid number of entries in source points per dimension
     def test_getSourcePoints2(self, create_source):

@@ -646,8 +646,26 @@ class SphereSource(Source, shield.Sphere):
 class BoxSource(Source, shield.Box):
     """Models a Axis-Aligned rectangular box source
     """
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, material_name: str, box_center: list[float],
+                 box_dimensions: list[float],
+                 density: Optional[float] = None) -> None:
+        """Create a Box source.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the source.
+        box_center
+            Vector location of the center of the box in cartesian coordiantes.
+        box_dimensions
+            Vector holding the dimensions of the box.
+        density
+            Material density in g/cm3.
+        """
+        super().__init__(material_name=material_name,
+                         box_center=box_center,
+                         box_dimensions=box_dimensions,
+                         density=density)
 
     def _get_source_point_weights(self) -> np.ndarray:
         '''
@@ -689,26 +707,32 @@ class BoxSource(Source, shield.Box):
 
 class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
     """Models a cylindrical source axis-aligned with the Z axis.
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_center : :obj:`list`
-        X, Y, and Z coordinates of the center of the cylinder.
-    cylinder_length : float
-        The length of the cylinder.
-    cylinder_radius : float
-        Radius of the cylinder.
-    density : float, optional
-        Material density in g/cm3.
-
     """
-    # initialize with cylinderCenter, cylinderLength, cylinderRadius,
-    # material(optional), density(optional)
 
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, material_name: str,
+                 cylinder_center: list[float],
+                 cylinder_length: float, cylinder_radius: float,
+                 density: Optional[float] = None) -> None:
+        """Create an ZAlignedCylinder source.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the source.
+        cylinder_center
+            X, Y, and Z coordinates of the center of the cylinder.
+        cylinder_length
+            The length of the cylinder.
+        cylinder_radius
+            The radius of the cylinder.
+        density
+            Material density in g/cm3.
+        """
+        super().__init__(material_name=material_name,
+                         cylinder_center=cylinder_center,
+                         cylinder_length=cylinder_length,
+                         cylinder_radius=cylinder_radius,
+                         density=density)
 
     def _get_source_point_weights(self) -> np.ndarray:
         '''
@@ -746,26 +770,31 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 
 class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
     """Models a cylindrical source axis-aligned with the Y axis.
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_center : :obj:`list`
-        X, Y, and Z coordinates of the center of the cylinder.
-    cylinder_length : float
-        The length of the cylinder.
-    cylinder_radius : float
-        Radius of the cylinder.
-    density : float, optional
-        Material density in g/cm3.
-
     """
-    # initialize with cylinderCenter, cylinderLength, cylinderRadius,
-    # material(optional), density(optional)
 
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, material_name: str, cylinder_center: list[float],
+                 cylinder_length: float, cylinder_radius: float,
+                 density: Optional[float] = None) -> None:
+        """Create an YAlignedCylinder source.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the source.
+        cylinder_center
+            X, Y, and Z coordinates of the center of the cylinder.
+        cylinder_length
+            The length of the cylinder.
+        cylinder_radius
+            The radius of the cylinder.
+        density
+            Material density in g/cm3.
+        """
+        super().__init__(material_name=material_name,
+                         cylinder_center=cylinder_center,
+                         cylinder_length=cylinder_length,
+                         cylinder_radius=cylinder_radius,
+                         density=density)
 
     def _get_source_point_weights(self) -> np.ndarray:
         '''
@@ -808,26 +837,31 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
 
 class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
     """Models a cylindrical source axis-aligned with the X axis.
-
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    cylinder_center : :obj:`list`
-        X, Y, and Z coordinates of the center of the cylinder.
-    cylinder_length : float
-        The length of the cylinder.
-    cylinder_radius : float
-        Radius of the cylinder.
-    density : float, optional
-        Material density in g/cm3.
-
     """
-    # initialize with cylinderCenter, cylinderLength, cylinderRadius,
-    # material(optional), density(optional)
 
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, material_name: str, cylinder_center: list[float],
+                 cylinder_length: float, cylinder_radius: float,
+                 density: Optional[float] = None) -> None:
+        """Create an XAlignedCylinder source.
+
+        Parameters
+        ----------
+        material_name
+            Name of the material composing the source.
+        cylinder_center
+            X, Y, and Z coordinates of the center of the cylinder.
+        cylinder_length
+            The length of the cylinder.
+        cylinder_radius
+            The radius of the cylinder.
+        density
+            Material density in g/cm3.
+        """
+        super().__init__(material_name=material_name,
+                         cylinder_center=cylinder_center,
+                         cylinder_length=cylinder_length,
+                         cylinder_radius=cylinder_radius,
+                         density=density)
 
     def _get_source_point_weights(self) -> np.ndarray:
         '''

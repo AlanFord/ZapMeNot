@@ -329,7 +329,8 @@ class Sphere(Shield):
         material_name
             Name of the material composing the shield.
         sphere_center
-            Vector location of the center of the sphere in cartesian coordiantes.
+            Vector location of the center of the sphere in
+            cartesian coordinates.
         sphere_radius
             Radius of the shield.
         density
@@ -411,7 +412,8 @@ class Shell(Shield):
         material_name
             Name of the material composing the shield.
         sphere
-            The spherical shield or source that defines the inner boundary of the shell.
+            The spherical shield or source that defines the
+            inner boundary of the shell.
         thickness
             The thickness of the shell.
         density

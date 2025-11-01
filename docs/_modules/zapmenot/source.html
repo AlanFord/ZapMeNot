@@ -794,8 +794,26 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="BoxSource.__init__">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.BoxSource.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">box_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                 <span class="n">box_dimensions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                 <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Box source.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the source.</span>
+<span class="sd">        box_center</span>
+<span class="sd">            Vector location of the center of the box in cartesian coordiantes.</span>
+<span class="sd">        box_dimensions</span>
+<span class="sd">            Vector holding the dimensions of the box.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span>
+                         <span class="n">box_center</span><span class="o">=</span><span class="n">box_center</span><span class="p">,</span>
+                         <span class="n">box_dimensions</span><span class="o">=</span><span class="n">box_dimensions</span><span class="p">,</span>
+                         <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -841,28 +859,34 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.ZAlignedCylinderSource">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ZAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">ZAlignedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the Z axis.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the center of the cylinder.</span>
-<span class="sd">    cylinder_length : float</span>
-<span class="sd">        The length of the cylinder.</span>
-<span class="sd">    cylinder_radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
-    <span class="c1"># material(optional), density(optional)</span>
 
 <div class="viewcode-block" id="ZAlignedCylinderSource.__init__">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.ZAlignedCylinderSource.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">cylinder_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                 <span class="n">cylinder_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cylinder_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                 <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an ZAlignedCylinder source.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the source.</span>
+<span class="sd">        cylinder_center</span>
+<span class="sd">            X, Y, and Z coordinates of the center of the cylinder.</span>
+<span class="sd">        cylinder_length</span>
+<span class="sd">            The length of the cylinder.</span>
+<span class="sd">        cylinder_radius</span>
+<span class="sd">            The radius of the cylinder.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span>
+                         <span class="n">cylinder_center</span><span class="o">=</span><span class="n">cylinder_center</span><span class="p">,</span>
+                         <span class="n">cylinder_length</span><span class="o">=</span><span class="n">cylinder_length</span><span class="p">,</span>
+                         <span class="n">cylinder_radius</span><span class="o">=</span><span class="n">cylinder_radius</span><span class="p">,</span>
+                         <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -904,28 +928,33 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.YAlignedCylinderSource">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">YAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">YAlignedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the Y axis.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the center of the cylinder.</span>
-<span class="sd">    cylinder_length : float</span>
-<span class="sd">        The length of the cylinder.</span>
-<span class="sd">    cylinder_radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
-    <span class="c1"># material(optional), density(optional)</span>
 
 <div class="viewcode-block" id="YAlignedCylinderSource.__init__">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.YAlignedCylinderSource.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                 <span class="n">cylinder_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cylinder_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                 <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an YAlignedCylinder source.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the source.</span>
+<span class="sd">        cylinder_center</span>
+<span class="sd">            X, Y, and Z coordinates of the center of the cylinder.</span>
+<span class="sd">        cylinder_length</span>
+<span class="sd">            The length of the cylinder.</span>
+<span class="sd">        cylinder_radius</span>
+<span class="sd">            The radius of the cylinder.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span>
+                         <span class="n">cylinder_center</span><span class="o">=</span><span class="n">cylinder_center</span><span class="p">,</span>
+                         <span class="n">cylinder_length</span><span class="o">=</span><span class="n">cylinder_length</span><span class="p">,</span>
+                         <span class="n">cylinder_radius</span><span class="o">=</span><span class="n">cylinder_radius</span><span class="p">,</span>
+                         <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -972,28 +1001,33 @@
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.XAlignedCylinderSource">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">XAlignedCylinderSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">XAlignedCylinder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a cylindrical source axis-aligned with the X axis.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    material_name : :obj:`material.Material`</span>
-<span class="sd">        Shield material type</span>
-<span class="sd">    cylinder_center : :obj:`list`</span>
-<span class="sd">        X, Y, and Z coordinates of the center of the cylinder.</span>
-<span class="sd">    cylinder_length : float</span>
-<span class="sd">        The length of the cylinder.</span>
-<span class="sd">    cylinder_radius : float</span>
-<span class="sd">        Radius of the cylinder.</span>
-<span class="sd">    density : float, optional</span>
-<span class="sd">        Material density in g/cm3.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># initialize with cylinderCenter, cylinderLength, cylinderRadius,</span>
-    <span class="c1"># material(optional), density(optional)</span>
 
 <div class="viewcode-block" id="XAlignedCylinderSource.__init__">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.XAlignedCylinderSource.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cylinder_center</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                 <span class="n">cylinder_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cylinder_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                 <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an XAlignedCylinder source.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        material_name</span>
+<span class="sd">            Name of the material composing the source.</span>
+<span class="sd">        cylinder_center</span>
+<span class="sd">            X, Y, and Z coordinates of the center of the cylinder.</span>
+<span class="sd">        cylinder_length</span>
+<span class="sd">            The length of the cylinder.</span>
+<span class="sd">        cylinder_radius</span>
+<span class="sd">            The radius of the cylinder.</span>
+<span class="sd">        density</span>
+<span class="sd">            Material density in g/cm3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">material_name</span><span class="o">=</span><span class="n">material_name</span><span class="p">,</span>
+                         <span class="n">cylinder_center</span><span class="o">=</span><span class="n">cylinder_center</span><span class="p">,</span>
+                         <span class="n">cylinder_length</span><span class="o">=</span><span class="n">cylinder_length</span><span class="p">,</span>
+                         <span class="n">cylinder_radius</span><span class="o">=</span><span class="n">cylinder_radius</span><span class="p">,</span>
+                         <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_source_point_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
