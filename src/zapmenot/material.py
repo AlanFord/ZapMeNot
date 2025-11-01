@@ -55,7 +55,8 @@ class Material:
     _density : float
         Density of the material in g/cm\ :sup:`3`
     '''
-    Dirt = TypedDict('Dirt', {'density': float,
+    Material_Specification = TypedDict('Material_Specification', {
+                              'density': float,
                               'density-units': str,
                               'energy-units': str,
                               'mass-atten-coff-units': str,
@@ -66,7 +67,7 @@ class Material:
                               'mass-en-abs-coff-units': Optional[str],
                               'mass-en-abs-coff-energy': Optional[List[float]],
                               }, total=True)
-    _library: ClassVar[Optional[Dict[str, Dirt]]] = None
+    _library: ClassVar[Optional[Dict[str, Material_Specification]]] = None
 
     # _library: ClassVar[Optional[Dict[str, Any]]] = None
 
@@ -95,7 +96,7 @@ class Material:
         self._name: str = name
         temp1 = Material._library.get(self._name)
         if temp1:
-            properties: Material.Dirt = temp1
+            properties: Material.Material_Specification = temp1
         self._density: float = properties["density"]
         self._atten_energy_bins: np.ndarray = np.array(
             properties["mass-atten-coff-energy"])

@@ -67,7 +67,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-zapmenot.material">ZapMeNot Material</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.material.Material"><code class="docutils literal notranslate"><span class="pre">Material</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#zapmenot.material.Material.Dirt"><code class="docutils literal notranslate"><span class="pre">Material.Dirt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zapmenot.material.Material.Material_Specification"><code class="docutils literal notranslate"><span class="pre">Material.Material_Specification</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.material.Material.__init__"><code class="docutils literal notranslate"><span class="pre">Material.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.material.Material.name"><code class="docutils literal notranslate"><span class="pre">Material.name</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.material.Material.density"><code class="docutils literal notranslate"><span class="pre">Material.density</span></code></a></li>
@@ -218,7 +218,6 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.source.LineSource"><code class="docutils literal notranslate"><span class="pre">LineSource</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.__init__"><code class="docutils literal notranslate"><span class="pre">LineSource.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.is_infinite"><code class="docutils literal notranslate"><span class="pre">LineSource.is_infinite()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.is_hollow"><code class="docutils literal notranslate"><span class="pre">LineSource.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">LineSource.get_crossing_mfp()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.LineSource.draw"><code class="docutils literal notranslate"><span class="pre">LineSource.draw()</span></code></a></li>
@@ -235,7 +234,6 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.source.PointSource"><code class="docutils literal notranslate"><span class="pre">PointSource</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.__init__"><code class="docutils literal notranslate"><span class="pre">PointSource.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.is_infinite"><code class="docutils literal notranslate"><span class="pre">PointSource.is_infinite()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.is_hollow"><code class="docutils literal notranslate"><span class="pre">PointSource.is_hollow()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">PointSource.get_crossing_mfp()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.PointSource.draw"><code class="docutils literal notranslate"><span class="pre">PointSource.draw()</span></code></a></li>
@@ -501,8 +499,8 @@ and the exposure buildup factor of the requested material.</p>
 </dd>
 </dl>
 <dl class="py class">
-<dt class="sig sig-object py" id="zapmenot.material.Material.Dirt">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Dirt</span></span><a class="headerlink" href="#zapmenot.material.Material.Dirt" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="zapmenot.material.Material.Material_Specification">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Material_Specification</span></span><a class="headerlink" href="#zapmenot.material.Material.Material_Specification" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 </dd></dl>
 
@@ -1833,22 +1831,12 @@ and photon list</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><span class="pre">GroupOption</span></a></em><a class="headerlink" href="#zapmenot.source.Source.grouping" title="Link to this definition"></a></dt>
 <dd><p>State defining the photon energy group
 option.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zapmenot.source.Source.include_key_progeny">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#zapmenot.source.Source.include_key_progeny" title="Link to this definition"></a></dt>
 <dd><p>State defining if key progeny should be included.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1858,8 +1846,8 @@ option.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>curies</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in curies.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in curies.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1875,8 +1863,8 @@ option.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>becquerels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in becquerels.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in becquerels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1892,8 +1880,8 @@ option.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV.</p></li>
-<li><p><strong>intensity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The intensity in photons/sec.</p></li>
+<li><p><strong>energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The intensity in photons/sec.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1905,14 +1893,14 @@ option.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.Source.list_isotopes">
 <span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#Source.list_isotopes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.Source.list_isotopes" title="Link to this definition"></a></dt>
-<dd><p>Returns a list of isotopes in the source</p>
+<dd><p>Returns a list of isotopes in the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
-Isotope object and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1925,12 +1913,12 @@ Isotope object and an activity in Bq.</p>
 individually to the source.  It does not include the photons
 that result from the isotopes added to the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1944,12 +1932,12 @@ unique_photons specified in the Source definition.
 The photon intensities are scaled to
 <strong>an integral over the source volume</strong>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1958,11 +1946,6 @@ photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 <dt class="sig sig-object py" id="zapmenot.source.Source.points_per_dimension">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#zapmenot.source.Source.points_per_dimension" title="Link to this definition"></a></dt>
 <dd><p>Number of source points per dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a> of integers</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2015,41 +1998,22 @@ with the shield.</p></li>
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zapmenot.source.</span></span><span class="sig-name descname"><span class="pre">LineSource</span></span><a class="reference internal" href="_modules/zapmenot/source.html#LineSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.LineSource" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#zapmenot.source.Source" title="zapmenot.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a></p>
 <p>Models a line radiation source</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – Cartiesian X, Y, and Z coordinates of the starting point of the
-line source.</p></li>
-<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – Cartiesian X, Y, and Z coordinates of the ending point of the
-line source.</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.LineSource.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#LineSource.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.LineSource.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initialize</p>
+<dd><p>Create a LineSource.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>)</p></li>
-<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>)</p></li>
+<li><p><strong>start</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>) – Cartiesian X, Y, and Z coordinates of the starting point of the
+line source.</p></li>
+<li><p><strong>end</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>) – Cartiesian X, Y, and Z coordinates of the ending point of the
+line source.</p></li>
 <li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zapmenot.source.LineSource.is_infinite">
-<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#LineSource.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.LineSource.is_infinite" title="Link to this definition"></a></dt>
-<dd><p>Returns true if any dimension is infinite, false otherwise</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2068,20 +2032,20 @@ line source.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.LineSource.get_crossing_mfp">
 <span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#LineSource.get_crossing_mfp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.LineSource.get_crossing_mfp" title="Link to this definition"></a></dt>
-<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dd><p>Calculates the mfp equivalent if a ray intersects the source</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ray</strong> (<a class="reference internal" href="#zapmenot.ray.FiniteLengthRay" title="zapmenot.ray.FiniteLengthRay"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.ray.FiniteLengthRay</span></code></a>) – The finite length ray that is checked for intersections with
+<li><p><strong>ray</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#zapmenot.ray.FiniteLengthRay" title="zapmenot.ray.FiniteLengthRay"><code class="xref py py-class docutils literal notranslate"><span class="pre">FiniteLengthRay</span></code></a></span>) – The finite length ray that is checked for intersections with
 the shield.</p></li>
-<li><p><strong>photon_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV</p></li>
+<li><p><strong>photon_energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Always returns 0</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mean free path in centimeters.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2091,11 +2055,11 @@ the shield.</p></li>
 <span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#LineSource.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.LineSource.draw" title="Link to this definition"></a></dt>
 <dd><p>Creates a display object</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A line object representing the line source.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="(in PyVista v0.37.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolyData</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="(in PyVista v0.37.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A display object representing the shield.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2107,8 +2071,8 @@ the shield.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>becquerels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in becquerels.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in becquerels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2124,8 +2088,8 @@ the shield.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>curies</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in curies.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in curies.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2141,8 +2105,8 @@ the shield.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV.</p></li>
-<li><p><strong>intensity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The intensity in photons/sec.</p></li>
+<li><p><strong>energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The intensity in photons/sec.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2160,12 +2124,12 @@ unique_photons specified in the Source definition.
 The photon intensities are scaled to
 <strong>an integral over the source volume</strong>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2175,22 +2139,12 @@ photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><span class="pre">GroupOption</span></a></em><a class="headerlink" href="#zapmenot.source.LineSource.grouping" title="Link to this definition"></a></dt>
 <dd><p>State defining the photon energy group
 option.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zapmenot.source.LineSource.include_key_progeny">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#zapmenot.source.LineSource.include_key_progeny" title="Link to this definition"></a></dt>
 <dd><p>State defining if key progeny should be included.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2201,12 +2155,12 @@ option.</p>
 individually to the source.  It does not include the photons
 that result from the isotopes added to the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2214,14 +2168,14 @@ photon energy in MeV and an activity in Bq.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.LineSource.list_isotopes">
 <span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.LineSource.list_isotopes" title="Link to this definition"></a></dt>
-<dd><p>Returns a list of isotopes in the source</p>
+<dd><p>Returns a list of isotopes in the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
-Isotope object and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2230,11 +2184,6 @@ Isotope object and an activity in Bq.</p>
 <dt class="sig sig-object py" id="zapmenot.source.LineSource.points_per_dimension">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#zapmenot.source.LineSource.points_per_dimension" title="Link to this definition"></a></dt>
 <dd><p>Number of source points per dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a> of integers</p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2256,29 +2205,18 @@ Isotope object and an activity in Bq.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.PointSource.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#PointSource.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.PointSource.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initialize with an x,y,z location in space</p>
+<dd><p>Create a PointSource.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>)</p></li>
-<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>)</p></li>
-<li><p><strong>z</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>)</p></li>
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Cartesian X coordinate of the point source.</p></li>
+<li><p><strong>y</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Cartesian Y coordinate of the point source.</p></li>
+<li><p><strong>z</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Cartesian Z coordinate of the point source.</p></li>
 <li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zapmenot.source.PointSource.is_infinite">
-<span class="sig-name descname"><span class="pre">is_infinite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#PointSource.is_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.PointSource.is_infinite" title="Link to this definition"></a></dt>
-<dd><p>Returns true if any dimension is infinite, false otherwise</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2297,21 +2235,20 @@ Isotope object and an activity in Bq.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.PointSource.get_crossing_mfp">
 <span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#PointSource.get_crossing_mfp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.PointSource.get_crossing_mfp" title="Link to this definition"></a></dt>
-<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
+<dd><p>Calculates the mfp equivalent if a ray intersects the source</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ray</strong> (<a class="reference internal" href="#zapmenot.ray.FiniteLengthRay" title="zapmenot.ray.FiniteLengthRay"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.ray.FiniteLengthRay</span></code></a>) – The finite length ray that is checked for intersections with
-the shield.
-Always returns 0 for the Point source.</p></li>
-<li><p><strong>photon_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV</p></li>
+<li><p><strong>ray</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#zapmenot.ray.FiniteLengthRay" title="zapmenot.ray.FiniteLengthRay"><code class="xref py py-class docutils literal notranslate"><span class="pre">FiniteLengthRay</span></code></a></span>) – The finite length ray that is checked for intersections with
+the shield.</p></li>
+<li><p><strong>photon_energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Always returns 0</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mean free path in centimeters.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2321,11 +2258,11 @@ Always returns 0 for the Point source.</p></li>
 <span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#PointSource.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.PointSource.draw" title="Link to this definition"></a></dt>
 <dd><p>Creates a display object</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A degenerate line object representing the point source.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="(in PyVista v0.37.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolyData</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="(in PyVista v0.37.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.PolyData</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A display object representing the shield.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2337,8 +2274,8 @@ Always returns 0 for the Point source.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>becquerels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in becquerels.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in becquerels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2354,8 +2291,8 @@ Always returns 0 for the Point source.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>curies</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in curies.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in curies.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2371,8 +2308,8 @@ Always returns 0 for the Point source.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV.</p></li>
-<li><p><strong>intensity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The intensity in photons/sec.</p></li>
+<li><p><strong>energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The intensity in photons/sec.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2390,12 +2327,12 @@ unique_photons specified in the Source definition.
 The photon intensities are scaled to
 <strong>an integral over the source volume</strong>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2405,22 +2342,12 @@ photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><span class="pre">GroupOption</span></a></em><a class="headerlink" href="#zapmenot.source.PointSource.grouping" title="Link to this definition"></a></dt>
 <dd><p>State defining the photon energy group
 option.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zapmenot.source.PointSource.include_key_progeny">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#zapmenot.source.PointSource.include_key_progeny" title="Link to this definition"></a></dt>
 <dd><p>State defining if key progeny should be included.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2431,12 +2358,12 @@ option.</p>
 individually to the source.  It does not include the photons
 that result from the isotopes added to the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2444,14 +2371,14 @@ photon energy in MeV and an activity in Bq.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.PointSource.list_isotopes">
 <span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.PointSource.list_isotopes" title="Link to this definition"></a></dt>
-<dd><p>Returns a list of isotopes in the source</p>
+<dd><p>Returns a list of isotopes in the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
-Isotope object and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2460,11 +2387,6 @@ Isotope object and an activity in Bq.</p>
 <dt class="sig sig-object py" id="zapmenot.source.PointSource.points_per_dimension">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#zapmenot.source.PointSource.points_per_dimension" title="Link to this definition"></a></dt>
 <dd><p>Number of source points per dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a> of integers</p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2473,40 +2395,18 @@ Isotope object and an activity in Bq.</p>
 <dt class="sig sig-object py" id="zapmenot.source.SphereSource">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zapmenot.source.</span></span><span class="sig-name descname"><span class="pre">SphereSource</span></span><a class="reference internal" href="_modules/zapmenot/source.html#SphereSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.SphereSource" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#zapmenot.source.Source" title="zapmenot.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a>, <a class="reference internal" href="#zapmenot.shield.Sphere" title="zapmenot.shield.Sphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sphere</span></code></a></p>
-<p>Models a Spherical source
-:type material_name: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
-:param material_name: Shield material type
-:type material_name: <code class="xref py py-obj docutils literal notranslate"><span class="pre">material.Material</span></code>
-:type sphere_center: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>
-:param sphere_center: list of floats (x, y, and z coordinates).
-:type sphere_center: list
-:type sphere_radius: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>
-:param sphere_radius: radius of the shield.
-:type sphere_radius: float
-:type density: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>
-:param density: Material density in g/cm3.
-:type density: float, optional</p>
-<dl class="field-list simple">
-<dt class="field-odd">Variables<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>material</strong> – Material properties of the shield</p></li>
-<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – list of floats (x, y, and z coordinates).</p></li>
-<li><p><strong>radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – radius of the sphere.</p></li>
-</ul>
-</dd>
-</dl>
+<p>Models a Spherical source.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.SphereSource.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere_center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere_radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#SphereSource.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.SphereSource.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initialize the Source with empty strings for the isotope list
-and photon list</p>
+<dd><p>Create a SphereSource.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>material_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>)</p></li>
-<li><p><strong>sphere_center</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>)</p></li>
-<li><p><strong>sphere_radius</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>)</p></li>
-<li><p><strong>density</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>material_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Name of the material composing the source.</p></li>
+<li><p><strong>sphere_center</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>) – x, y, and z coordinates of the sphere’s center.</p></li>
+<li><p><strong>sphere_radius</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – radius of the sphere.</p></li>
+<li><p><strong>density</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>) – Material density in g/cm3.</p></li>
 <li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><em>Any</em></a>)</p></li>
 </ul>
 </dd>
@@ -2520,11 +2420,6 @@ and photon list</p>
 <dt class="sig sig-object py" id="zapmenot.source.SphereSource.points_per_dimension">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#zapmenot.source.SphereSource.points_per_dimension" title="Link to this definition"></a></dt>
 <dd><p>Number of source points per dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a> of integers</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2534,8 +2429,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>becquerels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in becquerels.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in becquerels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2551,8 +2446,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>curies</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in curies.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in curies.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2568,8 +2463,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV.</p></li>
-<li><p><strong>intensity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The intensity in photons/sec.</p></li>
+<li><p><strong>energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The intensity in photons/sec.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2622,12 +2517,12 @@ unique_photons specified in the Source definition.
 The photon intensities are scaled to
 <strong>an integral over the source volume</strong>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2637,22 +2532,12 @@ photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><span class="pre">GroupOption</span></a></em><a class="headerlink" href="#zapmenot.source.SphereSource.grouping" title="Link to this definition"></a></dt>
 <dd><p>State defining the photon energy group
 option.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zapmenot.source.SphereSource.include_key_progeny">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#zapmenot.source.SphereSource.include_key_progeny" title="Link to this definition"></a></dt>
 <dd><p>State defining if key progeny should be included.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2674,12 +2559,12 @@ option.</p>
 individually to the source.  It does not include the photons
 that result from the isotopes added to the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2687,14 +2572,14 @@ photon energy in MeV and an activity in Bq.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.SphereSource.list_isotopes">
 <span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.SphereSource.list_isotopes" title="Link to this definition"></a></dt>
-<dd><p>Returns a list of isotopes in the source</p>
+<dd><p>Returns a list of isotopes in the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
-Isotope object and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2706,16 +2591,6 @@ Isotope object and an activity in Bq.</p>
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zapmenot.source.</span></span><span class="sig-name descname"><span class="pre">BoxSource</span></span><a class="reference internal" href="_modules/zapmenot/source.html#BoxSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.BoxSource" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#zapmenot.source.Source" title="zapmenot.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a>, <a class="reference internal" href="#zapmenot.shield.Box" title="zapmenot.shield.Box"><code class="xref py py-class docutils literal notranslate"><span class="pre">Box</span></code></a></p>
 <p>Models a Axis-Aligned rectangular box source</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>material_name</strong> (<a class="reference internal" href="#zapmenot.material.Material" title="zapmenot.material.Material"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.material.Material</span></code></a>) – Shield material type</p></li>
-<li><p><strong>box_center</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – X, Y, and Z coordinates of the box center.</p></li>
-<li><p><strong>box_dimensions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – X, Y, and Z dimensions of the box.</p></li>
-<li><p><strong>density</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Material density in g/cm3.</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.BoxSource.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#BoxSource.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.BoxSource.__init__" title="Link to this definition"></a></dt>
@@ -2738,8 +2613,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>becquerels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in becquerels.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in becquerels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2755,8 +2630,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>curies</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in curies.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in curies.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2772,8 +2647,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV.</p></li>
-<li><p><strong>intensity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The intensity in photons/sec.</p></li>
+<li><p><strong>energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The intensity in photons/sec.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2826,12 +2701,12 @@ unique_photons specified in the Source definition.
 The photon intensities are scaled to
 <strong>an integral over the source volume</strong>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2841,22 +2716,12 @@ photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><span class="pre">GroupOption</span></a></em><a class="headerlink" href="#zapmenot.source.BoxSource.grouping" title="Link to this definition"></a></dt>
 <dd><p>State defining the photon energy group
 option.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zapmenot.source.BoxSource.include_key_progeny">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#zapmenot.source.BoxSource.include_key_progeny" title="Link to this definition"></a></dt>
 <dd><p>State defining if key progeny should be included.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2878,12 +2743,12 @@ option.</p>
 individually to the source.  It does not include the photons
 that result from the isotopes added to the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2891,14 +2756,14 @@ photon energy in MeV and an activity in Bq.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.BoxSource.list_isotopes">
 <span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.BoxSource.list_isotopes" title="Link to this definition"></a></dt>
-<dd><p>Returns a list of isotopes in the source</p>
+<dd><p>Returns a list of isotopes in the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
-Isotope object and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2907,11 +2772,6 @@ Isotope object and an activity in Bq.</p>
 <dt class="sig sig-object py" id="zapmenot.source.BoxSource.points_per_dimension">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#zapmenot.source.BoxSource.points_per_dimension" title="Link to this definition"></a></dt>
 <dd><p>Number of source points per dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a> of integers</p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2954,8 +2814,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>becquerels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in becquerels.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in becquerels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2971,8 +2831,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>curies</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in curies.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in curies.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -2988,8 +2848,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV.</p></li>
-<li><p><strong>intensity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The intensity in photons/sec.</p></li>
+<li><p><strong>energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The intensity in photons/sec.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -3042,12 +2902,12 @@ unique_photons specified in the Source definition.
 The photon intensities are scaled to
 <strong>an integral over the source volume</strong>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3057,22 +2917,12 @@ photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><span class="pre">GroupOption</span></a></em><a class="headerlink" href="#zapmenot.source.ZAlignedCylinderSource.grouping" title="Link to this definition"></a></dt>
 <dd><p>State defining the photon energy group
 option.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zapmenot.source.ZAlignedCylinderSource.include_key_progeny">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#zapmenot.source.ZAlignedCylinderSource.include_key_progeny" title="Link to this definition"></a></dt>
 <dd><p>State defining if key progeny should be included.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -3094,12 +2944,12 @@ option.</p>
 individually to the source.  It does not include the photons
 that result from the isotopes added to the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3107,14 +2957,14 @@ photon energy in MeV and an activity in Bq.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.ZAlignedCylinderSource.list_isotopes">
 <span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.ZAlignedCylinderSource.list_isotopes" title="Link to this definition"></a></dt>
-<dd><p>Returns a list of isotopes in the source</p>
+<dd><p>Returns a list of isotopes in the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
-Isotope object and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3123,11 +2973,6 @@ Isotope object and an activity in Bq.</p>
 <dt class="sig sig-object py" id="zapmenot.source.ZAlignedCylinderSource.points_per_dimension">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#zapmenot.source.ZAlignedCylinderSource.points_per_dimension" title="Link to this definition"></a></dt>
 <dd><p>Number of source points per dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a> of integers</p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -3170,8 +3015,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>becquerels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in becquerels.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in becquerels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -3187,8 +3032,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>curies</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in curies.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in curies.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -3204,8 +3049,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV.</p></li>
-<li><p><strong>intensity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The intensity in photons/sec.</p></li>
+<li><p><strong>energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The intensity in photons/sec.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -3258,12 +3103,12 @@ unique_photons specified in the Source definition.
 The photon intensities are scaled to
 <strong>an integral over the source volume</strong>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3273,22 +3118,12 @@ photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><span class="pre">GroupOption</span></a></em><a class="headerlink" href="#zapmenot.source.YAlignedCylinderSource.grouping" title="Link to this definition"></a></dt>
 <dd><p>State defining the photon energy group
 option.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zapmenot.source.YAlignedCylinderSource.include_key_progeny">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#zapmenot.source.YAlignedCylinderSource.include_key_progeny" title="Link to this definition"></a></dt>
 <dd><p>State defining if key progeny should be included.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -3310,12 +3145,12 @@ option.</p>
 individually to the source.  It does not include the photons
 that result from the isotopes added to the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3323,14 +3158,14 @@ photon energy in MeV and an activity in Bq.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.YAlignedCylinderSource.list_isotopes">
 <span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.YAlignedCylinderSource.list_isotopes" title="Link to this definition"></a></dt>
-<dd><p>Returns a list of isotopes in the source</p>
+<dd><p>Returns a list of isotopes in the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
-Isotope object and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3339,11 +3174,6 @@ Isotope object and an activity in Bq.</p>
 <dt class="sig sig-object py" id="zapmenot.source.YAlignedCylinderSource.points_per_dimension">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#zapmenot.source.YAlignedCylinderSource.points_per_dimension" title="Link to this definition"></a></dt>
 <dd><p>Number of source points per dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a> of integers</p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -3386,8 +3216,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>becquerels</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in becquerels.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>becquerels</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in becquerels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -3403,8 +3233,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>new_isotope</strong> (<a class="reference internal" href="#zapmenot.isotope.Isotope" title="zapmenot.isotope.Isotope"><code class="xref py py-class docutils literal notranslate"><span class="pre">zapmenot.isotope.Isotope</span></code></a>) – The isotope to be added to the source.</p></li>
-<li><p><strong>curies</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The activity in curies.</p></li>
+<li><p><strong>new_isotope</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The isotope to be added to the source.</p></li>
+<li><p><strong>curies</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The activity in curies.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -3420,8 +3250,8 @@ and photon list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The photon energy in MeV.</p></li>
-<li><p><strong>intensity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The intensity in photons/sec.</p></li>
+<li><p><strong>energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV.</p></li>
+<li><p><strong>intensity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The intensity in photons/sec.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -3474,12 +3304,12 @@ unique_photons specified in the Source definition.
 The photon intensities are scaled to
 <strong>an integral over the source volume</strong>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in <strong>Bq</strong>.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3489,22 +3319,12 @@ photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grouping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><span class="pre">GroupOption</span></a></em><a class="headerlink" href="#zapmenot.source.XAlignedCylinderSource.grouping" title="Link to this definition"></a></dt>
 <dd><p>State defining the photon energy group
 option.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#zapmenot.source.GroupOption" title="zapmenot.source.GroupOption"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupOption</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="zapmenot.source.XAlignedCylinderSource.include_key_progeny">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_key_progeny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#zapmenot.source.XAlignedCylinderSource.include_key_progeny" title="Link to this definition"></a></dt>
 <dd><p>State defining if key progeny should be included.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -3526,12 +3346,12 @@ option.</p>
 individually to the source.  It does not include the photons
 that result from the isotopes added to the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of photon tuples, each tuple containing a
-photon energy in MeV and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of photon tuples, each tuple containing a
+photon energy in MeV and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3539,14 +3359,14 @@ photon energy in MeV and an activity in Bq.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.XAlignedCylinderSource.list_isotopes">
 <span class="sig-name descname"><span class="pre">list_isotopes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.XAlignedCylinderSource.list_isotopes" title="Link to this definition"></a></dt>
-<dd><p>Returns a list of isotopes in the source</p>
+<dd><p>Returns a list of isotopes in the source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of isotope tuples, each tuple containing a
-Isotope object and an activity in Bq.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of isotope tuples, each tuple containing a
+Isotope object and an activity in Bq.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3555,11 +3375,6 @@ Isotope object and an activity in Bq.</p>
 <dt class="sig sig-object py" id="zapmenot.source.XAlignedCylinderSource.points_per_dimension">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_per_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#zapmenot.source.XAlignedCylinderSource.points_per_dimension" title="Link to this definition"></a></dt>
 <dd><p>Number of source points per dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a> of integers</p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -3723,7 +3538,7 @@ uncollided energy flux, uncollided exposure, and total exposure</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Oct 28, 2025.
+      <span class="lastupdated">Last updated on Nov 01, 2025.
       </span></p>
   </div>
 

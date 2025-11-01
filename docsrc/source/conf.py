@@ -204,5 +204,6 @@ napoleon_numpy_docstring = True
 napoleon_include_init_with_doc = True
 autodoc_typehints = "description"
 autodoc_class_signature = "separated"
+autodoc_inherit_docstrings = True
 # napoleon_use_param = True
 # always_document_param_types = True

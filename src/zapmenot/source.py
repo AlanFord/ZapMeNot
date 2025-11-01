@@ -82,13 +82,13 @@ class Source(shield.Shield):
 
     @property
     def grouping(self) -> GroupOption:
-        """:class:`GroupOption` : State defining the photon energy group
+        """State defining the photon energy group
         option."""
         return self._grouping_option
 
     @grouping.setter
     def grouping(self, value: str) -> None:
-        """:class:`GroupOption` : State defining the photon energy group
+        """State defining the photon energy group
         option."""
         if value == GroupOption.HYBRID.value:
             self._grouping_option = GroupOption.HYBRID
@@ -101,12 +101,12 @@ class Source(shield.Shield):
 
     @property
     def include_key_progeny(self) -> bool:
-        """bool : State defining if key progeny should be included."""
+        """State defining if key progeny should be included."""
         return self._include_key_progeny
 
     @include_key_progeny.setter
     def include_key_progeny(self, value: bool) -> None:
-        """bool : State defining if key progeny should be included."""
+        """State defining if key progeny should be included."""
         self._include_key_progeny = value
 
     def add_isotope_curies(self, new_isotope: str, curies: float) -> None:
@@ -114,9 +114,9 @@ class Source(shield.Shield):
 
         Parameters
         ----------
-        new_isotope : :class:`zapmenot.isotope.Isotope`
+        new_isotope
             The isotope to be added to the source.
-        curies : float
+        curies
             The activity in curies.
         """
         self._isotope_list.append((new_isotope, curies*3.7E10))
@@ -126,9 +126,9 @@ class Source(shield.Shield):
 
         Parameters
         ----------
-        new_isotope : :class:`zapmenot.isotope.Isotope`
+        new_isotope
             The isotope to be added to the source.
-        becquerels : float
+        becquerels
             The activity in becquerels.
         """
         self._isotope_list.append((new_isotope, becquerels))
@@ -138,19 +138,18 @@ class Source(shield.Shield):
 
         Parameters
         ----------
-        energy : float
+        energy
             The photon energy in MeV.
-        intensity : float
+        intensity
             The intensity in photons/sec.
         """
         self._unique_photons.append((energy, intensity))
 
     def list_isotopes(self) -> List[Tuple[str, float]]:
-        """Returns a list of isotopes in the source
+        """Returns a list of isotopes in the source.
 
         Returns
         -------
-        :class:`list` of :class:`tuple`
             List of isotope tuples, each tuple containing a
             Isotope object and an activity in Bq.
         """
@@ -165,7 +164,6 @@ class Source(shield.Shield):
 
         Returns
         -------
-        :class:`list` of :class:`tuple`
             List of photon tuples, each tuple containing a
             photon energy in MeV and an activity in Bq.
         """
@@ -197,7 +195,6 @@ class Source(shield.Shield):
 
         Returns
         -------
-        :class:`list` of :class:`tuple`
             List of photon tuples, each tuple containing a
             photon energy in MeV and an activity in **Bq**.
         """
@@ -278,6 +275,9 @@ class Source(shield.Shield):
     @abc.abstractmethod
     def _get_source_points(self) -> List[Tuple[float, float, float]]:
         """Generates a list of point sources within the Source geometry.
+        Returns
+        -------
+            List of source point locations (x, y, z) in centimeters.
         """
         pass
 
@@ -294,12 +294,12 @@ class Source(shield.Shield):
 
     @property
     def points_per_dimension(self) -> List[int]:
-        """list of integers : Number of source points per dimension."""
+        """Number of source points per dimension."""
         return self._points_per_dimension
 
     @points_per_dimension.setter
     def points_per_dimension(self, value: Union[int, List[int]]) -> None:
-        """list of integers : Number of source points per dimension."""
+        """Number of source points per dimension."""
         if isinstance(value, int):
             listOfValues: List[int] = [value]
         else:
@@ -319,29 +319,20 @@ class Source(shield.Shield):
 
 class LineSource(Source):
     """Models a line radiation source
-
-    Parameters
-    ----------
-    start : :class:`list`
-        Cartiesian X, Y, and Z coordinates of the starting point of the
-        line source.
-    end : :class:`list`
-        Cartiesian X, Y, and Z coordinates of the ending point of the
-        line source.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    origin : :class:`numpy.ndarray`
-        Vector location of one end of the line source.
-    end : :class:`numpy.ndarray`
-        Vector location of one end of the line source.
-    '''
     def __init__(self, start: list[float], end: list[float],
                  **kwargs: Any) -> None:
-        "Initialize"
+        """Create a LineSource.
+
+        Parameters
+        ----------
+        start
+            Cartiesian X, Y, and Z coordinates of the starting point of the
+            line source.
+        end
+            Cartiesian X, Y, and Z coordinates of the ending point of the
+            line source.
+        """
         self.origin: np.ndarray = np.array(start)
         self.end: np.ndarray = np.array(end)
         self._length: np.floating[Any] = np.linalg.norm(self.end - self.origin)
@@ -353,11 +344,6 @@ class LineSource(Source):
         # initialize points_per_dimension after super() to force a
         # single dimension
         self._points_per_dimension = [10]
-
-    def is_infinite(self) -> bool:
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return False
 
     def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
@@ -412,30 +398,28 @@ class LineSource(Source):
 
     def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
                          photon_energy: float) -> int:
-        """Calculates the mfp equivalent if a ray intersects the shield
+        """Calculates the mfp equivalent if a ray intersects the source
 
         Parameters
         ----------
-        ray : :class:`zapmenot.ray.FiniteLengthRay`
+        ray
             The finite length ray that is checked for intersections with
             the shield.
-        photon_energy : float
+        photon_energy
             The photon energy in MeV
 
         Returns
         -------
-        int
-            Always returns 0
+            Mean free path in centimeters.
         """
         return 0
 
-    def draw(self) -> Optional[Any]:
+    def draw(self) -> pyvista.PolyData | None:
         """Creates a display object
 
         Returns
         -------
-        :class:`pyvista.PolyData`
-            A line object representing the line source.
+            A display object representing the shield.
         """
         if pyvista_found:
             return pyvista.Line(pointa=self.origin, pointb=self.end)
@@ -471,7 +455,17 @@ class PointSource(Source):
         Vector normal of the annulus centerline.
     '''
     def __init__(self, x: float, y: float, z: float, **kwargs: Any) -> None:
-        '''Initialize with an x,y,z location in space'''
+        """Create a PointSource.
+
+        Parameters
+        ----------
+        x
+            Cartesian X coordinate of the point source.
+        y
+            Cartesian Y coordinate of the point source.
+        z
+            Cartesian Z coordinate of the point source.
+        """
         self._x: float = x
         self._y: float = y
         self._z: float = z
@@ -480,11 +474,6 @@ class PointSource(Source):
         kwargs['density'] = 0
         super().__init__(**kwargs)
         self._points_per_dimension = [1]
-
-    def is_infinite(self) -> bool:
-        """Returns true if any dimension is infinite, false otherwise
-        """
-        return False
 
     def is_hollow(self) -> bool:
         """Returns true if the body is annular or hollow, false otherwise
@@ -531,31 +520,28 @@ class PointSource(Source):
 
     def get_crossing_mfp(self, ray: ray.FiniteLengthRay,
                          photon_energy: float) -> int:
-        """Calculates the mfp equivalent if a ray intersects the shield
+        """Calculates the mfp equivalent if a ray intersects the source
 
         Parameters
         ----------
-        ray : :class:`zapmenot.ray.FiniteLengthRay`
+        ray
             The finite length ray that is checked for intersections with
             the shield.
-            Always returns 0 for the Point source.
-        photon_energy : float
+        photon_energy
             The photon energy in MeV
 
         Returns
         -------
-        int
-            Always returns 0
+            Mean free path in centimeters.
         """
         return 0
 
-    def draw(self) -> Optional[Any]:
+    def draw(self) -> pyvista.PolyData | None:
         """Creates a display object
 
         Returns
         -------
-        :class:`pyvista.PolyData`
-            A degenerate line object representing the point source.
+            A display object representing the shield.
         """
         if pyvista_found:
             # this returns a degenerate line, equivalent to a point
@@ -568,31 +554,25 @@ class PointSource(Source):
 
 
 class SphereSource(Source, shield.Sphere):
-    '''Models a Spherical source
-    Parameters
-    ----------
-    material_name : :obj:`material.Material`
-        Shield material type
-    sphere_center : list
-        list of floats (x, y, and z coordinates).
-    sphere_radius : float
-        radius of the shield.
-    density : float, optional
-        Material density in g/cm3.
-
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    center : list
-        list of floats (x, y, and z coordinates).
-    radius : float
-        radius of the sphere.
+    '''Models a Spherical source.
     '''
 
     def __init__(self, material_name: str, sphere_center: list[float],
                  sphere_radius: float, density: Optional[float] = None,
                  **kwargs: Any) -> None:
+        """Create a SphereSource.
+
+        Parameters
+        ----------
+        material_name
+                Name of the material composing the source.
+        sphere_center
+            x, y, and z coordinates of the sphere's center.
+        sphere_radius
+            radius of the sphere.
+        density
+            Material density in g/cm3.
+        """
         kwargs['material_name'] = material_name
         kwargs['sphere_center'] = sphere_center
         kwargs['sphere_radius'] = sphere_radius
@@ -602,12 +582,12 @@ class SphereSource(Source, shield.Sphere):
 
     @property
     def points_per_dimension(self) -> List[int]:
-        """list of integers : Number of source points per dimension."""
+        """Number of source points per dimension."""
         return Source.points_per_dimension.fget(self)  # type: ignore
 
     @points_per_dimension.setter
     def points_per_dimension(self, value: List[int]) -> None:
-        """list of integers : Number of source points per dimension."""
+        """Number of source points per dimension."""
         # verify there are three values in the list
         if len(value) != 3:
             raise ValueError(
@@ -665,24 +645,7 @@ class SphereSource(Source, shield.Sphere):
 
 class BoxSource(Source, shield.Box):
     """Models a Axis-Aligned rectangular box source
-
-    Parameters
-    ----------
-    material_name : :class:`zapmenot.material.Material`
-        Shield material type
-    box_center : :class:`list`
-        X, Y, and Z coordinates of the box center.
-    box_dimensions : :class:`list`
-        X, Y, and Z dimensions of the box.
-    density : float, optional
-        Material density in g/cm3.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    '''
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 

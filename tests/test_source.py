@@ -178,9 +178,6 @@ class TestPointSource():
     def test_getSourcePointWeights(self, create_source):
         assert create_source._get_source_point_weights() == [1.0]
 
-    def test_infinite(self, create_source):
-        assert create_source.is_infinite() is False
-
 # =============================================================
 
 
@@ -217,9 +214,6 @@ class TestLineSource():
 
     def test_getSourcePointWeights(self, create_source):
         assert create_source._get_source_point_weights() == [1.0 / 5] * 5
-
-    def test_infinite(self, create_source):
-        assert create_source.is_infinite() is False
 
     def test_points_per_dimension(self, create_source):
         with pytest.raises(ValueError):

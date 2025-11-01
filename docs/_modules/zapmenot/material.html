@@ -138,7 +138,8 @@
 <span class="sd">    _density : float</span>
 <span class="sd">        Density of the material in g/cm\ :sup:`3`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">Dirt</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s1">&#39;Dirt&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;density&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">Material_Specification</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s1">&#39;Material_Specification&#39;</span><span class="p">,</span> <span class="p">{</span>
+                              <span class="s1">&#39;density&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                               <span class="s1">&#39;density-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                               <span class="s1">&#39;energy-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                               <span class="s1">&#39;mass-atten-coff-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -149,7 +150,7 @@
                               <span class="s1">&#39;mass-en-abs-coff-units&#39;</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
                               <span class="s1">&#39;mass-en-abs-coff-energy&#39;</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
                               <span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">_library</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dirt</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_library</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Material_Specification</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># _library: ClassVar[Optional[Dict[str, Any]]] = None</span>
 
@@ -180,7 +181,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span>
         <span class="n">temp1</span> <span class="o">=</span> <span class="n">Material</span><span class="o">.</span><span class="n">_library</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">temp1</span><span class="p">:</span>
-            <span class="n">properties</span><span class="p">:</span> <span class="n">Material</span><span class="o">.</span><span class="n">Dirt</span> <span class="o">=</span> <span class="n">temp1</span>
+            <span class="n">properties</span><span class="p">:</span> <span class="n">Material</span><span class="o">.</span><span class="n">Material_Specification</span> <span class="o">=</span> <span class="n">temp1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_density</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">properties</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_atten_energy_bins</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
             <span class="n">properties</span><span class="p">[</span><span class="s2">&quot;mass-atten-coff-energy&quot;</span><span class="p">])</span>
@@ -504,7 +505,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Oct 28, 2025.
+      <span class="lastupdated">Last updated on Oct 29, 2025.
       </span></p>
   </div>
 
