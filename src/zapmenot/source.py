@@ -49,7 +49,7 @@ class GroupOption(Enum):
 class Source(abc.ABC):
     """Abtract class to model a radiation source.
     """
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self) -> None:
         '''Initialize the Source with empty strings for the isotope list
         and photon list'''
         # list of isotopes and activities (Bq)
@@ -60,7 +60,7 @@ class Source(abc.ABC):
         self._include_key_progeny: bool = False
         self._max_photon_energies: int = 30
         self._grouping_option: GroupOption = GroupOption.HYBRID
-        super().__init__(**kwargs)
+        super().__init__()
 
     @property
     def grouping(self) -> GroupOption:
@@ -299,7 +299,7 @@ class Source(abc.ABC):
 # -----------------------------------------------------------
 
 
-class LineSource(Source, shield.Shield):
+class LineSource(shield.Shield, Source):
     """Models a line radiation source
     """
     def __init__(self, start: list[float], end: list[float]) -> None:
@@ -407,7 +407,7 @@ class LineSource(Source, shield.Shield):
 # -----------------------------------------------------------
 
 
-class PointSource(Source, shield.Shield):
+class PointSource(shield.Shield, Source):
     """Models a point radiation source
     """
     def __init__(self, x: float, y: float, z: float) -> None:
@@ -507,12 +507,13 @@ class PointSource(Source, shield.Shield):
 # -----------------------------------------------------------
 
 
-class SphereSource(Source, shield.Sphere):
+class SphereSource(shield.Sphere, Source):
     '''Models a Spherical source.
     '''
 
     def __init__(self, material_name: str, sphere_center: list[float],
-                 sphere_radius: float, density: Optional[float] = None) -> None:
+                 sphere_radius: float,
+                 density: Optional[float] = None) -> None:
         """Create a SphereSource.
 
         Parameters
@@ -526,7 +527,7 @@ class SphereSource(Source, shield.Sphere):
         density
             Material density in g/cm3.
         """
-        super().__init__(material_name=material_name, 
+        super().__init__(material_name=material_name,
                          sphere_center=sphere_center,
                          sphere_radius=sphere_radius, density=density)
         self.points_per_dimension = [10, 10, 10]  # triggers quadrature calcs
@@ -594,7 +595,7 @@ class SphereSource(Source, shield.Sphere):
 # -----------------------------------------------------------
 
 
-class BoxSource(Source, shield.Box):
+class BoxSource(shield.Box, Source):
     """Models a Axis-Aligned rectangular box source
     """
     def __init__(self, material_name: str, box_center: list[float],
@@ -656,7 +657,7 @@ class BoxSource(Source, shield.Box):
 # -----------------------------------------------------------
 
 
-class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
+class ZAlignedCylinderSource(shield.ZAlignedCylinder, Source):
     """Models a cylindrical source axis-aligned with the Z axis.
     """
 
@@ -719,7 +720,7 @@ class ZAlignedCylinderSource(Source, shield.ZAlignedCylinder):
 # -----------------------------------------------------------
 
 
-class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
+class YAlignedCylinderSource(shield.YAlignedCylinder, Source):
     """Models a cylindrical source axis-aligned with the Y axis.
     """
 
@@ -786,7 +787,7 @@ class YAlignedCylinderSource(Source, shield.YAlignedCylinder):
 # -----------------------------------------------------------
 
 
-class XAlignedCylinderSource(Source, shield.XAlignedCylinder):
+class XAlignedCylinderSource(shield.XAlignedCylinder, Source):
     """Models a cylindrical source axis-aligned with the X axis.
     """
 

@@ -2,7 +2,7 @@ import abc
 import math
 import numbers
 import copy
-from typing import Optional, List, Tuple, Any
+from typing import Optional, List, Tuple
 
 import numpy as np
 
