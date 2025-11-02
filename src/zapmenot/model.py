@@ -1,3 +1,15 @@
+import math
+import numpy as np
+import numbers
+from typing import Optional, List
+from . import ray, material, source, shield, detector
+
+import importlib
+pyvista_spec = importlib.util.find_spec("pyvista")
+pyvista_found = pyvista_spec is not None
+if pyvista_found:
+    import pyvista
+''' '''
 '''
 ZapMeNot - a point kernel photon shielding library
 Copyright (C) 2019-2025  C. Alan Ford
@@ -15,18 +27,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
-
-import math
-import numpy as np
-import numbers
-from typing import Optional, List
-from . import ray, material, source, shield, detector
-
-import importlib
-pyvista_spec = importlib.util.find_spec("pyvista")
-pyvista_found = pyvista_spec is not None
-if pyvista_found:
-    import pyvista
 
 
 class Model:

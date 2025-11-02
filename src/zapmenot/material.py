@@ -1,3 +1,20 @@
+from scipy.interpolate import Akima1DInterpolator
+import numpy as np
+import numbers
+import yaml
+from typing import List, Optional, Union, Dict, ClassVar, TypedDict
+
+try:
+    from yaml import CLoader as MyLoader, CDumper as MyDumper
+except ImportError:
+    from yaml import FullLoader as MyLoader, SafeDumper as MyDumper
+
+try:
+    from importlib import resources as impresources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as impresources
+''' '''
 '''
 ZapMeNot - a point kernel photon shielding library
 Copyright (C) 2019-2025  C. Alan Ford
@@ -15,23 +32,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
-
-from scipy.interpolate import Akima1DInterpolator
-import numpy as np
-import numbers
-import yaml
-from typing import List, Optional, Union, Dict, ClassVar, TypedDict
-
-try:
-    from yaml import CLoader as MyLoader, CDumper as MyDumper
-except ImportError:
-    from yaml import FullLoader as MyLoader, SafeDumper as MyDumper
-
-try:
-    from importlib import resources as impresources
-except ImportError:
-    # Try backported to PY<37 `importlib_resources`.
-    import importlib_resources as impresources
 
 
 class Material:
@@ -55,7 +55,8 @@ class Material:
     _density : float
         Density of the material in g/cm\ :sup:`3`
     '''
-    Dirt = TypedDict('Dirt', {'density': float,
+    Material_Specification = TypedDict('Material_Specification', {
+                              'density': float,
                               'density-units': str,
                               'energy-units': str,
                               'mass-atten-coff-units': str,
@@ -66,7 +67,7 @@ class Material:
                               'mass-en-abs-coff-units': Optional[str],
                               'mass-en-abs-coff-energy': Optional[List[float]],
                               }, total=True)
-    _library: ClassVar[Optional[Dict[str, Dirt]]] = None
+    _library: ClassVar[Optional[Dict[str, Material_Specification]]] = None
 
     # _library: ClassVar[Optional[Dict[str, Any]]] = None
 
@@ -95,7 +96,7 @@ class Material:
         self._name: str = name
         temp1 = Material._library.get(self._name)
         if temp1:
-            properties: Material.Dirt = temp1
+            properties: Material.Material_Specification = temp1
         self._density: float = properties["density"]
         self._atten_energy_bins: np.ndarray = np.array(
             properties["mass-atten-coff-energy"])
