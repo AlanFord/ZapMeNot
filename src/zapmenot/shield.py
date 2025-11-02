@@ -59,7 +59,7 @@ class Shield(abc.ABC):
             if not isinstance(density, numbers.Number):
                 raise ValueError(f"Invalid density: {density}")
             self.material.density = density
-        super().__init__(**kwargs)
+        super().__init__()
 
     @abc.abstractmethod
     def is_hollow(self) -> bool:
@@ -321,7 +321,7 @@ class Sphere(Shield):
     '''
     def __init__(self, material_name: str, sphere_center: List[float],
                  sphere_radius: float,
-                 density: Optional[float] = None, **kwargs: Any) -> None:
+                 density: Optional[float] = None) -> None:
         '''Create a spherical shield.
 
         Parameters
@@ -404,7 +404,7 @@ class Shell(Shield):
     """A shell that surrounds a spherical shield or source."""
 
     def __init__(self, material_name: str, sphere: Sphere, thickness: float,
-                 density: Optional[float] = None, **kwargs: Any) -> None:
+                 density: Optional[float] = None) -> None:
         """Create a Shell shield.
 
         Parameters

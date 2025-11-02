@@ -320,8 +320,7 @@ class Source(shield.Shield):
 class LineSource(Source):
     """Models a line radiation source
     """
-    def __init__(self, start: list[float], end: list[float],
-                 **kwargs: Any) -> None:
+    def __init__(self, start: list[float], end: list[float]) -> None:
         """Create a LineSource.
 
         Parameters
@@ -338,9 +337,7 @@ class LineSource(Source):
         self._length: np.floating[Any] = np.linalg.norm(self.end - self.origin)
         self._dir: np.ndarray = (self.end - self.origin)/self._length
         # let the point source have a dummy material of air at a zero density
-        kwargs['material_name'] = 'air'
-        kwargs['density'] = 0
-        super().__init__(**kwargs)
+        super().__init__(material_name='air', density=0)
         # initialize points_per_dimension after super() to force a
         # single dimension
         self._points_per_dimension = [10]
@@ -430,31 +427,8 @@ class LineSource(Source):
 
 class PointSource(Source):
     """Models a point radiation source
-
-    Parameters
-    ----------
-    x : float
-        Cartesian X coordinate of the point source.
-    y : float
-        Cartesian Y coordinate of the point source.
-    z : float
-        Cartesian Z coordinate of the point source.
     """
-    '''
-    Attributes
-    ----------
-    material : :class: `zapmenot.material.Material`
-        Material properties of the shield
-    inner_radius : float
-        Radius of the annulus inner surface.
-    outer_radius : float
-        Radius of the annulus outer surface.
-    origin : :class:`numpy.ndarray`
-        Vector location of a point on the annulus centerline.
-    dir : :class:`numpy.ndarray`
-        Vector normal of the annulus centerline.
-    '''
-    def __init__(self, x: float, y: float, z: float, **kwargs: Any) -> None:
+    def __init__(self, x: float, y: float, z: float) -> None:
         """Create a PointSource.
 
         Parameters
@@ -470,9 +444,7 @@ class PointSource(Source):
         self._y: float = y
         self._z: float = z
         # let the point source have a dummy material of air at a zero density
-        kwargs['material_name'] = 'air'
-        kwargs['density'] = 0
-        super().__init__(**kwargs)
+        super().__init__(material_name='air', density=0)
         self._points_per_dimension = [1]
 
     def is_hollow(self) -> bool:
@@ -558,8 +530,7 @@ class SphereSource(Source, shield.Sphere):
     '''
 
     def __init__(self, material_name: str, sphere_center: list[float],
-                 sphere_radius: float, density: Optional[float] = None,
-                 **kwargs: Any) -> None:
+                 sphere_radius: float, density: Optional[float] = None) -> None:
         """Create a SphereSource.
 
         Parameters
@@ -573,11 +544,9 @@ class SphereSource(Source, shield.Sphere):
         density
             Material density in g/cm3.
         """
-        kwargs['material_name'] = material_name
-        kwargs['sphere_center'] = sphere_center
-        kwargs['sphere_radius'] = sphere_radius
-        kwargs['density'] = density
-        super().__init__(**kwargs)
+        super().__init__(material_name=material_name, 
+                         sphere_center=sphere_center,
+                         sphere_radius=sphere_radius, density=density)
         self.points_per_dimension = [10, 10, 10]  # triggers quadrature calcs
 
     @property
