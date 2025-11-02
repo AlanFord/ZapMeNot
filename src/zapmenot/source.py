@@ -353,11 +353,8 @@ class LineSource(shield.Shield, Source):
         mesh_width = self._length/self._points_per_dimension[0]
         spacings = spacings*mesh_width
         spacings = spacings-(mesh_width/2)
-        source_points = []
-        for dist in spacings:
-            location = (self.origin+self._dir*dist).astype(float)
-            source_points.append(tuple(location))
-        return source_points
+        return [tuple((self.origin+self._dir*dist).astype(float))
+                for dist in spacings]
 
     def _get_crossing_length(self, ray: ray.FiniteLengthRay) -> int:
         """Calculates the linear intersection length of a ray and the shield
@@ -638,21 +635,20 @@ class BoxSource(shield.Box, Source):
         :class:`list` of :class:`numpy.ndarray`
             A list of vector locations within the Source body.
         """
-        source_points = []
         # verify there are three values in the list
         if len(self._points_per_dimension) != 3:
             raise ValueError(
                 "Source Points per Dimension needs three entries")
         mesh_width = self.box_dimensions/self._points_per_dimension
         start_point = self.box_center-(self.box_dimensions)/2+(mesh_width/2)
-        for i in range(self._points_per_dimension[0]):
-            x = start_point[0]+mesh_width[0]*i
-            for j in range(self._points_per_dimension[1]):
-                y = start_point[1]+mesh_width[1]*j
-                for k in range(self._points_per_dimension[2]):
-                    z = start_point[2]+mesh_width[2]*k
-                    source_points.append((x, y, z))
-        return source_points
+        return [
+            (start_point[0]+mesh_width[0]*i,
+             start_point[1]+mesh_width[1]*j,
+             start_point[2]+mesh_width[2]*k)
+            for i in range(self._points_per_dimension[0])
+            for j in range(self._points_per_dimension[1])
+            for k in range(self._points_per_dimension[2])
+        ]
 
 # -----------------------------------------------------------
 
@@ -886,29 +882,24 @@ def _generic_cylinder_source_points(points_per_dimension: List[int],
 
     angle_increment = 2*math.pi/points_per_dimension[1]
     start_angle = angle_increment/2
-    angle_locations = []
-    for i in range(points_per_dimension[1]):
-        angle_locations.append(start_angle + (i*angle_increment))
+    angle_locations = [start_angle + (i*angle_increment)
+                       for i in range(points_per_dimension[1])]
 
     length_increment = length/points_per_dimension[2]
     start_location = -(length/2) + length_increment/2
-    length_locations = []
-    for i in range(points_per_dimension[2]):
-        length_locations.append(start_location + (i*length_increment))
+    length_locations = [start_location + (i*length_increment)
+                        for i in range(points_per_dimension[2])]
 
     # iterate through each dimension, building a list of source points
-    source_points = []
-    for radial_location in annular_locations:
-        r = radial_location
-        for angle_location in angle_locations:
-            theta = angle_location
-            for length_location in length_locations:
-                z = length_location
-                # convert cylindrical to rectangular coordinates
-                x = r * math.cos(theta)
-                y = r * math.sin(theta)
-                source_points.append((x, y, z))
-    return source_points
+    # convert cylindrical to rectangular coordinates
+    return [
+        (r * math.cos(theta),
+         r * math.sin(theta),
+         z)
+        for r in annular_locations
+        for theta in angle_locations
+        for z in length_locations
+    ]
 
 
 def _spherequad(nr: int, nTheta: int, nPhi: int, rad: float) -> \

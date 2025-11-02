@@ -157,10 +157,8 @@ class Shield(abc.ABC):
         root = np.sqrt(discriminant)
         t0 = (-b - root)/(2*a)
         t1 = (-b + root)/(2*a)
-        big_list = []
-        for a_length in [t0, t1]:
-            if (a_length >= 0) and (a_length <= ray._length):
-                big_list.append(a_length)
+        big_list = [a_length for a_length in [t0, t1]
+                    if (a_length >= 0) and (a_length <= ray._length)]
         if len(big_list) != 2:
             # if not 2 intersections, look for ray endpoints inside the sphere
             if sphere._contains(ray._origin):
@@ -827,11 +825,10 @@ class InfiniteAnnulus(SemiInfiniteShield):
                 t2 = (-b - meo)/(2*a)
                 # check to see if the intersections occur in the finite
                 # length of the cylinder
-                for t in [t1, t2]:
-                    # discard line/cylinder intersections outside of the
-                    # length of the ray
-                    if t >= 0 and t <= ray._length:
-                        results.append(t)
+                # discard line/cylinder intersections outside of the
+                # length of the ray
+                results.extend(t for t in [t1, t2]
+                               if t >= 0 and t <= ray._length)
         return results
 
     def draw(self) -> pyvista.PolyData | None:

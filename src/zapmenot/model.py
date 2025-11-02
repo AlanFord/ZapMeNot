@@ -399,10 +399,7 @@ class Model:
         widths = [abs(pl.bounds[1] - pl.bounds[0]),
                   abs(pl.bounds[3] - pl.bounds[2]),
                   abs(pl.bounds[5] - pl.bounds[4])]
-        good_widths = []
-        for width in widths:
-            if width > 0:
-                good_widths.append(width)
+        good_widths = [width for width in widths if width > 0]
         if len(good_widths) == 0:
             raise ValueError("detector and source are coincident or missing")
         # determine a good radius for the points
