@@ -41,7 +41,7 @@ class Shield(abc.ABC):
     """
 
     def __init__(self, material_name: Optional[str] = None,
-                 density: Optional[float] = None, **kwargs: Any) -> None:
+                 density: Optional[float] = None) -> None:
         """Create a photon shield.
 
         Parameters
@@ -50,8 +50,6 @@ class Shield(abc.ABC):
             Name of the material composing the shield.
         density
             Material density in g/cm3.
-        **kwargs
-            Arbitrary keyword arguments.
         """
         # the material name is validated by the Material class
         self.material: material.Material = material.Material(material_name)

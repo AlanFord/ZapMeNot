@@ -126,7 +126,7 @@
 <div class="viewcode-block" id="Shield.__init__">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.shield.Shield.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">material_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+                 <span class="n">density</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a photon shield.</span>
 
 <span class="sd">        Parameters</span>
@@ -135,8 +135,6 @@
 <span class="sd">            Name of the material composing the shield.</span>
 <span class="sd">        density</span>
 <span class="sd">            Material density in g/cm3.</span>
-<span class="sd">        **kwargs</span>
-<span class="sd">            Arbitrary keyword arguments.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># the material name is validated by the Material class</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">:</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">(</span><span class="n">material_name</span><span class="p">)</span>
@@ -1535,7 +1533,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Nov 01, 2025.
+      <span class="lastupdated">Last updated on Nov 02, 2025.
       </span></p>
   </div>
 

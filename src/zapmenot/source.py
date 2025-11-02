@@ -46,27 +46,9 @@ class GroupOption(Enum):
 # -----------------------------------------------------------
 
 
-class Source(shield.Shield):
+class Source(abc.ABC):
     """Abtract class to model a radiation source.
-
-    Maintains a list of isotopes and can return a list of point source
-    locations within the body of the Source.
-
-    Parameters
-    ----------
-    **kwargs
-        Arbitrary keyword arguments.
     """
-    '''
-    Attributes
-    ----------
-    _points_per_dimension : :class:`list` of integers
-        The number of source points to be used in each dimension when modeling
-        the uniform source distribution throughout the body of the source.
-        Typically a list of three integers for three-dimensional sources, one
-        integer for one dimensional sources, and not significant for point
-        sources.
-    '''
     def __init__(self, **kwargs: Any) -> None:
         '''Initialize the Source with empty strings for the isotope list
         and photon list'''
@@ -317,7 +299,7 @@ class Source(shield.Shield):
 # -----------------------------------------------------------
 
 
-class LineSource(Source):
+class LineSource(Source, shield.Shield):
     """Models a line radiation source
     """
     def __init__(self, start: list[float], end: list[float]) -> None:
@@ -425,7 +407,7 @@ class LineSource(Source):
 # -----------------------------------------------------------
 
 
-class PointSource(Source):
+class PointSource(Source, shield.Shield):
     """Models a point radiation source
     """
     def __init__(self, x: float, y: float, z: float) -> None:

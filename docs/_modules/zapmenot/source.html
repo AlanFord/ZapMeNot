@@ -132,27 +132,9 @@
 
 <div class="viewcode-block" id="Source">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Source</span><span class="p">(</span><span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Source</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abtract class to model a radiation source.</span>
-
-<span class="sd">    Maintains a list of isotopes and can return a list of point source</span>
-<span class="sd">    locations within the body of the Source.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    **kwargs</span>
-<span class="sd">        Arbitrary keyword arguments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    _points_per_dimension : :class:`list` of integers</span>
-<span class="sd">        The number of source points to be used in each dimension when modeling</span>
-<span class="sd">        the uniform source distribution throughout the body of the source.</span>
-<span class="sd">        Typically a list of three integers for three-dimensional sources, one</span>
-<span class="sd">        integer for one dimensional sources, and not significant for point</span>
-<span class="sd">        sources.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="Source.__init__">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.Source.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -427,7 +409,7 @@
 
 <div class="viewcode-block" id="LineSource">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.LineSource">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">LineSource</span><span class="p">(</span><span class="n">Source</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LineSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a line radiation source</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="LineSource.__init__">
@@ -550,7 +532,7 @@
 
 <div class="viewcode-block" id="PointSource">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.source.PointSource">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">PointSource</span><span class="p">(</span><span class="n">Source</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PointSource</span><span class="p">(</span><span class="n">Source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Models a point radiation source</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="PointSource.__init__">
@@ -1179,7 +1161,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Nov 01, 2025.
+      <span class="lastupdated">Last updated on Nov 02, 2025.
       </span></p>
   </div>
 
