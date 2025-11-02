@@ -211,9 +211,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.Source.list_discrete_photons"><code class="docutils literal notranslate"><span class="pre">Source.list_discrete_photons()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.Source.get_photon_source_list"><code class="docutils literal notranslate"><span class="pre">Source.get_photon_source_list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.Source.points_per_dimension"><code class="docutils literal notranslate"><span class="pre">Source.points_per_dimension</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.Source.draw"><code class="docutils literal notranslate"><span class="pre">Source.draw()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.Source.get_crossing_mfp"><code class="docutils literal notranslate"><span class="pre">Source.get_crossing_mfp()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#zapmenot.source.Source.is_hollow"><code class="docutils literal notranslate"><span class="pre">Source.is_hollow()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#zapmenot.source.LineSource"><code class="docutils literal notranslate"><span class="pre">LineSource</span></code></a><ul>
@@ -785,14 +782,13 @@ along with this program.  If not, see &lt;<a class="reference external" href="ht
 <p>Abtract class to model a photon shield.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.Shield.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shield.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shield.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/shield.html#Shield.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.shield.Shield.__init__" title="Link to this definition"></a></dt>
 <dd><p>Create a photon shield.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>material_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Name of the material composing the shield.</p></li>
 <li><p><strong>density</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>) – Material density in g/cm3.</p></li>
-<li><p><strong>**kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – Arbitrary keyword arguments.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -853,14 +849,13 @@ with the shield.</p></li>
 <p>Abtract class to model a photon shield.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.shield.SemiInfiniteShield.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.SemiInfiniteShield.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.shield.SemiInfiniteShield.__init__" title="Link to this definition"></a></dt>
 <dd><p>Create a photon shield.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>material_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Name of the material composing the shield.</p></li>
 <li><p><strong>density</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>) – Material density in g/cm3.</p></li>
-<li><p><strong>**kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – Arbitrary keyword arguments.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1802,15 +1797,8 @@ include ‘group’, ‘discrete’, and ‘hybrid’.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="zapmenot.source.Source">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zapmenot.source.</span></span><span class="sig-name descname"><span class="pre">Source</span></span><a class="reference internal" href="_modules/zapmenot/source.html#Source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.Source" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zapmenot.shield.Shield" title="zapmenot.shield.Shield"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shield</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
 <p>Abtract class to model a radiation source.</p>
-<p>Maintains a list of isotopes and can return a list of point source
-locations within the body of the Source.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – Arbitrary keyword arguments.</p>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.Source.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zapmenot/source.html#Source.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.Source.__init__" title="Link to this definition"></a></dt>
@@ -1948,55 +1936,12 @@ photon energy in MeV and an activity in <strong>Bq</strong>.</p>
 <dd><p>Number of source points per dimension.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="zapmenot.source.Source.draw">
-<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.Source.draw" title="Link to this definition"></a></dt>
-<dd><p>Creates a display object</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.PolyData.html#pyvista.PolyData" title="(in PyVista v0.37.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolyData</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A display object representing the shield.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zapmenot.source.Source.get_crossing_mfp">
-<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_crossing_mfp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a_ray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photon_energy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.Source.get_crossing_mfp" title="Link to this definition"></a></dt>
-<dd><p>Calculates the mfp equivalent if a ray intersects the shield</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a_ray</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#zapmenot.ray.FiniteLengthRay" title="zapmenot.ray.FiniteLengthRay"><code class="xref py py-class docutils literal notranslate"><span class="pre">FiniteLengthRay</span></code></a></span>) – The finite length ray that is checked for intersections
-with the shield.</p></li>
-<li><p><strong>photon_energy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – The photon energy in MeV</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="zapmenot.source.Source.is_hollow">
-<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_hollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zapmenot.source.Source.is_hollow" title="Link to this definition"></a></dt>
-<dd><p>Returns true if the body is annular or hollow, false otherwise</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="zapmenot.source.LineSource">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zapmenot.source.</span></span><span class="sig-name descname"><span class="pre">LineSource</span></span><a class="reference internal" href="_modules/zapmenot/source.html#LineSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.LineSource" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zapmenot.source.Source" title="zapmenot.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#zapmenot.source.Source" title="zapmenot.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a>, <a class="reference internal" href="#zapmenot.shield.Shield" title="zapmenot.shield.Shield"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shield</span></code></a></p>
 <p>Models a line radiation source</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.LineSource.__init__">
@@ -2190,7 +2135,7 @@ Isotope object and an activity in Bq.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="zapmenot.source.PointSource">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zapmenot.source.</span></span><span class="sig-name descname"><span class="pre">PointSource</span></span><a class="reference internal" href="_modules/zapmenot/source.html#PointSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zapmenot.source.PointSource" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zapmenot.source.Source" title="zapmenot.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#zapmenot.source.Source" title="zapmenot.source.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a>, <a class="reference internal" href="#zapmenot.shield.Shield" title="zapmenot.shield.Shield"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shield</span></code></a></p>
 <p>Models a point radiation source</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="zapmenot.source.PointSource.__init__">
@@ -3512,7 +3457,7 @@ uncollided energy flux, uncollided exposure, and total exposure</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Nov 01, 2025.
+      <span class="lastupdated">Last updated on Nov 02, 2025.
       </span></p>
   </div>
 
