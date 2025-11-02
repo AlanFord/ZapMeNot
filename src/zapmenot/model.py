@@ -103,7 +103,8 @@ class Model:
 
         self.source = new_source
         # don't forget that sources are shields too!
-        self.shield_list.append(new_source)
+        if isinstance(new_source, shield.Shield):
+            self.shield_list.append(new_source)
 
     def add_shield(self, new_shield: shield.Shield) -> None:
         """Add a shield to the collection of shields used by the model.

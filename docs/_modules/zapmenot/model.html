@@ -194,7 +194,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">new_source</span>
         <span class="c1"># don&#39;t forget that sources are shields too!</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_source</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_source</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Model.add_shield">
