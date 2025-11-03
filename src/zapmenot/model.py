@@ -36,24 +36,15 @@ class Model:
     the point-kernel photon shielding analysis.  These elements include
     sources, shields, and detectors.
     """
-    '''
-    Attributes
-    ----------
-    source : :class:`zapmenot.source.Source`
-        The source distribution (point, line, or volume) included in the model.
-
-    shield_list : :class:`list` of :class:`zapmenot.shield.Shield`
-        A list of shields (including the source volume) contained in the model.
-
-    detector : :class:`zapmenot.detector.Detector`
-        The single detector in the model used to determine the exposure.
-
-    filler_material : :class:`zapmenot.material.Material`
-        The (optional) material used as fill around the formal shields.
-
-    buildup_factor_material : :class:`zapmenot.material.Material`
-        The material used to calculate the exposure buildup factor.
-    '''
+    # used to calculate exposure (R/sec) from flux (photon/cm2 sec),
+    # photon energy (MeV),
+    # and linear energy absorption coeff (cm2/g)
+    # aka, "flux to exposure conversion factor"
+    # for more information, see "Radiation Shielding", J. K. Shultis
+    #  and R.E. Faw, 2000, page 141.
+    # This value is based on a value of energy deposition
+    # per ion in air of 33.85 [ICRU Report 39, 1979].
+    FLUX_TO_EXPOSURE_CONVERSION_FACTOR = 1.835E-8
 
     def __init__(self) -> None:
         self.source: Optional[source.Source] = None
@@ -61,15 +52,6 @@ class Model:
         self.detector: Optional[detector.Detector] = None
         self.filler_material: Optional[material.Material] = None
         self.buildup_factor_material: Optional[material.Material] = None
-        # used to calculate exposure (R/sec) from flux (photon/cm2 sec),
-        # photon energy (MeV),
-        # and linear energy absorption coeff (cm2/g)
-        # aka, "flux to exposure conversion factor"
-        # for more information, see "Radiation Shielding", J. K. Shultis
-        #  and R.E. Faw, 2000, page 141.
-        # This value is based on a value of energy deposition
-        # per ion in air of 33.85 [ICRU Report 39, 1979].
-        self._conversion_factor: float = 1.835E-8
 
     def set_filler_material(self, filler_material: str,
                             density: Optional[float] = None) -> None:
@@ -258,7 +240,8 @@ class Model:
             total_uncollided_energy_flux = np.sum(uncollided_point_energy_flux)
 
             uncollided_point_exposure = uncollided_point_energy_flux * \
-                self._conversion_factor * dose_coeff * 1000 * 3600  # mR/hr
+                Model.FLUX_TO_EXPOSURE_CONVERSION_FACTOR * dose_coeff * \
+                1000 * 3600  # mR/hr
             total_uncollided_exposure = np.sum(uncollided_point_exposure)
 
             collided_point_exposure = uncollided_point_exposure * \
@@ -291,8 +274,10 @@ class Model:
         Adds shields to a Plotter instance after trimming any
         infinite shields to a predefined bounding box.
         """
-        shieldColor = 'blue'
-        sourceColor = 'red'
+        # display color for shield geometries
+        SHIELD_COLOR = 'blue'
+        # display color for source geometry
+        SOURCE_COLOR = 'red'
         for currentShield in self.shield_list:
             opacity = 1.0
             if currentShield.is_hollow():
@@ -313,7 +298,7 @@ class Model:
                         normal='-y', origin=[0, bounds[3], 0])
                     clipped = clipped.clip_closed_surface(    # type: ignore
                         normal='-z', origin=[0, 0, bounds[5]])
-                    pl.add_mesh(clipped, color=shieldColor, opacity=opacity)
+                    pl.add_mesh(clipped, color=SHIELD_COLOR, opacity=opacity)
             # now handle the sources and non-infinite shields
             else:
                 if isinstance(currentShield, source.Source):
@@ -322,9 +307,9 @@ class Model:
                         pass
                     else:
                         pl.add_mesh(currentShield.draw(),
-                                    sourceColor, label='source', line_width=3)
+                                    SOURCE_COLOR, label='source', line_width=3)
                 else:
-                    pl.add_mesh(currentShield.draw(), shieldColor,
+                    pl.add_mesh(currentShield.draw(), SHIELD_COLOR,
                                 opacity=opacity)
         # now add the "bounds" as a transparent block to for a display size
         mesh = pyvista.Box(bounds)
@@ -393,17 +378,20 @@ class Model:
         is ignored and the next largest dimension is used to size the
         point representation.
         """
-        point_ratio = 0.025
-        sourceColor = 'red'
-        detectorColor = 'green'
+        # ratio of the radius of point objects to the minimum width
+        # of other objects to be displayed
+        POINT_RATIO = 0.025
+        # display color for source geometry
+        SOURCE_COLOR = 'red'
+        # display color for detector geometry
+        DETECTOR_COLOR = 'green'
         widths = [abs(pl.bounds[1] - pl.bounds[0]),
                   abs(pl.bounds[3] - pl.bounds[2]),
                   abs(pl.bounds[5] - pl.bounds[4])]
         good_widths = [width for width in widths if width > 0]
         if len(good_widths) == 0:
             raise ValueError("detector and source are coincident or missing")
-        # determine a good radius for the points
-        point_radius = min(good_widths) * point_ratio
+        point_radius = min(good_widths) * POINT_RATIO
         # check if the source is a point source
         if isinstance(self.source, source.PointSource):
             body = pyvista.Sphere(center=(self.source._x,
@@ -411,7 +399,7 @@ class Model:
                                           self.source._z),
                                   radius=point_radius)
             pl.add_mesh(
-                body, line_width=5, color=sourceColor,
+                body, line_width=5, color=SOURCE_COLOR,
                 label='source')
         if self.detector is not None:
             body = pyvista.Sphere(center=(self.detector.x,
@@ -419,6 +407,6 @@ class Model:
                                           self.detector.z),
                                   radius=point_radius)
             pl.add_mesh(
-                body, line_width=5, color=detectorColor,
+                body, line_width=5, color=DETECTOR_COLOR,
                 label='detector')
         # pl.set_background(color='white')

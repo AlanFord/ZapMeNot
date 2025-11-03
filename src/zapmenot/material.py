@@ -80,7 +80,7 @@ class Material:
             path = 'materialLibrary.yml'
             try:
                 inp_file = (impresources.files(__package__) / path)
-                stream = inp_file.open("r")  # or "rt" as text file with universal newlines
+                stream = inp_file.open("r")
             except AttributeError:
                 # Python < PY3.9, fall back to method deprecated in PY3.11.
                 stream = impresources.open_text(__package__, path)

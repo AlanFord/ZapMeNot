@@ -469,11 +469,8 @@
         <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">spacings</span> <span class="o">=</span> <span class="n">spacings</span><span class="o">*</span><span class="n">mesh_width</span>
         <span class="n">spacings</span> <span class="o">=</span> <span class="n">spacings</span><span class="o">-</span><span class="p">(</span><span class="n">mesh_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">spacings</span><span class="p">:</span>
-            <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">_dir</span><span class="o">*</span><span class="n">dist</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-            <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">location</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">source_points</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">_dir</span><span class="o">*</span><span class="n">dist</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">spacings</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_crossing_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">:</span> <span class="n">ray</span><span class="o">.</span><span class="n">FiniteLengthRay</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the linear intersection length of a ray and the shield</span>
@@ -787,21 +784,20 @@
 <span class="sd">        :class:`list` of :class:`numpy.ndarray`</span>
 <span class="sd">            A list of vector locations within the Source body.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># verify there are three values in the list</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Source Points per Dimension needs three entries&quot;</span><span class="p">)</span>
         <span class="n">mesh_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span>
         <span class="n">start_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_center</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">box_dimensions</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">mesh_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">start_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">i</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="n">y</span> <span class="o">=</span> <span class="n">start_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">j</span>
-                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
-                    <span class="n">z</span> <span class="o">=</span> <span class="n">start_point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">k</span>
-                    <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">source_points</span></div>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">start_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">i</span><span class="p">,</span>
+             <span class="n">start_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">j</span><span class="p">,</span>
+             <span class="n">start_point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">mesh_width</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="p">]</span></div>
 
 
 <span class="c1"># -----------------------------------------------------------</span>
@@ -1054,29 +1050,24 @@
 
     <span class="n">angle_increment</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">start_angle</span> <span class="o">=</span> <span class="n">angle_increment</span><span class="o">/</span><span class="mi">2</span>
-    <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">angle_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">))</span>
+    <span class="n">angle_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">angle_increment</span><span class="p">)</span>
+                       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
 
     <span class="n">length_increment</span> <span class="o">=</span> <span class="n">length</span><span class="o">/</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">start_location</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">length</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">length_increment</span><span class="o">/</span><span class="mi">2</span>
-    <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
-        <span class="n">length_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_location</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">))</span>
+    <span class="n">length_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_location</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">length_increment</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">points_per_dimension</span><span class="p">[</span><span class="mi">2</span><span class="p">])]</span>
 
     <span class="c1"># iterate through each dimension, building a list of source points</span>
-    <span class="n">source_points</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">radial_location</span> <span class="ow">in</span> <span class="n">annular_locations</span><span class="p">:</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">radial_location</span>
-        <span class="k">for</span> <span class="n">angle_location</span> <span class="ow">in</span> <span class="n">angle_locations</span><span class="p">:</span>
-            <span class="n">theta</span> <span class="o">=</span> <span class="n">angle_location</span>
-            <span class="k">for</span> <span class="n">length_location</span> <span class="ow">in</span> <span class="n">length_locations</span><span class="p">:</span>
-                <span class="n">z</span> <span class="o">=</span> <span class="n">length_location</span>
-                <span class="c1"># convert cylindrical to rectangular coordinates</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-                <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-                <span class="n">source_points</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">source_points</span>
+    <span class="c1"># convert cylindrical to rectangular coordinates</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>
+         <span class="n">r</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>
+         <span class="n">z</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">annular_locations</span>
+        <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">angle_locations</span>
+        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">length_locations</span>
+    <span class="p">]</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_spherequad</span><span class="p">(</span><span class="n">nr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">nTheta</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">nPhi</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rad</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> \
@@ -1162,7 +1153,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Nov 02, 2025.
+      <span class="lastupdated">Last updated on Nov 03, 2025.
       </span></p>
   </div>
 

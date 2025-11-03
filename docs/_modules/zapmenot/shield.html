@@ -252,10 +252,8 @@
         <span class="n">root</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">discriminant</span><span class="p">)</span>
         <span class="n">t0</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">root</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
         <span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">root</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
-        <span class="n">big_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">a_length</span> <span class="ow">in</span> <span class="p">[</span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">a_length</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a_length</span> <span class="o">&lt;=</span> <span class="n">ray</span><span class="o">.</span><span class="n">_length</span><span class="p">):</span>
-                <span class="n">big_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_length</span><span class="p">)</span>
+        <span class="n">big_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a_length</span> <span class="k">for</span> <span class="n">a_length</span> <span class="ow">in</span> <span class="p">[</span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">a_length</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a_length</span> <span class="o">&lt;=</span> <span class="n">ray</span><span class="o">.</span><span class="n">_length</span><span class="p">)]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">big_list</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
             <span class="c1"># if not 2 intersections, look for ray endpoints inside the sphere</span>
             <span class="k">if</span> <span class="n">sphere</span><span class="o">.</span><span class="n">_contains</span><span class="p">(</span><span class="n">ray</span><span class="o">.</span><span class="n">_origin</span><span class="p">):</span>
@@ -997,11 +995,10 @@
                 <span class="n">t2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">meo</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
                 <span class="c1"># check to see if the intersections occur in the finite</span>
                 <span class="c1"># length of the cylinder</span>
-                <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">]:</span>
-                    <span class="c1"># discard line/cylinder intersections outside of the</span>
-                    <span class="c1"># length of the ray</span>
-                    <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">ray</span><span class="o">.</span><span class="n">_length</span><span class="p">:</span>
-                        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                <span class="c1"># discard line/cylinder intersections outside of the</span>
+                <span class="c1"># length of the ray</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">]</span>
+                               <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">ray</span><span class="o">.</span><span class="n">_length</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span>
 
 <div class="viewcode-block" id="InfiniteAnnulus.draw">
@@ -1533,7 +1530,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Nov 02, 2025.
+      <span class="lastupdated">Last updated on Nov 03, 2025.
       </span></p>
   </div>
 

@@ -119,24 +119,15 @@
 <span class="sd">    the point-kernel photon shielding analysis.  These elements include</span>
 <span class="sd">    sources, shields, and detectors.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    source : :class:`zapmenot.source.Source`</span>
-<span class="sd">        The source distribution (point, line, or volume) included in the model.</span>
-
-<span class="sd">    shield_list : :class:`list` of :class:`zapmenot.shield.Shield`</span>
-<span class="sd">        A list of shields (including the source volume) contained in the model.</span>
-
-<span class="sd">    detector : :class:`zapmenot.detector.Detector`</span>
-<span class="sd">        The single detector in the model used to determine the exposure.</span>
-
-<span class="sd">    filler_material : :class:`zapmenot.material.Material`</span>
-<span class="sd">        The (optional) material used as fill around the formal shields.</span>
-
-<span class="sd">    buildup_factor_material : :class:`zapmenot.material.Material`</span>
-<span class="sd">        The material used to calculate the exposure buildup factor.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># used to calculate exposure (R/sec) from flux (photon/cm2 sec),</span>
+    <span class="c1"># photon energy (MeV),</span>
+    <span class="c1"># and linear energy absorption coeff (cm2/g)</span>
+    <span class="c1"># aka, &quot;flux to exposure conversion factor&quot;</span>
+    <span class="c1"># for more information, see &quot;Radiation Shielding&quot;, J. K. Shultis</span>
+    <span class="c1">#  and R.E. Faw, 2000, page 141.</span>
+    <span class="c1"># This value is based on a value of energy deposition</span>
+    <span class="c1"># per ion in air of 33.85 [ICRU Report 39, 1979].</span>
+    <span class="n">FLUX_TO_EXPOSURE_CONVERSION_FACTOR</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
 
 <div class="viewcode-block" id="Model.__init__">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.__init__">[docs]</a>
@@ -145,16 +136,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="c1"># used to calculate exposure (R/sec) from flux (photon/cm2 sec),</span>
-        <span class="c1"># photon energy (MeV),</span>
-        <span class="c1"># and linear energy absorption coeff (cm2/g)</span>
-        <span class="c1"># aka, &quot;flux to exposure conversion factor&quot;</span>
-        <span class="c1"># for more information, see &quot;Radiation Shielding&quot;, J. K. Shultis</span>
-        <span class="c1">#  and R.E. Faw, 2000, page 141.</span>
-        <span class="c1"># This value is based on a value of energy deposition</span>
-        <span class="c1"># per ion in air of 33.85 [ICRU Report 39, 1979].</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.835E-8</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="Model.set_filler_material">
@@ -364,7 +346,8 @@
             <span class="n">total_uncollided_energy_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uncollided_point_energy_flux</span><span class="p">)</span>
 
             <span class="n">uncollided_point_exposure</span> <span class="o">=</span> <span class="n">uncollided_point_energy_flux</span> <span class="o">*</span> \
-                <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_factor</span> <span class="o">*</span> <span class="n">dose_coeff</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">3600</span>  <span class="c1"># mR/hr</span>
+                <span class="n">Model</span><span class="o">.</span><span class="n">FLUX_TO_EXPOSURE_CONVERSION_FACTOR</span> <span class="o">*</span> <span class="n">dose_coeff</span> <span class="o">*</span> \
+                <span class="mi">1000</span> <span class="o">*</span> <span class="mi">3600</span>  <span class="c1"># mR/hr</span>
             <span class="n">total_uncollided_exposure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">uncollided_point_exposure</span><span class="p">)</span>
 
             <span class="n">collided_point_exposure</span> <span class="o">=</span> <span class="n">uncollided_point_exposure</span> <span class="o">*</span> \
@@ -401,8 +384,10 @@
 <span class="sd">        Adds shields to a Plotter instance after trimming any</span>
 <span class="sd">        infinite shields to a predefined bounding box.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">shieldColor</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
-        <span class="n">sourceColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+        <span class="c1"># display color for shield geometries</span>
+        <span class="n">SHIELD_COLOR</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+        <span class="c1"># display color for source geometry</span>
+        <span class="n">SOURCE_COLOR</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
         <span class="k">for</span> <span class="n">currentShield</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
             <span class="n">opacity</span> <span class="o">=</span> <span class="mf">1.0</span>
             <span class="k">if</span> <span class="n">currentShield</span><span class="o">.</span><span class="n">is_hollow</span><span class="p">():</span>
@@ -423,7 +408,7 @@
                         <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-y&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">0</span><span class="p">])</span>
                     <span class="n">clipped</span> <span class="o">=</span> <span class="n">clipped</span><span class="o">.</span><span class="n">clip_closed_surface</span><span class="p">(</span>    <span class="c1"># type: ignore</span>
                         <span class="n">normal</span><span class="o">=</span><span class="s1">&#39;-z&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]])</span>
-                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clipped</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">shieldColor</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
+                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">clipped</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SHIELD_COLOR</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
             <span class="c1"># now handle the sources and non-infinite shields</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">currentShield</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">):</span>
@@ -432,9 +417,9 @@
                         <span class="k">pass</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">currentShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span>
-                                    <span class="n">sourceColor</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                                    <span class="n">SOURCE_COLOR</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">currentShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span> <span class="n">shieldColor</span><span class="p">,</span>
+                    <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">currentShield</span><span class="o">.</span><span class="n">draw</span><span class="p">(),</span> <span class="n">SHIELD_COLOR</span><span class="p">,</span>
                                 <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
         <span class="c1"># now add the &quot;bounds&quot; as a transparent block to for a display size</span>
         <span class="n">mesh</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span>
@@ -503,20 +488,20 @@
 <span class="sd">        is ignored and the next largest dimension is used to size the</span>
 <span class="sd">        point representation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">point_ratio</span> <span class="o">=</span> <span class="mf">0.025</span>
-        <span class="n">sourceColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
-        <span class="n">detectorColor</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
+        <span class="c1"># ratio of the radius of point objects to the minimum width</span>
+        <span class="c1"># of other objects to be displayed</span>
+        <span class="n">POINT_RATIO</span> <span class="o">=</span> <span class="mf">0.025</span>
+        <span class="c1"># display color for source geometry</span>
+        <span class="n">SOURCE_COLOR</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+        <span class="c1"># display color for detector geometry</span>
+        <span class="n">DETECTOR_COLOR</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
         <span class="n">widths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pl</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
                   <span class="nb">abs</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">pl</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
                   <span class="nb">abs</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">pl</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">4</span><span class="p">])]</span>
-        <span class="n">good_widths</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">width</span> <span class="ow">in</span> <span class="n">widths</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">good_widths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+        <span class="n">good_widths</span> <span class="o">=</span> <span class="p">[</span><span class="n">width</span> <span class="k">for</span> <span class="n">width</span> <span class="ow">in</span> <span class="n">widths</span> <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">good_widths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;detector and source are coincident or missing&quot;</span><span class="p">)</span>
-        <span class="c1"># determine a good radius for the points</span>
-        <span class="n">point_radius</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">good_widths</span><span class="p">)</span> <span class="o">*</span> <span class="n">point_ratio</span>
+        <span class="n">point_radius</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">good_widths</span><span class="p">)</span> <span class="o">*</span> <span class="n">POINT_RATIO</span>
         <span class="c1"># check if the source is a point source</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">PointSource</span><span class="p">):</span>
             <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span>
@@ -524,7 +509,7 @@
                                           <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">_z</span><span class="p">),</span>
                                   <span class="n">radius</span><span class="o">=</span><span class="n">point_radius</span><span class="p">)</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
-                <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">sourceColor</span><span class="p">,</span>
+                <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SOURCE_COLOR</span><span class="p">,</span>
                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">body</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">Sphere</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
@@ -532,7 +517,7 @@
                                           <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">z</span><span class="p">),</span>
                                   <span class="n">radius</span><span class="o">=</span><span class="n">point_radius</span><span class="p">)</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span>
-                <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">detectorColor</span><span class="p">,</span>
+                <span class="n">body</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">DETECTOR_COLOR</span><span class="p">,</span>
                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;detector&#39;</span><span class="p">)</span></div>
 
         <span class="c1"># pl.set_background(color=&#39;white&#39;)</span>
@@ -546,7 +531,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Nov 02, 2025.
+      <span class="lastupdated">Last updated on Nov 03, 2025.
       </span></p>
   </div>
 
