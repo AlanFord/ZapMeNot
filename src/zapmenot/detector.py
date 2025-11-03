@@ -1,3 +1,12 @@
+import numbers
+import importlib
+from typing import Tuple, Optional, Any
+
+pyvista_spec = importlib.util.find_spec("pyvista")
+pyvista_found = pyvista_spec is not None
+if pyvista_found:
+    import pyvista
+''' '''
 '''
 ZapMeNot - a point kernel photon shielding library
 Copyright (C) 2019-2025  C. Alan Ford
@@ -16,34 +25,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-import numbers
-import importlib
-from typing import Tuple, Optional, Any
-
-pyvista_spec = importlib.util.find_spec("pyvista")
-pyvista_found = pyvista_spec is not None
-if pyvista_found:
-    import pyvista
-
 
 class Detector:
     """A location used to calculate exposure
 
     Parameters
     ----------
-    x : float
+    x
         X coordinate of detector location in cartesian coordinates
-    y : float
+    y
         Y coordinate of detector location in cartesian coordinates
-    z : float
+    z
         Z coordinate of detector location in cartesian coordinates
     """
-
-    '''
-    Attributes
-    ----------
-    _location
-    '''
 
     def __init__(self, x: float, y: float, z: float) -> None:
         if isinstance(x, numbers.Number) and \
@@ -58,7 +52,7 @@ class Detector:
 
     @property
     def location(self) -> Tuple[float, float, float]:
-        """:class:`tuple` : The detector location in cartesian coordinates"""
+        """The detector location in cartesian coordinates"""
         return self._location
 
     def draw(self) -> Optional[Any]:
@@ -66,7 +60,6 @@ class Detector:
 
         Returns
         -------
-        :class:`pyvista.PolyData`
             A degenerate line object representing the detector.
         """
         if pyvista_found:

@@ -1,3 +1,17 @@
+import yaml
+from typing import Optional, List, Dict, TypedDict, ClassVar
+
+try:
+    from yaml import CLoader as MyLoader, CDumper as MyDumper
+except ImportError:
+    from yaml import FullLoader as MyLoader, SafeDumper as MyDumper
+
+try:
+    from importlib import resources as impresources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as impresources
+''' '''
 '''
 ZapMeNot - a point kernel photon shielding library
 Copyright (C) 2019-2025  C. Alan Ford
@@ -16,20 +30,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-import yaml
-from typing import Optional, List, Dict, TypedDict, ClassVar
-
-try:
-    from yaml import CLoader as MyLoader, CDumper as MyDumper
-except ImportError:
-    from yaml import FullLoader as MyLoader, SafeDumper as MyDumper
-
-try:
-    from importlib import resources as impresources
-except ImportError:
-    # Try backported to PY<37 `importlib_resources`.
-    import importlib_resources as impresources
-
 
 class Isotope:
     """Encapsulates isotope data from the IsotopeLibrary.yml file.
@@ -39,19 +39,9 @@ class Isotope:
 
     Parameters
     ----------
-    name : :class:`str`
+    name
         The isotope to be extracted from the isotope library.
     """
-
-    '''
-    Attributes
-    ----------
-    _name
-    _half_life
-    _photons
-    _key_progeny
-    _library
-    '''
 
     Atom = TypedDict('Atom', {'half-life': float,
                               'half-life-units': str,
@@ -102,23 +92,23 @@ class Isotope:
 
     @property
     def photons(self) -> Optional[List[List[float]]]:
-        """:class:`list` of :class:`list` : A list of photon energies (in MeV)
+        """A list of photon energies (in MeV)
         and intensities per decay."""
         return self._photons
 
     @property
     def name(self) -> str:
-        """:class:`str` : The name of the isotope."""
+        """The name of the isotope."""
         return self._name
 
     @property
     def half_life(self) -> float:
-        """:class:`str` : The half life of the isotope in seconds."""
+        """The half life of the isotope in seconds."""
         return self._half_life
 
     @property
     def key_progeny(self) -> Optional[Dict[str, float]]:
-        """:class:`dict` : The list of progeny that can be in secular or
+        """The list of progeny that can be in secular or
         transient equilibrium."""
         return self._key_progeny
 

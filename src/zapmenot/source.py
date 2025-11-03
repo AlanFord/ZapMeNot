@@ -301,6 +301,15 @@ class Source(abc.ABC):
 
 class LineSource(shield.Shield, Source):
     """Models a line radiation source
+
+    Parameters
+    ----------
+    start
+        Cartiesian X, Y, and Z coordinates of the starting point of the
+        line source.
+    end
+        Cartiesian X, Y, and Z coordinates of the ending point of the
+        line source.
     """
     def __init__(self, start: list[float], end: list[float]) -> None:
         """Create a LineSource.
@@ -406,6 +415,15 @@ class LineSource(shield.Shield, Source):
 
 class PointSource(shield.Shield, Source):
     """Models a point radiation source
+
+    Parameters
+    ----------
+    x
+        Cartesian X coordinate of the point source.
+    y
+        Cartesian Y coordinate of the point source.
+    z
+        Cartesian Z coordinate of the point source.
     """
     def __init__(self, x: float, y: float, z: float) -> None:
         """Create a PointSource.
@@ -506,6 +524,17 @@ class PointSource(shield.Shield, Source):
 
 class SphereSource(shield.Sphere, Source):
     '''Models a Spherical source.
+
+    Parameters
+    ----------
+    material_name
+            Name of the material composing the source.
+    sphere_center
+        x, y, and z coordinates of the sphere's center.
+    sphere_radius
+        radius of the sphere.
+    density
+        Material density in g/cm3.
     '''
 
     def __init__(self, material_name: str, sphere_center: list[float],
@@ -594,6 +623,17 @@ class SphereSource(shield.Sphere, Source):
 
 class BoxSource(shield.Box, Source):
     """Models a Axis-Aligned rectangular box source
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the source.
+    box_center
+        Vector location of the center of the box in cartesian coordiantes.
+    box_dimensions
+        Vector holding the dimensions of the box.
+    density
+        Material density in g/cm3.
     """
     def __init__(self, material_name: str, box_center: list[float],
                  box_dimensions: list[float],
@@ -655,6 +695,19 @@ class BoxSource(shield.Box, Source):
 
 class ZAlignedCylinderSource(shield.ZAlignedCylinder, Source):
     """Models a cylindrical source axis-aligned with the Z axis.
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the source.
+    cylinder_center
+        X, Y, and Z coordinates of the center of the cylinder.
+    cylinder_length
+        The length of the cylinder.
+    cylinder_radius
+        The radius of the cylinder.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str,
@@ -718,6 +771,19 @@ class ZAlignedCylinderSource(shield.ZAlignedCylinder, Source):
 
 class YAlignedCylinderSource(shield.YAlignedCylinder, Source):
     """Models a cylindrical source axis-aligned with the Y axis.
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the source.
+    cylinder_center
+        X, Y, and Z coordinates of the center of the cylinder.
+    cylinder_length
+        The length of the cylinder.
+    cylinder_radius
+        The radius of the cylinder.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, cylinder_center: list[float],
@@ -785,6 +851,19 @@ class YAlignedCylinderSource(shield.YAlignedCylinder, Source):
 
 class XAlignedCylinderSource(shield.XAlignedCylinder, Source):
     """Models a cylindrical source axis-aligned with the X axis.
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the source.
+    cylinder_center
+        X, Y, and Z coordinates of the center of the cylinder.
+    cylinder_length
+        The length of the cylinder.
+    cylinder_radius
+        The radius of the cylinder.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, cylinder_center: list[float],

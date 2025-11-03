@@ -129,15 +129,12 @@
     <span class="c1"># per ion in air of 33.85 [ICRU Report 39, 1979].</span>
     <span class="n">FLUX_TO_EXPOSURE_CONVERSION_FACTOR</span> <span class="o">=</span> <span class="mf">1.835E-8</span>
 
-<div class="viewcode-block" id="Model.__init__">
-<a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filler_material</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildup_factor_material</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Model.set_filler_material">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.set_filler_material">[docs]</a>
@@ -147,9 +144,9 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        filler_material : str</span>
+<span class="sd">        filler_material</span>
 <span class="sd">            The material to be used.</span>
-<span class="sd">        density : float, optional</span>
+<span class="sd">        density</span>
 <span class="sd">            The density of the material in g/cm\ :sup:`3`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filler_material</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -168,7 +165,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_source : :class:`zapmenot.source.Source`</span>
+<span class="sd">        new_source</span>
 <span class="sd">            The source to be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_source</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">):</span>
@@ -187,7 +184,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_shield : :class:`zapmenot.shield.Shield`</span>
+<span class="sd">        new_shield</span>
 <span class="sd">            The shield to be added.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_shield</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
@@ -202,7 +199,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_detector : :class:`zapmenot.detector.Detector`</span>
+<span class="sd">        new_detector</span>
 <span class="sd">            The detector to be used in the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_detector</span><span class="p">,</span> <span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">):</span>
@@ -218,7 +215,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_material : :class:`zapmenot.material.Material`</span>
+<span class="sd">        new_material</span>
 <span class="sd">            The material to be used in buildup factor calculations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_material</span><span class="p">,</span> <span class="n">material</span><span class="o">.</span><span class="n">Material</span><span class="p">):</span>
@@ -238,7 +235,6 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        float</span>
 <span class="sd">            The exposure in units of mR/hr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">results_by_photon_energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_summary</span><span class="p">()</span>
@@ -265,7 +261,6 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`list` of :class:`list`</span>
 <span class="sd">            List, by photon energy, of photon energy, photon emmission rate,</span>
 <span class="sd">            uncollided energy flux, uncollided exposure, and total exposure</span>
 <span class="sd">        &quot;&quot;&quot;</span>

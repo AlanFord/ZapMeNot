@@ -79,7 +79,13 @@
            <div itemprop="articleBody">
              
   <h1>Source code for zapmenot.ray</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">npt</span>
+<span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+<span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">ZapMeNot - a point kernel photon shielding library</span>
 <span class="sd">Copyright (C) 2019-2025  C. Alan Ford</span>
 
@@ -97,12 +103,6 @@
 <span class="sd">along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Any</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">npt</span>
-
 
 <div class="viewcode-block" id="FiniteLengthRay">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.ray.FiniteLengthRay">[docs]</a>
@@ -114,31 +114,12 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    start : :class:`list` or :class:`tuple`</span>
+<span class="sd">    start</span>
 <span class="sd">        Defines the starting point of the ray in cartesian coordinates.</span>
-<span class="sd">    end : :class:`list` or :class:`tuple`</span>
+<span class="sd">    end</span>
 <span class="sd">        Defines the ending point of the ray in cartesian coordinates.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    _start</span>
-<span class="sd">    _end</span>
-<span class="sd">    _origin : :class:`numpy.ndarray`</span>
-<span class="sd">        A vector implemenation of the starting point.</span>
-<span class="sd">    _length : float</span>
-<span class="sd">        The length of the ray.</span>
-<span class="sd">    _dir : :class:`numpy.ndarray`</span>
-<span class="sd">        A numpy vector holding the vector normal of the ray.</span>
-<span class="sd">    _invdir : :class:`numpy.ndarray`</span>
-<span class="sd">        A numpy vector holding the inverse of the vector _dir.</span>
-<span class="sd">    _sign : :class:`numpy.ndarray`</span>
-<span class="sd">        Indicates the signs of the components of :py:obj:`dir`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-<div class="viewcode-block" id="FiniteLengthRay.__init__">
-<a class="viewcode-back" href="../../module-docs.html#zapmenot.ray.FiniteLengthRay.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">end</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">FiniteLengthRay</span><span class="o">.</span><span class="n">_is_validate_vector</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid ray start&quot;</span><span class="p">)</span>
@@ -151,12 +132,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dir</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_invdir</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sign</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_regularize</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_regularize</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`list` : A list defining the starting point of the ray in</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A list defining the starting point of the ray in</span>
 <span class="sd">        cartesian coordinates.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start</span>
 
@@ -169,7 +149,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`list` : A list defining the ending point of the ray in</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A list defining the ending point of the ray in</span>
 <span class="sd">        cartesian coordinates.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end</span>
 
@@ -229,7 +209,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Oct 28, 2025.
+      <span class="lastupdated">Last updated on Nov 03, 2025.
       </span></p>
   </div>
 

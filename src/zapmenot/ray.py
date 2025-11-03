@@ -1,3 +1,9 @@
+import numpy as np
+import numbers
+from collections.abc import Iterable
+from typing import List, Sequence, Any
+import numpy.typing as npt
+""" """
 '''
 ZapMeNot - a point kernel photon shielding library
 Copyright (C) 2019-2025  C. Alan Ford
@@ -16,12 +22,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-import numpy as np
-import numbers
-from collections.abc import Iterable
-from typing import List, Sequence, Any
-import numpy.typing as npt
-
 
 class FiniteLengthRay:
     """Represents a ray in three-space.
@@ -31,28 +31,11 @@ class FiniteLengthRay:
 
     Parameters
     ----------
-    start : :class:`list` or :class:`tuple`
+    start
         Defines the starting point of the ray in cartesian coordinates.
-    end : :class:`list` or :class:`tuple`
+    end
         Defines the ending point of the ray in cartesian coordinates.
     """
-
-    '''
-    Attributes
-    ----------
-    _start
-    _end
-    _origin : :class:`numpy.ndarray`
-        A vector implemenation of the starting point.
-    _length : float
-        The length of the ray.
-    _dir : :class:`numpy.ndarray`
-        A numpy vector holding the vector normal of the ray.
-    _invdir : :class:`numpy.ndarray`
-        A numpy vector holding the inverse of the vector _dir.
-    _sign : :class:`numpy.ndarray`
-        Indicates the signs of the components of :py:obj:`dir`.
-    '''
 
     def __init__(self, start: Sequence[float], end: Sequence[float]) -> None:
         if not FiniteLengthRay._is_validate_vector(start):
@@ -70,7 +53,7 @@ class FiniteLengthRay:
 
     @property
     def start(self) -> Sequence[float]:
-        """:class:`list` : A list defining the starting point of the ray in
+        """A list defining the starting point of the ray in
         cartesian coordinates."""
         return self._start
 
@@ -83,7 +66,7 @@ class FiniteLengthRay:
 
     @property
     def end(self) -> Sequence[float]:
-        """:class:`list` : A list defining the ending point of the ray in
+        """A list defining the ending point of the ray in
         cartesian coordinates."""
         return self._end
 

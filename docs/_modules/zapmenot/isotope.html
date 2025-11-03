@@ -79,7 +79,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for zapmenot.isotope</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">ClassVar</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">yaml</span><span class="w"> </span><span class="kn">import</span> <span class="n">CLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">CDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">yaml</span><span class="w"> </span><span class="kn">import</span> <span class="n">FullLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">SafeDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">importlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">resources</span> <span class="k">as</span> <span class="n">impresources</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="c1"># Try backported to PY&lt;37 `importlib_resources`.</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">importlib_resources</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">impresources</span>
+<span class="sd">&#39;&#39;&#39; &#39;&#39;&#39;</span>
+<span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">ZapMeNot - a point kernel photon shielding library</span>
 <span class="sd">Copyright (C) 2019-2025  C. Alan Ford</span>
 
@@ -97,20 +111,6 @@
 <span class="sd">along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">ClassVar</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">yaml</span><span class="w"> </span><span class="kn">import</span> <span class="n">CLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">CDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">yaml</span><span class="w"> </span><span class="kn">import</span> <span class="n">FullLoader</span> <span class="k">as</span> <span class="n">MyLoader</span><span class="p">,</span> <span class="n">SafeDumper</span> <span class="k">as</span> <span class="n">MyDumper</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">importlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">resources</span> <span class="k">as</span> <span class="n">impresources</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="c1"># Try backported to PY&lt;37 `importlib_resources`.</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">importlib_resources</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">impresources</span>
-
 
 <div class="viewcode-block" id="Isotope">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.isotope.Isotope">[docs]</a>
@@ -122,19 +122,9 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    name : :class:`str`</span>
+<span class="sd">    name</span>
 <span class="sd">        The isotope to be extracted from the isotope library.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    _name</span>
-<span class="sd">    _half_life</span>
-<span class="sd">    _photons</span>
-<span class="sd">    _key_progeny</span>
-<span class="sd">    _library</span>
-<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">Atom</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s1">&#39;Atom&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;half-life&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                               <span class="s1">&#39;half-life-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -144,8 +134,6 @@
                               <span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">_library</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Atom</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Isotope.__init__">
-<a class="viewcode-back" href="../../module-docs.html#zapmenot.isotope.Isotope.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># initialize the class library if it has not already been done</span>
         <span class="k">if</span> <span class="n">Isotope</span><span class="o">.</span><span class="n">_library</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -183,28 +171,27 @@
         <span class="c1"># photon energies and intensities are stored as a list of tuples</span>
         <span class="c1"># 2D list of photon energies and intensities</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_photons</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]</span> <span class="o">=</span> \
-            <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;photon-intensity&quot;</span><span class="p">)</span></div>
-
+            <span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;photon-intensity&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">photons</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`list` of :class:`list` : A list of photon energies (in MeV)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A list of photon energies (in MeV)</span>
 <span class="sd">        and intensities per decay.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_photons</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`str` : The name of the isotope.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The name of the isotope.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">half_life</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`str` : The half life of the isotope in seconds.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The half life of the isotope in seconds.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_half_life</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">key_progeny</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`dict` : The list of progeny that can be in secular or</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The list of progeny that can be in secular or</span>
 <span class="sd">        transient equilibrium.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key_progeny</span>
 
@@ -261,7 +248,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Oct 28, 2025.
+      <span class="lastupdated">Last updated on Nov 03, 2025.
       </span></p>
   </div>
 

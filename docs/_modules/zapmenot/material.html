@@ -126,18 +126,10 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    name : :class: `str`</span>
+<span class="sd">    name</span>
 <span class="sd">        The material to be extracted from the material library</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="sa">r</span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    _library</span>
-<span class="sd">    _name</span>
-<span class="sd">    _density : float</span>
-<span class="sd">        Density of the material in g/cm\ :sup:`3`</span>
-<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">Material_Specification</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s1">&#39;Material_Specification&#39;</span><span class="p">,</span> <span class="p">{</span>
                               <span class="s1">&#39;density&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                               <span class="s1">&#39;density-units&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -154,8 +146,6 @@
 
     <span class="c1"># _library: ClassVar[Optional[Dict[str, Any]]] = None</span>
 
-<div class="viewcode-block" id="Material.__init__">
-<a class="viewcode-back" href="../../module-docs.html#zapmenot.material.Material.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Material name is not a string: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -230,17 +220,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_Xi</span><span class="p">:</span> <span class="n">Akima1DInterpolator</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span>
                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">_gp_X</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_di</span><span class="p">:</span> <span class="n">Akima1DInterpolator</span> <span class="o">=</span> <span class="n">Akima1DInterpolator</span><span class="p">(</span><span class="n">logE</span><span class="p">,</span>
-                                                                <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span><span class="p">)</span></div>
-
+                                                                <span class="bp">self</span><span class="o">.</span><span class="n">_gp_d</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:class:`str` : The name of the material&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The name of the material&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">density</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;:class:`float` : The density of the material in g/cm\ :sup:`3` &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The density of the material in g/cm\ :sup:`3` &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span>
 
     <span class="nd">@density</span><span class="o">.</span><span class="n">setter</span>
@@ -258,14 +247,13 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        energy : :class:`float`</span>
+<span class="sd">        energy</span>
 <span class="sd">            The photon energy in MeV</span>
-<span class="sd">        distance : :class:`float`</span>
+<span class="sd">        distance</span>
 <span class="sd">            The distance through the material in cm</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`float`</span>
 <span class="sd">            The mean free path in the material</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
@@ -286,7 +274,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        energy : :class:`float`</span>
+<span class="sd">        energy</span>
 <span class="sd">            The photon energy in MeV</span>
 
 <span class="sd">        Raises</span>
@@ -296,7 +284,6 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`float`</span>
 <span class="sd">            The mass attenuation coefficient in cm\ :sup:`2`/g</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
@@ -319,7 +306,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        energy : :class:`float`</span>
+<span class="sd">        energy</span>
 <span class="sd">            The photon energy in MeV</span>
 
 <span class="sd">        Raises</span>
@@ -329,7 +316,6 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`float`</span>
 <span class="sd">            The mass energy absorption coefficient in cm\ :sup:`2`/g</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
@@ -353,11 +339,11 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        energy : :class:`float`</span>
+<span class="sd">        energy</span>
 <span class="sd">            The photon energy in MeV</span>
-<span class="sd">        mfps : :class:`float`, :class:`list`, or :class:`numpy.ndarray`</span>
+<span class="sd">        mfps</span>
 <span class="sd">            One or more mean free path values through the material</span>
-<span class="sd">        formula : :class:`str`</span>
+<span class="sd">        formula</span>
 <span class="sd">            The format of the buildup factor (only &#39;GP&#39; is currently supported)</span>
 
 <span class="sd">        Raises</span>
@@ -369,7 +355,6 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        :class:`float` or :class:`numpy.ndarray`</span>
 <span class="sd">            A vector of photon exposure buildup factors in air, one for</span>
 <span class="sd">            each specified mfp</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -412,22 +397,21 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        a : float</span>
+<span class="sd">        a</span>
 <span class="sd">            A GP fitting coefficient</span>
-<span class="sd">        b : float</span>
+<span class="sd">        b</span>
 <span class="sd">            A GP fitting coefficient</span>
-<span class="sd">        c : float</span>
+<span class="sd">        c</span>
 <span class="sd">            A GP fitting coefficient</span>
-<span class="sd">        d : float</span>
+<span class="sd">        d</span>
 <span class="sd">            A GP fitting coefficient</span>
-<span class="sd">        X : float</span>
+<span class="sd">        X</span>
 <span class="sd">            A GP fitting coefficient</span>
 <span class="sd">        mfp : float (for a single mfp) or a numpy array (for several mfp&#39;s)</span>
 <span class="sd">            The mean free path through the material in cm</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        float or :class:`numpy.ndarray`</span>
 <span class="sd">            Vector of photon exposure buildup factors in air</span>
 
 <span class="sd">        Important Details</span>

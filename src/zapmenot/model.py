@@ -59,9 +59,9 @@ class Model:
 
         Parameters
         ----------
-        filler_material : str
+        filler_material
             The material to be used.
-        density : float, optional
+        density
             The density of the material in g/cm\ :sup:`3`.
         """
         if not isinstance(filler_material, str):
@@ -77,7 +77,7 @@ class Model:
 
         Parameters
         ----------
-        new_source : :class:`zapmenot.source.Source`
+        new_source
             The source to be used.
         """
         if not isinstance(new_source, source.Source):
@@ -93,7 +93,7 @@ class Model:
 
         Parameters
         ----------
-        new_shield : :class:`zapmenot.shield.Shield`
+        new_shield
             The shield to be added.
         """
         if not isinstance(new_shield, shield.Shield):
@@ -105,7 +105,7 @@ class Model:
 
         Parameters
         ----------
-        new_detector : :class:`zapmenot.detector.Detector`
+        new_detector
             The detector to be used in the model.
         """
         if not isinstance(new_detector, detector.Detector):
@@ -118,7 +118,7 @@ class Model:
 
         Parameters
         ----------
-        new_material : :class:`zapmenot.material.Material`
+        new_material
             The material to be used in buildup factor calculations.
         """
         if not isinstance(new_material, material.Material):
@@ -135,7 +135,6 @@ class Model:
 
         Returns
         -------
-        float
             The exposure in units of mR/hr.
         """
         results_by_photon_energy = self.generate_summary()
@@ -159,7 +158,6 @@ class Model:
 
         Returns
         -------
-        :class:`list` of :class:`list`
             List, by photon energy, of photon energy, photon emmission rate,
             uncollided energy flux, uncollided exposure, and total exposure
         """

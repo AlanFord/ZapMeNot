@@ -190,22 +190,22 @@ class SemiInfiniteShield(Shield):
 
 class SemiInfiniteXSlab(SemiInfiniteShield):
     """A semi-infinite slab shield perpendicular to the X axis.
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    x_start
+        X axis location of the inner edge of the shield.
+    x_end
+        X axis location of the outer edge of the shield.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, x_start: float, x_end: float,
                  density: Optional[float] = None) -> None:
         """Create a SemiInfiniteXSlab shield.
-
-        Parameters
-        ----------
-        material_name
-            Name of the material composing the shield.
-        x_start
-            X axis location of the inner edge of the shield.
-        x_end
-            X axis location of the outer edge of the shield.
-        density
-            Material density in g/cm3.
         """
         super().__init__(material_name=material_name, density=density)
         self.x_start: float = x_start
@@ -304,17 +304,19 @@ class SemiInfiniteXSlab(SemiInfiniteShield):
 
 class Sphere(Shield):
     """A spherical shield.
-    """
-    '''
-    Attributes
+
+    Parameters
     ----------
-    material : :class: `material.Material`
-        Material properties of the shield
-    center : list
-        list of floats (x, y, and z coordinates).
-    radius : float
-        radius of the sphere.
-    '''
+    material_name
+        Name of the material composing the shield.
+    sphere_center
+        Vector location of the center of the sphere in
+        cartesian coordinates.
+    sphere_radius
+        Radius of the shield.
+    density
+        Material density in g/cm3.
+    """
     def __init__(self, material_name: str, sphere_center: List[float],
                  sphere_radius: float,
                  density: Optional[float] = None) -> None:
@@ -397,7 +399,20 @@ class Sphere(Shield):
 
 
 class Shell(Shield):
-    """A shell that surrounds a spherical shield or source."""
+    """A shell that surrounds a spherical shield or source.
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    sphere
+        The spherical shield or source that defines the
+        inner boundary of the shell.
+    thickness
+        The thickness of the shell.
+    density
+        Material density in g/cm3.
+    """
 
     def __init__(self, material_name: str, sphere: Sphere, thickness: float,
                  density: Optional[float] = None) -> None:
@@ -494,6 +509,17 @@ class Shell(Shield):
 class Box(Shield):
     """A rectangular polyhedron shield.
        All sides of the box shield must be axis-aligned.
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    box_center
+        Vector location of the center of the box in cartesian coordiantes.
+    box_dimensions
+        Vector holding the dimensions of the box.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, box_center: list[float],
@@ -674,6 +700,21 @@ class Box(Shield):
 
 class InfiniteAnnulus(SemiInfiniteShield):
     """An annular shield of infinite length
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    cylinder_origin
+        X, Y, and Z coordinates of the point on the cylinder centerline.
+    cylinder_axis
+        X, Y, and Z vector components of the cylinder axis.
+    cylinder_inner_radius
+        Radius of the annulus inner surface.
+    cylinder_outer_radius
+        Radius of the annulus outer surface.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, cylinder_origin: list[float],
@@ -911,6 +952,19 @@ class InfiniteAnnulus(SemiInfiniteShield):
 
 class YAlignedInfiniteAnnulus(InfiniteAnnulus):
     """An annular shield of infinite length aligned with the Y axis
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    cylinder_center
+        X, Y, and Z coordinates of the point on the cylinder centerline.
+    cylinder_inner_radius
+        Radius of the annulus inner surface.
+    cylinder_outer_radius
+        Radius of the annulus outer surface.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, cylinder_center: list[float],
@@ -943,6 +997,19 @@ class YAlignedInfiniteAnnulus(InfiniteAnnulus):
 
 class XAlignedInfiniteAnnulus(InfiniteAnnulus):
     """An annular shield of infinite length aligned with the X axis
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    cylinder_center
+        X, Y, and Z coordinates of the point on the cylinder centerline.
+    cylinder_inner_radius
+        Radius of the annulus inner surface.
+    cylinder_outer_radius
+        Radius of the annulus outer surface.
+    density
+        Material density in g/cm3.
     """
     def __init__(self, material_name: str, cylinder_center: list[float],
                  cylinder_inner_radius: float,
@@ -974,6 +1041,19 @@ class XAlignedInfiniteAnnulus(InfiniteAnnulus):
 
 class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
     """An annular shield of infinite length aligned with the Z axis
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    cylinder_center
+        X, Y, and Z coordinates of the point on the cylinder centerline.
+    cylinder_inner_radius
+        Radius of the annulus inner surface.
+    cylinder_outer_radius
+        Radius of the annulus outer surface.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, cylinder_center: list[float],
@@ -1006,6 +1086,19 @@ class ZAlignedInfiniteAnnulus(InfiniteAnnulus):
 
 class CappedCylinder(Shield):
     """A cylindrical shield of finite length
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    cylinder_start
+        X, Y, and Z coordinates of the center of one cylinder end.
+    cylinder_end
+        X, Y, and Z coordinates of the center of another cylinder end.
+    cylinder_radius
+        Radius of the cylinder.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, cylinder_start: list[float],
@@ -1193,6 +1286,19 @@ class CappedCylinder(Shield):
 
 class YAlignedCylinder(CappedCylinder):
     """A cylindrical shield of finite length aligned with the Y axis
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    cylinder_center
+        X, Y, and Z coordinates of the center of the cylinder.
+    cylinder_length
+        The length of the cylinder.
+    cylinder_radius
+        The radius of the cylinder.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, cylinder_center: list[float],
@@ -1228,6 +1334,19 @@ class YAlignedCylinder(CappedCylinder):
 
 class XAlignedCylinder(CappedCylinder):
     """A cylindrical shield of finite length aligned with the X axis
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    cylinder_center
+        X, Y, and Z coordinates of the center of the cylinder.
+    cylinder_length
+        The length of the cylinder.
+    cylinder_radius
+        The radius of the cylinder.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str, cylinder_center: list[float],
@@ -1264,6 +1383,19 @@ class XAlignedCylinder(CappedCylinder):
 
 class ZAlignedCylinder(CappedCylinder):
     """A cylindrical shield of finite length aligned with the Z axis
+
+    Parameters
+    ----------
+    material_name
+        Name of the material composing the shield.
+    cylinder_center
+        X, Y, and Z coordinates of the center of the cylinder.
+    cylinder_length
+        The length of the cylinder.
+    cylinder_radius
+        The radius of the cylinder.
+    density
+        Material density in g/cm3.
     """
 
     def __init__(self, material_name: str,
