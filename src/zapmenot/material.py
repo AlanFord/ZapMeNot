@@ -63,7 +63,7 @@ class Material:
 
     # _library: ClassVar[Optional[Dict[str, Any]]] = None
 
-    def __init__(self, name: Optional[str]) -> None:
+    def __init__(self, name: str) -> None:
         if name is None or not isinstance(name, str):
             raise ValueError(f"Material name is not a string: {name}")
 
