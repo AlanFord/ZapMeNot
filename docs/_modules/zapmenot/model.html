@@ -161,7 +161,8 @@
 <div class="viewcode-block" id="Model.add_source">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_source">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_source</span><span class="p">:</span> <span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the source used by the model.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the source used by the model.  Only one source instance </span>
+<span class="sd">        is allowed per model.  Source can be replaced by calling this method.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -170,6 +171,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_source</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">Source</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid source&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">shield</span><span class="o">.</span><span class="n">Shield</span><span class="p">):</span>
+            <span class="c1"># removing the old source from the shield list</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">shield_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">new_source</span>
         <span class="c1"># don&#39;t forget that sources are shields too!</span>
@@ -195,7 +201,8 @@
 <div class="viewcode-block" id="Model.add_detector">
 <a class="viewcode-back" href="../../module-docs.html#zapmenot.model.Model.add_detector">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_detector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_detector</span><span class="p">:</span> <span class="n">detector</span><span class="o">.</span><span class="n">Detector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the detector used by the model.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the detector used by the model.  Only one detector instance </span>
+<span class="sd">        is allowed per model.  Detector can be replaced by calling this method.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -526,7 +533,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Nov 03, 2025.
+      <span class="lastupdated">Last updated on Dec 06, 2025.
       </span></p>
   </div>
 

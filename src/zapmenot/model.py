@@ -73,7 +73,8 @@ class Model:
             self.filler_material.density = density
 
     def add_source(self, new_source: source.Source) -> None:
-        """Set the source used by the model.
+        """Set the source used by the model.  Only one source instance 
+        is allowed per model.  Source can be replaced by calling this method.
 
         Parameters
         ----------
@@ -82,6 +83,11 @@ class Model:
         """
         if not isinstance(new_source, source.Source):
             raise ValueError("Invalid source")
+        
+        if self.source is not None and isinstance(self.source, shield.Shield):
+            # removing the old source from the shield list
+            if self.source in self.shield_list:
+                self.shield_list.remove(self.source)
 
         self.source = new_source
         # don't forget that sources are shields too!
@@ -101,7 +107,8 @@ class Model:
         self.shield_list.append(new_shield)
 
     def add_detector(self, new_detector: detector.Detector) -> None:
-        """Set the detector used by the model.
+        """Set the detector used by the model.  Only one detector instance 
+        is allowed per model.  Detector can be replaced by calling this method.
 
         Parameters
         ----------
