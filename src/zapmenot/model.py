@@ -165,7 +165,7 @@ class Model:
 
         Returns
         -------
-            List, by photon energy, of photon energy, photon emmission rate,
+            List, by photon energy, of photon energy, photon emission rate,
             uncollided energy flux, uncollided exposure, and total exposure
         """
         # build an array of shield crossing lengths.
