@@ -65,13 +65,17 @@ class Source(abc.ABC):
     @property
     def grouping(self) -> GroupOption:
         """State defining the photon energy group
-        option."""
+        option.  Set the grouping by assigning equal to a string
+        of either 'group' ,'hybrid', or 'discrete'.
+        """
         return self._grouping_option
 
     @grouping.setter
     def grouping(self, value: str) -> None:
         """State defining the photon energy group
-        option."""
+        option.  Set the grouping by assigning equal to a string
+        of either 'group' ,'hybrid', or 'discrete'.
+        """
         if value == GroupOption.HYBRID.value:
             self._grouping_option = GroupOption.HYBRID
         elif value == GroupOption.GROUP.value:

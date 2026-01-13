@@ -151,13 +151,17 @@
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">grouping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GroupOption</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;State defining the photon energy group</span>
-<span class="sd">        option.&quot;&quot;&quot;</span>
+<span class="sd">        option.  Set the grouping by assigning equal to a string</span>
+<span class="sd">        of either &#39;group&#39; ,&#39;hybrid&#39;, or &#39;discrete&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span>
 
     <span class="nd">@grouping</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">grouping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;State defining the photon energy group</span>
-<span class="sd">        option.&quot;&quot;&quot;</span>
+<span class="sd">        option.  Set the grouping by assigning equal to a string</span>
+<span class="sd">        of either &#39;group&#39; ,&#39;hybrid&#39;, or &#39;discrete&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">HYBRID</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_option</span> <span class="o">=</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">HYBRID</span>
         <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="n">GroupOption</span><span class="o">.</span><span class="n">GROUP</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
@@ -1208,7 +1212,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2025, Alan Ford..
-      <span class="lastupdated">Last updated on Nov 03, 2025.
+      <span class="lastupdated">Last updated on Jan 13, 2026.
       </span></p>
   </div>
 

@@ -4,7 +4,7 @@ Isotope Library
 .. index:: single: Isotope Library
 
 
-Photon emmisision data for a large number of radioisotopes are
+Photon emission data for a large number of radioisotopes are
 available for use in building sources.  The isotope library is
 based on ICRP Publication 107, "Nuclear Decay Data for Dosimetric Calculations."
 Photons with energies below 15 keV are excluded.
