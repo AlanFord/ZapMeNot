@@ -62,7 +62,7 @@ Updating A Version
 
 Following successful testing, the following steps are used to generate a new version of ZapMeNot:
 
-* Update the version number in ZapMeNot/source/zapmenot/__about__.py
+* Update the version number in ZapMeNot/src/zapmenot/__about__.py
 * Update the ZapMeNot/docsrc/source/getting-started.rst file with any new features or changes
 * Update the ZapMeNot/README.rst file with any new features or changes
 * Update the pyproject.toml file with the new version number

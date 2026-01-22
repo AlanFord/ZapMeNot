@@ -7,7 +7,7 @@ Read Me
 
 Getting Started
 ---------------
-`Quick Start Docs <https://alanford.github.io/ZapMeNot/quickstart.html>`__
+`Quick Start Docs <https://alanford.github.io/ZapMeNot/getting-started.html#quickstart>`__
 `Full documentation <https://alanford.github.io/ZapMeNot/>`__
 
 Version Changelog

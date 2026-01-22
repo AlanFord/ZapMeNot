@@ -4,5 +4,5 @@
 __package_name__ = 'zapmenot'
 __version__ = '0.2.1'
 __author__ = 'Alan Ford'
-__copyright__ = "2019 - 2025, Alan Ford."
+__copyright__ = "2019 - 2026, Alan Ford."
 

@@ -2,9 +2,11 @@
 Version History
 ===============
 
-* v0.2.1   - in development
+* v0.2.1   - 2026 / 01 / 22
 
   Added type hints and improved documentation
+
+  Improved the Model class to permit replacing an existing Source object
 * v0.2   - 2025 / 07 / 19
 
   Corrected buildup factor extrapolation
