@@ -9,6 +9,11 @@ pyvista_spec = importlib.util.find_spec("pyvista")
 pyvista_found = pyvista_spec is not None
 if pyvista_found:
     import pyvista
+    try:
+        from pyvista.plotting import BasePlotter
+    except ImportError:  # PV < 0.40
+        from pyvista.plotting.plotting import BasePlotter
+
 ''' '''
 '''
 ZapMeNot - a point kernel photon shielding library
@@ -73,7 +78,7 @@ class Model:
             self.filler_material.density = density
 
     def add_source(self, new_source: source.Source) -> None:
-        """Set the source used by the model.  Only one source instance 
+        """Set the source used by the model.  Only one source instance
         is allowed per model.  Source can be replaced by calling this method.
 
         Parameters
@@ -83,7 +88,7 @@ class Model:
         """
         if not isinstance(new_source, source.Source):
             raise ValueError("Invalid source")
-        
+
         if self.source is not None and isinstance(self.source, shield.Shield):
             # removing the old source from the shield list
             if self.source in self.shield_list:
@@ -107,7 +112,7 @@ class Model:
         self.shield_list.append(new_shield)
 
     def add_detector(self, new_detector: detector.Detector) -> None:
-        """Set the detector used by the model.  Only one detector instance 
+        """Set the detector used by the model.  Only one detector instance
         is allowed per model.  Detector can be replaced by calling this method.
 
         Parameters
@@ -259,22 +264,30 @@ class Model:
 
         return results_by_photon_energy
 
+    def _build_image(self, plotter: BasePlotter) -> None:
+        """
+        Produces a graphic display on any version of plotter derived from
+        BasePlotter.
+        """
+        # find the bounding box for all objects
+        bounds = self._findBoundingBox()
+        self._trimBlocks(plotter, bounds)
+        self._addPoints(plotter)
+        plotter.show_bounds(grid='front', location='outer', all_edges=True)
+        if self.source is not None or self.detector is not None:
+            plotter.add_legend(face=None, size=(0.1, 0.1))
+
     def display(self) -> None:
         """
         Produces a graphic display of the model.
         """
         if pyvista_found:
             # find the bounding box for all objects
-            bounds = self._findBoundingBox()
             pl: pyvista.Plotter = pyvista.Plotter()
-            self._trimBlocks(pl, bounds)
-            self._addPoints(pl)
-            pl.show_bounds(grid='front', location='outer', all_edges=True)
-            if self.source is not None or self.detector is not None:
-                pl.add_legend(face=None, size=(0.1, 0.1))
+            self._build_image(pl)
             pl.show()
 
-    def _trimBlocks(self, pl: pyvista.Plotter, bounds: List[float]) -> None:
+    def _trimBlocks(self, pl: BasePlotter, bounds: List[float]) -> None:
         """
         Adds shields to a Plotter instance after trimming any
         infinite shields to a predefined bounding box.
@@ -370,7 +383,7 @@ class Model:
         boundingBox = [x * 1.01 for x in bounds]
         return boundingBox
 
-    def _addPoints(self, pl: pyvista.Plotter) -> None:
+    def _addPoints(self, pl: BasePlotter) -> None:
         """
         the goal here is to add 'points' to the display, but they
         must be represented as spheres to have some physical
