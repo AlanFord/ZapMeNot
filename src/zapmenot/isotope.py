@@ -49,11 +49,11 @@ class Isotope:
                               'photon-energy-units': str,
                               'photon-intensity': List[List[float]],
                               }, total=True)
-    _library: ClassVar[Optional[Dict[str, Atom]]] = None
+    _library: Dict[str, Atom] = {}
 
     def __init__(self, name: str) -> None:
         # initialize the class library if it has not already been done
-        if Isotope._library is None:
+        if not Isotope._library:
             path = 'isotopeLibrary.yml'
             try:
                 inp_file = (impresources.files(__package__) / path)
