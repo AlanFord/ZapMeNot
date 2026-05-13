@@ -17,11 +17,11 @@ classifiers = [
     "Topic :: Scientific/Engineering"
 ]
 license-files = ["LICEN[CS]E*", "vendored/licenses/*.txt", "AUTHORS.md"]
-requires-python = ">=3.12"
+requires-python = ">=3.11.14"
 dependencies = [
   # basic functionality
-  "scipy >=1.15",
-  "pyyaml>=6.0",
+  "scipy",
+  "pyyaml",
   "pyvista>=0.45",
 ]
 
@@ -55,7 +55,7 @@ jupyterlab = [
 ]
 test = [
     "pandas>=2.3",
-    "pytest>=8.4",
+    "pytest==7.0.0",
 ]
 
 

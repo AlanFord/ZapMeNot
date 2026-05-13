@@ -18,14 +18,15 @@ ZapMeNot is still in its alpha release
 Requirements
 ------------
 
- - Python 3.13 or above
- - SciPy 1.15 or above
- - Pyyaml 6.0 or above
- - Pytest 5.3.5 or above
+ - Python 3.11.14 or above
+ - SciPy 
+ - Pyyaml
  - PyVista 0.45 or above (optional for graphics)
+ - Pytest 7.0.0 or above (optional, for testing)
+ - pandas 2.3 or above (optional, for testing)
  - jupyterlab 4.4 or above (optional for jupyter capability)
- - trame 3.10 or above (optional for graphics)
  - ipywidgets 8.1.7 or above (optional for jupyter capability)
+ - trame 3.10 or above (optional for headless graphics)
 
 
 Installation:
