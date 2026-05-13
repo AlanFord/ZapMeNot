@@ -32,7 +32,9 @@ dev = [
     "sphinx-rtd-theme >=3.0",
     "flake8 >=7.2",
     "build >=1.2",
-]
+    "types-PyYAML",
+    "scipy-stubs",
+    ]
 # include by using: uv sync --group jupyterlab
 jupyterlab = [
     "zapmenot[jupyterlab]"
