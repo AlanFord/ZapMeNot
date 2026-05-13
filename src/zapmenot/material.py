@@ -59,16 +59,14 @@ class Material:
                               'mass-en-abs-coff-units': Optional[str],
                               'mass-en-abs-coff-energy': Optional[List[float]],
                               }, total=True)
-    _library: ClassVar[Optional[Dict[str, Material_Specification]]] = None
-
-    # _library: ClassVar[Optional[Dict[str, Any]]] = None
+    _library: Dict[str, Material_Specification] = {}
 
     def __init__(self, name: str) -> None:
         if name is None or not isinstance(name, str):
             raise ValueError(f"Material name is not a string: {name}")
 
         # initialize the class library if it has not already been done
-        if Material._library is None:
+        if not Material._library:
             path = 'materialLibrary.yml'
             try:
                 inp_file = (impresources.files(__package__) / path)
