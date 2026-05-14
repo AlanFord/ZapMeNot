@@ -325,10 +325,10 @@ class Model:
                         # point sources are handled later
                         pass
                     else:
-                        pl.add_mesh(currentShield.draw(),
-                                    SOURCE_COLOR, label='source', line_width=3)
+                        pl.add_mesh(mesh=currentShield.draw(),
+                                    color=SOURCE_COLOR, label='source', line_width=3)
                 else:
-                    pl.add_mesh(currentShield.draw(), SHIELD_COLOR,
+                    pl.add_mesh(mesh=currentShield.draw(), color=SHIELD_COLOR,
                                 opacity=opacity)
         # now add the "bounds" as a transparent block to for a display size
         mesh = pyvista.Box(bounds)
