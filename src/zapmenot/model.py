@@ -286,6 +286,7 @@ class Model:
             pl: pyvista.Plotter = pyvista.Plotter()
             self._build_image(pl)
             pl.show()
+            pl.close()
 
     def _trimBlocks(self, pl: BasePlotter, bounds: List[float]) -> None:
         """
