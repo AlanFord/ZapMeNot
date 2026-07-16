@@ -154,7 +154,7 @@ class TestGenericSourceFeatures():
 class TestPointSource():
 
     # setup routine for subsequent tests
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_source(self):
         my_source = source.PointSource(1, 2, 3)
         return my_source
@@ -184,7 +184,7 @@ class TestPointSource():
 class TestLineSource():
 
     # setup routine for subsequent tests
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_source(self):
         my_source = source.LineSource([1, 2, 3], [11, 12, 13])
         my_source.points_per_dimension = 5

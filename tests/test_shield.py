@@ -19,7 +19,7 @@ def test_GeneralShieldFeatures():
 class TestSemiInfiniteXSlab():
 
     # setup routine for subsequent tests
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.SemiInfiniteXSlab("iron", 10, 20)
         return myShield
@@ -29,7 +29,7 @@ class TestSemiInfiniteXSlab():
         assert create_shield.x_end == 20
 
     # setup routine for subsequent tests
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_ray(self):
         start = [0, 0, 0]
         end = [30, 30, 30]
@@ -122,7 +122,7 @@ class TestSemiInfiniteXSlab():
 
 # =============================================================
 class TestShell():
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.Sphere("iron", sphere_radius=10,
                                  sphere_center=[0, 0, 0])
@@ -202,7 +202,7 @@ class TestShell():
 # =============================================================
 class TestSphere():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.Sphere("iron", sphere_radius=10,
                                  sphere_center=[0, 0, 0])
@@ -264,7 +264,7 @@ class TestSphere():
 # =============================================================
 class TestBox():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.Box("iron", box_center=[1, 0, 0],
                               box_dimensions=[10, 10, 10])
@@ -338,7 +338,7 @@ class TestBox():
 # =============================================================
 class TestInfiniteAnnulus():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.InfiniteAnnulus("iron", cylinder_origin=[0, 0, -50],
                                           cylinder_axis=[0, 0, 1],
@@ -431,7 +431,7 @@ class TestInfiniteAnnulus():
 # =============================================================
 class TestYAlignedInfiniteAnnulus():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.YAlignedInfiniteAnnulus(
             "iron", cylinder_center=[0, 0, -50],
@@ -449,7 +449,7 @@ class TestYAlignedInfiniteAnnulus():
 # =============================================================
 class TestXAlignedInfiniteAnnulus():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.XAlignedInfiniteAnnulus(
             "iron", cylinder_center=[0, 0, -50],
@@ -467,7 +467,7 @@ class TestXAlignedInfiniteAnnulus():
 # =============================================================
 class TestZAlignedInfiniteAnnulus():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.ZAlignedInfiniteAnnulus(
             "iron", cylinder_center=[0, 0, -50],
@@ -485,7 +485,7 @@ class TestZAlignedInfiniteAnnulus():
 # =============================================================
 class TestCappedCylinder():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.CappedCylinder("iron",
                                          cylinder_start=[0, 0, -50],
@@ -584,7 +584,7 @@ class TestCappedCylinder():
 # =============================================================
 class TestYAlignedCylinder():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.YAlignedCylinder("iron",
                                            cylinder_center=[0, 0, 0],
@@ -608,7 +608,7 @@ class TestYAlignedCylinder():
 # =============================================================
 class TestXAlignedCylinder():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.XAlignedCylinder("iron",
                                            cylinder_center=[0, 0, 0],
@@ -632,7 +632,7 @@ class TestXAlignedCylinder():
 # =============================================================
 class TestZAlignedCylinder():
 
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def create_shield(self):
         myShield = shield.ZAlignedCylinder("iron",
                                            cylinder_center=[0, 0, 0],
