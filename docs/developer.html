@@ -60,7 +60,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#graphics-tests">Graphics Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#coverage">Coverage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-version-compatibility">Python Version Compatibility</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#updating-a-version">Updating A Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#updating-copyright">Updating Copyright</a></li>
 </ul>
@@ -94,6 +94,10 @@
              
   <section id="developer">
 <h1>Developer<a class="headerlink" href="#developer" title="Link to this heading"></a></h1>
+<p>Most of the development work is done as part of a uv project.  However, uv
+is not required.  Most of the uv commands discussed in the following sections
+can be performed in various development environments using commands
+specific to that environment.</p>
 <section id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h2>
 <p>Test cases packaged with ZapMeNot fall into three categories;
@@ -103,7 +107,7 @@ unit tests, graphics tests, and benchmarks.</p>
 <p>These tests are verify that code blocks are functioning as
 intended.  To execute the unit tests, use the following code:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
-<span class="go">pytest -m basic</span>
+<span class="go">uv run pytest -m basic</span>
 </pre></div>
 </div>
 </section>
@@ -115,7 +119,7 @@ code block can be used to execute the benchmarks.  Note the use of the
 “-s” option, which ensures that normal console output is retained by
 the testing routines.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
-<span class="go">pytest -s -m benchmark</span>
+<span class="go">uv run pytest -s -m benchmark</span>
 </pre></div>
 </div>
 </section>
@@ -129,15 +133,18 @@ to trap expected errors.</p>
 <p>Note that the graphics tests cases as currently configured will fail
 when run on a “headless” server, i.e. a server without graphics hardware.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
-<span class="go">pytest -m graphics</span>
+<span class="go">uv run pytest -m graphics</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="coverage">
-<h2>Coverage<a class="headerlink" href="#coverage" title="Link to this heading"></a></h2>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot/coverage</span>
-<span class="go">./runCoverage.sh</span>
+<section id="python-version-compatibility">
+<h2>Python Version Compatibility<a class="headerlink" href="#python-version-compatibility" title="Link to this heading"></a></h2>
+<p>A shell script, run_tests.sh, will run the unit tests using Python
+version 3.11 through 3.14.  Uncommenting a line in the file will also
+run the graphics tests.  The file uses uv commands, but can be modified as needed.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd ZapMeNot</span>
+<span class="go">uv run ./run_tests.sh</span>
 </pre></div>
 </div>
 </section>
@@ -148,10 +155,8 @@ when run on a “headless” server, i.e. a server without graphics hardware.</p
 <li><p>Update the version number in ZapMeNot/src/zapmenot/__about__.py</p></li>
 <li><p>Update the ZapMeNot/docsrc/source/getting-started.rst file with any new features or changes</p></li>
 <li><p>Update the ZapMeNot/README.rst file with any new features or changes</p></li>
-<li><p>Update the pyproject.toml file with the new version number</p></li>
-<li><p>Optionally update the interSphinx input by executing <code class="code docutils literal notranslate"><span class="pre">update.sh</span></code> from the ZapMeNot/docsrc/interSphinx folder</p></li>
-<li><p>Rebuild the documentation by executing <code class="code docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> from the ZapMeNot/docsrc folder</p></li>
-<li><p>Build the distribution packages by executing <code class="code docutils literal notranslate"><span class="pre">hatch</span> <span class="pre">build</span></code> from the ZapMeNot folder</p></li>
+<li><p>Rebuild the documentation by executing <code class="code docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">make</span> <span class="pre">html</span></code> from the ZapMeNot/docsrc folder</p></li>
+<li><p>Build the distribution packages by executing <code class="code docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">hatch</span> <span class="pre">build</span></code> from the ZapMeNot folder</p></li>
 </ul>
 </section>
 <section id="updating-copyright">
@@ -177,7 +182,7 @@ when run on a “headless” server, i.e. a server without graphics hardware.</p
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2026, Alan Ford..
-      <span class="lastupdated">Last updated on Jul 17, 2026.
+      <span class="lastupdated">Last updated on Jul 18, 2026.
       </span></p>
   </div>
 

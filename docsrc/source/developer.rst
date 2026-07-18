@@ -1,6 +1,11 @@
 Developer
 =========
 
+Most of the development work is done as part of a uv project.  However, uv
+is not required.  Most of the uv commands discussed in the following sections
+can be performed in various development environments using commands
+specific to that environment.
+
 Testing
 -------
 
@@ -16,7 +21,7 @@ intended.  To execute the unit tests, use the following code:
 .. code-block :: console 
 
    cd ZapMeNot
-   pytest -m basic
+   uv run pytest -m basic
 
 Benchmark Tests
 ^^^^^^^^^^^^^^^
@@ -30,7 +35,7 @@ the testing routines.
 .. code-block :: console 
 
    cd ZapMeNot
-   pytest -s -m benchmark
+   uv run pytest -s -m benchmark
 
 Graphics Tests
 ^^^^^^^^^^^^^^
@@ -47,15 +52,19 @@ when run on a "headless" server, i.e. a server without graphics hardware.
 .. code-block :: console 
 
    cd ZapMeNot
-   pytest -m graphics
+   uv run pytest -m graphics
 
-Coverage
+Python Version Compatibility
 --------
+
+A shell script, run_tests.sh, will run the unit tests using Python
+version 3.11 through 3.14.  Uncommenting a line in the file will also
+run the graphics tests.  The file uses uv commands, but can be modified as needed.
 
 .. code-block :: console
 
-   cd ZapMeNot/coverage
-   ./runCoverage.sh
+   cd ZapMeNot
+   uv run ./run_tests.sh
 
 Updating A Version
 ------------------
@@ -65,10 +74,8 @@ Following successful testing, the following steps are used to generate a new ver
 * Update the version number in ZapMeNot/src/zapmenot/__about__.py
 * Update the ZapMeNot/docsrc/source/getting-started.rst file with any new features or changes
 * Update the ZapMeNot/README.rst file with any new features or changes
-* Update the pyproject.toml file with the new version number
-* Optionally update the interSphinx input by executing :code:`update.sh` from the ZapMeNot/docsrc/interSphinx folder
-* Rebuild the documentation by executing :code:`make html` from the ZapMeNot/docsrc folder
-* Build the distribution packages by executing :code:`hatch build` from the ZapMeNot folder
+* Rebuild the documentation by executing :code:`uv run make html` from the ZapMeNot/docsrc folder
+* Build the distribution packages by executing :code:`uv run hatch build` from the ZapMeNot folder
 
 Updating Copyright
 ------------------
