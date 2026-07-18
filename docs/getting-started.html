@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting Started &mdash; Zapmenot 0.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=37f418d5"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -49,6 +49,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#installing-with-pip">Installing with Pip</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#working-with-conda">Working with Conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-with-uv">Installing with uv</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#quickstart">Quickstart</a></li>
@@ -107,12 +108,18 @@ covering all of the isotopes included in <a class="reference external" href="htt
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <p>There are as many ways to install ZapMeNot as there are ways to install and run Python.  First
-up is installing ZapMeNot using pip, followed by using Anaconda.</p>
+up is installing ZapMeNot using pip, followed by using Anaconda, and finally using uv.</p>
 <section id="installing-with-pip">
 <h3>Installing with Pip<a class="headerlink" href="#installing-with-pip" title="Link to this heading"></a></h3>
-<p>You must start with a copy of Python Version 3.13.
+<p>You must start with a copy of Python.  ZapMeNot is compatible with Python releases 3.11, 3.12, 3.13, and 3.14.
 ZapMeNot can be installed directly from Github using pip:</p>
-<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+git://github.com/AlanFord/ZapMeNot.git</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">'ZapMeNot</span> <span class="pre">&#64;</span> <span class="pre">git+https://github.com/AlanFord/ZapMeNot.git'</span></code></p>
+<p>To install the optional support for <a class="reference external" href="https://jupyterlab.readthedocs.io/en/stable/index.html">Jupyterlab</a>,
+run the command:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">'ZapMeNot[jupyterlab]</span> <span class="pre">&#64;</span> <span class="pre">git+https://github.com/AlanFord/ZapMeNot.git'</span></code></p>
+<p>Similarly, to install the optional support for testing the package, run the command:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">'ZapMeNot[test]</span> <span class="pre">&#64;</span> <span class="pre">git+https://github.com/AlanFord/ZapMeNot.git'</span></code></p>
+<p>Additional information about running the unit tests can be found in the <a class="reference internal" href="developer.html"><span class="doc">Developer</span></a> section</p>
 <p>ZapMeNot can be installing from a local source tree using pip once the source has been retrieved from Github:</p>
 <p><code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">./ZapMeNot</span></code></p>
 <p>You can also install in Development Mode:</p>
@@ -120,9 +127,15 @@ ZapMeNot can be installed directly from Github using pip:</p>
 </section>
 <section id="working-with-conda">
 <h3>Working with Conda<a class="headerlink" href="#working-with-conda" title="Link to this heading"></a></h3>
-<p>At present most ZapMeNot users are running ZapMeNot using either Anaconda, Miniconda, or conda-forge.  All use conda
-to create specialized python environment tailored to the work at hand.  After installing either
-Anaconda, Miniconda, or conda-forge, create a ZapMeNot environment using the following command:</p>
+<p>At present many ZapMeNot users are running ZapMeNot using either Anaconda, Miniconda, or conda-forge.  All use conda
+to create specialized python environment tailored to the work at hand.</p>
+<p>After installing either
+Anaconda, Miniconda, or conda-forge, create an appropriate conda environment.  Activate that environment
+and then install ZapMeNot using the pip instructions previously discussed.  This does not mesh perfectly
+with the conda scheme, but it is workable.</p>
+<p>A more complicated, but conda-esque approach is to create a conda environment for ZapMeNot without using pip,
+allowing conda to manage the coordination between ZapMeNot’s dependencies and any other packages you may install via conda.
+Use the following command:</p>
 <p><code class="code docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span> <span class="pre">-f</span> <span class="pre">zapmenot.yml</span></code></p>
 <p>where the zapmenot.yml file contains the following:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zapmenot</span>
@@ -130,34 +143,57 @@ Anaconda, Miniconda, or conda-forge, create a ZapMeNot environment using the fol
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">defaults</span>
 <span class="nt">dependencies</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python&gt;=3.13</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scipy&gt;=1.15</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyyaml&gt;=6.0</span>
-<span class="c1"># optional for graphics capability</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python&gt;=3.11.14</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scipy</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyyaml</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyvista&gt;=0.45</span>
 <span class="c1"># optional for jupyterlab capability</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jupyterlab&gt;=4.4</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jupyterlab&gt;=4.5.9</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trame&gt;=3.10</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trame-vtk&gt;=2.8.17</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trame-vuetify&gt;=3.0</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipywidgets&gt;=8.1.7</span>
-<span class="c1"># required for testing</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest&gt;=8.4</span>
+<span class="c1"># optional for testing</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest&gt;=9.0.3</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pandas&gt;=2.3</span>
 <span class="c1"># required for developers</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hatch</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hatchling&gt;=1.27</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx-rtd-theme&gt;=3.0</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx-autodoc-typehints&gt;=3.6.1</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">typing-extensions&gt;=4.15.0</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx&gt;=8.2</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flake8&gt;=7.2</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">types-PyYAML</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scipy-stubs</span>
 <span class="c1"># replace python-build with &quot;build&quot; if not using the conda-forge channel</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python-build&gt;=1.2</span>
 </pre></div>
 </div>
-<p>Finally, install the ZapMeNot package from Github:</p>
+<p>Next, install the ZapMeNot package from Github using pip:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>zapmenot
-pip<span class="w"> </span>install<span class="w"> </span>git+git://github.com/AlanFord/ZapMeNot.git
+pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;ZapMeNot @ git+https://github.com/AlanFord/ZapMeNot.git&#39;</span>
 </pre></div>
 </div>
+</section>
+<section id="installing-with-uv">
+<h3>Installing with uv<a class="headerlink" href="#installing-with-uv" title="Link to this heading"></a></h3>
+<p>uv is a very fast Python package manager (similar to pip) but also manages your Python virtual environment.</p>
+<p>There are a number of ways to use uv, as documented at <a class="reference external" href="https://docs.astral.sh/uv/">https://docs.astral.sh/uv/</a>.  Let’s assume
+you are working on a project and have already installed uv.</p>
+<p>First, the following command will create a project folder and initialize it with uv:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">uv</span> <span class="pre">init</span> <span class="pre">my_project</span></code></p>
+<p>Next, from within the project folder include ZapMeNot in the project’s dependencies:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">uv</span> <span class="pre">add</span> <span class="pre">'ZapMeNot</span> <span class="pre">&#64;</span> <span class="pre">git+https://github.com/AlanFord/ZapMeNot.git'</span></code></p>
+<p>This will install ZapMeNot and all of the supporting Python packages, allowing uv to manage the Python environment
+and Python package versions.  The syntax of the command is similar to the pip command discussed earlier.  The uv
+commands for installing the optional support for Jupyterlab and unit testing are structured similarly - create the uv
+command by starting with the pip command and replace “pip install” with “uv add”.  Done!</p>
+<p>You can now build out your ZapMeNot project.</p>
+<p>Once you have your ZapMeNot model written as a python file you can run it using the command from within
+your project folder:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">myPythonFile.py</span></code></p>
+<p>uv is very powerful and can do much more; addition information on using uv can be found at <a class="reference external" href="https://docs.astral.sh/uv/">https://docs.astral.sh/uv/</a>.</p>
 </section>
 </section>
 <section id="quickstart">
@@ -214,7 +250,7 @@ look at output options can be found in the <a class="reference internal" href="r
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019 - 2026, Alan Ford..
-      <span class="lastupdated">Last updated on Jan 22, 2026.
+      <span class="lastupdated">Last updated on Jul 17, 2026.
       </span></p>
   </div>
 

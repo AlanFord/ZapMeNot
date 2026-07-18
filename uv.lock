@@ -3440,6 +3440,43 @@ wheels = [
 ]
 
 [[package]]
+name = "sphinx-autodoc-typehints"
+version = "3.6.1"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.12' and sys_platform == 'win32'",
+    "python_full_version < '3.12' and sys_platform == 'emscripten'",
+    "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
+dependencies = [
+    { name = "sphinx", version = "9.0.4", source = { registry = "https://pypi.org/simple" } },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1d/f6/bdd93582b2aaad2cfe9eb5695a44883c8bc44572dd3c351a947acbb13789/sphinx_autodoc_typehints-3.6.1.tar.gz", hash = "sha256:fa0b686ae1b85965116c88260e5e4b82faec3687c2e94d6a10f9b36c3743e2fe", size = 37563, upload-time = "2026-01-02T15:23:46.543Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/dc/6a/c0360b115c81d449b3b73bf74b64ca773464d5c7b1b77bda87c5e874853b/sphinx_autodoc_typehints-3.6.1-py3-none-any.whl", hash = "sha256:dd818ba31d4c97f219a8c0fcacef280424f84a3589cedcb73003ad99c7da41ca", size = 20869, upload-time = "2026-01-02T15:23:45.194Z" },
+]
+
+[[package]]
+name = "sphinx-autodoc-typehints"
+version = "3.12.1"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.14' and sys_platform == 'win32'",
+    "python_full_version >= '3.14' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
+dependencies = [
+    { name = "sphinx", version = "9.1.0", source = { registry = "https://pypi.org/simple" } },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/de/ae/8ad5e79a0f7beac5e5810b2a8d0a1c6c63c795ba265a81970070abf15f32/sphinx_autodoc_typehints-3.12.1.tar.gz", hash = "sha256:4bbf6f6b907586d3b2a3ae2b23e0f86be939f19a7449e917d304df57ff9674d1", size = 84421, upload-time = "2026-07-03T13:52:09.056Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2a/a2/d5964523f0c98e39ef608a09f3de23032aa32fbe3e98a262e2112c39f985/sphinx_autodoc_typehints-3.12.1-py3-none-any.whl", hash = "sha256:932472c9cc160e6a0dc34eca13d3d6a9823ed6e6dc505d7c12f6963c983cf8f6", size = 42950, upload-time = "2026-07-03T13:52:07.696Z" },
+]
+
+[[package]]
 name = "sphinx-rtd-theme"
 version = "3.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -4017,8 +4054,11 @@ dev = [
     { name = "scipy-stubs" },
     { name = "sphinx", version = "9.0.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "sphinx", version = "9.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "sphinx-autodoc-typehints", version = "3.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "sphinx-autodoc-typehints", version = "3.12.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "sphinx-rtd-theme" },
     { name = "types-pyyaml" },
+    { name = "typing-extensions" },
 ]
 jupyterlab = [
     { name = "zapmenot", extra = ["jupyterlab"] },
@@ -4049,8 +4089,10 @@ dev = [
     { name = "hatch" },
     { name = "scipy-stubs" },
     { name = "sphinx", specifier = ">=8.2" },
+    { name = "sphinx-autodoc-typehints", specifier = ">=3.6.1" },
     { name = "sphinx-rtd-theme", specifier = ">=3.0" },
     { name = "types-pyyaml" },
+    { name = "typing-extensions", specifier = ">=4.15.0" },
 ]
 jupyterlab = [{ name = "zapmenot", extras = ["jupyterlab"], editable = "." }]
 test = [{ name = "zapmenot", extras = ["test"], editable = "." }]

@@ -25,15 +25,26 @@ Installation
 ------------
 
 There are as many ways to install ZapMeNot as there are ways to install and run Python.  First
-up is installing ZapMeNot using pip, followed by using Anaconda.
+up is installing ZapMeNot using pip, followed by using Anaconda, and finally using uv.
 
 Installing with Pip
 ^^^^^^^^^^^^^^^^^^^
 
-You must start with a copy of Python Version 3.13.  
+You must start with a copy of Python.  ZapMeNot is compatible with Python releases 3.11, 3.12, 3.13, and 3.14.  
 ZapMeNot can be installed directly from Github using pip:
 
-:code:`pip install git+git://github.com/AlanFord/ZapMeNot.git`
+:code:`pip install 'ZapMeNot @ git+https://github.com/AlanFord/ZapMeNot.git'`
+
+To install the optional support for `Jupyterlab <https://jupyterlab.readthedocs.io/en/stable/index.html>`__, 
+run the command:
+
+:code:`pip install 'ZapMeNot[jupyterlab] @ git+https://github.com/AlanFord/ZapMeNot.git'`
+
+Similarly, to install the optional support for testing the package, run the command:
+
+:code:`pip install 'ZapMeNot[test] @ git+https://github.com/AlanFord/ZapMeNot.git'`
+
+Additional information about running the unit tests can be found in the :doc:`developer` section 
 
 ZapMeNot can be installing from a local source tree using pip once the source has been retrieved from Github:
 
@@ -46,9 +57,17 @@ You can also install in Development Mode:
 Working with Conda
 ^^^^^^^^^^^^^^^^^^^
 
-At present most ZapMeNot users are running ZapMeNot using either Anaconda, Miniconda, or conda-forge.  All use conda
-to create specialized python environment tailored to the work at hand.  After installing either
-Anaconda, Miniconda, or conda-forge, create a ZapMeNot environment using the following command:
+At present many ZapMeNot users are running ZapMeNot using either Anaconda, Miniconda, or conda-forge.  All use conda
+to create specialized python environment tailored to the work at hand.  
+
+After installing either
+Anaconda, Miniconda, or conda-forge, create an appropriate conda environment.  Activate that environment
+and then install ZapMeNot using the pip instructions previously discussed.  This does not mesh perfectly
+with the conda scheme, but it is workable.
+
+A more complicated, but conda-esque approach is to create a conda environment for ZapMeNot without using pip, 
+allowing conda to manage the coordination between ZapMeNot's dependencies and any other packages you may install via conda.
+Use the following command:
 
 :code:`conda env create -f zapmenot.yml`
 
@@ -61,34 +80,69 @@ where the zapmenot.yml file contains the following:
     - conda-forge
     - defaults
     dependencies:
-    - python>=3.13
-    - scipy>=1.15
-    - pyyaml>=6.0
-    # optional for graphics capability
+    - python>=3.11.14
+    - scipy
+    - pyyaml
     - pyvista>=0.45
     # optional for jupyterlab capability
-    - jupyterlab>=4.4
+    - jupyterlab>=4.5.9
     - trame>=3.10
     - trame-vtk>=2.8.17
     - trame-vuetify>=3.0
     - ipywidgets>=8.1.7
-    # required for testing
-    - pytest>=8.4
+    # optional for testing
+    - pytest>=9.0.3
     - pandas>=2.3
     # required for developers
     - hatch
+    - hatchling>=1.27
     - sphinx-rtd-theme>=3.0
+    - sphinx-autodoc-typehints>=3.6.1
+    - typing-extensions>=4.15.0
     - sphinx>=8.2
     - flake8>=7.2
+    - types-PyYAML
+    - scipy-stubs
     # replace python-build with "build" if not using the conda-forge channel
     - python-build>=1.2
 
-Finally, install the ZapMeNot package from Github:
+Next, install the ZapMeNot package from Github using pip:
 
 .. code-block:: bash
 
     conda activate zapmenot
-    pip install git+git://github.com/AlanFord/ZapMeNot.git
+    pip install 'ZapMeNot @ git+https://github.com/AlanFord/ZapMeNot.git'
+
+
+Installing with uv
+^^^^^^^^^^^^^^^^^^^
+uv is a very fast Python package manager (similar to pip) but also manages your Python virtual environment.
+
+There are a number of ways to use uv, as documented at https://docs.astral.sh/uv/.  Let's assume
+you are working on a project and have already installed uv.
+
+First, the following command will create a project folder and initialize it with uv:
+
+:code:`uv init my_project`
+
+
+Next, from within the project folder include ZapMeNot in the project's dependencies:
+
+:code:`uv add 'ZapMeNot @ git+https://github.com/AlanFord/ZapMeNot.git'`
+
+This will install ZapMeNot and all of the supporting Python packages, allowing uv to manage the Python environment
+and Python package versions.  The syntax of the command is similar to the pip command discussed earlier.  The uv 
+commands for installing the optional support for Jupyterlab and unit testing are structured similarly - create the uv
+command by starting with the pip command and replace "pip install" with "uv add".  Done!
+
+You can now build out your ZapMeNot project.  
+
+Once you have your ZapMeNot model written as a python file you can run it using the command from within
+your project folder:
+
+:code:`uv run myPythonFile.py`
+
+uv is very powerful and can do much more; addition information on using uv can be found at https://docs.astral.sh/uv/.
 
 
 Quickstart
