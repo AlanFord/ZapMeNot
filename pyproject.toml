@@ -49,7 +49,7 @@ test = [
 [project.optional-dependencies]
 jupyterlab = [
   # jupyterlab, including headless
-  "jupyterlab >=4.5.9",
+  "jupyterlab>=4.5.10",
   "trame >=3.10",
   "trame-vtk >=2.8.17",
   "trame-vuetify >=3.0",
